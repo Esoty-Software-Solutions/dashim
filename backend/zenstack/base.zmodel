@@ -1,0 +1,56 @@
+import 'user'
+
+abstract model Base {
+    id String @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+
+    // author has full access
+    // @@allow('all', auth() != null && published)
+    @@allow('all', true && isPublished)
+}
+
+abstract model ActivationStatus {
+    isActive Boolean @default(true)
+    deactivationReason String?
+}
+
+abstract model HumanProfile{
+    firstName String
+    secondName String?
+    thirdName String?
+    fourthName String?
+    lastName String
+    searchName String
+
+    birthDate DateTime
+    
+    gender Gender? @relation(fields: [genderId], references: [id])
+    genderId String?
+
+    nationality String?
+    nationalID String? @unique
+
+    residence String?
+    address String?
+
+}
+
+abstract model LangLocale{
+    arabic String?
+    english String?
+}
+
+model Gender extends Base, LangLocale{
+    name String @unique
+    user User[]
+    subscriberGroup SubscriberGroup[]
+}
+
+// enum Gender {
+//     MALE
+//     FEMALE
+//     NA
+// }

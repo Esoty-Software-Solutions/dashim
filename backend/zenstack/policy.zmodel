@@ -1,0 +1,48 @@
+import 'base'
+
+
+model InsurancePolicy extends Base, ActivationStatus {
+    name String @unique
+    coPay Int
+    limit Int
+
+    institution Institution @relation(fields: [institutionId], references: [id])
+    institutionId String
+
+    subscribers Subscriber[]
+
+    packageMedicalServices PackageMedicalServices[]
+    medicalCenters InsurancePolicyMedicalCenters[]
+    
+} 
+
+
+model BenefitPackage extends Base, ActivationStatus {
+    name String @unique
+    limit Int
+    medicalCenters PackageMedicalServices[]
+}
+
+model PackageMedicalServices extends Base, ActivationStatus {
+    beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
+    beneftiPackageId String
+
+    medicalService MedicalCenter @relation(fields: [medicalServiceId], references: [id])
+    medicalServiceId String
+
+    insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
+    insurancePolicyId String
+
+    price Int
+
+    @@unique([beneftiPackageId, medicalServiceId])
+    @@index([beneftiPackageId, medicalServiceId])
+}
+
+model InsurancePolicyMedicalCenters extends Base, ActivationStatus {
+    insurancePolicyId String
+    insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
+    
+    medicalCenterId String
+    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+}

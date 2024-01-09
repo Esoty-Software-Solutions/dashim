@@ -49,6 +49,7 @@ const Home = () => {
   ];
 
   const useQuery = trpc.user.getMany.useQuery("dfs");
+  useQuery.
 
   const greeting = trpc.greeting.useQuery();
 
