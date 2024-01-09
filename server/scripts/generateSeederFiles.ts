@@ -2,8 +2,7 @@ import { faker } from '@faker-js/faker'
 import cuid2 from '@paralleldrive/cuid2'
 import fs from 'fs'
 import readline from 'readline'
-import { locales } from '../../browser/src/lang/i18n-config'
-import { locales } from '@/lang/i18n-config'
+import * as functions from '../prisma/fakeData/functions'
 
 const dbmlFIlePath = '../prisma/dbml/schema.dbml'
 
@@ -85,56 +84,70 @@ console.info('stack generated...')
 interface Object {
   [key: string]: any
 }
+
 async function fieldOverride(object: Object) {
   const randomness = 0.5
   for (const [key, value] of Object.entries(object)) {
-    if (key === 'id') {
+    if (key === 'id' && 'id' in object) {
       object[key] = cuid2.createId()
     }
-    if (key === 'createdAt') {
-      object[key] = faker.date.past({ years: 2, refDate: new Date() })
-      if (Math.random() < randomness) {
+    if (key === 'createdAt' && 'createdAt' in object) {
+      object[key] = faker.date.past({
+        years: 12,
+        refDate: '2023-01-01T00:00:00.000Z',
+      })
+      if (Math.random() < randomness && 'updatedAt' in object) {
         object['updatedAt'] = faker.date.between({
           from: object[key],
           to: new Date(),
         })
-      } else {
-        object['updatedAt'] = undefined
       }
     }
-    if (key === 'email') {
+    if (key === 'email' && 'email' in object) {
       object[key] = faker.internet.email()
     }
-    if (key === 'username') {
+    if (key === 'username' && 'username' in object) {
       object[key] = faker.internet.userName()
     }
-    if (key === 'passwordHash') {
+    if (key === 'passwordHash' && 'passwordHash' in object) {
       object[key] = faker.internet.password()
     }
-    if (key === 'phone') {
+    if (key === 'phone' && 'phone' in object) {
       object[key] = faker.phone.number()
     }
-    if (key === 'birthDate') {
-      object[key] = faker.date.past({ years: 50, refDate: new Date() })
+    if (key === 'birthDate' && 'birthDate' in object) {
+      object[key] = faker.date.past({
+        years: 70,
+        refDate: '2019-01-01T00:00:00.000Z',
+      })
     }
-    if (key === 'secondName') {
+    if (key === 'secondName' && 'secondName' in object) {
       object[key] = faker.person.firstName()
     }
     if (Math.random() < randomness) {
-      if (key === 'thirdName') {
+      if (key === 'thirdName' && 'thirdName' in object) {
         object[key] = faker.person.firstName()
       }
-      if (key === 'fourthName') {
+      if (key === 'fourthName' && 'fourthName' in object) {
         object[key] = faker.person.firstName()
       }
     }
-    if (key === 'searchName') {
+    if (
+      key === 'searchName' &&
+      'searchName' in object &&
+      'firstName' in object &&
+      'secondName' in object &&
+      'thirdName' in object &&
+      'thirdName' in object &&
+      'fourthName' in object &&
+      'lastName' in object
+    ) {
       object[key] =
-        object['firstName'] +
-        object['secondName'] +
-        object['thirdName'] +
-        object['fourthName'] +
-        object['lastName']
+        (object['firstName'] || '') +
+        (object['secondName'] || '') +
+        (object['thirdName'] || '') +
+        (object['fourthName'] || '') +
+        (object['lastName'] || '')
     }
 
     if (key === 'address' && Math.random() < randomness) {
@@ -151,29 +164,45 @@ async function fieldOverride(object: Object) {
         object['arabic'] = faker.string.alpha({ length: { min: 5, max: 15 } })
       }
     }
-    if (typeof value === 'object') {
-      //if value is object
-      //if value is array
-      if (Array.isArray(value)) {
-        //iterate over array
-        for (const [index, item] of value.entries()) {
-          //if item is object
-          if (typeof item === 'object') {
-            //if item has id
-            if (item.id) {
-              //replace item with id
-              object[key][index] = item.id
-            }
-          }
-        }
-      } else {
-        //if value is object
-        //if value has id
-        if (value.id) {
-          //replace value with id
-          object[key] = value.id
-        }
-      }
-    }
+
+    // if (typeof value === 'object' && !Array.isArray(value)) {
+    //   console.log('recursion on key: ', key)
+    //   object[key] = await fieldOverride(value)
+    // }
+
+    // if (typeof value === 'object') {
+    //   //if value is object
+    //   //if value is array
+    //   if (Array.isArray(value)) {
+    //     //iterate over array
+    //     for (const [index, item] of value.entries()) {
+    //       //if item is object
+    //       if (typeof item === 'object') {
+    //         //if item has id
+    //         if (item.id) {
+    //           //replace item with id
+    //           object[key][index] = item.id
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     //if value is object
+    //     //if value has id
+    //     if (value.id) {
+    //       //replace value with id
+    //       object[key] = value.id
+    //     }
+    //   }
+    // }
   }
+
+  return object
+}
+
+export const SeedHelper = {
+  tableDep,
+  tableRefs,
+  stack,
+  fieldOverride,
+  functions,
 }

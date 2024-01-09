@@ -76,6 +76,7 @@ model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
 
 
 model Relationship extends Base, LangLocale{
+    name String @unique
     subscriberGroup SubscriberGroup[]
 }
 

@@ -1,10 +1,8 @@
-import {} from 'D:githubdashimserver\node_modules@prismaclient'
-import cuid2 from '@paralleldrive/cuid2'
 import { faker } from '@faker-js/faker'
 
 export function fakeGender() {
   return {
-    updatedAt: faker.date.past(),
+    updatedAt: faker.date.anytime(),
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
@@ -12,7 +10,7 @@ export function fakeGender() {
 }
 export function fakeGenderComplete() {
   return {
-    id: cuid2.createId(),
+    id: faker.string.uuid(),
     createdAt: new Date(),
     updatedAt: faker.date.anytime(),
     isPublished: true,

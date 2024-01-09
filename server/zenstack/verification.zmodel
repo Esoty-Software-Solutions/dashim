@@ -52,14 +52,14 @@ model FingerType extends Base, LangLocale{
 }
 
 // enum FingerType {
-//     LEFTTHUMB
-//     LEFTINDEX
-//     LEFTMIDDLE
-//     LEFTRING
-//     LEFTLITTLE
-//     RIGHTTHUMB
-//     RIGHTINDEX
-//     RIGHTMIDDLE
-//     RIGHTRING
-//     RIGHTLITTLE
+    // LEFTTHUMB
+    // LEFTINDEX
+    // LEFTMIDDLE
+    // LEFTRING
+    // LEFTLITTLE
+    // RIGHTTHUMB
+    // RIGHTINDEX
+    // RIGHTMIDDLE
+    // RIGHTRING
+    // RIGHTLITTLE
 // }

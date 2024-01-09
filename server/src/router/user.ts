@@ -7,11 +7,13 @@ import ServerError from '~/utilities/error'
 type test = UserType
 
 import { unGuardedPrisma } from '@config/db'
+import { UserFindManySchema } from 'prisma/generated/schemas'
 
 export const userRouter = router({
   // GET http://localhost:3000/trpc/user.getOne?input="test"
-  getMany: publicProcedure.input(z.string()).query(async (opts) => {
+  getMany: publicProcedure.input(UserFindManySchema).query(async (opts) => {
     opts.input // string
+    opts.input.where
     const stuff = await User.getMany(opts.ctx.req, {})
     const stuff1: test[] = await unGuardedPrisma.user.findMany()
     return stuff1
