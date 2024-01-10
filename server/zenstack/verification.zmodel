@@ -10,13 +10,13 @@ model Fingerprint extends Base, ActivationStatus {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord []
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 
     @@index([id,fingerTypeId])
     @@unique([id,fingerTypeId])
-
-    entryRecords EntryRecord[]
 
 }    
 
@@ -25,35 +25,33 @@ model IDCard extends Base, ActivationStatus {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord[]
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 
-    entryRecords EntryRecord[]
-
-
 }
 
-model FaceBiometric extends Base, ActivationStatus {
+model Face extends Base, ActivationStatus {
     faceHash String
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
-    @@index([subscriberGroupId, id])
-    @@unique([subscriberGroupId, id])
-
     entryRecords EntryRecord[]
 
+    @@index([subscriberGroupId, id])
+    @@unique([subscriberGroupId, id])
 }
 
-model VoiceBiometric extends Base, ActivationStatus {
+model Voice extends Base, ActivationStatus {
     voiceHash String
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord[]
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
-
-    entryRecords EntryRecord[]
 }
 
 model FingerType extends Base, LangLocale{

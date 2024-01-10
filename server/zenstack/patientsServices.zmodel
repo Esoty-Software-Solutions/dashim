@@ -1,8 +1,8 @@
 import 'base'
 import 'medicalCenter';
+import 'verification'
 
 model TimeWindow extends Base, ActivationStatus{
-
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references:[id])
   medicalCenterId String @unique
   time Int @default(24)
@@ -18,11 +18,11 @@ model EntryRecord extends Base, ActivationStatus{
   idCard IDCard? @relation(fields: [idCardId], references: [id])
   idCardId String
 
-  faceBiometric FaceBiometric? @relation(fields: [faceBiometricId], references: [id])
-  faceBiometricId String
+  face Face? @relation(fields: [faceId], references: [id])
+  faceId String
   
-  voiceBiometric VoiceBiometric? @relation(fields: [voiceBiometricId], references: [id])
-  voiceBiometricId String
+  voice Voice? @relation(fields: [voiceId], references: [id])
+  voiceId String
 
   patientServices PatientService[]
   patientExamination PatientExamination[]
@@ -36,7 +36,9 @@ model PatientService extends Base, ActivationStatus{
 
   isWorkInjury Boolean @default(false)
 
-  cash Int
+  cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
+  limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
+  deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
 
   reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
   reviewStatusId String
@@ -53,7 +55,9 @@ model PatientExamination extends Base, ActivationStatus{
 
   isWorkInjury Boolean @default(false)
 
-  cash Int
+  cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
+  limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
+  deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
 
   reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
   reviewStatusId String

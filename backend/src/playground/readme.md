@@ -1,1 +1,0 @@
-This folder if a sandbox for trial purposes

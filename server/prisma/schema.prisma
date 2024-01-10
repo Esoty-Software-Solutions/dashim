@@ -452,6 +452,8 @@ model PatientService {
     cash Int
     reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
     reviewStatusId String
+    patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
+    patientExaminationId String
 }
 
 /// @@allow('all', true && isPublished)
@@ -470,6 +472,7 @@ model PatientExamination {
     cash Int
     reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
     reviewStatusId String
+    patientServices PatientService[]
 }
 
 /// @@allow('all', true && isPublished)
