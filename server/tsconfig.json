@@ -1,7 +1,9 @@
 {
   "include": ["index.ts", "src", "prisma", "scripts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "*/playground/**"],
   "compilerOptions": {
+    "composite": true,
+    "declaration": true,
     "lib": ["esnext"],
     "typeRoots": ["node_modules/@types", "src/types"],
     "types": ["node"],
@@ -11,6 +13,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "esnext",
+    "outDir": "dist",
     "strict": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,

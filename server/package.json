@@ -3,6 +3,7 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "types": "dist",
   "scripts": {
     "clean": "rimraf ./build && rimraf ./public/build && rimraf ./node_modules/.cache",
     "build": "esbuild src/server.ts src/client.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
