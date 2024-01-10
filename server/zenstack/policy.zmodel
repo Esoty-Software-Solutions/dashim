@@ -21,6 +21,7 @@ model BenefitPackage extends Base, ActivationStatus {
     name String @unique
     limit Int
     medicalServices PackageMedicalServices[]
+    spents SubscriberGroupBalance[]
 }
 
 model PackageMedicalServices extends Base, ActivationStatus {
@@ -34,6 +35,9 @@ model PackageMedicalServices extends Base, ActivationStatus {
     insurancePolicyId String
 
     price Int
+
+    patientServices PatientService[]
+    patientExaminations PatientExamination[]
 
     @@unique([insurancePolicyId, beneftiPackageId, medicalServiceId ])
     @@index([insurancePolicyId, beneftiPackageId, medicalServiceId])

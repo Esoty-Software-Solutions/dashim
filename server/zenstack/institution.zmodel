@@ -1,6 +1,7 @@
 import 'base'
 import 'verification'
 import 'policy'
+import 'patientsServices'
 
 
 model Institution extends Base, ActivationStatus {
@@ -68,6 +69,8 @@ model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
     voice Voice[]
 
     entryRecords EntryRecord[]
+
+    spents SubscriberGroupBalance[]
 
     @@index([subscriberId, id])
     @@unique([subscriberId, id])

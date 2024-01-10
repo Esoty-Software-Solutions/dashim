@@ -1,6 +1,7 @@
 import 'base'
 import 'medicalCenter';
 import 'verification'
+import 'policy'
 
 model TimeWindow extends Base, ActivationStatus{
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references:[id])
@@ -15,6 +16,9 @@ model EntryRecord extends Base, ActivationStatus{
   fingerprintBiometric Fingerprint? @relation(fields: [fingerprintId], references: [id])
   fingerprintId String
 
+  isValidated Boolean
+  isManuallyInserted Boolean @default(false)
+
   idCard IDCard? @relation(fields: [idCardId], references: [id])
   idCardId String
 
@@ -25,7 +29,7 @@ model EntryRecord extends Base, ActivationStatus{
   voiceId String
 
   patientServices PatientService[]
-  patientExamination PatientExamination[]
+  patientExamination PatientExamination?
 }
 
 model PatientService extends Base, ActivationStatus{
@@ -36,6 +40,7 @@ model PatientService extends Base, ActivationStatus{
 
   isWorkInjury Boolean @default(false)
 
+  name String
   cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
   limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
   deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
@@ -45,16 +50,20 @@ model PatientService extends Base, ActivationStatus{
 
   patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
   patientExaminationId String
+
+  serviceId String
+  service PackageMedicalServices @relation(fields: [serviceId], references: [id])
 }
 
 model PatientExamination extends Base, ActivationStatus{
   entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
-  entryRecordId String
+  entryRecordId String @unique
 
   Note String?
 
   isWorkInjury Boolean @default(false)
 
+  name String
   cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
   limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
   deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
@@ -63,10 +72,24 @@ model PatientExamination extends Base, ActivationStatus{
   reviewStatusId String
 
   patientServices PatientService[]
+  
+  serviceId String
+  service PackageMedicalServices @relation(fields: [serviceId], references: [id])
 }
 
-model ReviewStatus extends Base {
+model ReviewStatus extends Base, LangLocale {
   name String @unique
   patientServices PatientService[]
   PatientExamination PatientExamination[]
+}
+
+model SubscriberGroupBalance extends Base {
+  subscriberGroupId String
+  subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
+
+  beneftiPackageId String
+  beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
+
+  balance Float
+
 }
