@@ -265,6 +265,7 @@ Table Relationship {
   isSoftDeleted Boolean [not null, default: false]
   arabic String
   english String
+  name String [unique, not null]
   subscriberGroup SubscriberGroup [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'

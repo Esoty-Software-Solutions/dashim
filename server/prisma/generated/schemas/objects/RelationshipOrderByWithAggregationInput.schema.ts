@@ -26,6 +26,7 @@ const Schema: z.ZodType<Prisma.RelationshipOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => RelationshipCountOrderByAggregateInputObjectSchema)
       .optional(),

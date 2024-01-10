@@ -53,6 +53,12 @@ const Schema: z.ZodType<Prisma.RelationshipUpdateInput> = z
       ])
       .optional()
       .nullable(),
+    name: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
     subscriberGroup: z
       .lazy(
         () =>

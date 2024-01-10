@@ -331,6 +331,7 @@ export function fakeRelationship() {
     updatedAt: faker.date.anytime(),
     arabic: undefined,
     english: undefined,
+    name: faker.person.fullName(),
   }
 }
 export function fakeRelationshipComplete() {
@@ -342,6 +343,7 @@ export function fakeRelationshipComplete() {
     isSoftDeleted: false,
     arabic: undefined,
     english: undefined,
+    name: faker.person.fullName(),
   }
 }
 export function fakeFingerprint() {

@@ -8,4 +8,5 @@ export const RelationshipScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'arabic',
   'english',
+  'name',
 ]);

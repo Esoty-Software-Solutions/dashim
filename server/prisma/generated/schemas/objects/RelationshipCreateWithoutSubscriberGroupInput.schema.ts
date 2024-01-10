@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.RelationshipCreateWithoutSubscriberGroupInput> =
       isSoftDeleted: z.boolean().optional(),
       arabic: z.string().optional().nullable(),
       english: z.string().optional().nullable(),
+      name: z.string(),
     })
     .strict();
 

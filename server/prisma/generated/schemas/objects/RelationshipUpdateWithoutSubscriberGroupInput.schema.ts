@@ -53,6 +53,12 @@ const Schema: z.ZodType<Prisma.RelationshipUpdateWithoutSubscriberGroupInput> =
         ])
         .optional()
         .nullable(),
+      name: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
     })
     .strict();
 

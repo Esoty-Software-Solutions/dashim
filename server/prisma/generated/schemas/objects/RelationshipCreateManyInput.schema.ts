@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.RelationshipCreateManyInput> = z
     isSoftDeleted: z.boolean().optional(),
     arabic: z.string().optional().nullable(),
     english: z.string().optional().nullable(),
+    name: z.string(),
   })
   .strict();
 

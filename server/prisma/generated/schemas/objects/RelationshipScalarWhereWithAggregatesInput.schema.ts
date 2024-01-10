@@ -63,6 +63,9 @@ const Schema: z.ZodType<Prisma.RelationshipScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
+    name: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
   })
   .strict();
 

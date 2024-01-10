@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.RelationshipMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     arabic: z.literal(true).optional(),
     english: z.literal(true).optional(),
+    name: z.literal(true).optional(),
   })
   .strict();
 

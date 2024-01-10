@@ -114,9 +114,9 @@ export const deviceTypeEnum = [
   {
     ...SeedHelper.functions.fakeDeviceType(),
     id: cuid2.createId(),
-    name: 'pc',
-    english: 'pc',
-    arabic: 'كمبيوتر شخصي',
+    name: 'web',
+    english: 'web',
+    arabic: 'متصفح',
   },
   {
     ...SeedHelper.functions.fakeDeviceType(),

@@ -52,6 +52,12 @@ const Schema: z.ZodType<Prisma.RelationshipUncheckedUpdateManyInput> = z
       ])
       .optional()
       .nullable(),
+    name: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
   })
   .strict();
 

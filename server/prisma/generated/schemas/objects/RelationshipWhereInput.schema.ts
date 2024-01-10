@@ -48,6 +48,9 @@ const Schema: z.ZodType<Prisma.RelationshipWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
+    name: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
     subscriberGroup: z
       .lazy(() => SubscriberGroupListRelationFilterObjectSchema)
       .optional(),

@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.RelationshipMaxOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     arabic: z.lazy(() => SortOrderSchema).optional(),
     english: z.lazy(() => SortOrderSchema).optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 
