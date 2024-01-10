@@ -1,0 +1,14 @@
+{
+  "name": "dashim",
+  "version": "0.0.1",
+  "description": "Dalil",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "server",
+    "browser"
+  ]
+}
