@@ -83,7 +83,7 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,json,yaml,yml,vue,htm,html,md}": "npm run lint:fix -w dashim-browser-client"
+    "browser/src/**/*.{js,ts,json,yaml,yml,vue,htm,html,md}": "npm run lint:fix -w dashim-browser-client"
   },
   "publishConfig": {
     "access": "restricted"
