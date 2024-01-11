@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-import {
-  mdiThemeLightDark,
-  mdiAccountGroup,
-  mdiClipboardEdit,
-  mdiLogout,
-} from "@mdi/js";
+import { mdiThemeLightDark, mdiAccountGroup, mdiLogout } from "@mdi/js";
 import { useDisplay } from "vuetify";
 
+import useSession from "@/modules/auth/stores/session";
 import useConfig from "@/modules/shared/stores/configStore";
 import useLayoutStore from "@/modules/shared/stores/layoutStore";
 
 import type { DrawerMenuItem } from "../../interfaces";
+
+const sessionStore = useSession();
 
 // == drawer open/close state //
 const layoutStore = useLayoutStore();
@@ -133,6 +131,7 @@ const configStore = useConfig();
             color="primary"
             density="comfortable"
             block
+            @click="sessionStore.signOut"
           >
             <template #prepend>
               <VIcon :icon="mdiLogout" />

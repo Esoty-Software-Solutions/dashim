@@ -10,8 +10,6 @@ import {
 import useSession from "@/modules/auth/stores/session";
 import useGlobal from "@/modules/shared/stores/globalStore";
 
-import type useGlobal from "@/modules/shared/stores/configStore";
-
 /** Router Rules */
 const routes: RouteRecordRaw[] = [
   {
