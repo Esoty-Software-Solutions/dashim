@@ -25,8 +25,6 @@ const Schema: z.ZodType<Prisma.InstitutionMinOrderByAggregateInput> = z
     instagramLink: z.lazy(() => SortOrderSchema).optional(),
     latitude: z.lazy(() => SortOrderSchema).optional(),
     longitude: z.lazy(() => SortOrderSchema).optional(),
-    institutionCode: z.lazy(() => SortOrderSchema).optional(),
-    managingTenantId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

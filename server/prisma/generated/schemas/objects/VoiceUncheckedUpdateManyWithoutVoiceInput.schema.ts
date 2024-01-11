@@ -51,7 +51,7 @@ const Schema: z.ZodType<Prisma.VoiceUncheckedUpdateManyWithoutVoiceInput> = z
       ])
       .optional()
       .nullable(),
-    voiceHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

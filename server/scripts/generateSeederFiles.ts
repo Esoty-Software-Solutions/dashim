@@ -3,6 +3,7 @@ import cuid2 from '@paralleldrive/cuid2'
 import fs from 'fs'
 import readline from 'readline'
 import * as functions from '../prisma/fakeData/functions'
+import { RandomData } from '../../app/components/dummyData'
 
 const dbmlFIlePath = '../prisma/dbml/schema.dbml'
 
@@ -162,6 +163,24 @@ async function fieldOverride(object: Object) {
           object['name'] = object[key]
         }
         object['arabic'] = faker.string.alpha({ length: { min: 5, max: 15 } })
+      }
+    }
+
+    if (key === 'legacyCode') {
+      if (Math.random() < randomness) {
+        object[key] = faker.string.alpha({ length: { min: 5, max: 15 } })
+      }
+    }
+
+    if (key === 'residence') {
+      if (Math.random() < randomness) {
+        object[key] = faker.location.city()
+      }
+    }
+
+    if (key === 'hash') {
+      if (Math.random() < randomness) {
+        object[key] = faker.string.nanoid({ min: 5, max: 15 })
       }
     }
 

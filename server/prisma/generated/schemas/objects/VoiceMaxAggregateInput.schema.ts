@@ -11,7 +11,7 @@ const Schema: z.ZodType<Prisma.VoiceMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
-    voiceHash: z.literal(true).optional(),
+    hash: z.literal(true).optional(),
     subscriberGroupId: z.literal(true).optional(),
   })
   .strict();

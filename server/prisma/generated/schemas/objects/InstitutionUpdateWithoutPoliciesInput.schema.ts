@@ -3,10 +3,9 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { InstitutionUpdatephoneInputObjectSchema } from './InstitutionUpdatephoneInput.schema';
-import { InstitutionUpdateemailInputObjectSchema } from './InstitutionUpdateemailInput.schema';
+import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
+import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
-import { TenantUpdateOneRequiredWithoutAssignedToInstitutionNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutAssignedToInstitutionNestedInput.schema';
 import { SubscriberUpdateManyWithoutInstitutionNestedInputObjectSchema } from './SubscriberUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -96,15 +95,15 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       ])
       .optional()
       .nullable(),
-    phone: z
+    phoneArray: z
       .union([
-        z.lazy(() => InstitutionUpdatephoneInputObjectSchema),
+        z.lazy(() => InstitutionUpdatephoneArrayInputObjectSchema),
         z.string().array(),
       ])
       .optional(),
-    email: z
+    emailArray: z
       .union([
-        z.lazy(() => InstitutionUpdateemailInputObjectSchema),
+        z.lazy(() => InstitutionUpdateemailArrayInputObjectSchema),
         z.string().array(),
       ])
       .optional(),
@@ -152,18 +151,6 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       ])
       .optional()
       .nullable(),
-    institutionCode: z
-      .union([
-        z.string(),
-        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    managingTenant: z
-      .lazy(
-        () =>
-          TenantUpdateOneRequiredWithoutAssignedToInstitutionNestedInputObjectSchema,
-      )
-      .optional(),
     members: z
       .lazy(() => SubscriberUpdateManyWithoutInstitutionNestedInputObjectSchema)
       .optional(),

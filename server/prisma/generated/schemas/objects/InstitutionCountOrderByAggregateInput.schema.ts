@@ -18,8 +18,8 @@ const Schema: z.ZodType<Prisma.InstitutionCountOrderByAggregateInput> = z
     description: z.lazy(() => SortOrderSchema).optional(),
     cityHQ: z.lazy(() => SortOrderSchema).optional(),
     address: z.lazy(() => SortOrderSchema).optional(),
-    phone: z.lazy(() => SortOrderSchema).optional(),
-    email: z.lazy(() => SortOrderSchema).optional(),
+    phoneArray: z.lazy(() => SortOrderSchema).optional(),
+    emailArray: z.lazy(() => SortOrderSchema).optional(),
     website: z.lazy(() => SortOrderSchema).optional(),
     facebookLink: z.lazy(() => SortOrderSchema).optional(),
     googleMapsLink: z.lazy(() => SortOrderSchema).optional(),
@@ -27,8 +27,6 @@ const Schema: z.ZodType<Prisma.InstitutionCountOrderByAggregateInput> = z
     instagramLink: z.lazy(() => SortOrderSchema).optional(),
     latitude: z.lazy(() => SortOrderSchema).optional(),
     longitude: z.lazy(() => SortOrderSchema).optional(),
-    institutionCode: z.lazy(() => SortOrderSchema).optional(),
-    managingTenantId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

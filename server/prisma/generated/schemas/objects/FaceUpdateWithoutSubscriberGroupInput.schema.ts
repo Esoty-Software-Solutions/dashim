@@ -51,7 +51,7 @@ const Schema: z.ZodType<Prisma.FaceUpdateWithoutSubscriberGroupInput> = z
       ])
       .optional()
       .nullable(),
-    faceHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

@@ -8,6 +8,6 @@ export const FaceScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
-  'faceHash',
+  'hash',
   'subscriberGroupId',
 ]);

@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.VoiceMaxOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
-    voiceHash: z.lazy(() => SortOrderSchema).optional(),
+    hash: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();

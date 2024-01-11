@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.FingerprintCreateWithoutSubscriberGroupInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    fingerprintHash: z.string(),
+    hash: z.string(),
     fingerType: z.lazy(
       () => FingerTypeCreateNestedOneWithoutFingerTypeInputObjectSchema,
     ),

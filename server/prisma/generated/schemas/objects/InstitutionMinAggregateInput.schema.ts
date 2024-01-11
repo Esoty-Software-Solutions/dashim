@@ -24,8 +24,6 @@ const Schema: z.ZodType<Prisma.InstitutionMinAggregateInputType> = z
     instagramLink: z.literal(true).optional(),
     latitude: z.literal(true).optional(),
     longitude: z.literal(true).optional(),
-    institutionCode: z.literal(true).optional(),
-    managingTenantId: z.literal(true).optional(),
   })
   .strict();
 

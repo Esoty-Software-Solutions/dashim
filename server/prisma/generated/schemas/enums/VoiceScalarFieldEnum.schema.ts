@@ -8,6 +8,6 @@ export const VoiceScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
-  'voiceHash',
+  'hash',
   'subscriberGroupId',
 ]);

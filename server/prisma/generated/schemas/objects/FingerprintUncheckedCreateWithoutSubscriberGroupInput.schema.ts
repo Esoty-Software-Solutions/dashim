@@ -13,7 +13,7 @@ const Schema: z.ZodType<Prisma.FingerprintUncheckedCreateWithoutSubscriberGroupI
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       fingerTypeId: z.string(),
-      fingerprintHash: z.string(),
+      hash: z.string(),
     })
     .strict();
 

@@ -14,8 +14,8 @@ export const InstitutionScalarFieldEnumSchema = z.enum([
   'description',
   'cityHQ',
   'address',
-  'phone',
-  'email',
+  'phoneArray',
+  'emailArray',
   'website',
   'facebookLink',
   'googleMapsLink',
@@ -23,6 +23,4 @@ export const InstitutionScalarFieldEnumSchema = z.enum([
   'instagramLink',
   'latitude',
   'longitude',
-  'institutionCode',
-  'managingTenantId',
 ]);

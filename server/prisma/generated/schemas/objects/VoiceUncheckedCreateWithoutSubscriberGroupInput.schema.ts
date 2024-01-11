@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.VoiceUncheckedCreateWithoutSubscriberGroupInput> 
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
-      voiceHash: z.string(),
+      hash: z.string(),
     })
     .strict();
 

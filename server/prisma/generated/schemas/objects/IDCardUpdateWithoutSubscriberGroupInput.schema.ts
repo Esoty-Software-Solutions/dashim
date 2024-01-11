@@ -51,7 +51,7 @@ const Schema: z.ZodType<Prisma.IDCardUpdateWithoutSubscriberGroupInput> = z
       ])
       .optional()
       .nullable(),
-    cardHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

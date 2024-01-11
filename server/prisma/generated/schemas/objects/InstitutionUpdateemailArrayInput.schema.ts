@@ -2,11 +2,11 @@ import { z } from 'zod';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.InstitutionUpdatephoneInput> = z
+const Schema: z.ZodType<Prisma.InstitutionUpdateemailArrayInput> = z
   .object({
     set: z.string().array().optional(),
     push: z.union([z.string(), z.string().array()]).optional(),
   })
   .strict();
 
-export const InstitutionUpdatephoneInputObjectSchema = Schema;
+export const InstitutionUpdateemailArrayInputObjectSchema = Schema;

@@ -52,7 +52,7 @@ const Schema: z.ZodType<Prisma.VoiceUpdateInput> = z
       ])
       .optional()
       .nullable(),
-    voiceHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

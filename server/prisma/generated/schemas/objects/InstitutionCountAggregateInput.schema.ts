@@ -17,8 +17,8 @@ const Schema: z.ZodType<Prisma.InstitutionCountAggregateInputType> = z
     description: z.literal(true).optional(),
     cityHQ: z.literal(true).optional(),
     address: z.literal(true).optional(),
-    phone: z.literal(true).optional(),
-    email: z.literal(true).optional(),
+    phoneArray: z.literal(true).optional(),
+    emailArray: z.literal(true).optional(),
     website: z.literal(true).optional(),
     facebookLink: z.literal(true).optional(),
     googleMapsLink: z.literal(true).optional(),
@@ -26,8 +26,6 @@ const Schema: z.ZodType<Prisma.InstitutionCountAggregateInputType> = z
     instagramLink: z.literal(true).optional(),
     latitude: z.literal(true).optional(),
     longitude: z.literal(true).optional(),
-    institutionCode: z.literal(true).optional(),
-    managingTenantId: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })
   .strict();

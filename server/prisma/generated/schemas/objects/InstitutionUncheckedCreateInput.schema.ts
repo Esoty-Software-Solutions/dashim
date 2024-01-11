@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { InstitutionCreatephoneInputObjectSchema } from './InstitutionCreatephoneInput.schema';
-import { InstitutionCreateemailInputObjectSchema } from './InstitutionCreateemailInput.schema';
+import { InstitutionCreatephoneArrayInputObjectSchema } from './InstitutionCreatephoneArrayInput.schema';
+import { InstitutionCreateemailArrayInputObjectSchema } from './InstitutionCreateemailArrayInput.schema';
 import { InsurancePolicyUncheckedCreateNestedManyWithoutInstitutionInputObjectSchema } from './InsurancePolicyUncheckedCreateNestedManyWithoutInstitutionInput.schema';
 import { SubscriberUncheckedCreateNestedManyWithoutInstitutionInputObjectSchema } from './SubscriberUncheckedCreateNestedManyWithoutInstitutionInput.schema';
 
@@ -21,15 +21,15 @@ const Schema: z.ZodType<Prisma.InstitutionUncheckedCreateInput> = z
     description: z.string().optional().nullable(),
     cityHQ: z.string().optional().nullable(),
     address: z.string().optional().nullable(),
-    phone: z
+    phoneArray: z
       .union([
-        z.lazy(() => InstitutionCreatephoneInputObjectSchema),
+        z.lazy(() => InstitutionCreatephoneArrayInputObjectSchema),
         z.string().array(),
       ])
       .optional(),
-    email: z
+    emailArray: z
       .union([
-        z.lazy(() => InstitutionCreateemailInputObjectSchema),
+        z.lazy(() => InstitutionCreateemailArrayInputObjectSchema),
         z.string().array(),
       ])
       .optional(),
@@ -40,8 +40,6 @@ const Schema: z.ZodType<Prisma.InstitutionUncheckedCreateInput> = z
     instagramLink: z.string(),
     latitude: z.number().optional().nullable(),
     longitude: z.number().optional().nullable(),
-    institutionCode: z.string(),
-    managingTenantId: z.string(),
     policies: z
       .lazy(
         () =>

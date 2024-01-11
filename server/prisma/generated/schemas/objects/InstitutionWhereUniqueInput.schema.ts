@@ -5,10 +5,9 @@ import type { Prisma } from '@prisma/client';
 const Schema: z.ZodType<Prisma.InstitutionWhereUniqueInput> = z
   .object({
     id: z.string().optional(),
-    phone: z.string().array().optional(),
-    email: z.string().array().optional(),
-    institutionCode: z.string().optional(),
-    managingTenantId: z.string().optional(),
+    code: z.string().optional(),
+    phoneArray: z.string().array().optional(),
+    emailArray: z.string().array().optional(),
   })
   .strict();
 

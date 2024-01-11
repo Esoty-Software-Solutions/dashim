@@ -5,8 +5,6 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { StringNullableListFilterObjectSchema } from './StringNullableListFilter.schema';
 import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
-import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
-import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { InsurancePolicyListRelationFilterObjectSchema } from './InsurancePolicyListRelationFilter.schema';
 import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
 
@@ -74,8 +72,8 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    phone: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
-    email: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
+    phoneArray: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
+    emailArray: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     website: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -99,18 +97,6 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       .union([z.lazy(() => FloatNullableFilterObjectSchema), z.number()])
       .optional()
       .nullable(),
-    institutionCode: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
-    managingTenantId: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
-    managingTenant: z
-      .union([
-        z.lazy(() => TenantRelationFilterObjectSchema),
-        z.lazy(() => TenantWhereInputObjectSchema),
-      ])
-      .optional(),
     policies: z
       .lazy(() => InsurancePolicyListRelationFilterObjectSchema)
       .optional(),

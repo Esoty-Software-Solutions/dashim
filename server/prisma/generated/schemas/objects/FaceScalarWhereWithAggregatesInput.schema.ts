@@ -55,7 +55,7 @@ const Schema: z.ZodType<Prisma.FaceScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    faceHash: z
+    hash: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     subscriberGroupId: z

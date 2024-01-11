@@ -21,7 +21,7 @@ const Schema: z.ZodType<Prisma.IDCardOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    cardHash: z.lazy(() => SortOrderSchema).optional(),
+    hash: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => IDCardCountOrderByAggregateInputObjectSchema)

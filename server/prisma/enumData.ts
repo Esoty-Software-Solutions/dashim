@@ -2,6 +2,7 @@ import cuid2 from '@paralleldrive/cuid2'
 import { SeedHelper } from '../scripts/generateSeederFiles'
 import { fakeDeviceType } from './fakeData/functions'
 import { Relationship } from '../../app/server/models/relationship.server'
+import { ar, en } from '@faker-js/faker'
 
 export const genderEnum = [
   {
@@ -148,6 +149,20 @@ export const relationshipEnum = [
     name: 'mother',
     english: 'mother',
     arabic: 'الوالده',
+  },
+  {
+    ...SeedHelper.functions.fakeRelationship(),
+    id: cuid2.createId(),
+    name: 'husband',
+    english: 'husband',
+    arabic: 'الزوج',
+  },
+  {
+    ...SeedHelper.functions.fakeRelationship(),
+    id: cuid2.createId(),
+    name: 'wife',
+    english: 'wife',
+    arabic: 'الزوجه',
   },
   {
     ...SeedHelper.functions.fakeRelationship(),

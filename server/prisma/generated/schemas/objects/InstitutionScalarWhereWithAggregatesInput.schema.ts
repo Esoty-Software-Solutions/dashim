@@ -95,8 +95,8 @@ const Schema: z.ZodType<Prisma.InstitutionScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    phone: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
-    email: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
+    phoneArray: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
+    emailArray: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     website: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
@@ -126,12 +126,6 @@ const Schema: z.ZodType<Prisma.InstitutionScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    institutionCode: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
-    managingTenantId: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
   })
   .strict();
 

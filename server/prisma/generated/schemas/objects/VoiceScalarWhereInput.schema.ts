@@ -46,7 +46,7 @@ const Schema: z.ZodType<Prisma.VoiceScalarWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    voiceHash: z
+    hash: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     subscriberGroupId: z

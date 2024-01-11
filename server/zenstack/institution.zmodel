@@ -5,13 +5,15 @@ import 'policy'
 
 model Institution extends Base, ActivationStatus {
     name String
-    code String
+    code String @unique
     legacyCode String?
     description String?
     cityHQ String?
     address String?
-    phone String[] @unique
-    email String[] @unique
+    phoneArray String[] @unique
+    emailArray String[] @unique
+    // TODO: Normalize the phone and email array
+    // TODO: Normalize links
     website String @url
     facebookLink String @url
     googleMapsLink String @url
@@ -20,11 +22,9 @@ model Institution extends Base, ActivationStatus {
 
     latitude Float?
     longitude Float?
-    
-    institutionCode String @unique
 
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique
+    // managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+    // managingTenantId String @unique
 
     policies InsurancePolicy[]
     members Subscriber[]

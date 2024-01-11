@@ -51,7 +51,7 @@ const Schema: z.ZodType<Prisma.FingerprintUpdateManyMutationInput> = z
       ])
       .optional()
       .nullable(),
-    fingerprintHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

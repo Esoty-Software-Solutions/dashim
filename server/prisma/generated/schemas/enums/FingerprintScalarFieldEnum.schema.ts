@@ -9,6 +9,6 @@ export const FingerprintScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'fingerTypeId',
-  'fingerprintHash',
+  'hash',
   'subscriberGroupId',
 ]);

@@ -19,7 +19,7 @@ const Schema: z.ZodType<Prisma.FaceOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    faceHash: z.lazy(() => SortOrderSchema).optional(),
+    hash: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroup: z
       .lazy(() => SubscriberGroupOrderByWithRelationInputObjectSchema)

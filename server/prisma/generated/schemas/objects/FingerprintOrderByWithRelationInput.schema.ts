@@ -21,7 +21,7 @@ const Schema: z.ZodType<Prisma.FingerprintOrderByWithRelationInput> = z
       ])
       .optional(),
     fingerTypeId: z.lazy(() => SortOrderSchema).optional(),
-    fingerprintHash: z.lazy(() => SortOrderSchema).optional(),
+    hash: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
     fingerType: z
       .lazy(() => FingerTypeOrderByWithRelationInputObjectSchema)

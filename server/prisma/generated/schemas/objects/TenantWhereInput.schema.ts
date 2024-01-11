@@ -5,8 +5,6 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { TenantTypeRelationFilterObjectSchema } from './TenantTypeRelationFilter.schema';
 import { TenantTypeWhereInputObjectSchema } from './TenantTypeWhereInput.schema';
-import { InstitutionRelationFilterObjectSchema } from './InstitutionRelationFilter.schema';
-import { InstitutionWhereInputObjectSchema } from './InstitutionWhereInput.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
 import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
@@ -102,13 +100,6 @@ const Schema: z.ZodType<Prisma.TenantWhereInput> = z
         z.lazy(() => TenantTypeWhereInputObjectSchema),
       ])
       .optional(),
-    assignedToInstitution: z
-      .union([
-        z.lazy(() => InstitutionRelationFilterObjectSchema),
-        z.lazy(() => InstitutionWhereInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     assignedToMedicalCenter: z
       .union([
         z.lazy(() => MedicalCenterRelationFilterObjectSchema),

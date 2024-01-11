@@ -46,7 +46,7 @@ const Schema: z.ZodType<Prisma.FaceScalarWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    faceHash: z
+    hash: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     subscriberGroupId: z

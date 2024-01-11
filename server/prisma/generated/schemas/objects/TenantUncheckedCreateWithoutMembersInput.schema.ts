@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { InstitutionUncheckedCreateNestedOneWithoutManagingTenantInputObjectSchema } from './InstitutionUncheckedCreateNestedOneWithoutManagingTenantInput.schema';
 import { MedicalCenterUncheckedCreateNestedOneWithoutManagingTenantInputObjectSchema } from './MedicalCenterUncheckedCreateNestedOneWithoutManagingTenantInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -24,12 +23,6 @@ const Schema: z.ZodType<Prisma.TenantUncheckedCreateWithoutMembersInput> = z
     city: z.string().optional().nullable(),
     country: z.string().optional().nullable(),
     ownerId: z.string(),
-    assignedToInstitution: z
-      .lazy(
-        () =>
-          InstitutionUncheckedCreateNestedOneWithoutManagingTenantInputObjectSchema,
-      )
-      .optional(),
     assignedToMedicalCenter: z
       .lazy(
         () =>

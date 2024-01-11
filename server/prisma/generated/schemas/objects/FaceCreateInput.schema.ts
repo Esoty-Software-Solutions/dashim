@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.FaceCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    faceHash: z.string(),
+    hash: z.string(),
     subscriberGroup: z.lazy(
       () => SubscriberGroupCreateNestedOneWithoutFaceInputObjectSchema,
     ),

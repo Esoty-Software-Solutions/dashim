@@ -21,7 +21,7 @@ const Schema: z.ZodType<Prisma.FaceOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    faceHash: z.lazy(() => SortOrderSchema).optional(),
+    hash: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
     _count: z.lazy(() => FaceCountOrderByAggregateInputObjectSchema).optional(),
     _max: z.lazy(() => FaceMaxOrderByAggregateInputObjectSchema).optional(),

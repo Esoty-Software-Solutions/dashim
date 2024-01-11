@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { InstitutionCreateNestedOneWithoutManagingTenantInputObjectSchema } from './InstitutionCreateNestedOneWithoutManagingTenantInput.schema';
 import { MedicalCenterCreateNestedOneWithoutManagingTenantInputObjectSchema } from './MedicalCenterCreateNestedOneWithoutManagingTenantInput.schema';
 import { UserCreateNestedOneWithoutOwnerOfInputObjectSchema } from './UserCreateNestedOneWithoutOwnerOfInput.schema';
 import { TenantMembersCreateNestedManyWithoutTenantInputObjectSchema } from './TenantMembersCreateNestedManyWithoutTenantInput.schema';
@@ -24,11 +23,6 @@ const Schema: z.ZodType<Prisma.TenantCreateWithoutTypeInput> = z
     address: z.string().optional().nullable(),
     city: z.string().optional().nullable(),
     country: z.string().optional().nullable(),
-    assignedToInstitution: z
-      .lazy(
-        () => InstitutionCreateNestedOneWithoutManagingTenantInputObjectSchema,
-      )
-      .optional(),
     assignedToMedicalCenter: z
       .lazy(
         () =>

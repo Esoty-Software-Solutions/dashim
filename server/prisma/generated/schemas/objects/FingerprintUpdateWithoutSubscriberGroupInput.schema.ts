@@ -52,7 +52,7 @@ const Schema: z.ZodType<Prisma.FingerprintUpdateWithoutSubscriberGroupInput> = z
       ])
       .optional()
       .nullable(),
-    fingerprintHash: z
+    hash: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

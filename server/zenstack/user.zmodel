@@ -49,7 +49,7 @@ model Tenant extends Base, ActivationStatus {
   city String?
   country String?
 
-  assignedToInstitution Institution?
+  // assignedToInstitution Institution?
   assignedToMedicalCenter MedicalCenter?
 
   

@@ -1,4 +1,7 @@
-import { faker } from '@faker-js/faker'
+import {  } from 'D:\github\dashim\server\node_modules\@prisma\client';
+import { faker } from '@faker-js/faker';
+
+
 
 export function fakeGender() {
   return {
@@ -6,7 +9,7 @@ export function fakeGender() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeGenderComplete() {
   return {
@@ -18,7 +21,7 @@ export function fakeGenderComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeUser() {
   return {
@@ -40,7 +43,7 @@ export function fakeUser() {
     phone: undefined,
     passwordHash: faker.lorem.words(5),
     avatar: undefined,
-  }
+  };
 }
 export function fakeUserComplete() {
   return {
@@ -70,13 +73,13 @@ export function fakeUserComplete() {
     isPhoneVerified: false,
     passwordHash: faker.lorem.words(5),
     avatar: undefined,
-  }
+  };
 }
 export function fakeTenantMembers() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-  }
+  };
 }
 export function fakeTenantMembersComplete() {
   return {
@@ -89,7 +92,7 @@ export function fakeTenantMembersComplete() {
     deactivationReason: undefined,
     tenantId: faker.string.uuid(),
     memberId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeTenant() {
   return {
@@ -104,7 +107,7 @@ export function fakeTenant() {
     address: undefined,
     city: undefined,
     country: undefined,
-  }
+  };
 }
 export function fakeTenantComplete() {
   return {
@@ -126,14 +129,14 @@ export function fakeTenantComplete() {
     city: undefined,
     country: undefined,
     ownerId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeDeviceToken() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeDeviceTokenComplete() {
   return {
@@ -147,7 +150,7 @@ export function fakeDeviceTokenComplete() {
     name: faker.person.fullName(),
     deviceTypeId: faker.string.uuid(),
     userId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeTenantType() {
   return {
@@ -155,7 +158,7 @@ export function fakeTenantType() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeTenantTypeComplete() {
   return {
@@ -167,7 +170,7 @@ export function fakeTenantTypeComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeRole() {
   return {
@@ -175,7 +178,7 @@ export function fakeRole() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeRoleComplete() {
   return {
@@ -187,7 +190,7 @@ export function fakeRoleComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeDeviceType() {
   return {
@@ -195,7 +198,7 @@ export function fakeDeviceType() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeDeviceTypeComplete() {
   return {
@@ -207,7 +210,7 @@ export function fakeDeviceTypeComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeInstitution() {
   return {
@@ -219,8 +222,8 @@ export function fakeInstitution() {
     description: undefined,
     cityHQ: undefined,
     address: undefined,
-    phone: faker.lorem.words(5).split(' '),
-    email: faker.lorem.words(5).split(' '),
+    phoneArray: faker.lorem.words(5).split(' '),
+    emailArray: faker.lorem.words(5).split(' '),
     website: faker.lorem.words(5),
     facebookLink: faker.lorem.words(5),
     googleMapsLink: faker.lorem.words(5),
@@ -228,8 +231,7 @@ export function fakeInstitution() {
     instagramLink: faker.lorem.words(5),
     latitude: undefined,
     longitude: undefined,
-    institutionCode: faker.lorem.words(5),
-  }
+  };
 }
 export function fakeInstitutionComplete() {
   return {
@@ -246,8 +248,8 @@ export function fakeInstitutionComplete() {
     description: undefined,
     cityHQ: undefined,
     address: undefined,
-    phone: faker.lorem.words(5).split(' '),
-    email: faker.lorem.words(5).split(' '),
+    phoneArray: faker.lorem.words(5).split(' '),
+    emailArray: faker.lorem.words(5).split(' '),
     website: faker.lorem.words(5),
     facebookLink: faker.lorem.words(5),
     googleMapsLink: faker.lorem.words(5),
@@ -255,15 +257,13 @@ export function fakeInstitutionComplete() {
     instagramLink: faker.lorem.words(5),
     latitude: undefined,
     longitude: undefined,
-    institutionCode: faker.lorem.words(5),
-    managingTenantId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeSubscriber() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-  }
+  };
 }
 export function fakeSubscriberComplete() {
   return {
@@ -276,7 +276,7 @@ export function fakeSubscriberComplete() {
     deactivationReason: undefined,
     institutionId: faker.string.uuid(),
     insurancePolicyId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeSubscriberGroup() {
   return {
@@ -294,7 +294,7 @@ export function fakeSubscriberGroup() {
     address: undefined,
     deactivationReason: undefined,
     legacyCode: undefined,
-  }
+  };
 }
 export function fakeSubscriberGroupComplete() {
   return {
@@ -324,7 +324,7 @@ export function fakeSubscriberGroupComplete() {
     isIdCardVerificationActive: false,
     isFaceVerificationActive: false,
     isVoiceVerificationActive: false,
-  }
+  };
 }
 export function fakeRelationship() {
   return {
@@ -332,7 +332,7 @@ export function fakeRelationship() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeRelationshipComplete() {
   return {
@@ -344,14 +344,14 @@ export function fakeRelationshipComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeFingerprint() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-    fingerprintHash: faker.lorem.words(5),
-  }
+    hash: faker.lorem.words(5),
+  };
 }
 export function fakeFingerprintComplete() {
   return {
@@ -363,16 +363,16 @@ export function fakeFingerprintComplete() {
     isActive: true,
     deactivationReason: undefined,
     fingerTypeId: faker.string.uuid(),
-    fingerprintHash: faker.lorem.words(5),
+    hash: faker.lorem.words(5),
     subscriberGroupId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeIDCard() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-    cardHash: faker.lorem.words(5),
-  }
+    hash: faker.lorem.words(5),
+  };
 }
 export function fakeIDCardComplete() {
   return {
@@ -383,16 +383,16 @@ export function fakeIDCardComplete() {
     isSoftDeleted: false,
     isActive: true,
     deactivationReason: undefined,
-    cardHash: faker.lorem.words(5),
+    hash: faker.lorem.words(5),
     subscriberGroupId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeFace() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-    faceHash: faker.lorem.words(5),
-  }
+    hash: faker.lorem.words(5),
+  };
 }
 export function fakeFaceComplete() {
   return {
@@ -403,16 +403,16 @@ export function fakeFaceComplete() {
     isSoftDeleted: false,
     isActive: true,
     deactivationReason: undefined,
-    faceHash: faker.lorem.words(5),
+    hash: faker.lorem.words(5),
     subscriberGroupId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeVoice() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
-    voiceHash: faker.lorem.words(5),
-  }
+    hash: faker.lorem.words(5),
+  };
 }
 export function fakeVoiceComplete() {
   return {
@@ -423,9 +423,9 @@ export function fakeVoiceComplete() {
     isSoftDeleted: false,
     isActive: true,
     deactivationReason: undefined,
-    voiceHash: faker.lorem.words(5),
+    hash: faker.lorem.words(5),
     subscriberGroupId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeFingerType() {
   return {
@@ -433,7 +433,7 @@ export function fakeFingerType() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeFingerTypeComplete() {
   return {
@@ -445,14 +445,14 @@ export function fakeFingerTypeComplete() {
     arabic: undefined,
     english: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeInsurancePolicy() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeInsurancePolicyComplete() {
   return {
@@ -465,14 +465,14 @@ export function fakeInsurancePolicyComplete() {
     deactivationReason: undefined,
     name: faker.person.fullName(),
     institutionId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeBenefitPackage() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
-  }
+  };
 }
 export function fakeBenefitPackageComplete() {
   return {
@@ -485,7 +485,7 @@ export function fakeBenefitPackageComplete() {
     deactivationReason: undefined,
     name: faker.person.fullName(),
     insurancePolicyId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeMedicalCenter() {
   return {
@@ -505,7 +505,7 @@ export function fakeMedicalCenter() {
     instagramLink: faker.lorem.words(5),
     latitude: undefined,
     longitude: undefined,
-  }
+  };
 }
 export function fakeMedicalCenterComplete() {
   return {
@@ -531,7 +531,7 @@ export function fakeMedicalCenterComplete() {
     latitude: undefined,
     longitude: undefined,
     managingTenantId: faker.string.uuid(),
-  }
+  };
 }
 export function fakeMedicalCenterServiceTemplate() {
   return {
@@ -540,7 +540,7 @@ export function fakeMedicalCenterServiceTemplate() {
     name: faker.person.fullName(),
     dalilCode: faker.lorem.words(5),
     basePrice: faker.lorem.words(5),
-  }
+  };
 }
 export function fakeMedicalCenterServiceTemplateComplete() {
   return {
@@ -554,7 +554,7 @@ export function fakeMedicalCenterServiceTemplateComplete() {
     name: faker.person.fullName(),
     dalilCode: faker.lorem.words(5),
     basePrice: faker.lorem.words(5),
-  }
+  };
 }
 export function fakeMedicalCenterService() {
   return {
@@ -563,7 +563,7 @@ export function fakeMedicalCenterService() {
     name: faker.person.fullName(),
     medicalCenterCode: faker.lorem.words(5),
     basePrice: faker.lorem.words(5),
-  }
+  };
 }
 export function fakeMedicalCenterServiceComplete() {
   return {
@@ -579,5 +579,5 @@ export function fakeMedicalCenterServiceComplete() {
     basePrice: faker.lorem.words(5),
     medicalCenterId: faker.string.uuid(),
     templateId: faker.string.uuid(),
-  }
+  };
 }

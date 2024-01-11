@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { TenantTypeOrderByWithRelationInputObjectSchema } from './TenantTypeOrderByWithRelationInput.schema';
-import { InstitutionOrderByWithRelationInputObjectSchema } from './InstitutionOrderByWithRelationInput.schema';
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
 import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 import { TenantMembersOrderByRelationAggregateInputObjectSchema } from './TenantMembersOrderByRelationAggregateInput.schema';
@@ -76,9 +75,6 @@ const Schema: z.ZodType<Prisma.TenantOrderByWithRelationInput> = z
     ownerId: z.lazy(() => SortOrderSchema).optional(),
     type: z
       .lazy(() => TenantTypeOrderByWithRelationInputObjectSchema)
-      .optional(),
-    assignedToInstitution: z
-      .lazy(() => InstitutionOrderByWithRelationInputObjectSchema)
       .optional(),
     assignedToMedicalCenter: z
       .lazy(() => MedicalCenterOrderByWithRelationInputObjectSchema)

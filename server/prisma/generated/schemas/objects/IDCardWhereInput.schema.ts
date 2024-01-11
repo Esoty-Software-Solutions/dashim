@@ -48,7 +48,7 @@ const Schema: z.ZodType<Prisma.IDCardWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    cardHash: z
+    hash: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     subscriberGroupId: z

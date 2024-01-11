@@ -49,8 +49,8 @@ const Schema: z.ZodType<Prisma.InstitutionOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    phone: z.lazy(() => SortOrderSchema).optional(),
-    email: z.lazy(() => SortOrderSchema).optional(),
+    phoneArray: z.lazy(() => SortOrderSchema).optional(),
+    emailArray: z.lazy(() => SortOrderSchema).optional(),
     website: z.lazy(() => SortOrderSchema).optional(),
     facebookLink: z.lazy(() => SortOrderSchema).optional(),
     googleMapsLink: z.lazy(() => SortOrderSchema).optional(),
@@ -68,8 +68,6 @@ const Schema: z.ZodType<Prisma.InstitutionOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    institutionCode: z.lazy(() => SortOrderSchema).optional(),
-    managingTenantId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => InstitutionCountOrderByAggregateInputObjectSchema)
       .optional(),

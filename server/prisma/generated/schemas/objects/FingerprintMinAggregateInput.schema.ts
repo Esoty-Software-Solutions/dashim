@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.FingerprintMinAggregateInputType> = z
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
     fingerTypeId: z.literal(true).optional(),
-    fingerprintHash: z.literal(true).optional(),
+    hash: z.literal(true).optional(),
     subscriberGroupId: z.literal(true).optional(),
   })
   .strict();

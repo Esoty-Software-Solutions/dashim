@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedCreateWithoutSubscriberGroupInput>
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
-      cardHash: z.string(),
+      hash: z.string(),
     })
     .strict();
 

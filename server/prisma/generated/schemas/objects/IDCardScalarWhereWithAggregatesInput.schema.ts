@@ -55,7 +55,7 @@ const Schema: z.ZodType<Prisma.IDCardScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    cardHash: z
+    hash: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     subscriberGroupId: z

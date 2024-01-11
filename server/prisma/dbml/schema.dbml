@@ -91,7 +91,6 @@ Table Tenant {
   address String
   city String
   country String
-  assignedToInstitution Institution
   assignedToMedicalCenter MedicalCenter
   owner User [not null]
   ownerId String [not null]
@@ -171,13 +170,13 @@ Table Institution {
   isActive Boolean [not null, default: true]
   deactivationReason String
   name String [not null]
-  code String [not null]
+  code String [unique, not null]
   legacyCode String
   description String
   cityHQ String
   address String
-  phone String[] [unique, not null]
-  email String[] [unique, not null]
+  phoneArray String[] [unique, not null]
+  emailArray String[] [unique, not null]
   website String [not null, note: '@url']
   facebookLink String [not null, note: '@url']
   googleMapsLink String [not null, note: '@url']
@@ -185,9 +184,6 @@ Table Institution {
   instagramLink String [not null, note: '@url']
   latitude Float
   longitude Float
-  institutionCode String [unique, not null]
-  managingTenant Tenant [not null]
-  managingTenantId String [unique, not null]
   policies InsurancePolicy [not null]
   members Subscriber [not null]
 
@@ -281,7 +277,7 @@ Table Fingerprint {
   deactivationReason String
   fingerType FingerType [not null]
   fingerTypeId String [not null]
-  fingerprintHash String [unique, not null]
+  hash String [unique, not null]
   subscriberGroup SubscriberGroup [not null]
   subscriberGroupId String [not null]
 
@@ -301,7 +297,7 @@ Table IDCard {
   isSoftDeleted Boolean [not null, default: false]
   isActive Boolean [not null, default: true]
   deactivationReason String
-  cardHash String [not null]
+  hash String [unique, not null]
   subscriberGroup SubscriberGroup [not null]
   subscriberGroupId String [not null]
 
@@ -320,7 +316,7 @@ Table Face {
   isSoftDeleted Boolean [not null, default: false]
   isActive Boolean [not null, default: true]
   deactivationReason String
-  faceHash String [not null]
+  hash String [unique, not null]
   subscriberGroup SubscriberGroup [not null]
   subscriberGroupId String [not null]
 
@@ -339,7 +335,7 @@ Table Voice {
   isSoftDeleted Boolean [not null, default: false]
   isActive Boolean [not null, default: true]
   deactivationReason String
-  voiceHash String [not null]
+  hash String [unique, not null]
   subscriberGroup SubscriberGroup [not null]
   subscriberGroupId String [not null]
 
@@ -478,8 +474,6 @@ Ref: Tenant.ownerId > User.id
 Ref: DeviceToken.deviceTypeId > DeviceType.id
 
 Ref: DeviceToken.userId > User.id
-
-Ref: Institution.managingTenantId - Tenant.id
 
 Ref: Subscriber.institutionId > Institution.id
 
