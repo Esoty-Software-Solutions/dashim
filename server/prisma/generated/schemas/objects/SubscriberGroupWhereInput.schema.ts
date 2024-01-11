@@ -13,6 +13,8 @@ import { FingerprintListRelationFilterObjectSchema } from './FingerprintListRela
 import { IDCardListRelationFilterObjectSchema } from './IDCardListRelationFilter.schema';
 import { FaceListRelationFilterObjectSchema } from './FaceListRelationFilter.schema';
 import { VoiceListRelationFilterObjectSchema } from './VoiceListRelationFilter.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
+import { SubscriberGroupBalanceListRelationFilterObjectSchema } from './SubscriberGroupBalanceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -147,6 +149,12 @@ const Schema: z.ZodType<Prisma.SubscriberGroupWhereInput> = z
     idCard: z.lazy(() => IDCardListRelationFilterObjectSchema).optional(),
     face: z.lazy(() => FaceListRelationFilterObjectSchema).optional(),
     voice: z.lazy(() => VoiceListRelationFilterObjectSchema).optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
+      .optional(),
+    spents: z
+      .lazy(() => SubscriberGroupBalanceListRelationFilterObjectSchema)
+      .optional(),
   })
   .strict();
 

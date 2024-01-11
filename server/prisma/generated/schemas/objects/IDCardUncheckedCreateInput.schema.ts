@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { EntryRecordUncheckedCreateNestedManyWithoutIdCardInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutIdCardInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,6 +14,12 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedCreateInput> = z
     deactivationReason: z.string().optional().nullable(),
     hash: z.string(),
     subscriberGroupId: z.string(),
+    entryRecords: z
+      .lazy(
+        () =>
+          EntryRecordUncheckedCreateNestedManyWithoutIdCardInputObjectSchema,
+      )
+      .optional(),
   })
   .strict();
 

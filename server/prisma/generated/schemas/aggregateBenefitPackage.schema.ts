@@ -5,6 +5,8 @@ import { BenefitPackageWhereUniqueInputObjectSchema } from './objects/BenefitPac
 import { BenefitPackageCountAggregateInputObjectSchema } from './objects/BenefitPackageCountAggregateInput.schema';
 import { BenefitPackageMinAggregateInputObjectSchema } from './objects/BenefitPackageMinAggregateInput.schema';
 import { BenefitPackageMaxAggregateInputObjectSchema } from './objects/BenefitPackageMaxAggregateInput.schema';
+import { BenefitPackageAvgAggregateInputObjectSchema } from './objects/BenefitPackageAvgAggregateInput.schema';
+import { BenefitPackageSumAggregateInputObjectSchema } from './objects/BenefitPackageSumAggregateInput.schema';
 
 export const BenefitPackageAggregateSchema = z.object({
   orderBy: z
@@ -22,4 +24,6 @@ export const BenefitPackageAggregateSchema = z.object({
     .optional(),
   _min: BenefitPackageMinAggregateInputObjectSchema.optional(),
   _max: BenefitPackageMaxAggregateInputObjectSchema.optional(),
+  _avg: BenefitPackageAvgAggregateInputObjectSchema.optional(),
+  _sum: BenefitPackageSumAggregateInputObjectSchema.optional(),
 });

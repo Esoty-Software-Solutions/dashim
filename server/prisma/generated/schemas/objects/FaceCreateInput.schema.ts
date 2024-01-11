@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SubscriberGroupCreateNestedOneWithoutFaceInputObjectSchema } from './SubscriberGroupCreateNestedOneWithoutFaceInput.schema';
+import { EntryRecordCreateNestedManyWithoutFaceInputObjectSchema } from './EntryRecordCreateNestedManyWithoutFaceInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -16,6 +17,9 @@ const Schema: z.ZodType<Prisma.FaceCreateInput> = z
     subscriberGroup: z.lazy(
       () => SubscriberGroupCreateNestedOneWithoutFaceInputObjectSchema,
     ),
+    entryRecords: z
+      .lazy(() => EntryRecordCreateNestedManyWithoutFaceInputObjectSchema)
+      .optional(),
   })
   .strict();
 

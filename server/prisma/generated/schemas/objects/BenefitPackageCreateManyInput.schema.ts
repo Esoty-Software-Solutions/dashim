@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageCreateManyInput> = z
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     name: z.string(),
-    insurancePolicyId: z.string(),
+    limit: z.number(),
   })
   .strict();
 

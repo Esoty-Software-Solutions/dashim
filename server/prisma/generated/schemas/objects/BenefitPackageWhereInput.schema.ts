@@ -3,8 +3,9 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
-import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
+import { IntFilterObjectSchema } from './IntFilter.schema';
+import { PackageMedicalServicesListRelationFilterObjectSchema } from './PackageMedicalServicesListRelationFilter.schema';
+import { SubscriberGroupBalanceListRelationFilterObjectSchema } from './SubscriberGroupBalanceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -51,14 +52,14 @@ const Schema: z.ZodType<Prisma.BenefitPackageWhereInput> = z
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    insurancePolicyId: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+    limit: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
-    insurancePolicy: z
-      .union([
-        z.lazy(() => InsurancePolicyRelationFilterObjectSchema),
-        z.lazy(() => InsurancePolicyWhereInputObjectSchema),
-      ])
+    medicalServices: z
+      .lazy(() => PackageMedicalServicesListRelationFilterObjectSchema)
+      .optional(),
+    spents: z
+      .lazy(() => SubscriberGroupBalanceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

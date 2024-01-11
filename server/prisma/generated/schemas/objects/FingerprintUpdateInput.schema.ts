@@ -5,6 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { FingerTypeUpdateOneRequiredWithoutFingerTypeNestedInputObjectSchema } from './FingerTypeUpdateOneRequiredWithoutFingerTypeNestedInput.schema';
 import { SubscriberGroupUpdateOneRequiredWithoutFingerprintNestedInputObjectSchema } from './SubscriberGroupUpdateOneRequiredWithoutFingerprintNestedInput.schema';
+import { EntryRecordUpdateManyWithoutFingerprintBiometricNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutFingerprintBiometricNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -69,6 +70,12 @@ const Schema: z.ZodType<Prisma.FingerprintUpdateInput> = z
       .lazy(
         () =>
           SubscriberGroupUpdateOneRequiredWithoutFingerprintNestedInputObjectSchema,
+      )
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () =>
+          EntryRecordUpdateManyWithoutFingerprintBiometricNestedInputObjectSchema,
       )
       .optional(),
   })

@@ -3,11 +3,12 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { IntFilterObjectSchema } from './IntFilter.schema';
 import { InstitutionRelationFilterObjectSchema } from './InstitutionRelationFilter.schema';
 import { InstitutionWhereInputObjectSchema } from './InstitutionWhereInput.schema';
 import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
-import { BenefitPackageRelationFilterObjectSchema } from './BenefitPackageRelationFilter.schema';
-import { BenefitPackageWhereInputObjectSchema } from './BenefitPackageWhereInput.schema';
+import { PackageMedicalServicesListRelationFilterObjectSchema } from './PackageMedicalServicesListRelationFilter.schema';
+import { InsurancePolicyMedicalCentersListRelationFilterObjectSchema } from './InsurancePolicyMedicalCentersListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -54,6 +55,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyWhereInput> = z
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
+    coPay: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    limit: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
     institutionId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -66,13 +73,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyWhereInput> = z
     subscribers: z
       .lazy(() => SubscriberListRelationFilterObjectSchema)
       .optional(),
-    beneftiPackage: z
-      .union([
-        z.lazy(() => BenefitPackageRelationFilterObjectSchema),
-        z.lazy(() => BenefitPackageWhereInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
+    packageMedicalServices: z
+      .lazy(() => PackageMedicalServicesListRelationFilterObjectSchema)
+      .optional(),
+    medicalCenters: z
+      .lazy(() => InsurancePolicyMedicalCentersListRelationFilterObjectSchema)
+      .optional(),
   })
   .strict();
 

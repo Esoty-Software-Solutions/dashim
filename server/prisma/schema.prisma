@@ -487,6 +487,8 @@ model EntryRecord {
     voiceId String
     patientServices PatientService[]
     patientExamination PatientExamination?
+    medicalCenterId String
+    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
 }
 
 /// @@allow('all', true && isPublished)
@@ -506,12 +508,15 @@ model PatientService {
     cash Int
     limit Int
     deffered Int
-    reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
-    reviewStatusId String
+    transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
+    transactionReviewStatusId String
+    medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
+    medicalReviewStatusId String
     patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
     patientExaminationId String
     serviceId String
     service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+    groupId String
 }
 
 /// @@allow('all', true && isPublished)
@@ -531,11 +536,14 @@ model PatientExamination {
     cash Int
     limit Int
     deffered Int
-    reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
-    reviewStatusId String
+    transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
+    transactionReviewStatusId String
+    medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
+    medicalReviewStatusId String
     patientServices PatientService[]
     serviceId String
     service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+    groupId String
 }
 
 /// @@allow('all', true && isPublished)
@@ -548,8 +556,10 @@ model ReviewStatus {
     arabic String?
     english String?
     name String @unique()
-    patientServices PatientService[]
-    PatientExamination PatientExamination[]
+    transactionPatientServices PatientService[] @relation("transactionReviewStatus")
+    medicalPatientServices PatientService[] @relation("medicalReviewStatus")
+    transactionPatientExamination PatientExamination[] @relation("transactionReviewStatus")
+    medicalPatientExamination PatientExamination[] @relation("medicalReviewStatus")
 }
 
 /// @@allow('all', true && isPublished)
@@ -600,6 +610,7 @@ model MedicalCenter {
     beneftiPackages PackageMedicalServices[]
     insurancePolicy InsurancePolicyMedicalCenters[]
     timeWindow TimeWindow?
+    entryRecords EntryRecord[]
 }
 
 /// @@allow('all', true && isPublished)

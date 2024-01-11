@@ -3,6 +3,7 @@ import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFi
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter.schema';
 import { StringNullableWithAggregatesFilterObjectSchema } from './StringNullableWithAggregatesFilter.schema';
+import { IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -85,6 +86,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
           z.lazy(() => StringWithAggregatesFilterObjectSchema),
           z.string(),
         ])
+        .optional(),
+      coPay: z
+        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+        .optional(),
+      limit: z
+        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
         .optional(),
       institutionId: z
         .union([

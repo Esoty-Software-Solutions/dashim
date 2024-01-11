@@ -8,6 +8,11 @@ import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
 import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
 import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { MedicalCenterServiceListRelationFilterObjectSchema } from './MedicalCenterServiceListRelationFilter.schema';
+import { PackageMedicalServicesListRelationFilterObjectSchema } from './PackageMedicalServicesListRelationFilter.schema';
+import { InsurancePolicyMedicalCentersListRelationFilterObjectSchema } from './InsurancePolicyMedicalCentersListRelationFilter.schema';
+import { TimeWindowRelationFilterObjectSchema } from './TimeWindowRelationFilter.schema';
+import { TimeWindowWhereInputObjectSchema } from './TimeWindowWhereInput.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -103,6 +108,22 @@ const Schema: z.ZodType<Prisma.MedicalCenterWhereInput> = z
       .optional(),
     services: z
       .lazy(() => MedicalCenterServiceListRelationFilterObjectSchema)
+      .optional(),
+    beneftiPackages: z
+      .lazy(() => PackageMedicalServicesListRelationFilterObjectSchema)
+      .optional(),
+    insurancePolicy: z
+      .lazy(() => InsurancePolicyMedicalCentersListRelationFilterObjectSchema)
+      .optional(),
+    timeWindow: z
+      .union([
+        z.lazy(() => TimeWindowRelationFilterObjectSchema),
+        z.lazy(() => TimeWindowWhereInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    entryRecords: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

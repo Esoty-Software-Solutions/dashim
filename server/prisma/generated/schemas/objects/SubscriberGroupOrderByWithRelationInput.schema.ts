@@ -8,6 +8,8 @@ import { FingerprintOrderByRelationAggregateInputObjectSchema } from './Fingerpr
 import { IDCardOrderByRelationAggregateInputObjectSchema } from './IDCardOrderByRelationAggregateInput.schema';
 import { FaceOrderByRelationAggregateInputObjectSchema } from './FaceOrderByRelationAggregateInput.schema';
 import { VoiceOrderByRelationAggregateInputObjectSchema } from './VoiceOrderByRelationAggregateInput.schema';
+import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
+import { SubscriberGroupBalanceOrderByRelationAggregateInputObjectSchema } from './SubscriberGroupBalanceOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -107,6 +109,14 @@ const Schema: z.ZodType<Prisma.SubscriberGroupOrderByWithRelationInput> = z
       .optional(),
     voice: z
       .lazy(() => VoiceOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    spents: z
+      .lazy(
+        () => SubscriberGroupBalanceOrderByRelationAggregateInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

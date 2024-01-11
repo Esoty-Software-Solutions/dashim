@@ -452,6 +452,8 @@ export function fakeInsurancePolicy() {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
+    coPay: faker.number.int(),
+    limit: faker.number.int(),
   };
 }
 export function fakeInsurancePolicyComplete() {
@@ -464,6 +466,8 @@ export function fakeInsurancePolicyComplete() {
     isActive: true,
     deactivationReason: undefined,
     name: faker.person.fullName(),
+    coPay: faker.number.int(),
+    limit: faker.number.int(),
     institutionId: faker.string.uuid(),
   };
 }
@@ -472,6 +476,7 @@ export function fakeBenefitPackage() {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
+    limit: faker.number.int(),
   };
 }
 export function fakeBenefitPackageComplete() {
@@ -484,7 +489,200 @@ export function fakeBenefitPackageComplete() {
     isActive: true,
     deactivationReason: undefined,
     name: faker.person.fullName(),
+    limit: faker.number.int(),
+  };
+}
+export function fakePackageMedicalServices() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+    price: faker.number.int(),
+  };
+}
+export function fakePackageMedicalServicesComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    beneftiPackageId: faker.string.uuid(),
+    medicalServiceId: faker.string.uuid(),
     insurancePolicyId: faker.string.uuid(),
+    price: faker.number.int(),
+  };
+}
+export function fakeInsurancePolicyMedicalCenters() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+  };
+}
+export function fakeInsurancePolicyMedicalCentersComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    insurancePolicyId: faker.string.uuid(),
+    medicalCenterId: faker.string.uuid(),
+  };
+}
+export function fakeTimeWindow() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+  };
+}
+export function fakeTimeWindowComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    medicalCenterId: faker.string.uuid(),
+    time: 24,
+  };
+}
+export function fakeEntryRecord() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+    isValidated: faker.datatype.boolean(),
+  };
+}
+export function fakeEntryRecordComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    subscriberGroupId: faker.string.uuid(),
+    fingerprintId: faker.string.uuid(),
+    isValidated: faker.datatype.boolean(),
+    isManuallyInserted: false,
+    idCardId: faker.string.uuid(),
+    faceId: faker.string.uuid(),
+    voiceId: faker.string.uuid(),
+    medicalCenterId: faker.string.uuid(),
+  };
+}
+export function fakePatientService() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+    Note: undefined,
+    name: faker.person.fullName(),
+    cash: faker.number.int(),
+    limit: faker.number.int(),
+    deffered: faker.number.int(),
+    groupId: faker.lorem.words(5),
+  };
+}
+export function fakePatientServiceComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    entryRecordId: faker.string.uuid(),
+    Note: undefined,
+    isWorkInjury: false,
+    name: faker.person.fullName(),
+    cash: faker.number.int(),
+    limit: faker.number.int(),
+    deffered: faker.number.int(),
+    transactionReviewStatusId: faker.string.uuid(),
+    medicalReviewStatusId: faker.string.uuid(),
+    patientExaminationId: faker.string.uuid(),
+    serviceId: faker.string.uuid(),
+    groupId: faker.lorem.words(5),
+  };
+}
+export function fakePatientExamination() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+    Note: undefined,
+    name: faker.person.fullName(),
+    cash: faker.number.int(),
+    limit: faker.number.int(),
+    deffered: faker.number.int(),
+    groupId: faker.lorem.words(5),
+  };
+}
+export function fakePatientExaminationComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    entryRecordId: faker.string.uuid(),
+    Note: undefined,
+    isWorkInjury: false,
+    name: faker.person.fullName(),
+    cash: faker.number.int(),
+    limit: faker.number.int(),
+    deffered: faker.number.int(),
+    transactionReviewStatusId: faker.string.uuid(),
+    medicalReviewStatusId: faker.string.uuid(),
+    serviceId: faker.string.uuid(),
+    groupId: faker.lorem.words(5),
+  };
+}
+export function fakeReviewStatus() {
+  return {
+    updatedAt: faker.date.anytime(),
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+  };
+}
+export function fakeReviewStatusComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+  };
+}
+export function fakeSubscriberGroupBalance() {
+  return {
+    updatedAt: faker.date.anytime(),
+    balance: faker.number.float(),
+  };
+}
+export function fakeSubscriberGroupBalanceComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    subscriberGroupId: faker.string.uuid(),
+    beneftiPackageId: faker.string.uuid(),
+    balance: faker.number.float(),
   };
 }
 export function fakeMedicalCenter() {

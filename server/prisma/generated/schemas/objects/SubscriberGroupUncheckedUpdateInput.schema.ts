@@ -7,6 +7,8 @@ import { FingerprintUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSc
 import { IDCardUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './IDCardUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { FaceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './FaceUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { VoiceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './VoiceUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -200,6 +202,18 @@ const Schema: z.ZodType<Prisma.SubscriberGroupUncheckedUpdateInput> = z
       .lazy(
         () =>
           VoiceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+      )
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () =>
+          EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+      )
+      .optional(),
+    spents: z
+      .lazy(
+        () =>
+          SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
       )
       .optional(),
   })

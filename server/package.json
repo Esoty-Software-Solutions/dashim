@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "@prisma/client": "^5.7.0",
+    "@prisma/client": "^5.7.1",
     "@trpc/server": "^10.45.0",
     "@zenstackhq/runtime": "1.4.0",
     "cors": "^2.8.5",

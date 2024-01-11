@@ -2,6 +2,10 @@ import { z } from 'zod';
 import { MedicalCenterCreatephoneInputObjectSchema } from './MedicalCenterCreatephoneInput.schema';
 import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreateemailInput.schema';
 import { MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInput.schema';
+import { PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInput.schema';
+import { InsurancePolicyMedicalCentersCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './InsurancePolicyMedicalCentersCreateNestedManyWithoutMedicalCenterInput.schema';
+import { TimeWindowCreateNestedOneWithoutMedicalCenterInputObjectSchema } from './TimeWindowCreateNestedOneWithoutMedicalCenterInput.schema';
+import { EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './EntryRecordCreateNestedManyWithoutMedicalCenterInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -43,6 +47,29 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutManagingTenantInput> =
         .lazy(
           () =>
             MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema,
+        )
+        .optional(),
+      beneftiPackages: z
+        .lazy(
+          () =>
+            PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInputObjectSchema,
+        )
+        .optional(),
+      insurancePolicy: z
+        .lazy(
+          () =>
+            InsurancePolicyMedicalCentersCreateNestedManyWithoutMedicalCenterInputObjectSchema,
+        )
+        .optional(),
+      timeWindow: z
+        .lazy(
+          () => TimeWindowCreateNestedOneWithoutMedicalCenterInputObjectSchema,
+        )
+        .optional(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema,
         )
         .optional(),
     })

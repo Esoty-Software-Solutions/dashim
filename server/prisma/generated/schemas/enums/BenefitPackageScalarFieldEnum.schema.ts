@@ -9,5 +9,5 @@ export const BenefitPackageScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'name',
-  'insurancePolicyId',
+  'limit',
 ]);

@@ -4,19 +4,19 @@ import { User, type UserType } from "@models/user";
 import { TRPCError } from "@trpc/server";
 import ServerError from "~/utilities/error";
 
-type test = UserType
+type test = UserType;
 
-import { unGuardedPrisma } from '@config/db'
-import { UserFindManySchema } from 'prisma/generated/schemas'
+import { unGuardedPrisma } from "@config/db";
+import { UserFindManySchema } from "prisma/generated/schemas";
 
 export const userRouter = router({
   // GET http://localhost:3000/trpc/user.getOne?input="test"
   getMany: publicProcedure.input(UserFindManySchema).query(async (opts) => {
-    opts.input // string
-    opts.input.where
-    const stuff = await User.getMany(opts.ctx.req, {})
-    const stuff1: test[] = await unGuardedPrisma.user.findMany()
-    return stuff1
+    opts.input; // string
+    opts.input.where;
+    const stuff = await User.getMany(opts.ctx.req, {});
+    const stuff1: test[] = await unGuardedPrisma.user.findMany();
+    return stuff1;
     // opts.input // string
     // return await User.getMany(opts.ctx.req, {})
     // try {
@@ -31,8 +31,8 @@ export const userRouter = router({
     // }
   }),
   getOne: publicProcedure.input(z.string()).query((opts) => {
-    opts.input // string
-    return { response: 'user getOne' 
+    opts.input; // string
+    return { response: "user getOne" };
   }),
   // POST http://localhost:3000/trpc/user.createOne with body { name: "test" }
   createOne: publicProcedure.mutation(async (opts) => {

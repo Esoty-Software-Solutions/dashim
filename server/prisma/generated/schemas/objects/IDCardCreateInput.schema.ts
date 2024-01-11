@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SubscriberGroupCreateNestedOneWithoutIdCardInputObjectSchema } from './SubscriberGroupCreateNestedOneWithoutIdCardInput.schema';
+import { EntryRecordCreateNestedManyWithoutIdCardInputObjectSchema } from './EntryRecordCreateNestedManyWithoutIdCardInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -16,6 +17,9 @@ const Schema: z.ZodType<Prisma.IDCardCreateInput> = z
     subscriberGroup: z.lazy(
       () => SubscriberGroupCreateNestedOneWithoutIdCardInputObjectSchema,
     ),
+    entryRecords: z
+      .lazy(() => EntryRecordCreateNestedManyWithoutIdCardInputObjectSchema)
+      .optional(),
   })
   .strict();
 

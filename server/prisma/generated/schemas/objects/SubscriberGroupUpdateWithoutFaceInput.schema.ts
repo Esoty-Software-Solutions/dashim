@@ -9,6 +9,8 @@ import { RelationshipUpdateOneRequiredWithoutSubscriberGroupNestedInputObjectSch
 import { FingerprintUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './FingerprintUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { IDCardUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './IDCardUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { VoiceUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './VoiceUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { EntryRecordUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { SubscriberGroupBalanceUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './SubscriberGroupBalanceUpdateManyWithoutSubscriberGroupNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -187,6 +189,18 @@ const Schema: z.ZodType<Prisma.SubscriberGroupUpdateWithoutFaceInput> = z
       .optional(),
     voice: z
       .lazy(() => VoiceUpdateManyWithoutSubscriberGroupNestedInputObjectSchema)
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () =>
+          EntryRecordUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+      )
+      .optional(),
+    spents: z
+      .lazy(
+        () =>
+          SubscriberGroupBalanceUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

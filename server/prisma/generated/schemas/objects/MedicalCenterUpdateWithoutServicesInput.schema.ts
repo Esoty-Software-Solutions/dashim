@@ -7,6 +7,10 @@ import { MedicalCenterUpdatephoneInputObjectSchema } from './MedicalCenterUpdate
 import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdateemailInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInput.schema';
+import { PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInput.schema';
+import { InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { TimeWindowUpdateOneWithoutMedicalCenterNestedInputObjectSchema } from './TimeWindowUpdateOneWithoutMedicalCenterNestedInput.schema';
+import { EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutMedicalCenterNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -146,6 +150,28 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateWithoutServicesInput> = z
       .lazy(
         () =>
           TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    beneftiPackages: z
+      .lazy(
+        () =>
+          PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
+      )
+      .optional(),
+    insurancePolicy: z
+      .lazy(
+        () =>
+          InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    timeWindow: z
+      .lazy(
+        () => TimeWindowUpdateOneWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () => EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
       )
       .optional(),
   })

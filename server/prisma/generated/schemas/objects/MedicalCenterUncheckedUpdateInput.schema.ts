@@ -7,6 +7,10 @@ import { MedicalCenterUpdatephoneInputObjectSchema } from './MedicalCenterUpdate
 import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdateemailInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInput.schema';
+import { InsurancePolicyMedicalCentersUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCentersUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInputObjectSchema } from './TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -152,6 +156,30 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateInput> = z
       .lazy(
         () =>
           MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    beneftiPackages: z
+      .lazy(
+        () =>
+          PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
+      )
+      .optional(),
+    insurancePolicy: z
+      .lazy(
+        () =>
+          InsurancePolicyMedicalCentersUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    timeWindow: z
+      .lazy(
+        () =>
+          TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () =>
+          EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
       )
       .optional(),
   })

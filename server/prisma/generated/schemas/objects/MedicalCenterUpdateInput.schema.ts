@@ -8,6 +8,10 @@ import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdate
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInput.schema';
 import { MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInput.schema';
+import { InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { TimeWindowUpdateOneWithoutMedicalCenterNestedInputObjectSchema } from './TimeWindowUpdateOneWithoutMedicalCenterNestedInput.schema';
+import { EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutMedicalCenterNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -153,6 +157,28 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateInput> = z
       .lazy(
         () =>
           MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    beneftiPackages: z
+      .lazy(
+        () =>
+          PackageMedicalServicesUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
+      )
+      .optional(),
+    insurancePolicy: z
+      .lazy(
+        () =>
+          InsurancePolicyMedicalCentersUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    timeWindow: z
+      .lazy(
+        () => TimeWindowUpdateOneWithoutMedicalCenterNestedInputObjectSchema,
+      )
+      .optional(),
+    entryRecords: z
+      .lazy(
+        () => EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
       )
       .optional(),
   })

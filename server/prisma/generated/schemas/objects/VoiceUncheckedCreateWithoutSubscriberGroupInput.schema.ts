@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { EntryRecordUncheckedCreateNestedManyWithoutVoiceInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutVoiceInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,6 +14,12 @@ const Schema: z.ZodType<Prisma.VoiceUncheckedCreateWithoutSubscriberGroupInput> 
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       hash: z.string(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedCreateNestedManyWithoutVoiceInputObjectSchema,
+        )
+        .optional(),
     })
     .strict();
 

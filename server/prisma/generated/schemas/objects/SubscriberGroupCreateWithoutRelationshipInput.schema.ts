@@ -5,6 +5,8 @@ import { FingerprintCreateNestedManyWithoutSubscriberGroupInputObjectSchema } fr
 import { IDCardCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './IDCardCreateNestedManyWithoutSubscriberGroupInput.schema';
 import { FaceCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './FaceCreateNestedManyWithoutSubscriberGroupInput.schema';
 import { VoiceCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './VoiceCreateNestedManyWithoutSubscriberGroupInput.schema';
+import { EntryRecordCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './EntryRecordCreateNestedManyWithoutSubscriberGroupInput.schema';
+import { SubscriberGroupBalanceCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './SubscriberGroupBalanceCreateNestedManyWithoutSubscriberGroupInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -59,6 +61,18 @@ const Schema: z.ZodType<Prisma.SubscriberGroupCreateWithoutRelationshipInput> =
       voice: z
         .lazy(
           () => VoiceCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
+        )
+        .optional(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
+        )
+        .optional(),
+      spents: z
+        .lazy(
+          () =>
+            SubscriberGroupBalanceCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
         )
         .optional(),
     })

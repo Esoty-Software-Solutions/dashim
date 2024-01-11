@@ -9,5 +9,7 @@ export const InsurancePolicyScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'name',
+  'coPay',
+  'limit',
   'institutionId',
 ]);

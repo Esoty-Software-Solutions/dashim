@@ -7,6 +7,7 @@ import { FingerTypeRelationFilterObjectSchema } from './FingerTypeRelationFilter
 import { FingerTypeWhereInputObjectSchema } from './FingerTypeWhereInput.schema';
 import { SubscriberGroupRelationFilterObjectSchema } from './SubscriberGroupRelationFilter.schema';
 import { SubscriberGroupWhereInputObjectSchema } from './SubscriberGroupWhereInput.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -70,6 +71,9 @@ const Schema: z.ZodType<Prisma.FingerprintWhereInput> = z
         z.lazy(() => SubscriberGroupRelationFilterObjectSchema),
         z.lazy(() => SubscriberGroupWhereInputObjectSchema),
       ])
+      .optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

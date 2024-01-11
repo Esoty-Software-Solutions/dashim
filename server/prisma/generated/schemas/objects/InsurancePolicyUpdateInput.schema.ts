@@ -3,9 +3,11 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { InstitutionUpdateOneRequiredWithoutPoliciesNestedInputObjectSchema } from './InstitutionUpdateOneRequiredWithoutPoliciesNestedInput.schema';
 import { SubscriberUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './SubscriberUpdateManyWithoutInsurancePolicyNestedInput.schema';
-import { BenefitPackageUpdateOneWithoutInsurancePolicyNestedInputObjectSchema } from './BenefitPackageUpdateOneWithoutInsurancePolicyNestedInput.schema';
+import { PackageMedicalServicesUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './PackageMedicalServicesUpdateManyWithoutInsurancePolicyNestedInput.schema';
+import { InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -60,6 +62,18 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    coPay: z
+      .union([
+        z.number(),
+        z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
+    limit: z
+      .union([
+        z.number(),
+        z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
     institution: z
       .lazy(
         () =>
@@ -71,10 +85,16 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateInput> = z
         () => SubscriberUpdateManyWithoutInsurancePolicyNestedInputObjectSchema,
       )
       .optional(),
-    beneftiPackage: z
+    packageMedicalServices: z
       .lazy(
         () =>
-          BenefitPackageUpdateOneWithoutInsurancePolicyNestedInputObjectSchema,
+          PackageMedicalServicesUpdateManyWithoutInsurancePolicyNestedInputObjectSchema,
+      )
+      .optional(),
+    medicalCenters: z
+      .lazy(
+        () =>
+          InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInputObjectSchema,
       )
       .optional(),
   })

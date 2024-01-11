@@ -3,6 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { IntFilterObjectSchema } from './IntFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -48,6 +49,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereInput> = z
       .nullable(),
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    coPay: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    limit: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
     institutionId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])

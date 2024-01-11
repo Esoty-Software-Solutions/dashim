@@ -6,7 +6,6 @@ const Schema: z.ZodType<Prisma.BenefitPackageWhereUniqueInput> = z
   .object({
     id: z.string().optional(),
     name: z.string().optional(),
-    insurancePolicyId: z.string().optional(),
   })
   .strict();
 

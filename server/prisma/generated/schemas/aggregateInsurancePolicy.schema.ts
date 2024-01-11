@@ -5,6 +5,8 @@ import { InsurancePolicyWhereUniqueInputObjectSchema } from './objects/Insurance
 import { InsurancePolicyCountAggregateInputObjectSchema } from './objects/InsurancePolicyCountAggregateInput.schema';
 import { InsurancePolicyMinAggregateInputObjectSchema } from './objects/InsurancePolicyMinAggregateInput.schema';
 import { InsurancePolicyMaxAggregateInputObjectSchema } from './objects/InsurancePolicyMaxAggregateInput.schema';
+import { InsurancePolicyAvgAggregateInputObjectSchema } from './objects/InsurancePolicyAvgAggregateInput.schema';
+import { InsurancePolicySumAggregateInputObjectSchema } from './objects/InsurancePolicySumAggregateInput.schema';
 
 export const InsurancePolicyAggregateSchema = z.object({
   orderBy: z
@@ -22,4 +24,6 @@ export const InsurancePolicyAggregateSchema = z.object({
     .optional(),
   _min: InsurancePolicyMinAggregateInputObjectSchema.optional(),
   _max: InsurancePolicyMaxAggregateInputObjectSchema.optional(),
+  _avg: InsurancePolicyAvgAggregateInputObjectSchema.optional(),
+  _sum: InsurancePolicySumAggregateInputObjectSchema.optional(),
 });

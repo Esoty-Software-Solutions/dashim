@@ -3,7 +3,8 @@ import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { InstitutionOrderByWithRelationInputObjectSchema } from './InstitutionOrderByWithRelationInput.schema';
 import { SubscriberOrderByRelationAggregateInputObjectSchema } from './SubscriberOrderByRelationAggregateInput.schema';
-import { BenefitPackageOrderByWithRelationInputObjectSchema } from './BenefitPackageOrderByWithRelationInput.schema';
+import { PackageMedicalServicesOrderByRelationAggregateInputObjectSchema } from './PackageMedicalServicesOrderByRelationAggregateInput.schema';
+import { InsurancePolicyMedicalCentersOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCentersOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -22,6 +23,8 @@ const Schema: z.ZodType<Prisma.InsurancePolicyOrderByWithRelationInput> = z
       ])
       .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
+    coPay: z.lazy(() => SortOrderSchema).optional(),
+    limit: z.lazy(() => SortOrderSchema).optional(),
     institutionId: z.lazy(() => SortOrderSchema).optional(),
     institution: z
       .lazy(() => InstitutionOrderByWithRelationInputObjectSchema)
@@ -29,8 +32,16 @@ const Schema: z.ZodType<Prisma.InsurancePolicyOrderByWithRelationInput> = z
     subscribers: z
       .lazy(() => SubscriberOrderByRelationAggregateInputObjectSchema)
       .optional(),
-    beneftiPackage: z
-      .lazy(() => BenefitPackageOrderByWithRelationInputObjectSchema)
+    packageMedicalServices: z
+      .lazy(
+        () => PackageMedicalServicesOrderByRelationAggregateInputObjectSchema,
+      )
+      .optional(),
+    medicalCenters: z
+      .lazy(
+        () =>
+          InsurancePolicyMedicalCentersOrderByRelationAggregateInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

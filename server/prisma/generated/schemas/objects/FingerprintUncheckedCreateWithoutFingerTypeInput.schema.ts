@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { EntryRecordUncheckedCreateNestedManyWithoutFingerprintBiometricInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutFingerprintBiometricInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,6 +15,12 @@ const Schema: z.ZodType<Prisma.FingerprintUncheckedCreateWithoutFingerTypeInput>
       deactivationReason: z.string().optional().nullable(),
       hash: z.string(),
       subscriberGroupId: z.string(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedCreateNestedManyWithoutFingerprintBiometricInputObjectSchema,
+        )
+        .optional(),
     })
     .strict();
 

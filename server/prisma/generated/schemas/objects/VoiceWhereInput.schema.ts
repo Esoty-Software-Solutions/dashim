@@ -5,6 +5,7 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { SubscriberGroupRelationFilterObjectSchema } from './SubscriberGroupRelationFilter.schema';
 import { SubscriberGroupWhereInputObjectSchema } from './SubscriberGroupWhereInput.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -59,6 +60,9 @@ const Schema: z.ZodType<Prisma.VoiceWhereInput> = z
         z.lazy(() => SubscriberGroupRelationFilterObjectSchema),
         z.lazy(() => SubscriberGroupWhereInputObjectSchema),
       ])
+      .optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

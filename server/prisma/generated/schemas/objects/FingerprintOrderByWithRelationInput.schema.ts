@@ -3,6 +3,7 @@ import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { FingerTypeOrderByWithRelationInputObjectSchema } from './FingerTypeOrderByWithRelationInput.schema';
 import { SubscriberGroupOrderByWithRelationInputObjectSchema } from './SubscriberGroupOrderByWithRelationInput.schema';
+import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -28,6 +29,9 @@ const Schema: z.ZodType<Prisma.FingerprintOrderByWithRelationInput> = z
       .optional(),
     subscriberGroup: z
       .lazy(() => SubscriberGroupOrderByWithRelationInputObjectSchema)
+      .optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

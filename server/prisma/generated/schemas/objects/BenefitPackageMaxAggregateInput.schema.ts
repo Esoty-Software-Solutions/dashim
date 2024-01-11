@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageMaxAggregateInputType> = z
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
     name: z.literal(true).optional(),
-    insurancePolicyId: z.literal(true).optional(),
+    limit: z.literal(true).optional(),
   })
   .strict();
 

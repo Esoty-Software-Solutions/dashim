@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { SubscriberGroupOrderByWithRelationInputObjectSchema } from './SubscriberGroupOrderByWithRelationInput.schema';
+import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -23,6 +24,9 @@ const Schema: z.ZodType<Prisma.IDCardOrderByWithRelationInput> = z
     subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
     subscriberGroup: z
       .lazy(() => SubscriberGroupOrderByWithRelationInputObjectSchema)
+      .optional(),
+    entryRecords: z
+      .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

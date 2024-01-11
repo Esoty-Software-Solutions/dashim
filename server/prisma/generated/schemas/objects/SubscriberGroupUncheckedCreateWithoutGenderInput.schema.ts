@@ -3,6 +3,8 @@ import { FingerprintUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSc
 import { IDCardUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './IDCardUncheckedCreateNestedManyWithoutSubscriberGroupInput.schema';
 import { FaceUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './FaceUncheckedCreateNestedManyWithoutSubscriberGroupInput.schema';
 import { VoiceUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './VoiceUncheckedCreateNestedManyWithoutSubscriberGroupInput.schema';
+import { EntryRecordUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutSubscriberGroupInput.schema';
+import { SubscriberGroupBalanceUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema } from './SubscriberGroupBalanceUncheckedCreateNestedManyWithoutSubscriberGroupInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -56,6 +58,18 @@ const Schema: z.ZodType<Prisma.SubscriberGroupUncheckedCreateWithoutGenderInput>
         .lazy(
           () =>
             VoiceUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
+        )
+        .optional(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
+        )
+        .optional(),
+      spents: z
+        .lazy(
+          () =>
+            SubscriberGroupBalanceUncheckedCreateNestedManyWithoutSubscriberGroupInputObjectSchema,
         )
         .optional(),
     })

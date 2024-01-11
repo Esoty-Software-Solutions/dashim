@@ -6,6 +6,8 @@ import { NullableStringFieldUpdateOperationsInputObjectSchema } from './Nullable
 import { FingerprintUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './FingerprintUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { IDCardUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './IDCardUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 import { FaceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './FaceUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
+import { SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema } from './SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -194,6 +196,18 @@ const Schema: z.ZodType<Prisma.SubscriberGroupUncheckedUpdateWithoutVoiceInput> 
         .lazy(
           () =>
             FaceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+        )
+        .optional(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
+        )
+        .optional(),
+      spents: z
+        .lazy(
+          () =>
+            SubscriberGroupBalanceUncheckedUpdateManyWithoutSubscriberGroupNestedInputObjectSchema,
         )
         .optional(),
     })

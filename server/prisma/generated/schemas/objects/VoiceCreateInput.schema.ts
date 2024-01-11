@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SubscriberGroupCreateNestedOneWithoutVoiceInputObjectSchema } from './SubscriberGroupCreateNestedOneWithoutVoiceInput.schema';
+import { EntryRecordCreateNestedManyWithoutVoiceInputObjectSchema } from './EntryRecordCreateNestedManyWithoutVoiceInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -16,6 +17,9 @@ const Schema: z.ZodType<Prisma.VoiceCreateInput> = z
     subscriberGroup: z.lazy(
       () => SubscriberGroupCreateNestedOneWithoutVoiceInputObjectSchema,
     ),
+    entryRecords: z
+      .lazy(() => EntryRecordCreateNestedManyWithoutVoiceInputObjectSchema)
+      .optional(),
   })
   .strict();
 

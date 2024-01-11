@@ -3,6 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutIdCardNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutIdCardNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -57,6 +58,12 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedUpdateWithoutSubscriberGroupInput>
           z.string(),
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
+        .optional(),
+      entryRecords: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedUpdateManyWithoutIdCardNestedInputObjectSchema,
+        )
         .optional(),
     })
     .strict();
