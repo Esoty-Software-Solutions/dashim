@@ -18,6 +18,19 @@ generator erd {
     theme = "forest"
 }
 
+generator zod {
+    provider = "prisma-zod-generator"
+}
+
+generator fakeData {
+    provider = "prisma-generator-fake-data"
+    output = "./fakeData/functions.ts"
+}
+
+generator dbml {
+    provider = "prisma-dbml-generator"
+}
+
 /// @@allow('all', true && isPublished)
 model Gender {
     id String @id()
@@ -106,7 +119,6 @@ model Tenant {
     address String?
     city String?
     country String?
-    assignedToInstitution Institution?
     assignedToMedicalCenter MedicalCenter?
     owner User @relation(fields: [ownerId], references: [id])
     ownerId String
@@ -180,13 +192,13 @@ model Institution {
     isActive Boolean @default(true)
     deactivationReason String?
     name String
-    code String
+    code String @unique()
     legacyCode String?
     description String?
     cityHQ String?
     address String?
-    phone String[] @unique()
-    email String[] @unique()
+    phoneArray String[] @unique()
+    emailArray String[] @unique()
     /// @url
     website String
     /// @url
@@ -199,9 +211,6 @@ model Institution {
     instagramLink String
     latitude Float?
     longitude Float?
-    institutionCode String @unique()
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique()
     policies InsurancePolicy[]
     members Subscriber[]
 }
@@ -276,6 +285,7 @@ model Relationship {
     isSoftDeleted Boolean @default(false)
     arabic String?
     english String?
+    name String @unique()
     subscriberGroup SubscriberGroup[]
 }
 
@@ -290,7 +300,7 @@ model Fingerprint {
     deactivationReason String?
     fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
     fingerTypeId String
-    fingerprintHash String @unique()
+    hash String @unique()
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
     entryRecords EntryRecord[]
@@ -310,7 +320,7 @@ model IDCard {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    cardHash String
+    hash String @unique()
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
     entryRecords EntryRecord[]
@@ -328,7 +338,7 @@ model Face {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    faceHash String
+    hash String @unique()
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
     entryRecords EntryRecord[]
@@ -346,7 +356,7 @@ model Voice {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    voiceHash String
+    hash String @unique()
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
     entryRecords EntryRecord[]

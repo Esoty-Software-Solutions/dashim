@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
-import { User } from '@models/user.server'
+import { User } from '@models/user'
 import { create } from 'domain'
 import { createId } from '@paralleldrive/cuid2'
+import { SeedHelper } from '../scripts/generateSeederFiles'
+import * as functions from '../prisma/fakeData/functions'
 
 const prisma = new PrismaClient()
 
