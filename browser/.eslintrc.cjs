@@ -29,7 +29,7 @@ module.exports = {
     ],
     extraFileExtensions: [".vue"],
   },
-  plugins: ["import", "tsdoc", "vue"],
+  plugins: ["import", "tsdoc", "vue", "prettier"],
   rules: {
     "require-jsdoc": "off",
     "@typescript-eslint/no-explicit-any": "off",

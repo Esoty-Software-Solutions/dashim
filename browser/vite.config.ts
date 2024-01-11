@@ -11,7 +11,7 @@ function createServerConfig({ command, mode }: ConfigEnv) {
   let { SERVER_HOST, SERVER_BASE_URL, SERVER_TRPC_URL } = loadEnv(
     mode,
     process.cwd(),
-    ""
+    "",
   );
 
   // == dev serve proxy-ing config

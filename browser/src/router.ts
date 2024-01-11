@@ -7,8 +7,10 @@ import {
   type RouteRecordRaw,
 } from "vue-router";
 
-// sub routes
+import useSession from "@/modules/auth/stores/session";
 import useGlobal from "@/modules/shared/stores/globalStore";
+
+import type useGlobal from "@/modules/shared/stores/configStore";
 
 /** Router Rules */
 const routes: RouteRecordRaw[] = [
@@ -26,6 +28,17 @@ const routes: RouteRecordRaw[] = [
       requiresAuth: true,
     },
   },
+
+  {
+    path: "/join",
+
+    name: "Join",
+    component: () => import("@/modules/auth/JoinPage.vue"),
+    meta: {
+      guestOnly: true,
+    },
+  },
+
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
@@ -70,29 +83,29 @@ if (import.meta.env.DEV) {
 /** session initialization
 /***/
 router.beforeEach(async () => {
-  // const sessionStore = useSession();
+  const sessionStore = useSession();
   const globalStore = useGlobal();
-  // if (!sessionStore.isInitialized.value) {
-  globalStore.setLoading(true);
-  // await sessionStore.initialize();
-  // }
+  if (!sessionStore.isInitialized) {
+    globalStore.setLoading(true);
+    await sessionStore.initialize();
+  }
 });
 
 /***
 /** Authentication state guard
 /***/
 router.beforeEach((to) => {
-  // // const sessionStore = useSession();
-  // // redirect non-guest user to home page
-  // if (to.meta?.guestOnly && sessionStore.isAuthenticated.value) {
-  //   return { name: "Home" };
-  // }
-  // if (to.meta?.requiresAuth && !sessionStore.isAuthenticated.value) {
-  //   return {
-  //     name: "Join",
-  //     query: { redirect: encodeURIComponent(JSON.stringify(to)) },
-  //   };
-  // }
+  // redirect non-guest user to home page
+  const sessionStore = useSession();
+  if (to.meta?.guestOnly && sessionStore.isAuthenticated) {
+    return { name: "Home" };
+  }
+  if (to.meta?.requiresAuth && !sessionStore.isAuthenticated) {
+    return {
+      name: "Join",
+      query: { redirect: encodeURIComponent(JSON.stringify(to)) },
+    };
+  }
 });
 
 // Global before guards
@@ -100,7 +113,7 @@ router.beforeEach(
   (
     _to: RouteLocationNormalized,
     _from: RouteLocationNormalized,
-    next: NavigationGuardNext
+    next: NavigationGuardNext,
   ) => {
     const globalStore = useGlobal();
     // Show Loading
@@ -109,7 +122,7 @@ router.beforeEach(
     // Hide snack bar
     globalStore.setMessage("");
     next();
-  }
+  },
 );
 
 // Global After Hooks
