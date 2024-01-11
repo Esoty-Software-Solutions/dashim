@@ -29,6 +29,8 @@ model MedicalCenter extends Base, ActivationStatus{
     insurancePolicy InsurancePolicyMedicalCenters []
 
     timeWindow TimeWindow?
+
+    entryRecords EntryRecord[]
 }
 
 model MedicalCenterServiceTemplate extends Base, ActivationStatus {

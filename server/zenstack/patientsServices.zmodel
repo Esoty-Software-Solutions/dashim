@@ -30,6 +30,9 @@ model EntryRecord extends Base, ActivationStatus{
 
   patientServices PatientService[]
   patientExamination PatientExamination?
+
+  medicalCenterId String
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
 }
 
 model PatientService extends Base, ActivationStatus{
