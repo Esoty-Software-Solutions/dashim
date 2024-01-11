@@ -53,6 +53,8 @@ model PatientService extends Base, ActivationStatus{
 
   serviceId String
   service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+
+  groupId String
 }
 
 model PatientExamination extends Base, ActivationStatus{
@@ -75,6 +77,8 @@ model PatientExamination extends Base, ActivationStatus{
   
   serviceId String
   service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+
+  groupId String
 }
 
 model ReviewStatus extends Base, LangLocale {
