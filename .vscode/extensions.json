@@ -11,6 +11,7 @@
     "mikestead.dotenv",
     "naumovs.color-highlight",
     "streetsidesoftware.code-spell-checker",
-    "aaron-bond.better-comments"
+    "aaron-bond.better-comments",
+    "editorconfig.editorconfig"
   ]
 }
