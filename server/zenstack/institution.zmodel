@@ -1,6 +1,7 @@
 import 'base'
 import 'verification'
 import 'policy'
+import 'patientsServices'
 
 
 model Institution extends Base, ActivationStatus {
@@ -31,9 +32,7 @@ model Institution extends Base, ActivationStatus {
 
 }
 
-model Subscriber extends Base, ActivationStatus {
-
-    
+model Subscriber extends Base, ActivationStatus {  
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
 
@@ -52,7 +51,6 @@ model Subscriber extends Base, ActivationStatus {
 
 
 model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
-
     subscriber Subscriber @relation(fields: [subscriberId], references: [id])
     subscriberId String
     legacyCode String?
@@ -69,6 +67,10 @@ model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
     idCard IDCard[]
     face Face[]
     voice Voice[]
+
+    entryRecords EntryRecord[]
+
+    spents SubscriberGroupBalance[]
 
     @@index([subscriberId, id])
     @@unique([subscriberId, id])

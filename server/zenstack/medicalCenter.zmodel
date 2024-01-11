@@ -24,6 +24,13 @@ model MedicalCenter extends Base, ActivationStatus{
 
     services MedicalCenterService[]
     
+    beneftiPackages PackageMedicalServices []
+
+    insurancePolicy InsurancePolicyMedicalCenters []
+
+    timeWindow TimeWindow?
+
+    entryRecords EntryRecord[]
 }
 
 model MedicalCenterServiceTemplate extends Base, ActivationStatus {

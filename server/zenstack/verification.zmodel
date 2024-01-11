@@ -10,6 +10,8 @@ model Fingerprint extends Base, ActivationStatus {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord []
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 
@@ -23,6 +25,8 @@ model IDCard extends Base, ActivationStatus {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord[]
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 
@@ -33,6 +37,8 @@ model Face extends Base, ActivationStatus {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
 
+    entryRecords EntryRecord[]
+
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 }
@@ -41,6 +47,8 @@ model Voice extends Base, ActivationStatus {
     hash String @unique
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
+
+    entryRecords EntryRecord[]
 
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])

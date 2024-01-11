@@ -50,6 +50,7 @@ const Home = () => {
 
   const useQuery = trpc.user.getMany.useQuery()
 
+
   const greeting = trpc.greeting.useQuery()
 
   const mutation = trpc.user.getOne.useQuery('fsd')
