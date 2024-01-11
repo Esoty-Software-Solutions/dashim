@@ -13,11 +13,13 @@
     "paralleldrive",
     "partialize",
     "Shafi",
+    "stylelint",
     "tabler",
     "tailwindcss",
     "tanstack",
     "TRPC",
     "typecheck",
+    "vuetify",
     "zenstack",
     "zenstackhq",
     "zustand",
@@ -31,5 +33,6 @@
     "node_modules/@mantine/core/esm/index.css"
   ],
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "tailwindCSS.experimental.classRegex": ["className=\"([^\"\\n]*)\""]
+  "tailwindCSS.experimental.classRegex": ["className=\"([^\"\\n]*)\""],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
