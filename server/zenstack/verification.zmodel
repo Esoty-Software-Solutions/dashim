@@ -6,9 +6,11 @@ model Fingerprint extends Base, ActivationStatus {
     fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
     fingerTypeId String
 
-    fingerprintHash String @unique
+    hash String @unique
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
+
+    entryRecords EntryRecord []
 
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
@@ -19,9 +21,11 @@ model Fingerprint extends Base, ActivationStatus {
 }    
 
 model IDCard extends Base, ActivationStatus {
-    cardHash String
+    hash String @unique
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
+
+    entryRecords EntryRecord[]
 
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
@@ -29,18 +33,22 @@ model IDCard extends Base, ActivationStatus {
 }
 
 model Face extends Base, ActivationStatus {
-    faceHash String
+    hash String @unique
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
+
+    entryRecords EntryRecord[]
 
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
 }
 
 model Voice extends Base, ActivationStatus {
-    voiceHash String
+    hash String @unique
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
+
+    entryRecords EntryRecord[]
 
     @@index([subscriberGroupId, id])
     @@unique([subscriberGroupId, id])
@@ -52,14 +60,14 @@ model FingerType extends Base, LangLocale{
 }
 
 // enum FingerType {
-//     LEFTTHUMB
-//     LEFTINDEX
-//     LEFTMIDDLE
-//     LEFTRING
-//     LEFTLITTLE
-//     RIGHTTHUMB
-//     RIGHTINDEX
-//     RIGHTMIDDLE
-//     RIGHTRING
-//     RIGHTLITTLE
+    // LEFTTHUMB
+    // LEFTINDEX
+    // LEFTMIDDLE
+    // LEFTRING
+    // LEFTLITTLE
+    // RIGHTTHUMB
+    // RIGHTINDEX
+    // RIGHTMIDDLE
+    // RIGHTRING
+    // RIGHTLITTLE
 // }

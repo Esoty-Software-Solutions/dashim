@@ -49,7 +49,7 @@ model Tenant extends Base, ActivationStatus {
   city String?
   country String?
 
-  assignedToInstitution Institution?
+  // assignedToInstitution Institution?
   assignedToMedicalCenter MedicalCenter?
 
   
@@ -92,7 +92,6 @@ model TenantType extends Base, LangLocale{
 
 model Role extends Base, LangLocale{
   name String @unique
-
 }
 
 // enum Role {
@@ -104,9 +103,6 @@ model Role extends Base, LangLocale{
 model DeviceType extends Base, LangLocale{
   name String @unique
   deviceToken DeviceToken[]
-
-
-
 }
 
 // enum DeviceType {

@@ -1,17 +1,20 @@
 import 'base'
 import 'verification'
 import 'policy'
+import 'patientsServices'
 
 
 model Institution extends Base, ActivationStatus {
     name String
-    code String
+    code String @unique
     legacyCode String?
     description String?
     cityHQ String?
     address String?
-    phone String[] @unique
-    email String[] @unique
+    phoneArray String[] @unique
+    emailArray String[] @unique
+    // TODO: Normalize the phone and email array
+    // TODO: Normalize links
     website String @url
     facebookLink String @url
     googleMapsLink String @url
@@ -20,20 +23,16 @@ model Institution extends Base, ActivationStatus {
 
     latitude Float?
     longitude Float?
-    
-    institutionCode String @unique
 
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique
+    // managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+    // managingTenantId String @unique
 
     policies InsurancePolicy[]
     members Subscriber[]
 
 }
 
-model Subscriber extends Base, ActivationStatus {
-
-    
+model Subscriber extends Base, ActivationStatus {  
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
 
@@ -52,7 +51,6 @@ model Subscriber extends Base, ActivationStatus {
 
 
 model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
-
     subscriber Subscriber @relation(fields: [subscriberId], references: [id])
     subscriberId String
     legacyCode String?
@@ -70,12 +68,17 @@ model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
     face Face[]
     voice Voice[]
 
+    entryRecords EntryRecord[]
+
+    spents SubscriberGroupBalance[]
+
     @@index([subscriberId, id])
     @@unique([subscriberId, id])
 }
 
 
 model Relationship extends Base, LangLocale{
+    name String @unique
     subscriberGroup SubscriberGroup[]
 }
 

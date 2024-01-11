@@ -52,5 +52,5 @@ model Gender extends Base, LangLocale{
 // enum Gender {
 //     MALE
 //     FEMALE
-//     NA
+//     unknown
 // }
