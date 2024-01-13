@@ -20,15 +20,24 @@ generator erd {
   // output = "./ERD.svg"
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-}
-
 generator fakeData {
-    provider = "prisma-generator-fake-data"
-    output   = "./fakeData/functions.ts"
+  provider = "prisma-generator-fake-data"
+  output   = "./fakeData/functions.ts"
 }
 
 generator dbml {
   provider = "prisma-dbml-generator"
 }
+
+generator trpc {
+  provider          = "prisma-trpc-generator"
+  withZod           = true
+  withMiddleware    = false
+  withShield        = false
+  contextPath       = "../src/router/_context"
+  trpcOptionsPath   = "../src/trpcOptions"
+}
+
+// generator zod {
+//   provider = "prisma-zod-generator"
+// }

@@ -469,15 +469,15 @@ Table EntryRecord {
   subscriberGroup SubscriberGroup [not null]
   subscriberGroupId String [not null]
   fingerprintBiometric Fingerprint
-  fingerprintId String [not null]
+  fingerprintId String
+  idCard IDCard
+  idCardId String
+  face Face
+  faceId String
+  voice Voice
+  voiceId String
   isValidated Boolean [not null]
   isManuallyInserted Boolean [not null, default: false]
-  idCard IDCard
-  idCardId String [not null]
-  face Face
-  faceId String [not null]
-  voice Voice
-  voiceId String [not null]
   patientServices PatientService [not null]
   patientExamination PatientExamination
   medicalCenterId String [not null]

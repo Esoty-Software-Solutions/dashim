@@ -3,30 +3,30 @@ import 'medicalCenter';
 import 'verification'
 import 'policy'
 
-model TimeWindow extends Base, ActivationStatus{
-  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references:[id])
+model TimeWindow extends Base, ActivationStatus {
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
   medicalCenterId String @unique
   time Int @default(24)
 }
 
-model EntryRecord extends Base, ActivationStatus{
+model EntryRecord extends Base, ActivationStatus {
   subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
   subscriberGroupId String
-  
+
   fingerprintBiometric Fingerprint? @relation(fields: [fingerprintId], references: [id])
-  fingerprintId String
+  fingerprintId String?
+
+  idCard IDCard? @relation(fields: [idCardId], references: [id])
+  idCardId String?
+
+  face Face? @relation(fields: [faceId], references: [id])
+  faceId String?
+
+  voice Voice? @relation(fields: [voiceId], references: [id])
+  voiceId String?
 
   isValidated Boolean
   isManuallyInserted Boolean @default(false)
-
-  idCard IDCard? @relation(fields: [idCardId], references: [id])
-  idCardId String
-
-  face Face? @relation(fields: [faceId], references: [id])
-  faceId String
-  
-  voice Voice? @relation(fields: [voiceId], references: [id])
-  voiceId String
 
   patientServices PatientService[]
   patientExamination PatientExamination?
@@ -35,7 +35,7 @@ model EntryRecord extends Base, ActivationStatus{
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
 }
 
-model PatientService extends Base, ActivationStatus{
+model PatientService extends Base, ActivationStatus {
   entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
   entryRecordId String
 
@@ -51,7 +51,7 @@ model PatientService extends Base, ActivationStatus{
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
 
-  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",  fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
   patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
@@ -63,7 +63,7 @@ model PatientService extends Base, ActivationStatus{
   groupId String
 }
 
-model PatientExamination extends Base, ActivationStatus{
+model PatientExamination extends Base, ActivationStatus {
   entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
   entryRecordId String @unique
 
@@ -79,11 +79,11 @@ model PatientExamination extends Base, ActivationStatus{
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
 
-  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",  fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
   patientServices PatientService[]
-  
+
   serviceId String
   service PackageMedicalServices @relation(fields: [serviceId], references: [id])
 
@@ -107,5 +107,4 @@ model SubscriberGroupBalance extends Base {
   beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
 
   balance Float
-
 }

@@ -53,6 +53,7 @@
     "prisma-dbml-generator": "^0.10.0",
     "prisma-erd-generator": "^1.11.2",
     "prisma-generator-fake-data": "^0.13.0",
+    "prisma-trpc-generator": "^1.4.1",
     "prisma-zod-generator": "^0.8.13",
     "start-server-and-test": "^2.0.1",
     "tsconfig-paths": "^4.2.0",

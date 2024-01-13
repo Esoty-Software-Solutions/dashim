@@ -18,10 +18,6 @@ generator erd {
     theme = "forest"
 }
 
-generator zod {
-    provider = "prisma-zod-generator"
-}
-
 generator fakeData {
     provider = "prisma-generator-fake-data"
     output = "./fakeData/functions.ts"
@@ -29,6 +25,15 @@ generator fakeData {
 
 generator dbml {
     provider = "prisma-dbml-generator"
+}
+
+generator trpc {
+    provider = "prisma-trpc-generator"
+    withZod = true
+    withMiddleware = false
+    withShield = false
+    contextPath = "../src/router/_context"
+    trpcOptionsPath = "../src/trpcOptions"
 }
 
 /// @@allow('all', true && isPublished)
@@ -476,15 +481,15 @@ model EntryRecord {
     subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
     subscriberGroupId String
     fingerprintBiometric Fingerprint? @relation(fields: [fingerprintId], references: [id])
-    fingerprintId String
+    fingerprintId String?
+    idCard IDCard? @relation(fields: [idCardId], references: [id])
+    idCardId String?
+    face Face? @relation(fields: [faceId], references: [id])
+    faceId String?
+    voice Voice? @relation(fields: [voiceId], references: [id])
+    voiceId String?
     isValidated Boolean
     isManuallyInserted Boolean @default(false)
-    idCard IDCard? @relation(fields: [idCardId], references: [id])
-    idCardId String
-    face Face? @relation(fields: [faceId], references: [id])
-    faceId String
-    voice Voice? @relation(fields: [voiceId], references: [id])
-    voiceId String
     patientServices PatientService[]
     patientExamination PatientExamination?
     medicalCenterId String
