@@ -1,4 +1,4 @@
-import { t } from "./helpers/createRouter";
+import { t, publicProcedure } from "./helpers/createRouter";
 import { gendersRouter } from "./Gender.router";
 import { usersRouter } from "./User.router";
 import { tenantmembersRouter } from "./TenantMembers.router";
@@ -29,8 +29,15 @@ import { subscribergroupbalancesRouter } from "./SubscriberGroupBalance.router";
 import { medicalcentersRouter } from "./MedicalCenter.router";
 import { medicalcenterservicetemplatesRouter } from "./MedicalCenterServiceTemplate.router";
 import { medicalcenterservicesRouter } from "./MedicalCenterService.router";
+import { z } from "zod";
 
 export const appRouter = t.router({
+  // GET http://localhost:3000/trpc/greeting?input="hello"
+  greeting: publicProcedure.input(z.string().optional()).query((opts) => {
+    return (
+      "hello from tRPC v10! Here is your validated string input: " + opts.input
+    );
+  }),
   gender: gendersRouter,
   user: usersRouter,
   tenantmembers: tenantmembersRouter,
@@ -60,6 +67,5 @@ export const appRouter = t.router({
   subscribergroupbalance: subscribergroupbalancesRouter,
   medicalcenter: medicalcentersRouter,
   medicalcenterservicetemplate: medicalcenterservicetemplatesRouter,
-  medicalcenterservice: medicalcenterservicesRouter
-})
-
+  medicalcenterservice: medicalcenterservicesRouter,
+});
