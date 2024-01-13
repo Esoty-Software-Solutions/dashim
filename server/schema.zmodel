@@ -34,8 +34,8 @@ generator trpc {
   withZod           = true
   withMiddleware    = false
   withShield        = false
-  contextPath       = "../src/router/_context"
-  trpcOptionsPath   = "../src/trpcOptions"
+  contextPath       = "../src/routers/_context.router"
+  trpcOptionsPath   = "trpcOptions"
 }
 
 // generator zod {

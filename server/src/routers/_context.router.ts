@@ -51,5 +51,5 @@ export async function createContext(opts: CreateExpressContextOptions) {
     context,
   };
 }
-
+//* IMPORTANT the exported type is intentionally using the inner context
 export type Context = Awaited<ReturnType<typeof createContextInner>>;
