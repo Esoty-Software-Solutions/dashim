@@ -1,47 +1,47 @@
-import express from 'express'
-import cors from 'cors'
-import * as trpcExpress from '@trpc/server/adapters/express'
-import { appRouter } from '@router/_router'
+import express from "express";
+import cors from "cors";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import { appRouter } from "~/routers/_.router";
 
-const app = express()
-const PORT = 3000
+const app = express();
+const PORT = 3000;
 
 // created for each request
 const createContext = ({
   req,
   res,
 }: trpcExpress.CreateExpressContextOptions): {
-  req: typeof req
-  res: typeof res
-  test: string
-  context: string
+  req: typeof req;
+  res: typeof res;
+  test: string;
+  context: string;
 } => ({
   req,
   res,
-  test: 'some test value', // replace with actual value
-  context: 'some context value', // replace with actual value
-})
-type Context = Awaited<ReturnType<typeof createContext>>
+  test: "some test value", // replace with actual value
+  context: "some context value", // replace with actual value
+});
+type Context = Awaited<ReturnType<typeof createContext>>;
 
 // enable cors
-app.use(cors())
+app.use(cors());
 
 // File size limit
-app.use(express.json({ limit: '150mb' }))
-app.use(express.urlencoded({ extended: true, limit: '150mb' }))
+app.use(express.json({ limit: "150mb" }));
+app.use(express.urlencoded({ extended: true, limit: "150mb" }));
 
 app.use(
-  '/trpc',
+  "/trpc",
   trpcExpress.createExpressMiddleware({
     router: appRouter,
     createContext,
-  })
-)
+  }),
+);
 
-app.get('/', (req, res) => {
-  res.send('Hello World from Express')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World from Express");
+});
 
 app.listen(PORT, () => {
-  console.log(`App listening at http://localhost:${PORT}`)
-})
+  console.log(`App listening at http://localhost:${PORT}`);
+});
