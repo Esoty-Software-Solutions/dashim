@@ -1,7 +1,7 @@
 import { z } from "zod";
 // import { router, publicProcedure, mergeRouters } from "./_trpc.router";
 
-import { appRouter } from "prisma/generated/routers/index";
+import { appRouter } from "../../prisma/generated/routers/index";
 
 // const routerObject = router({
 //   // GET http://localhost:3000/trpc/greeting
