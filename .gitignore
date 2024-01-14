@@ -8,8 +8,11 @@ node_modules
 # Prisma
 /prisma/db.sqlite
 /prisma/DB.sqlite-journal
-
+prisma/dbml
+prisma/fakeData
+prisma/generated
 .zenstack_repl_history
+ERD.svg
 
 *.tsbuildinfo
 
