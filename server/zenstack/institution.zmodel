@@ -60,10 +60,10 @@ model Beneficiary extends Base, HumanProfile, ActivationStatus {
     isFaceVerificationActive Boolean @default(false)
     isVoiceVerificationActive Boolean @default(false)
 
-    fingerprint Fingerprint []
+    fingerprint FingerprintBiometric []
     idCard IDCard[]
-    face Face[]
-    voice Voice[]
+    face FaceBiometric[]
+    voice VoiceBiometric[]
 
     entryRecords EntryRecord[]
 

@@ -7,16 +7,16 @@ model EntryRecord extends Base, ActivationStatus {
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String
 
-  fingerprintBiometric Fingerprint? @relation(fields: [fingerprintId], references: [id])
+  fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
   fingerprintId String?
 
-  idCard IDCard? @relation(fields: [idCardId], references: [id])
+  idCardBiometric IDCard? @relation(fields: [idCardId], references: [id])
   idCardId String?
 
-  face Face? @relation(fields: [faceId], references: [id])
+  faceBiometric FaceBiometric? @relation(fields: [faceId], references: [id])
   faceId String?
 
-  voice Voice? @relation(fields: [voiceId], references: [id])
+  voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
   voiceId String?
 
   isValidated Boolean
@@ -38,9 +38,7 @@ model PatientService extends Base, ActivationStatus {
   entryRecordId String
   name String
   Note String?
-
-  isWorkInjury Boolean @default(false)
-
+  isWorkInjury Boolean @default(false) // TODO: connect this to the insurance policy
   isExamination Boolean @default(false) // is this service is examination or not
 
   // الحقول الأسفل تخزن بالقرش
@@ -71,11 +69,11 @@ model ReviewStatus extends Base, LangLocale {
 }
 
 model BeneficiaryBalance extends Base {
-  beneficiaryId String
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
-  beneftiPackageId String
   beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
+  beneftiPackageId String
 
   balance Float
 }

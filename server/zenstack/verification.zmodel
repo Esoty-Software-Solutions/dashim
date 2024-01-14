@@ -1,7 +1,7 @@
 import 'base'
 import 'institution'
 
-model Fingerprint extends Base, ActivationStatus {
+model FingerprintBiometric extends Base, ActivationStatus {
 
     fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
     fingerTypeId String
@@ -30,7 +30,7 @@ model IDCard extends Base, ActivationStatus {
     @@unique([beneficiaryId, id])
 }
 
-model Face extends Base, ActivationStatus {
+model FaceBiometric extends Base, ActivationStatus {
     hash String @unique
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
@@ -41,7 +41,7 @@ model Face extends Base, ActivationStatus {
     @@unique([beneficiaryId, id])
 }
 
-model Voice extends Base, ActivationStatus {
+model VoiceBiometric extends Base, ActivationStatus {
     hash String @unique
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
@@ -54,7 +54,7 @@ model Voice extends Base, ActivationStatus {
 
 model FingerType extends Base, LangLocale {
     name String @unique
-    fingerType Fingerprint[]
+    fingerType FingerprintBiometric[]
 }
 
 // enum FingerType {
