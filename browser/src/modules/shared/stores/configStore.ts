@@ -6,9 +6,7 @@ import {
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
-import i18n from "@/plugins/i18n";
-
-import type { SupportedLocale } from "@/plugins/i18n";
+import i18n, { type SupportedLocale } from "@/plugins/i18n";
 
 function getDefaultLocale(): SupportedLocale {
   let locale: SupportedLocale = "ar";
@@ -79,7 +77,7 @@ const useConfig = defineStore("config", () => {
      * Should be invoked once the user preferences are already available
      */
     initializeI18n: async () => {
-      i18n.global.locale.value = locale.value;
+      setLocale(locale.value);
       await loadLocaleMessages();
     },
   };
