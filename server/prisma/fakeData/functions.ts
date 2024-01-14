@@ -23,6 +23,75 @@ export function fakeGenderComplete() {
     name: faker.person.fullName(),
   };
 }
+export function fakeCurrency() {
+  return {
+    updatedAt: faker.date.anytime(),
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+    code: faker.lorem.words(5),
+    symbol: faker.lorem.words(5),
+  };
+}
+export function fakeCurrencyComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+    code: faker.lorem.words(5),
+    symbol: faker.lorem.words(5),
+    BuyexchangeRate: 1,
+    SellExchangeRate: 1,
+  };
+}
+export function fakeCities() {
+  return {
+    updatedAt: faker.date.anytime(),
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+  };
+}
+export function fakeCitiesComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+    countryId: faker.string.uuid(),
+  };
+}
+export function fakeCountry() {
+  return {
+    updatedAt: faker.date.anytime(),
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+    code: faker.lorem.words(5),
+  };
+}
+export function fakeCountryComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    arabic: undefined,
+    english: undefined,
+    name: faker.person.fullName(),
+    code: faker.lorem.words(5),
+  };
+}
 export function fakeUser() {
   return {
     updatedAt: faker.date.anytime(),
@@ -447,12 +516,32 @@ export function fakeFingerTypeComplete() {
     name: faker.person.fullName(),
   };
 }
+export function fakeCoPayDistribution() {
+  return {
+    updatedAt: faker.date.anytime(),
+    deactivationReason: undefined,
+    threashold: faker.number.int(),
+    Percentage: faker.number.int(),
+  };
+}
+export function fakeCoPayDistributionComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    isActive: true,
+    deactivationReason: undefined,
+    threashold: faker.number.int(),
+    Percentage: faker.number.int(),
+  };
+}
 export function fakeInsurancePolicy() {
   return {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
-    coPay: faker.number.int(),
     limit: faker.number.int(),
   };
 }
@@ -466,7 +555,6 @@ export function fakeInsurancePolicyComplete() {
     isActive: true,
     deactivationReason: undefined,
     name: faker.person.fullName(),
-    coPay: faker.number.int(),
     limit: faker.number.int(),
     institutionId: faker.string.uuid(),
   };
@@ -476,7 +564,8 @@ export function fakeBenefitPackage() {
     updatedAt: faker.date.anytime(),
     deactivationReason: undefined,
     name: faker.person.fullName(),
-    limit: faker.number.int(),
+    copayDistrubtion: [faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int()],
+    threashold: [faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int()],
   };
 }
 export function fakeBenefitPackageComplete() {
@@ -489,7 +578,8 @@ export function fakeBenefitPackageComplete() {
     isActive: true,
     deactivationReason: undefined,
     name: faker.person.fullName(),
-    limit: faker.number.int(),
+    copayDistrubtion: [faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int()],
+    threashold: [faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int(),faker.number.int()],
   };
 }
 export function fakePackageMedicalServices() {
@@ -683,6 +773,58 @@ export function fakeSubscriberGroupBalanceComplete() {
     subscriberGroupId: faker.string.uuid(),
     beneftiPackageId: faker.string.uuid(),
     balance: faker.number.float(),
+  };
+}
+export function fakeDiagnosesAttachment() {
+  return {
+    updatedAt: faker.date.anytime(),
+    name: faker.person.fullName(),
+    link: faker.lorem.words(5),
+    size: faker.number.int(),
+    contentType: faker.lorem.words(5),
+    metadata: JSON.stringify({"foo":"a189769a-7f20-4079-b7d9-0848e5ec601d","bar":1273735321485312,"bike":"4","a":"8","b":0.6165269357152283,"name":"Selina","prop":"0b1"}),
+  };
+}
+export function fakeDiagnosesAttachmentComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+    name: faker.person.fullName(),
+    link: faker.lorem.words(5),
+    size: faker.number.int(),
+    contentType: faker.lorem.words(5),
+    metadata: JSON.stringify({"foo":"c6221a49-2b46-4c11-8cfc-5afce30ec5c1","bar":4295716671324160,"bike":"f","a":"e","b":0.03679193160496652,"name":"Jeffrey","prop":"0b0"}),
+  };
+}
+export function fakeLabReportAttachment() {
+  return {
+    updatedAt: faker.date.anytime(),
+  };
+}
+export function fakeLabReportAttachmentComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
+  };
+}
+export function fakeprescriptionAttachment() {
+  return {
+    updatedAt: faker.date.anytime(),
+  };
+}
+export function fakeprescriptionAttachmentComplete() {
+  return {
+    id: faker.string.uuid(),
+    createdAt: new Date(),
+    updatedAt: faker.date.anytime(),
+    isPublished: true,
+    isSoftDeleted: false,
   };
 }
 export function fakeMedicalCenter() {

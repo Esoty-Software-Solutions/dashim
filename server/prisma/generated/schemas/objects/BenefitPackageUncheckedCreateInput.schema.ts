@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { BenefitPackageCreatecopayDistrubtionInputObjectSchema } from './BenefitPackageCreatecopayDistrubtionInput.schema';
+import { BenefitPackageCreatethreasholdInputObjectSchema } from './BenefitPackageCreatethreasholdInput.schema';
 import { PackageMedicalServicesUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './PackageMedicalServicesUncheckedCreateNestedManyWithoutBeneftiPackageInput.schema';
 import { SubscriberGroupBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './SubscriberGroupBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInput.schema';
 
@@ -14,7 +16,18 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedCreateInput> = z
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     name: z.string(),
-    limit: z.number(),
+    copayDistrubtion: z
+      .union([
+        z.lazy(() => BenefitPackageCreatecopayDistrubtionInputObjectSchema),
+        z.number().array(),
+      ])
+      .optional(),
+    threashold: z
+      .union([
+        z.lazy(() => BenefitPackageCreatethreasholdInputObjectSchema),
+        z.number().array(),
+      ])
+      .optional(),
     medicalServices: z
       .lazy(
         () =>

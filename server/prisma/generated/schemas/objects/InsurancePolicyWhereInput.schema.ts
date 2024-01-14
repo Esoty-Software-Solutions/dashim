@@ -55,9 +55,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyWhereInput> = z
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    coPay: z
-      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
-      .optional(),
     limit: z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),

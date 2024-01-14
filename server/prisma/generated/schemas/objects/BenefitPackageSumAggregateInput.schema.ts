@@ -4,7 +4,8 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.BenefitPackageSumAggregateInputType> = z
   .object({
-    limit: z.literal(true).optional(),
+    copayDistrubtion: z.literal(true).optional(),
+    threashold: z.literal(true).optional(),
   })
   .strict();
 

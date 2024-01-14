@@ -15,7 +15,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateWithoutSubscribersInput> = z
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     name: z.string(),
-    coPay: z.number(),
     limit: z.number(),
     institution: z.lazy(
       () => InstitutionCreateNestedOneWithoutPoliciesInputObjectSchema,

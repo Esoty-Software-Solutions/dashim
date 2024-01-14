@@ -7,67 +7,65 @@ model Fingerprint extends Base, ActivationStatus {
     fingerTypeId String
 
     hash String @unique
-    subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
-    subscriberGroupId String
+    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+    beneficiaryId String
 
     entryRecords EntryRecord []
 
-    @@index([subscriberGroupId, id])
-    @@unique([subscriberGroupId, id])
+    @@index([beneficiaryId, id])
+    @@unique([beneficiaryId, id])
 
     @@index([id,fingerTypeId])
     @@unique([id,fingerTypeId])
-
-}    
+}
 
 model IDCard extends Base, ActivationStatus {
     hash String @unique
-    subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
-    subscriberGroupId String
+    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+    beneficiaryId String
 
     entryRecords EntryRecord[]
 
-    @@index([subscriberGroupId, id])
-    @@unique([subscriberGroupId, id])
-
+    @@index([beneficiaryId, id])
+    @@unique([beneficiaryId, id])
 }
 
 model Face extends Base, ActivationStatus {
     hash String @unique
-    subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
-    subscriberGroupId String
+    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+    beneficiaryId String
 
     entryRecords EntryRecord[]
 
-    @@index([subscriberGroupId, id])
-    @@unique([subscriberGroupId, id])
+    @@index([beneficiaryId, id])
+    @@unique([beneficiaryId, id])
 }
 
 model Voice extends Base, ActivationStatus {
     hash String @unique
-    subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
-    subscriberGroupId String
+    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+    beneficiaryId String
 
     entryRecords EntryRecord[]
 
-    @@index([subscriberGroupId, id])
-    @@unique([subscriberGroupId, id])
+    @@index([beneficiaryId, id])
+    @@unique([beneficiaryId, id])
 }
 
-model FingerType extends Base, LangLocale{
+model FingerType extends Base, LangLocale {
     name String @unique
     fingerType Fingerprint[]
 }
 
 // enum FingerType {
-    // LEFTTHUMB
-    // LEFTINDEX
-    // LEFTMIDDLE
-    // LEFTRING
-    // LEFTLITTLE
-    // RIGHTTHUMB
-    // RIGHTINDEX
-    // RIGHTMIDDLE
-    // RIGHTRING
-    // RIGHTLITTLE
+// LEFTTHUMB
+// LEFTINDEX
+// LEFTMIDDLE
+// LEFTRING
+// LEFTLITTLE
+// RIGHTTHUMB
+// RIGHTINDEX
+// RIGHTMIDDLE
+// RIGHTRING
+// RIGHTLITTLE
 // }

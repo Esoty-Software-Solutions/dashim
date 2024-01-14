@@ -3,7 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { IntFilterObjectSchema } from './IntFilter.schema';
+import { IntNullableListFilterObjectSchema } from './IntNullableListFilter.schema';
 import { PackageMedicalServicesListRelationFilterObjectSchema } from './PackageMedicalServicesListRelationFilter.schema';
 import { SubscriberGroupBalanceListRelationFilterObjectSchema } from './SubscriberGroupBalanceListRelationFilter.schema';
 
@@ -52,9 +52,10 @@ const Schema: z.ZodType<Prisma.BenefitPackageWhereInput> = z
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    limit: z
-      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+    copayDistrubtion: z
+      .lazy(() => IntNullableListFilterObjectSchema)
       .optional(),
+    threashold: z.lazy(() => IntNullableListFilterObjectSchema).optional(),
     medicalServices: z
       .lazy(() => PackageMedicalServicesListRelationFilterObjectSchema)
       .optional(),

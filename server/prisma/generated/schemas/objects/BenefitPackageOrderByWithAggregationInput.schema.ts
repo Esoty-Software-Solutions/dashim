@@ -24,7 +24,8 @@ const Schema: z.ZodType<Prisma.BenefitPackageOrderByWithAggregationInput> = z
       ])
       .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
-    limit: z.lazy(() => SortOrderSchema).optional(),
+    copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
+    threashold: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => BenefitPackageCountOrderByAggregateInputObjectSchema)
       .optional(),

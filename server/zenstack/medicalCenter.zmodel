@@ -2,59 +2,57 @@ import 'base'
 import 'user'
 
 
-model MedicalCenter extends Base, ActivationStatus{
-    name String
-    code String
-    description String
-    cityHQ String
-    address String?
-    phone String[] @unique
-    email String[] @unique
-    website String @url
-    facebookLink String @url
-    googleMapsLink String @url
-    twitterLink String @url
-    instagramLink String @url
+model MedicalCenter extends Base, ActivationStatus {
+  name String
+  code String
+  description String
+  cityHQ String
+  address String?
+  phone String[] @unique
+  email String[] @unique
+  website String @url
+  facebookLink String @url
+  googleMapsLink String @url
+  twitterLink String @url
+  instagramLink String @url
 
-    latitude Float?
-    longitude Float?
+  latitude Float?
+  longitude Float?
 
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique
+  managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+  managingTenantId String @unique
 
-    services MedicalCenterService[]
-    
-    beneftiPackages PackageMedicalServices []
+  services MedicalCenterService[]
 
-    insurancePolicy InsurancePolicyMedicalCenters []
+  beneftiPackages PackageMedicalServices []
 
-    timeWindow TimeWindow?
+  insurancePolicy InsurancePolicyMedicalCenters []
 
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 }
 
 model MedicalCenterServiceTemplate extends Base, ActivationStatus {
-    name String
-    dalilCode String
-    basePrice String
+  name String
+  dalilCode String
+  basePrice String
 
-    services MedicalCenterService[]
+  services MedicalCenterService[]
 }
 
 model MedicalCenterService extends Base, ActivationStatus {
-    name String
-    medicalCenterCode String
-    basePrice String
+  name String
+  medicalCenterCode String
+  basePrice String
 
-    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-    medicalCenterId String @unique
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  medicalCenterId String @unique
 
-    @@index([medicalCenterId, medicalCenterCode])
-    @@unique([medicalCenterId, medicalCenterCode])
+  @@index([medicalCenterId, medicalCenterCode])
+  @@unique([medicalCenterId, medicalCenterCode])
 
 
-    template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
-    templateId String 
-    @@index([templateId,medicalCenterId,  medicalCenterCode])
-    @@unique([templateId,medicalCenterId,  medicalCenterCode])
+  template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
+  templateId String
+  @@index([templateId,medicalCenterId,  medicalCenterCode])
+  @@unique([templateId,medicalCenterId,  medicalCenterCode])
 }

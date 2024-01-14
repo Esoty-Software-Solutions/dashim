@@ -13,14 +13,12 @@ model User extends Base, ActivationStatus, HumanProfile {
 
   deviceToken DeviceToken[]
 
-  
-  avatar String?
+
+  avatar String? // base64?
 
   ownerOf Tenant[]
 
   memberOf TenantMembers[]
-  
-
 }
 
 model TenantMembers extends Base, ActivationStatus {
@@ -33,7 +31,6 @@ model TenantMembers extends Base, ActivationStatus {
 
   @@index([tenantId, id])
   @@unique([memberId, id])
-
 }
 
 model Tenant extends Base, ActivationStatus {
@@ -52,13 +49,12 @@ model Tenant extends Base, ActivationStatus {
   // assignedToInstitution Institution?
   assignedToMedicalCenter MedicalCenter?
 
-  
+
   owner User @relation(fields: [ownerId], references: [id])
   ownerId String
 
   // needs review
   members TenantMembers[]
-
 }
 
 model DeviceToken extends Base, ActivationStatus {
@@ -74,11 +70,10 @@ model DeviceToken extends Base, ActivationStatus {
   @@unique([userId, name])
 }
 
-model TenantType extends Base, LangLocale{
+model TenantType extends Base, LangLocale {
   name String @unique
 
   tenant Tenant[]
-
 }
 // enum TenantType {
 //   INSTITUTION
@@ -90,7 +85,7 @@ model TenantType extends Base, LangLocale{
 //   OTHER
 // }
 
-model Role extends Base, LangLocale{
+model Role extends Base, LangLocale {
   name String @unique
 }
 
@@ -100,7 +95,7 @@ model Role extends Base, LangLocale{
 //   GUEST
 // }
 
-model DeviceType extends Base, LangLocale{
+model DeviceType extends Base, LangLocale {
   name String @unique
   deviceToken DeviceToken[]
 }

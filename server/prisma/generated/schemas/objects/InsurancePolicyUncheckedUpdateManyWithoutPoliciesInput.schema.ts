@@ -59,12 +59,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUncheckedUpdateManyWithoutPolicies
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
-      coPay: z
-        .union([
-          z.number(),
-          z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
       limit: z
         .union([
           z.number(),

@@ -3,15 +3,9 @@ import 'medicalCenter';
 import 'verification'
 import 'policy'
 
-model TimeWindow extends Base, ActivationStatus {
-  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-  medicalCenterId String @unique
-  time Int @default(24)
-}
-
 model EntryRecord extends Base, ActivationStatus {
-  subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
-  subscriberGroupId String
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
   fingerprintBiometric Fingerprint? @relation(fields: [fingerprintId], references: [id])
   fingerprintId String?
@@ -29,7 +23,6 @@ model EntryRecord extends Base, ActivationStatus {
   isManuallyInserted Boolean @default(false)
 
   patientServices PatientService[]
-  patientExamination PatientExamination?
 
   medicalCenterId String
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
@@ -48,33 +41,7 @@ model PatientService extends Base, ActivationStatus {
 
   isWorkInjury Boolean @default(false)
 
-  name String
-  cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
-  limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
-  deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
-
-  transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
-  transactionReviewStatusId String
-
-  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
-  medicalReviewStatusId String
-
-  patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
-  patientExaminationId String
-
-  serviceId String
-  service PackageMedicalServices @relation(fields: [serviceId], references: [id])
-
-  groupId String
-}
-
-model PatientExamination extends Base, ActivationStatus {
-  entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
-  entryRecordId String @unique
-
-  Note String?
-
-  isWorkInjury Boolean @default(false)
+  isExamination Boolean @default(false) // is this service is examination or not
 
   name String
   cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
@@ -87,26 +54,21 @@ model PatientExamination extends Base, ActivationStatus {
   medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
-  patientServices PatientService[]
-
-  serviceId String
   service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+  serviceId String
 
-  groupId String
+  groupCode String //used to group services in the same group
 }
 
 model ReviewStatus extends Base, LangLocale {
   name String @unique
   transactionPatientServices PatientService[] @relation("transactionReviewStatus")
   medicalPatientServices PatientService[] @relation("medicalReviewStatus")
-
-  transactionPatientExamination PatientExamination[] @relation("transactionReviewStatus")
-  medicalPatientExamination PatientExamination[] @relation("medicalReviewStatus")
 }
 
-model SubscriberGroupBalance extends Base {
-  subscriberGroupId String
-  subscriberGroup SubscriberGroup @relation(fields: [subscriberGroupId], references: [id])
+model BeneficiaryBalance extends Base {
+  beneficiaryId String
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
 
   beneftiPackageId String
   beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
@@ -114,11 +76,11 @@ model SubscriberGroupBalance extends Base {
   balance Float
 }
 
-model DiagnosesAttachment extends Base, Attachment {
+model DiagnosisAttachment extends Base, Attachment {
 }
 
 model LabReportAttachment extends Base {
 }
 
-model prescriptionAttachment extends Base {
+model PrescriptionAttachment extends Base {
 }

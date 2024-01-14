@@ -5,7 +5,8 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.BenefitPackageAvgOrderByAggregateInput> = z
   .object({
-    limit: z.lazy(() => SortOrderSchema).optional(),
+    copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
+    threashold: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

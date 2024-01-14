@@ -17,6 +17,53 @@ Table Gender {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
+Table Currency {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+  arabic String
+  english String
+  name String [unique, not null]
+  code String [unique, not null]
+  symbol String [not null]
+  BuyexchangeRate Float [not null, default: 1]
+  SellExchangeRate Float [not null, default: 1]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
+Table Cities {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+  arabic String
+  english String
+  name String [unique, not null]
+  country Country [not null]
+  countryId String [not null]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
+Table Country {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+  arabic String
+  english String
+  name String [unique, not null]
+  code String [unique, not null]
+  cities Cities [not null]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
 Table User {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
@@ -366,6 +413,20 @@ Table FingerType {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
+Table CoPayDistribution {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+  isActive Boolean [not null, default: true]
+  deactivationReason String
+  threashold Int [not null]
+  Percentage Int [not null]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
 Table InsurancePolicy {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
@@ -375,7 +436,6 @@ Table InsurancePolicy {
   isActive Boolean [not null, default: true]
   deactivationReason String
   name String [unique, not null]
-  coPay Int [not null]
   limit Int [not null]
   institution Institution [not null]
   institutionId String [not null]
@@ -395,7 +455,8 @@ Table BenefitPackage {
   isActive Boolean [not null, default: true]
   deactivationReason String
   name String [unique, not null]
-  limit Int [not null]
+  copayDistrubtion Int[] [not null]
+  threashold Int[] [not null]
   medicalServices PackageMedicalServices [not null]
   spents SubscriberGroupBalance [not null]
 
@@ -575,6 +636,41 @@ Table SubscriberGroupBalance {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
+Table DiagnosesAttachment {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+  name String [not null]
+  link String [not null]
+  size Int [not null]
+  contentType String [not null]
+  metadata Json [not null]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
+Table LabReportAttachment {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
+Table prescriptionAttachment {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  isPublished Boolean [not null, default: true]
+  isSoftDeleted Boolean [not null, default: false]
+
+  Note: '@@allow(\'all\', true && isPublished)'
+}
+
 Table MedicalCenter {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
@@ -647,6 +743,8 @@ Table MedicalCenterService {
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
+
+Ref: Cities.countryId > Country.id
 
 Ref: User.genderId > Gender.id
 

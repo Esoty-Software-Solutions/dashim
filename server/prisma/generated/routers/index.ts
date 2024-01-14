@@ -1,5 +1,8 @@
-import { t, publicProcedure } from "./helpers/createRouter";
+import { t } from "./helpers/createRouter";
 import { gendersRouter } from "./Gender.router";
+import { currenciesRouter } from "./Currency.router";
+import { citiesRouter } from "./Cities.router";
+import { countriesRouter } from "./Country.router";
 import { usersRouter } from "./User.router";
 import { tenantmembersRouter } from "./TenantMembers.router";
 import { tenantsRouter } from "./Tenant.router";
@@ -16,6 +19,7 @@ import { idcardsRouter } from "./IDCard.router";
 import { facesRouter } from "./Face.router";
 import { voicesRouter } from "./Voice.router";
 import { fingertypesRouter } from "./FingerType.router";
+import { copaydistributionsRouter } from "./CoPayDistribution.router";
 import { insurancepoliciesRouter } from "./InsurancePolicy.router";
 import { benefitpackagesRouter } from "./BenefitPackage.router";
 import { packagemedicalservicesRouter } from "./PackageMedicalServices.router";
@@ -26,19 +30,18 @@ import { patientservicesRouter } from "./PatientService.router";
 import { patientexaminationsRouter } from "./PatientExamination.router";
 import { reviewstatusesRouter } from "./ReviewStatus.router";
 import { subscribergroupbalancesRouter } from "./SubscriberGroupBalance.router";
+import { diagnosesattachmentsRouter } from "./DiagnosesAttachment.router";
+import { labreportattachmentsRouter } from "./LabReportAttachment.router";
+import { prescriptionattachmentsRouter } from "./prescriptionAttachment.router";
 import { medicalcentersRouter } from "./MedicalCenter.router";
 import { medicalcenterservicetemplatesRouter } from "./MedicalCenterServiceTemplate.router";
 import { medicalcenterservicesRouter } from "./MedicalCenterService.router";
-import { z } from "zod";
 
 export const appRouter = t.router({
-  // GET http://localhost:3000/trpc/greeting?input="hello"
-  greeting: publicProcedure.input(z.string().optional()).query((opts) => {
-    return (
-      "hello from tRPC v10! Here is your validated string input: " + opts.input
-    );
-  }),
   gender: gendersRouter,
+  currency: currenciesRouter,
+  cities: citiesRouter,
+  country: countriesRouter,
   user: usersRouter,
   tenantmembers: tenantmembersRouter,
   tenant: tenantsRouter,
@@ -55,6 +58,7 @@ export const appRouter = t.router({
   face: facesRouter,
   voice: voicesRouter,
   fingertype: fingertypesRouter,
+  copaydistribution: copaydistributionsRouter,
   insurancepolicy: insurancepoliciesRouter,
   benefitpackage: benefitpackagesRouter,
   packagemedicalservices: packagemedicalservicesRouter,
@@ -65,7 +69,11 @@ export const appRouter = t.router({
   patientexamination: patientexaminationsRouter,
   reviewstatus: reviewstatusesRouter,
   subscribergroupbalance: subscribergroupbalancesRouter,
+  diagnosesattachment: diagnosesattachmentsRouter,
+  labreportattachment: labreportattachmentsRouter,
+  prescriptionattachment: prescriptionattachmentsRouter,
   medicalcenter: medicalcentersRouter,
   medicalcenterservicetemplate: medicalcenterservicetemplatesRouter,
-  medicalcenterservice: medicalcenterservicesRouter,
-});
+  medicalcenterservice: medicalcenterservicesRouter
+})
+

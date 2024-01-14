@@ -16,6 +16,7 @@ generator client {
 generator erd {
     provider = "prisma-erd-generator"
     theme = "forest"
+    output = "./ERD.svg"
 }
 
 generator fakeData {
@@ -48,6 +49,50 @@ model Gender {
     name String @unique()
     user User[]
     subscriberGroup SubscriberGroup[]
+}
+
+/// @@allow('all', true && isPublished)
+model Currency {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    code String @unique()
+    symbol String
+    BuyexchangeRate Float @default(1)
+    SellExchangeRate Float @default(1)
+}
+
+/// @@allow('all', true && isPublished)
+model Cities {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    country Country @relation(fields: [countryId], references: [id])
+    countryId String
+}
+
+/// @@allow('all', true && isPublished)
+model Country {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    code String @unique()
+    cities Cities[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -384,6 +429,19 @@ model FingerType {
 }
 
 /// @@allow('all', true && isPublished)
+model CoPayDistribution {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    threashold Int
+    Percentage Int
+}
+
+/// @@allow('all', true && isPublished)
 model InsurancePolicy {
     id String @id()
     createdAt DateTime @default(now())
@@ -393,7 +451,6 @@ model InsurancePolicy {
     isActive Boolean @default(true)
     deactivationReason String?
     name String @unique()
-    coPay Int
     limit Int
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
@@ -412,7 +469,8 @@ model BenefitPackage {
     isActive Boolean @default(true)
     deactivationReason String?
     name String @unique()
-    limit Int
+    copayDistrubtion Int[]
+    threashold Int[]
     medicalServices PackageMedicalServices[]
     spents SubscriberGroupBalance[]
 }
@@ -579,6 +637,38 @@ model SubscriberGroupBalance {
     beneftiPackageId String
     beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
     balance Float
+}
+
+/// @@allow('all', true && isPublished)
+model DiagnosesAttachment {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    name String
+    link String
+    size Int
+    contentType String
+    metadata Json
+}
+
+/// @@allow('all', true && isPublished)
+model LabReportAttachment {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+}
+
+/// @@allow('all', true && isPublished)
+model prescriptionAttachment {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
 }
 
 /// @@allow('all', true && isPublished)

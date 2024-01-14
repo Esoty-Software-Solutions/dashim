@@ -12,7 +12,8 @@ const Schema: z.ZodType<Prisma.BenefitPackageCountAggregateInputType> = z
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
     name: z.literal(true).optional(),
-    limit: z.literal(true).optional(),
+    copayDistrubtion: z.literal(true).optional(),
+    threashold: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })
   .strict();

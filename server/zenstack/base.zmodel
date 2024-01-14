@@ -45,7 +45,7 @@ abstract model LangLocale {
 model Gender extends Base, LangLocale {
   name String @unique
   user User[]
-  subscriberGroup SubscriberGroup[]
+  beneficiary Beneficiary[]
 }
 
 // enum Gender {

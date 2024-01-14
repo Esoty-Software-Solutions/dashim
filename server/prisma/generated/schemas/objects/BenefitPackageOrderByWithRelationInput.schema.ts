@@ -21,7 +21,8 @@ const Schema: z.ZodType<Prisma.BenefitPackageOrderByWithRelationInput> = z
       ])
       .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
-    limit: z.lazy(() => SortOrderSchema).optional(),
+    copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
+    threashold: z.lazy(() => SortOrderSchema).optional(),
     medicalServices: z
       .lazy(
         () => PackageMedicalServicesOrderByRelationAggregateInputObjectSchema,

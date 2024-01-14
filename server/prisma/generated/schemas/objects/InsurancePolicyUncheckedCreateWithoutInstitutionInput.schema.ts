@@ -16,7 +16,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUncheckedCreateWithoutInstitutionI
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       name: z.string(),
-      coPay: z.number(),
       limit: z.number(),
       subscribers: z
         .lazy(

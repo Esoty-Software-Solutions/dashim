@@ -87,9 +87,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
           z.string(),
         ])
         .optional(),
-      coPay: z
-        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
-        .optional(),
       limit: z
         .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
         .optional(),

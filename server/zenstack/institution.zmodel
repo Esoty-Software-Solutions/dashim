@@ -29,35 +29,32 @@ model Institution extends Base, ActivationStatus {
 
     policies InsurancePolicy[]
     members Subscriber[]
-
 }
 
-model Subscriber extends Base, ActivationStatus {  
+model Subscriber extends Base, ActivationStatus {
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
 
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
 
-    
 
-    subscriberGroup SubscriberGroup[]
+
+    beneficiary Beneficiary[]
 
     @@index([institutionId, id])
     @@unique([institutionId, id])
-
-
 }
 
 
-model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
+model Beneficiary extends Base, HumanProfile, ActivationStatus {
     subscriber Subscriber @relation(fields: [subscriberId], references: [id])
     subscriberId String
     legacyCode String?
 
     relationship Relationship @relation(fields: [relationshipId], references: [id])
     relationshipId String
-    
+
     isFingerprintVerificationActive Boolean @default(false)
     isIdCardVerificationActive Boolean @default(false)
     isFaceVerificationActive Boolean @default(false)
@@ -70,16 +67,16 @@ model SubscriberGroup extends Base, HumanProfile, ActivationStatus {
 
     entryRecords EntryRecord[]
 
-    spents SubscriberGroupBalance[]
+    spents BeneficiaryBalance[]
 
     @@index([subscriberId, id])
     @@unique([subscriberId, id])
 }
 
 
-model Relationship extends Base, LangLocale{
+model Relationship extends Base, LangLocale {
     name String @unique
-    subscriberGroup SubscriberGroup[]
+    beneficiary Beneficiary[]
 }
 
 // enum Relationship {

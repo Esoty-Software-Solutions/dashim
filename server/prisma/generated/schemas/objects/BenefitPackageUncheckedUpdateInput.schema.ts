@@ -3,7 +3,8 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
+import { BenefitPackageUpdatecopayDistrubtionInputObjectSchema } from './BenefitPackageUpdatecopayDistrubtionInput.schema';
+import { BenefitPackageUpdatethreasholdInputObjectSchema } from './BenefitPackageUpdatethreasholdInput.schema';
 import { PackageMedicalServicesUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './PackageMedicalServicesUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
 import { SubscriberGroupBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './SubscriberGroupBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
 
@@ -60,10 +61,16 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    limit: z
+    copayDistrubtion: z
       .union([
-        z.number(),
-        z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+        z.lazy(() => BenefitPackageUpdatecopayDistrubtionInputObjectSchema),
+        z.number().array(),
+      ])
+      .optional(),
+    threashold: z
+      .union([
+        z.lazy(() => BenefitPackageUpdatethreasholdInputObjectSchema),
+        z.number().array(),
       ])
       .optional(),
     medicalServices: z
