@@ -27,8 +27,8 @@ abstract model HumanProfile {
 
   birthDate DateTime
 
-  gender Gender? @relation(fields: [genderId], references: [id])
-  genderId String?
+  gender Gender @relation(fields: [genderId], references: [id])
+  genderId String
 
   nationality String?
   nationalID String? @unique

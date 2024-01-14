@@ -278,7 +278,7 @@ model Subscriber {
     institutionId String
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
-    beneficiary Beneficiary[]
+    beneficiaries Beneficiary[]
 
     @@index([institutionId, id])
     @@unique([institutionId, id])
@@ -320,7 +320,7 @@ model Beneficiary {
     face FaceBiometric[]
     voice VoiceBiometric[]
     entryRecords EntryRecord[]
-    spents BeneficiaryBalance[]
+    beneficiaryBalances BeneficiaryBalance[]
 
     @@index([subscriberId, id])
     @@unique([subscriberId, id])
@@ -443,7 +443,7 @@ model InsurancePolicy {
     institutionId String
     subscribers Subscriber[]
     serviceEntryTimeWindow Int @default(24)
-    packageMedicalServices PackageMedicalServices[]
+    benefitPackages BenefitPackage[]
     medicalCenters InsurancePolicyMedicalCenter[]
 }
 
@@ -459,30 +459,10 @@ model BenefitPackage {
     name String @unique()
     copayDistrubtion Int[]
     threashold Int[]
-    medicalServices PackageMedicalServices[]
-    spents BeneficiaryBalance[]
-}
-
-/// @@allow('all', true && isPublished)
-model PackageMedicalServices {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    isActive Boolean @default(true)
-    deactivationReason String?
-    beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
-    beneftiPackageId String
-    medicalService MedicalCenter @relation(fields: [medicalServiceId], references: [id])
-    medicalServiceId String
+    medicalServiceTemplates BenefitPackageMedicalCenterServiceTemplate[]
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
-    price Int
-    patientServices PatientService[]
-
-    @@unique([insurancePolicyId, beneftiPackageId, medicalServiceId])
-    @@index([insurancePolicyId, beneftiPackageId, medicalServiceId])
+    beneficiaryBalances BeneficiaryBalance[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -531,9 +511,26 @@ model MedicalCenter {
     managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
     managingTenantId String @unique()
     services MedicalCenterService[]
-    beneftiPackages PackageMedicalServices[]
     insurancePolicy InsurancePolicyMedicalCenter[]
     entryRecords EntryRecord[]
+}
+
+/// @@allow('all', true && isPublished)
+model BenefitPackageMedicalCenterServiceTemplate {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
+    benefitPackageId String
+    medicalCenterServiceTemplate MedicalCenterServiceTemplate @relation(fields: [medicalCenterServiceTemplateId], references: [id])
+    medicalCenterServiceTemplateId String
+
+    @@index([benefitPackageId, medicalCenterServiceTemplateId])
+    @@unique([benefitPackageId, medicalCenterServiceTemplateId])
 }
 
 /// @@allow('all', true && isPublished)
@@ -548,6 +545,7 @@ model MedicalCenterServiceTemplate {
     name String
     dalilCode String
     basePrice String
+    beneftiPackages BenefitPackageMedicalCenterServiceTemplate[]
     services MedicalCenterService[]
 }
 
@@ -564,7 +562,8 @@ model MedicalCenterService {
     medicalCenterCode String
     basePrice String
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-    medicalCenterId String @unique()
+    medicalCenterId String
+    patientServices PatientService[]
     template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
     templateId String
 
@@ -626,8 +625,8 @@ model PatientService {
     transactionReviewStatusId String
     medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
     medicalReviewStatusId String
-    service PackageMedicalServices @relation(fields: [serviceId], references: [id])
-    serviceId String
+    medicalService MedicalCenterService @relation(fields: [medicalServiceId], references: [id])
+    medicalServiceId String
     groupCode String
 }
 
@@ -657,6 +656,9 @@ model BeneficiaryBalance {
     beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
     beneftiPackageId String
     balance Float
+
+    @@index([beneficiaryId, beneftiPackageId])
+    @@unique([beneficiaryId, beneftiPackageId])
 }
 
 /// @@allow('all', true && isPublished)
