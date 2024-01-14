@@ -31,20 +31,21 @@ const useConfig = defineStore("config", () => {
   const toggleTheme = () => (dark.value = !dark.value);
 
   const locale = useLocalStorage<SupportedLocale>("locale", getDefaultLocale());
+
+  // upon application boot, tell vue-i18n to use the preserved locale
+  i18n.global.locale.value = locale.value;
   /**
    * Set Locale.
    *
    */
-  const setLocale = (l: SupportedLocale) => {
+  function setLocale(l: SupportedLocale) {
     locale.value = l;
-    i18n.global.locale.value = l;
-  };
+  }
 
   /**
    * List of loaded of locales that are successfully lazy loaded
    */
   const loadedLocales = ref<SupportedLocale[]>([]);
-
   async function loadLocaleMessages() {
     if (process.env.NODE_ENV !== "production") {
       console.log(`[I18n]: Loading "${locale.value}"locale messages.`);
@@ -58,10 +59,18 @@ const useConfig = defineStore("config", () => {
     i18n.global.mergeLocaleMessage(locale.value, jsonModule.default);
   }
 
-  watch(locale, (value) => {
+  watch(locale, async (value) => {
+    i18n.global.fallbackWarn = false;
+    i18n.global.missingWarn = false;
+
     if (!loadedLocales.value.includes(value)) {
-      loadLocaleMessages();
+      await loadLocaleMessages();
     }
+
+    i18n.global.locale.value = value;
+
+    i18n.global.fallbackWarn = true;
+    i18n.global.missingWarn = true;
   });
 
   return {
