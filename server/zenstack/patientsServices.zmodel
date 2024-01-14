@@ -36,17 +36,21 @@ model EntryRecord extends Base, ActivationStatus {
 model PatientService extends Base, ActivationStatus {
   entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
   entryRecordId String
-
+  name String
   Note String?
 
   isWorkInjury Boolean @default(false)
 
   isExamination Boolean @default(false) // is this service is examination or not
 
-  name String
-  cash Int // تخزين القيمة التي دفعها المستفيد, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
-  limit Int // تخزين قيمة التي التغطية, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة
-  deffered Int // تخزين القيمة التي دفعتها المؤسسة, يتم حفظها هنا في حال تم تغيير نسبة تغطية الخدمة //
+  // الحقول الأسفل تخزن بالقرش
+  billedAmmount Int // قيمة الخدمة المفوترة
+  allowedAmmount Int // قيمة الخدمة المسموح بها
+  copayAmmount Int  // قيمة المتحمله على المستفيد
+  cashAmount Int // قيمة المدفوعه نقديا من قبل المريض
+  coveredAmount Int // قيمة المغطاه من قبل الشركة
+  defferedAmount Int // قيمة المؤجله من قبل الشركة
+  coinsuranceAmount Int // قيمة التأمين المشترك
 
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
