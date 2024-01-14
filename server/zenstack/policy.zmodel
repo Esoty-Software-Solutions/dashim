@@ -1,4 +1,5 @@
 import 'base'
+import 'medicalCenter'
 
 model InsurancePolicy extends Base, ActivationStatus {
   name String @unique
