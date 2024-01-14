@@ -2,26 +2,27 @@ import express from "express";
 import cors from "cors";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { appRouter } from "~/routers/_.router";
+import { createContext } from "~/routers/_context.router";
 
 const app = express();
 const PORT = 3000;
 
 // created for each request
-const createContext = ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions): {
-  req: typeof req;
-  res: typeof res;
-  test: string;
-  context: string;
-} => ({
-  req,
-  res,
-  test: "some test value", // replace with actual value
-  context: "some context value", // replace with actual value
-});
-type Context = Awaited<ReturnType<typeof createContext>>;
+// const createContext = ({
+//   req,
+//   res,
+// }: trpcExpress.CreateExpressContextOptions): {
+//   req: typeof req;
+//   res: typeof res;
+//   test: string;
+//   context: string;
+// } => ({
+//   req,
+//   res,
+//   test: "some test value", // replace with actual value
+//   context: "some context value", // replace with actual value
+// });
+// type Context = Awaited<ReturnType<typeof createContext>>;
 
 // enable cors
 app.use(cors());

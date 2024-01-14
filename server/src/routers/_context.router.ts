@@ -36,20 +36,21 @@ export async function createContext(opts: CreateExpressContextOptions) {
   // const session = getSessionFromCookie(opts.req);
 
   const contextInner = await createContextInner();
-  async function test() {
-    const context = "hello from context";
-    return context;
-  }
+  // async function test() {
+  //   const context = "hello from context";
+  //   return context;
+  // }
 
-  const context = await test();
+  // const context = await test();
+  // console.log("context", context)
 
   return {
     ...contextInner,
     req: opts.req,
     res: opts.res,
-    test: "hello",
-    context,
+    // test: "hello",
+    // context,
   };
 }
-//* IMPORTANT the exported type is intentionally using the inner context
-export type Context = Awaited<ReturnType<typeof createContextInner>>;
+//* IMPORTANT the exported type is intentionally using the inner context //TODO: Rename to createContextOuter
+export type Context = Awaited<ReturnType<typeof createContext>>;
