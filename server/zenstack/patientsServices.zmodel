@@ -51,7 +51,7 @@ model PatientService extends Base, ActivationStatus {
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
 
-  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",  fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
   patientExamination PatientExamination @relation(fields: [patientExaminationId], references: [id])
@@ -79,7 +79,7 @@ model PatientExamination extends Base, ActivationStatus {
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
 
-  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus",  fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
   patientServices PatientService[]
@@ -107,4 +107,28 @@ model SubscriberGroupBalance extends Base {
   beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
 
   balance Float
+}
+
+model DiagnosesAttachment extends Base {
+  name String
+  link String // holds s3 secret link
+  size Int // in bytes
+  contentType String
+  metadata Json
+}
+
+model LabReportAttachment extends Base {
+  name String
+  link String // holds s3 secret link
+  size Int // in bytes
+  contentType String
+  metadata Json
+}
+
+model prescriptionAttachment extends Base {
+  name String
+  link String // holds s3 secret link
+  size Int // in bytes
+  contentType String
+  metadata Json
 }
