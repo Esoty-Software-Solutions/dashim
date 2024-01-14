@@ -20,8 +20,8 @@ import i18n from "./i18n";
 // Styles
 import "vuetify/styles";
 
-i18n.global.mergeLocaleMessage("en", en);
-i18n.global.mergeLocaleMessage("ar", ar);
+i18n.global.mergeLocaleMessage("en", { $vuetify: en });
+i18n.global.mergeLocaleMessage("ar", { $vuetify: ar });
 
 await loadFonts();
 
