@@ -51,6 +51,8 @@ model MedicalCenterServiceTemplate extends Base, ActivationStatus {
   name String
   dalilCode String
   basePrice String
+  IsPriceVaried Boolean @default(false)
+  description String
 
   beneftiPackages BenefitPackageMedicalCenterServiceTemplate[]
   services MedicalCenterService[]
@@ -59,12 +61,13 @@ model MedicalCenterServiceTemplate extends Base, ActivationStatus {
 model MedicalCenterService extends Base, ActivationStatus {
   name String
   medicalCenterCode String
-  basePrice String
+  basePrice Int
 
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
   medicalCenterId String
 
   patientServices PatientService[]
+  institutionPricing InstitutionMedicalCeneterService[]
 
   template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
   templateId String
