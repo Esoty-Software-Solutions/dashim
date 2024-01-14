@@ -3,13 +3,12 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { SubscriberGroupUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './SubscriberGroupUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
-import { FingerprintUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FingerprintUpdateOneWithoutEntryRecordsNestedInput.schema';
+import { BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
+import { FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './IDCardUpdateOneWithoutEntryRecordsNestedInput.schema';
-import { FaceUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FaceUpdateOneWithoutEntryRecordsNestedInput.schema';
-import { VoiceUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './VoiceUpdateOneWithoutEntryRecordsNestedInput.schema';
+import { FaceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FaceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
+import { VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './VoiceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutEntryRecordNestedInput.schema';
-import { PatientExaminationUpdateOneWithoutEntryRecordNestedInputObjectSchema } from './PatientExaminationUpdateOneWithoutEntryRecordNestedInput.schema';
 import { MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -71,35 +70,34 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .lazy(
         () =>
-          SubscriberGroupUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema,
+          BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema,
       )
       .optional(),
     fingerprintBiometric: z
       .lazy(
-        () => FingerprintUpdateOneWithoutEntryRecordsNestedInputObjectSchema,
+        () =>
+          FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema,
       )
       .optional(),
-    idCard: z
+    idCardBiometric: z
       .lazy(() => IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema)
       .optional(),
-    face: z
-      .lazy(() => FaceUpdateOneWithoutEntryRecordsNestedInputObjectSchema)
+    faceBiometric: z
+      .lazy(
+        () => FaceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema,
+      )
       .optional(),
-    voice: z
-      .lazy(() => VoiceUpdateOneWithoutEntryRecordsNestedInputObjectSchema)
+    voiceBiometric: z
+      .lazy(
+        () => VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema,
+      )
       .optional(),
     patientServices: z
       .lazy(
         () => PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
-      )
-      .optional(),
-    patientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationUpdateOneWithoutEntryRecordNestedInputObjectSchema,
       )
       .optional(),
     medicalCenter: z

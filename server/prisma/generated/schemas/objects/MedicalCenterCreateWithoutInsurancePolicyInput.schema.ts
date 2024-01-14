@@ -4,7 +4,6 @@ import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreate
 import { TenantCreateNestedOneWithoutAssignedToMedicalCenterInputObjectSchema } from './TenantCreateNestedOneWithoutAssignedToMedicalCenterInput.schema';
 import { MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInput.schema';
 import { PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInput.schema';
-import { TimeWindowCreateNestedOneWithoutMedicalCenterInputObjectSchema } from './TimeWindowCreateNestedOneWithoutMedicalCenterInput.schema';
 import { EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './EntryRecordCreateNestedManyWithoutMedicalCenterInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -57,11 +56,6 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutInsurancePolicyInput> =
         .lazy(
           () =>
             PackageMedicalServicesCreateNestedManyWithoutMedicalServiceInputObjectSchema,
-        )
-        .optional(),
-      timeWindow: z
-        .lazy(
-          () => TimeWindowCreateNestedOneWithoutMedicalCenterInputObjectSchema,
         )
         .optional(),
       entryRecords: z

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { BenefitPackageCreatecopayDistrubtionInputObjectSchema } from './BenefitPackageCreatecopayDistrubtionInput.schema';
 import { BenefitPackageCreatethreasholdInputObjectSchema } from './BenefitPackageCreatethreasholdInput.schema';
 import { PackageMedicalServicesUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './PackageMedicalServicesUncheckedCreateNestedManyWithoutBeneftiPackageInput.schema';
-import { SubscriberGroupBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './SubscriberGroupBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInput.schema';
+import { BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -37,7 +37,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedCreateInput> = z
     spents: z
       .lazy(
         () =>
-          SubscriberGroupBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema,
+          BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneftiPackageInputObjectSchema,
       )
       .optional(),
   })

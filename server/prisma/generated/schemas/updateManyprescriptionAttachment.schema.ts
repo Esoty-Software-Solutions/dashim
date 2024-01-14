@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { prescriptionAttachmentUpdateManyMutationInputObjectSchema } from './objects/prescriptionAttachmentUpdateManyMutationInput.schema';
-import { prescriptionAttachmentWhereInputObjectSchema } from './objects/prescriptionAttachmentWhereInput.schema';
+import { PrescriptionAttachmentUpdateManyMutationInputObjectSchema } from './objects/PrescriptionAttachmentUpdateManyMutationInput.schema';
+import { PrescriptionAttachmentWhereInputObjectSchema } from './objects/PrescriptionAttachmentWhereInput.schema';
 
-export const prescriptionAttachmentUpdateManySchema = z.object({
-  data: prescriptionAttachmentUpdateManyMutationInputObjectSchema,
-  where: prescriptionAttachmentWhereInputObjectSchema.optional(),
+export const PrescriptionAttachmentUpdateManySchema = z.object({
+  data: PrescriptionAttachmentUpdateManyMutationInputObjectSchema,
+  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
 });

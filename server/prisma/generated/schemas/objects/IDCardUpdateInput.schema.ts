@@ -3,8 +3,8 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInputObjectSchema } from './SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInput.schema';
-import { EntryRecordUpdateManyWithoutIdCardNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutIdCardNestedInput.schema';
+import { BeneficiaryUpdateOneRequiredWithoutIdCardNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutIdCardNestedInput.schema';
+import { EntryRecordUpdateManyWithoutIdCardBiometricNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutIdCardBiometricNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -59,14 +59,16 @@ const Schema: z.ZodType<Prisma.IDCardUpdateInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .lazy(
-        () =>
-          SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInputObjectSchema,
+        () => BeneficiaryUpdateOneRequiredWithoutIdCardNestedInputObjectSchema,
       )
       .optional(),
     entryRecords: z
-      .lazy(() => EntryRecordUpdateManyWithoutIdCardNestedInputObjectSchema)
+      .lazy(
+        () =>
+          EntryRecordUpdateManyWithoutIdCardBiometricNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

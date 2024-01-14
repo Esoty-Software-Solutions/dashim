@@ -49,7 +49,7 @@ const Schema: z.ZodType<Prisma.IDCardScalarWhereInput> = z
     hash: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
   })

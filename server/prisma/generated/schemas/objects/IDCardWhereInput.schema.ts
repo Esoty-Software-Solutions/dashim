@@ -3,8 +3,8 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { SubscriberGroupRelationFilterObjectSchema } from './SubscriberGroupRelationFilter.schema';
-import { SubscriberGroupWhereInputObjectSchema } from './SubscriberGroupWhereInput.schema';
+import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
+import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -52,13 +52,13 @@ const Schema: z.ZodType<Prisma.IDCardWhereInput> = z
     hash: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .union([
-        z.lazy(() => SubscriberGroupRelationFilterObjectSchema),
-        z.lazy(() => SubscriberGroupWhereInputObjectSchema),
+        z.lazy(() => BeneficiaryRelationFilterObjectSchema),
+        z.lazy(() => BeneficiaryWhereInputObjectSchema),
       ])
       .optional(),
     entryRecords: z

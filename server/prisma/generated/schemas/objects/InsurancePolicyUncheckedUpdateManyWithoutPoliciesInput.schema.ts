@@ -65,6 +65,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUncheckedUpdateManyWithoutPolicies
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
+      serviceEntryTimeWindow: z
+        .union([
+          z.number(),
+          z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
     })
     .strict();
 

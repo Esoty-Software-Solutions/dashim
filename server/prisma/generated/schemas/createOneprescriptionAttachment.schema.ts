@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { prescriptionAttachmentCreateInputObjectSchema } from './objects/prescriptionAttachmentCreateInput.schema';
-import { prescriptionAttachmentUncheckedCreateInputObjectSchema } from './objects/prescriptionAttachmentUncheckedCreateInput.schema';
+import { PrescriptionAttachmentCreateInputObjectSchema } from './objects/PrescriptionAttachmentCreateInput.schema';
+import { PrescriptionAttachmentUncheckedCreateInputObjectSchema } from './objects/PrescriptionAttachmentUncheckedCreateInput.schema';
 
-export const prescriptionAttachmentCreateOneSchema = z.object({
+export const PrescriptionAttachmentCreateOneSchema = z.object({
   data: z.union([
-    prescriptionAttachmentCreateInputObjectSchema,
-    prescriptionAttachmentUncheckedCreateInputObjectSchema,
+    PrescriptionAttachmentCreateInputObjectSchema,
+    PrescriptionAttachmentUncheckedCreateInputObjectSchema,
   ]),
 });

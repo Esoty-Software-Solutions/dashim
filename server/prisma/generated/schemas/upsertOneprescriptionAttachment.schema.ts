@@ -1,18 +1,18 @@
 import { z } from 'zod';
-import { prescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/prescriptionAttachmentWhereUniqueInput.schema';
-import { prescriptionAttachmentCreateInputObjectSchema } from './objects/prescriptionAttachmentCreateInput.schema';
-import { prescriptionAttachmentUncheckedCreateInputObjectSchema } from './objects/prescriptionAttachmentUncheckedCreateInput.schema';
-import { prescriptionAttachmentUpdateInputObjectSchema } from './objects/prescriptionAttachmentUpdateInput.schema';
-import { prescriptionAttachmentUncheckedUpdateInputObjectSchema } from './objects/prescriptionAttachmentUncheckedUpdateInput.schema';
+import { PrescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/PrescriptionAttachmentWhereUniqueInput.schema';
+import { PrescriptionAttachmentCreateInputObjectSchema } from './objects/PrescriptionAttachmentCreateInput.schema';
+import { PrescriptionAttachmentUncheckedCreateInputObjectSchema } from './objects/PrescriptionAttachmentUncheckedCreateInput.schema';
+import { PrescriptionAttachmentUpdateInputObjectSchema } from './objects/PrescriptionAttachmentUpdateInput.schema';
+import { PrescriptionAttachmentUncheckedUpdateInputObjectSchema } from './objects/PrescriptionAttachmentUncheckedUpdateInput.schema';
 
-export const prescriptionAttachmentUpsertSchema = z.object({
-  where: prescriptionAttachmentWhereUniqueInputObjectSchema,
+export const PrescriptionAttachmentUpsertSchema = z.object({
+  where: PrescriptionAttachmentWhereUniqueInputObjectSchema,
   create: z.union([
-    prescriptionAttachmentCreateInputObjectSchema,
-    prescriptionAttachmentUncheckedCreateInputObjectSchema,
+    PrescriptionAttachmentCreateInputObjectSchema,
+    PrescriptionAttachmentUncheckedCreateInputObjectSchema,
   ]),
   update: z.union([
-    prescriptionAttachmentUpdateInputObjectSchema,
-    prescriptionAttachmentUncheckedUpdateInputObjectSchema,
+    PrescriptionAttachmentUpdateInputObjectSchema,
+    PrescriptionAttachmentUncheckedUpdateInputObjectSchema,
   ]),
 });

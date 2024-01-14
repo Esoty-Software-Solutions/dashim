@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateManyInstitutionInput> = z
     deactivationReason: z.string().optional().nullable(),
     name: z.string(),
     limit: z.number(),
+    serviceEntryTimeWindow: z.number().optional(),
   })
   .strict();
 

@@ -57,7 +57,7 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedUpdateManyInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

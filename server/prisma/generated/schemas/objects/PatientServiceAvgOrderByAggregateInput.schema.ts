@@ -5,9 +5,13 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.PatientServiceAvgOrderByAggregateInput> = z
   .object({
-    cash: z.lazy(() => SortOrderSchema).optional(),
-    limit: z.lazy(() => SortOrderSchema).optional(),
-    deffered: z.lazy(() => SortOrderSchema).optional(),
+    billedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    allowedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    copayAmmount: z.lazy(() => SortOrderSchema).optional(),
+    cashAmount: z.lazy(() => SortOrderSchema).optional(),
+    coveredAmount: z.lazy(() => SortOrderSchema).optional(),
+    defferedAmount: z.lazy(() => SortOrderSchema).optional(),
+    coinsuranceAmount: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

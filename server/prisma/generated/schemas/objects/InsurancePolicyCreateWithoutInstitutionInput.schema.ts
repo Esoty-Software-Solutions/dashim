@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SubscriberCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './SubscriberCreateNestedManyWithoutInsurancePolicyInput.schema';
 import { PackageMedicalServicesCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './PackageMedicalServicesCreateNestedManyWithoutInsurancePolicyInput.schema';
-import { InsurancePolicyMedicalCentersCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './InsurancePolicyMedicalCentersCreateNestedManyWithoutInsurancePolicyInput.schema';
+import { InsurancePolicyMedicalCenterCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './InsurancePolicyMedicalCenterCreateNestedManyWithoutInsurancePolicyInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -16,6 +16,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateWithoutInstitutionInput> = z
     deactivationReason: z.string().optional().nullable(),
     name: z.string(),
     limit: z.number(),
+    serviceEntryTimeWindow: z.number().optional(),
     subscribers: z
       .lazy(
         () => SubscriberCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
@@ -30,7 +31,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateWithoutInstitutionInput> = z
     medicalCenters: z
       .lazy(
         () =>
-          InsurancePolicyMedicalCentersCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
+          InsurancePolicyMedicalCenterCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
       )
       .optional(),
   })

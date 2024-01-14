@@ -3,7 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { FingerprintListRelationFilterObjectSchema } from './FingerprintListRelationFilter.schema';
+import { FingerprintBiometricListRelationFilterObjectSchema } from './FingerprintBiometricListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -52,7 +52,7 @@ const Schema: z.ZodType<Prisma.FingerTypeWhereInput> = z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     fingerType: z
-      .lazy(() => FingerprintListRelationFilterObjectSchema)
+      .lazy(() => FingerprintBiometricListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

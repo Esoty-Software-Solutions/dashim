@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentUncheckedUpdateManyInput> =
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentUncheckedUpdateManyInput> =
   z
     .object({
       id: z
@@ -41,5 +41,5 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentUncheckedUpdateManyInput> =
     })
     .strict();
 
-export const prescriptionAttachmentUncheckedUpdateManyInputObjectSchema =
+export const PrescriptionAttachmentUncheckedUpdateManyInputObjectSchema =
   Schema;

@@ -12,7 +12,7 @@ Table Gender {
   english String
   name String [unique, not null]
   user User [not null]
-  subscriberGroup SubscriberGroup [not null]
+  beneficiary Beneficiary [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -34,7 +34,7 @@ Table Currency {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table Cities {
+Table City {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -59,7 +59,7 @@ Table Country {
   english String
   name String [unique, not null]
   code String [unique, not null]
-  cities Cities [not null]
+  cities City [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -249,7 +249,7 @@ Table Subscriber {
   institutionId String [not null]
   insurancePolicy InsurancePolicy [not null]
   insurancePolicyId String [not null]
-  subscriberGroup SubscriberGroup [not null]
+  beneficiary Beneficiary [not null]
 
   indexes {
     (institutionId, id) [unique]
@@ -258,7 +258,7 @@ Table Subscriber {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table SubscriberGroup {
+Table Beneficiary {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -288,12 +288,12 @@ Table SubscriberGroup {
   isIdCardVerificationActive Boolean [not null, default: false]
   isFaceVerificationActive Boolean [not null, default: false]
   isVoiceVerificationActive Boolean [not null, default: false]
-  fingerprint Fingerprint [not null]
+  fingerprint FingerprintBiometric [not null]
   idCard IDCard [not null]
-  face Face [not null]
-  voice Voice [not null]
+  face FaceBiometric [not null]
+  voice VoiceBiometric [not null]
   entryRecords EntryRecord [not null]
-  spents SubscriberGroupBalance [not null]
+  spents BeneficiaryBalance [not null]
 
   indexes {
     (subscriberId, id) [unique]
@@ -311,12 +311,12 @@ Table Relationship {
   arabic String
   english String
   name String [unique, not null]
-  subscriberGroup SubscriberGroup [not null]
+  beneficiary Beneficiary [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table Fingerprint {
+Table FingerprintBiometric {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -327,12 +327,12 @@ Table Fingerprint {
   fingerType FingerType [not null]
   fingerTypeId String [not null]
   hash String [unique, not null]
-  subscriberGroup SubscriberGroup [not null]
-  subscriberGroupId String [not null]
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
   entryRecords EntryRecord [not null]
 
   indexes {
-    (subscriberGroupId, id) [unique]
+    (beneficiaryId, id) [unique]
     (id, fingerTypeId) [unique]
   }
 
@@ -348,18 +348,18 @@ Table IDCard {
   isActive Boolean [not null, default: true]
   deactivationReason String
   hash String [unique, not null]
-  subscriberGroup SubscriberGroup [not null]
-  subscriberGroupId String [not null]
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
   entryRecords EntryRecord [not null]
 
   indexes {
-    (subscriberGroupId, id) [unique]
+    (beneficiaryId, id) [unique]
   }
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table Face {
+Table FaceBiometric {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -368,18 +368,18 @@ Table Face {
   isActive Boolean [not null, default: true]
   deactivationReason String
   hash String [unique, not null]
-  subscriberGroup SubscriberGroup [not null]
-  subscriberGroupId String [not null]
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
   entryRecords EntryRecord [not null]
 
   indexes {
-    (subscriberGroupId, id) [unique]
+    (beneficiaryId, id) [unique]
   }
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table Voice {
+Table VoiceBiometric {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -388,12 +388,12 @@ Table Voice {
   isActive Boolean [not null, default: true]
   deactivationReason String
   hash String [unique, not null]
-  subscriberGroup SubscriberGroup [not null]
-  subscriberGroupId String [not null]
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
   entryRecords EntryRecord [not null]
 
   indexes {
-    (subscriberGroupId, id) [unique]
+    (beneficiaryId, id) [unique]
   }
 
   Note: '@@allow(\'all\', true && isPublished)'
@@ -408,21 +408,7 @@ Table FingerType {
   arabic String
   english String
   name String [unique, not null]
-  fingerType Fingerprint [not null]
-
-  Note: '@@allow(\'all\', true && isPublished)'
-}
-
-Table CoPayDistribution {
-  id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  isPublished Boolean [not null, default: true]
-  isSoftDeleted Boolean [not null, default: false]
-  isActive Boolean [not null, default: true]
-  deactivationReason String
-  threashold Int [not null]
-  Percentage Int [not null]
+  fingerType FingerprintBiometric [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -440,8 +426,9 @@ Table InsurancePolicy {
   institution Institution [not null]
   institutionId String [not null]
   subscribers Subscriber [not null]
+  serviceEntryTimeWindow Int [not null, default: 24]
   packageMedicalServices PackageMedicalServices [not null]
-  medicalCenters InsurancePolicyMedicalCenters [not null]
+  medicalCenters InsurancePolicyMedicalCenter [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -458,7 +445,7 @@ Table BenefitPackage {
   copayDistrubtion Int[] [not null]
   threashold Int[] [not null]
   medicalServices PackageMedicalServices [not null]
-  spents SubscriberGroupBalance [not null]
+  spents BeneficiaryBalance [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -479,7 +466,6 @@ Table PackageMedicalServices {
   insurancePolicyId String [not null]
   price Int [not null]
   patientServices PatientService [not null]
-  patientExaminations PatientExamination [not null]
 
   indexes {
     (insurancePolicyId, beneftiPackageId, medicalServiceId) [unique]
@@ -488,7 +474,7 @@ Table PackageMedicalServices {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table InsurancePolicyMedicalCenters {
+Table InsurancePolicyMedicalCenter {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -504,21 +490,6 @@ Table InsurancePolicyMedicalCenters {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table TimeWindow {
-  id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  isPublished Boolean [not null, default: true]
-  isSoftDeleted Boolean [not null, default: false]
-  isActive Boolean [not null, default: true]
-  deactivationReason String
-  medicalCenter MedicalCenter [not null]
-  medicalCenterId String [unique, not null]
-  time Int [not null, default: 24]
-
-  Note: '@@allow(\'all\', true && isPublished)'
-}
-
 Table EntryRecord {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
@@ -527,20 +498,19 @@ Table EntryRecord {
   isSoftDeleted Boolean [not null, default: false]
   isActive Boolean [not null, default: true]
   deactivationReason String
-  subscriberGroup SubscriberGroup [not null]
-  subscriberGroupId String [not null]
-  fingerprintBiometric Fingerprint
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
+  fingerprintBiometric FingerprintBiometric
   fingerprintId String
-  idCard IDCard
+  idCardBiometric IDCard
   idCardId String
-  face Face
+  faceBiometric FaceBiometric
   faceId String
-  voice Voice
+  voiceBiometric VoiceBiometric
   voiceId String
   isValidated Boolean [not null]
   isManuallyInserted Boolean [not null, default: false]
   patientServices PatientService [not null]
-  patientExamination PatientExamination
   medicalCenterId String [not null]
   medicalCenter MedicalCenter [not null]
 
@@ -557,49 +527,24 @@ Table PatientService {
   deactivationReason String
   entryRecord EntryRecord [not null]
   entryRecordId String [not null]
+  name String [not null]
   Note String
   isWorkInjury Boolean [not null, default: false]
-  name String [not null]
-  cash Int [not null]
-  limit Int [not null]
-  deffered Int [not null]
+  isExamination Boolean [not null, default: false]
+  billedAmmount Int [not null]
+  allowedAmmount Int [not null]
+  copayAmmount Int [not null]
+  cashAmount Int [not null]
+  coveredAmount Int [not null]
+  defferedAmount Int [not null]
+  coinsuranceAmount Int [not null]
   transactionReviewStatus ReviewStatus [not null]
   transactionReviewStatusId String [not null]
   medicalReviewStatus ReviewStatus [not null]
   medicalReviewStatusId String [not null]
-  patientExamination PatientExamination [not null]
-  patientExaminationId String [not null]
-  serviceId String [not null]
   service PackageMedicalServices [not null]
-  groupId String [not null]
-
-  Note: '@@allow(\'all\', true && isPublished)'
-}
-
-Table PatientExamination {
-  id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  isPublished Boolean [not null, default: true]
-  isSoftDeleted Boolean [not null, default: false]
-  isActive Boolean [not null, default: true]
-  deactivationReason String
-  entryRecord EntryRecord [not null]
-  entryRecordId String [unique, not null]
-  Note String
-  isWorkInjury Boolean [not null, default: false]
-  name String [not null]
-  cash Int [not null]
-  limit Int [not null]
-  deffered Int [not null]
-  transactionReviewStatus ReviewStatus [not null]
-  transactionReviewStatusId String [not null]
-  medicalReviewStatus ReviewStatus [not null]
-  medicalReviewStatusId String [not null]
-  patientServices PatientService [not null]
   serviceId String [not null]
-  service PackageMedicalServices [not null]
-  groupId String [not null]
+  groupCode String [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
@@ -615,28 +560,26 @@ Table ReviewStatus {
   name String [unique, not null]
   transactionPatientServices PatientService [not null]
   medicalPatientServices PatientService [not null]
-  transactionPatientExamination PatientExamination [not null]
-  medicalPatientExamination PatientExamination [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table SubscriberGroupBalance {
+Table BeneficiaryBalance {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   isPublished Boolean [not null, default: true]
   isSoftDeleted Boolean [not null, default: false]
-  subscriberGroupId String [not null]
-  subscriberGroup SubscriberGroup [not null]
-  beneftiPackageId String [not null]
+  beneficiary Beneficiary [not null]
+  beneficiaryId String [not null]
   beneftiPackage BenefitPackage [not null]
+  beneftiPackageId String [not null]
   balance Float [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table DiagnosesAttachment {
+Table DiagnosisAttachment {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -661,7 +604,7 @@ Table LabReportAttachment {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Table prescriptionAttachment {
+Table PrescriptionAttachment {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -697,8 +640,7 @@ Table MedicalCenter {
   managingTenantId String [unique, not null]
   services MedicalCenterService [not null]
   beneftiPackages PackageMedicalServices [not null]
-  insurancePolicy InsurancePolicyMedicalCenters [not null]
-  timeWindow TimeWindow
+  insurancePolicy InsurancePolicyMedicalCenter [not null]
   entryRecords EntryRecord [not null]
 
   Note: '@@allow(\'all\', true && isPublished)'
@@ -744,7 +686,7 @@ Table MedicalCenterService {
   Note: '@@allow(\'all\', true && isPublished)'
 }
 
-Ref: Cities.countryId > Country.id
+Ref: City.countryId > Country.id
 
 Ref: User.genderId > Gender.id
 
@@ -764,21 +706,21 @@ Ref: Subscriber.institutionId > Institution.id
 
 Ref: Subscriber.insurancePolicyId > InsurancePolicy.id
 
-Ref: SubscriberGroup.genderId > Gender.id
+Ref: Beneficiary.genderId > Gender.id
 
-Ref: SubscriberGroup.subscriberId > Subscriber.id
+Ref: Beneficiary.subscriberId > Subscriber.id
 
-Ref: SubscriberGroup.relationshipId > Relationship.id
+Ref: Beneficiary.relationshipId > Relationship.id
 
-Ref: Fingerprint.fingerTypeId > FingerType.id
+Ref: FingerprintBiometric.fingerTypeId > FingerType.id
 
-Ref: Fingerprint.subscriberGroupId > SubscriberGroup.id
+Ref: FingerprintBiometric.beneficiaryId > Beneficiary.id
 
-Ref: IDCard.subscriberGroupId > SubscriberGroup.id
+Ref: IDCard.beneficiaryId > Beneficiary.id
 
-Ref: Face.subscriberGroupId > SubscriberGroup.id
+Ref: FaceBiometric.beneficiaryId > Beneficiary.id
 
-Ref: Voice.subscriberGroupId > SubscriberGroup.id
+Ref: VoiceBiometric.beneficiaryId > Beneficiary.id
 
 Ref: InsurancePolicy.institutionId > Institution.id
 
@@ -788,21 +730,19 @@ Ref: PackageMedicalServices.medicalServiceId > MedicalCenter.id
 
 Ref: PackageMedicalServices.insurancePolicyId > InsurancePolicy.id
 
-Ref: InsurancePolicyMedicalCenters.insurancePolicyId > InsurancePolicy.id
+Ref: InsurancePolicyMedicalCenter.insurancePolicyId > InsurancePolicy.id
 
-Ref: InsurancePolicyMedicalCenters.medicalCenterId > MedicalCenter.id
+Ref: InsurancePolicyMedicalCenter.medicalCenterId > MedicalCenter.id
 
-Ref: TimeWindow.medicalCenterId - MedicalCenter.id
+Ref: EntryRecord.beneficiaryId > Beneficiary.id
 
-Ref: EntryRecord.subscriberGroupId > SubscriberGroup.id
-
-Ref: EntryRecord.fingerprintId > Fingerprint.id
+Ref: EntryRecord.fingerprintId > FingerprintBiometric.id
 
 Ref: EntryRecord.idCardId > IDCard.id
 
-Ref: EntryRecord.faceId > Face.id
+Ref: EntryRecord.faceId > FaceBiometric.id
 
-Ref: EntryRecord.voiceId > Voice.id
+Ref: EntryRecord.voiceId > VoiceBiometric.id
 
 Ref: EntryRecord.medicalCenterId > MedicalCenter.id
 
@@ -812,21 +752,11 @@ Ref: PatientService.transactionReviewStatusId > ReviewStatus.id
 
 Ref: PatientService.medicalReviewStatusId > ReviewStatus.id
 
-Ref: PatientService.patientExaminationId > PatientExamination.id
-
 Ref: PatientService.serviceId > PackageMedicalServices.id
 
-Ref: PatientExamination.entryRecordId - EntryRecord.id
+Ref: BeneficiaryBalance.beneficiaryId > Beneficiary.id
 
-Ref: PatientExamination.transactionReviewStatusId > ReviewStatus.id
-
-Ref: PatientExamination.medicalReviewStatusId > ReviewStatus.id
-
-Ref: PatientExamination.serviceId > PackageMedicalServices.id
-
-Ref: SubscriberGroupBalance.subscriberGroupId > SubscriberGroup.id
-
-Ref: SubscriberGroupBalance.beneftiPackageId > BenefitPackage.id
+Ref: BeneficiaryBalance.beneftiPackageId > BenefitPackage.id
 
 Ref: MedicalCenter.managingTenantId - Tenant.id
 

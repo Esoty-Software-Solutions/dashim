@@ -3,7 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { FingerprintUpdateManyWithoutFingerTypeNestedInputObjectSchema } from './FingerprintUpdateManyWithoutFingerTypeNestedInput.schema';
+import { FingerprintBiometricUpdateManyWithoutFingerTypeNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutFingerTypeNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -60,7 +60,10 @@ const Schema: z.ZodType<Prisma.FingerTypeUpdateInput> = z
       ])
       .optional(),
     fingerType: z
-      .lazy(() => FingerprintUpdateManyWithoutFingerTypeNestedInputObjectSchema)
+      .lazy(
+        () =>
+          FingerprintBiometricUpdateManyWithoutFingerTypeNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

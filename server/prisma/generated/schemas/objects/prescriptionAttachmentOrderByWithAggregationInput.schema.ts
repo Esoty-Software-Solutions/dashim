@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
-import { prescriptionAttachmentCountOrderByAggregateInputObjectSchema } from './prescriptionAttachmentCountOrderByAggregateInput.schema';
-import { prescriptionAttachmentMaxOrderByAggregateInputObjectSchema } from './prescriptionAttachmentMaxOrderByAggregateInput.schema';
-import { prescriptionAttachmentMinOrderByAggregateInputObjectSchema } from './prescriptionAttachmentMinOrderByAggregateInput.schema';
+import { PrescriptionAttachmentCountOrderByAggregateInputObjectSchema } from './PrescriptionAttachmentCountOrderByAggregateInput.schema';
+import { PrescriptionAttachmentMaxOrderByAggregateInputObjectSchema } from './PrescriptionAttachmentMaxOrderByAggregateInput.schema';
+import { PrescriptionAttachmentMinOrderByAggregateInputObjectSchema } from './PrescriptionAttachmentMinOrderByAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentOrderByWithAggregationInput> =
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentOrderByWithAggregationInput> =
   z
     .object({
       id: z.lazy(() => SortOrderSchema).optional(),
@@ -16,17 +16,17 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentOrderByWithAggregationInput
       isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
       _count: z
         .lazy(
-          () => prescriptionAttachmentCountOrderByAggregateInputObjectSchema,
+          () => PrescriptionAttachmentCountOrderByAggregateInputObjectSchema,
         )
         .optional(),
       _max: z
-        .lazy(() => prescriptionAttachmentMaxOrderByAggregateInputObjectSchema)
+        .lazy(() => PrescriptionAttachmentMaxOrderByAggregateInputObjectSchema)
         .optional(),
       _min: z
-        .lazy(() => prescriptionAttachmentMinOrderByAggregateInputObjectSchema)
+        .lazy(() => PrescriptionAttachmentMinOrderByAggregateInputObjectSchema)
         .optional(),
     })
     .strict();
 
-export const prescriptionAttachmentOrderByWithAggregationInputObjectSchema =
+export const PrescriptionAttachmentOrderByWithAggregationInputObjectSchema =
   Schema;

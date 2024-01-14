@@ -62,7 +62,7 @@ model Currency extends Base, LangLocale {
   SellExchangeRate Float @default(1)
 }
 
-model Cities extends Base, LangLocale {
+model City extends Base, LangLocale {
   name String @unique
   country Country @relation(fields: [countryId], references: [id])
   countryId String
@@ -71,7 +71,7 @@ model Cities extends Base, LangLocale {
 model Country extends Base, LangLocale {
   name String @unique
   code String @unique
-  cities Cities[]
+  cities City[]
 }
 
 abstract model Attachment {

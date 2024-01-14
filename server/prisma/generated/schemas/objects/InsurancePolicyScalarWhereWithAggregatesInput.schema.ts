@@ -96,6 +96,9 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
           z.string(),
         ])
         .optional(),
+      serviceEntryTimeWindow: z
+        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+        .optional(),
     })
     .strict();
 

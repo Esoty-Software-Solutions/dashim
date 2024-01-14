@@ -5,7 +5,7 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { IntNullableListFilterObjectSchema } from './IntNullableListFilter.schema';
 import { PackageMedicalServicesListRelationFilterObjectSchema } from './PackageMedicalServicesListRelationFilter.schema';
-import { SubscriberGroupBalanceListRelationFilterObjectSchema } from './SubscriberGroupBalanceListRelationFilter.schema';
+import { BeneficiaryBalanceListRelationFilterObjectSchema } from './BeneficiaryBalanceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -60,7 +60,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageWhereInput> = z
       .lazy(() => PackageMedicalServicesListRelationFilterObjectSchema)
       .optional(),
     spents: z
-      .lazy(() => SubscriberGroupBalanceListRelationFilterObjectSchema)
+      .lazy(() => BeneficiaryBalanceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

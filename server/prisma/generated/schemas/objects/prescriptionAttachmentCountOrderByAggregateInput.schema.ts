@@ -3,7 +3,7 @@ import { SortOrderSchema } from '../enums/SortOrder.schema';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentCountOrderByAggregateInput> =
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentCountOrderByAggregateInput> =
   z
     .object({
       id: z.lazy(() => SortOrderSchema).optional(),
@@ -14,5 +14,5 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentCountOrderByAggregateInput>
     })
     .strict();
 
-export const prescriptionAttachmentCountOrderByAggregateInputObjectSchema =
+export const PrescriptionAttachmentCountOrderByAggregateInputObjectSchema =
   Schema;

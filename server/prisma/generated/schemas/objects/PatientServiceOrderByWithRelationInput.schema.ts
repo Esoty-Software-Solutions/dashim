@@ -3,7 +3,6 @@ import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { EntryRecordOrderByWithRelationInputObjectSchema } from './EntryRecordOrderByWithRelationInput.schema';
 import { ReviewStatusOrderByWithRelationInputObjectSchema } from './ReviewStatusOrderByWithRelationInput.schema';
-import { PatientExaminationOrderByWithRelationInputObjectSchema } from './PatientExaminationOrderByWithRelationInput.schema';
 import { PackageMedicalServicesOrderByWithRelationInputObjectSchema } from './PackageMedicalServicesOrderByWithRelationInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -23,6 +22,7 @@ const Schema: z.ZodType<Prisma.PatientServiceOrderByWithRelationInput> = z
       ])
       .optional(),
     entryRecordId: z.lazy(() => SortOrderSchema).optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
     Note: z
       .union([
         z.lazy(() => SortOrderSchema),
@@ -30,15 +30,18 @@ const Schema: z.ZodType<Prisma.PatientServiceOrderByWithRelationInput> = z
       ])
       .optional(),
     isWorkInjury: z.lazy(() => SortOrderSchema).optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
-    cash: z.lazy(() => SortOrderSchema).optional(),
-    limit: z.lazy(() => SortOrderSchema).optional(),
-    deffered: z.lazy(() => SortOrderSchema).optional(),
+    isExamination: z.lazy(() => SortOrderSchema).optional(),
+    billedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    allowedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    copayAmmount: z.lazy(() => SortOrderSchema).optional(),
+    cashAmount: z.lazy(() => SortOrderSchema).optional(),
+    coveredAmount: z.lazy(() => SortOrderSchema).optional(),
+    defferedAmount: z.lazy(() => SortOrderSchema).optional(),
+    coinsuranceAmount: z.lazy(() => SortOrderSchema).optional(),
     transactionReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
     medicalReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
-    patientExaminationId: z.lazy(() => SortOrderSchema).optional(),
     serviceId: z.lazy(() => SortOrderSchema).optional(),
-    groupId: z.lazy(() => SortOrderSchema).optional(),
+    groupCode: z.lazy(() => SortOrderSchema).optional(),
     entryRecord: z
       .lazy(() => EntryRecordOrderByWithRelationInputObjectSchema)
       .optional(),
@@ -47,9 +50,6 @@ const Schema: z.ZodType<Prisma.PatientServiceOrderByWithRelationInput> = z
       .optional(),
     medicalReviewStatus: z
       .lazy(() => ReviewStatusOrderByWithRelationInputObjectSchema)
-      .optional(),
-    patientExamination: z
-      .lazy(() => PatientExaminationOrderByWithRelationInputObjectSchema)
       .optional(),
     service: z
       .lazy(() => PackageMedicalServicesOrderByWithRelationInputObjectSchema)

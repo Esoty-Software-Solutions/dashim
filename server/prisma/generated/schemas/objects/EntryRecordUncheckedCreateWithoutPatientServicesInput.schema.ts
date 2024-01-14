@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInputObjectSchema } from './PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,7 +12,7 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedCreateWithoutPatientServicesI
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
-      subscriberGroupId: z.string(),
+      beneficiaryId: z.string(),
       fingerprintId: z.string().optional().nullable(),
       idCardId: z.string().optional().nullable(),
       faceId: z.string().optional().nullable(),
@@ -21,12 +20,6 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedCreateWithoutPatientServicesI
       isValidated: z.boolean(),
       isManuallyInserted: z.boolean().optional(),
       medicalCenterId: z.string(),
-      patientExamination: z
-        .lazy(
-          () =>
-            PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInputObjectSchema,
-        )
-        .optional(),
     })
     .strict();
 

@@ -13,7 +13,7 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedCreateWithoutEntryRecordsInput> =
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       hash: z.string(),
-      subscriberGroupId: z.string(),
+      beneficiaryId: z.string(),
     })
     .strict();
 

@@ -1,87 +1,87 @@
 import { t, publicProcedure } from "./helpers/createRouter";
-import { prescriptionAttachmentAggregateSchema } from "../schemas/aggregateprescriptionAttachment.schema";
-import { prescriptionAttachmentCreateManySchema } from "../schemas/createManyprescriptionAttachment.schema";
-import { prescriptionAttachmentCreateOneSchema } from "../schemas/createOneprescriptionAttachment.schema";
-import { prescriptionAttachmentDeleteManySchema } from "../schemas/deleteManyprescriptionAttachment.schema";
-import { prescriptionAttachmentDeleteOneSchema } from "../schemas/deleteOneprescriptionAttachment.schema";
-import { prescriptionAttachmentFindFirstSchema } from "../schemas/findFirstprescriptionAttachment.schema";
-import { prescriptionAttachmentFindManySchema } from "../schemas/findManyprescriptionAttachment.schema";
-import { prescriptionAttachmentFindUniqueSchema } from "../schemas/findUniqueprescriptionAttachment.schema";
-import { prescriptionAttachmentGroupBySchema } from "../schemas/groupByprescriptionAttachment.schema";
-import { prescriptionAttachmentUpdateManySchema } from "../schemas/updateManyprescriptionAttachment.schema";
-import { prescriptionAttachmentUpdateOneSchema } from "../schemas/updateOneprescriptionAttachment.schema";
-import { prescriptionAttachmentUpsertSchema } from "../schemas/upsertOneprescriptionAttachment.schema";
+import { PrescriptionAttachmentAggregateSchema } from "../schemas/aggregatePrescriptionAttachment.schema";
+import { PrescriptionAttachmentCreateManySchema } from "../schemas/createManyPrescriptionAttachment.schema";
+import { PrescriptionAttachmentCreateOneSchema } from "../schemas/createOnePrescriptionAttachment.schema";
+import { PrescriptionAttachmentDeleteManySchema } from "../schemas/deleteManyPrescriptionAttachment.schema";
+import { PrescriptionAttachmentDeleteOneSchema } from "../schemas/deleteOnePrescriptionAttachment.schema";
+import { PrescriptionAttachmentFindFirstSchema } from "../schemas/findFirstPrescriptionAttachment.schema";
+import { PrescriptionAttachmentFindManySchema } from "../schemas/findManyPrescriptionAttachment.schema";
+import { PrescriptionAttachmentFindUniqueSchema } from "../schemas/findUniquePrescriptionAttachment.schema";
+import { PrescriptionAttachmentGroupBySchema } from "../schemas/groupByPrescriptionAttachment.schema";
+import { PrescriptionAttachmentUpdateManySchema } from "../schemas/updateManyPrescriptionAttachment.schema";
+import { PrescriptionAttachmentUpdateOneSchema } from "../schemas/updateOnePrescriptionAttachment.schema";
+import { PrescriptionAttachmentUpsertSchema } from "../schemas/upsertOnePrescriptionAttachment.schema";
 
 export const prescriptionattachmentsRouter = t.router({
-  aggregateprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentAggregateSchema).query(async ({ ctx, input }) => {
-      const aggregateprescriptionAttachment = await ctx.prisma.prescriptionAttachment.aggregate(input);
-      return aggregateprescriptionAttachment;
+  aggregatePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentAggregateSchema).query(async ({ ctx, input }) => {
+      const aggregatePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.aggregate(input);
+      return aggregatePrescriptionAttachment;
     }),
-  createManyprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentCreateManySchema).mutation(async ({ ctx, input }) => {
-      const createManyprescriptionAttachment = await ctx.prisma.prescriptionAttachment.createMany(input);
-      return createManyprescriptionAttachment;
+  createManyPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentCreateManySchema).mutation(async ({ ctx, input }) => {
+      const createManyPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.createMany(input);
+      return createManyPrescriptionAttachment;
     }),
-  createOneprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentCreateOneSchema).mutation(async ({ ctx, input }) => {
-      const createOneprescriptionAttachment = await ctx.prisma.prescriptionAttachment.create(input);
-      return createOneprescriptionAttachment;
+  createOnePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentCreateOneSchema).mutation(async ({ ctx, input }) => {
+      const createOnePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.create(input);
+      return createOnePrescriptionAttachment;
     }),
-  deleteManyprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentDeleteManySchema).mutation(async ({ ctx, input }) => {
-      const deleteManyprescriptionAttachment = await ctx.prisma.prescriptionAttachment.deleteMany(input);
-      return deleteManyprescriptionAttachment;
+  deleteManyPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentDeleteManySchema).mutation(async ({ ctx, input }) => {
+      const deleteManyPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.deleteMany(input);
+      return deleteManyPrescriptionAttachment;
     }),
-  deleteOneprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentDeleteOneSchema).mutation(async ({ ctx, input }) => {
-      const deleteOneprescriptionAttachment = await ctx.prisma.prescriptionAttachment.delete(input);
-      return deleteOneprescriptionAttachment;
+  deleteOnePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentDeleteOneSchema).mutation(async ({ ctx, input }) => {
+      const deleteOnePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.delete(input);
+      return deleteOnePrescriptionAttachment;
     }),
-  findFirstprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentFindFirstSchema).query(async ({ ctx, input }) => {
-      const findFirstprescriptionAttachment = await ctx.prisma.prescriptionAttachment.findFirst(input);
-      return findFirstprescriptionAttachment;
+  findFirstPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentFindFirstSchema).query(async ({ ctx, input }) => {
+      const findFirstPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.findFirst(input);
+      return findFirstPrescriptionAttachment;
     }),
-  findFirstprescriptionAttachmentOrThrow: publicProcedure
-    .input(prescriptionAttachmentFindFirstSchema).query(async ({ ctx, input }) => {
-      const findFirstprescriptionAttachmentOrThrow = await ctx.prisma.prescriptionAttachment.findFirstOrThrow(input);
-      return findFirstprescriptionAttachmentOrThrow;
+  findFirstPrescriptionAttachmentOrThrow: publicProcedure
+    .input(PrescriptionAttachmentFindFirstSchema).query(async ({ ctx, input }) => {
+      const findFirstPrescriptionAttachmentOrThrow = await ctx.prisma.prescriptionAttachment.findFirstOrThrow(input);
+      return findFirstPrescriptionAttachmentOrThrow;
     }),
-  findManyprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentFindManySchema).query(async ({ ctx, input }) => {
-      const findManyprescriptionAttachment = await ctx.prisma.prescriptionAttachment.findMany(input);
-      return findManyprescriptionAttachment;
+  findManyPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentFindManySchema).query(async ({ ctx, input }) => {
+      const findManyPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.findMany(input);
+      return findManyPrescriptionAttachment;
     }),
-  findUniqueprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentFindUniqueSchema).query(async ({ ctx, input }) => {
-      const findUniqueprescriptionAttachment = await ctx.prisma.prescriptionAttachment.findUnique(input);
-      return findUniqueprescriptionAttachment;
+  findUniquePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentFindUniqueSchema).query(async ({ ctx, input }) => {
+      const findUniquePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.findUnique(input);
+      return findUniquePrescriptionAttachment;
     }),
-  findUniqueprescriptionAttachmentOrThrow: publicProcedure
-    .input(prescriptionAttachmentFindUniqueSchema).query(async ({ ctx, input }) => {
-      const findUniqueprescriptionAttachmentOrThrow = await ctx.prisma.prescriptionAttachment.findUniqueOrThrow(input);
-      return findUniqueprescriptionAttachmentOrThrow;
+  findUniquePrescriptionAttachmentOrThrow: publicProcedure
+    .input(PrescriptionAttachmentFindUniqueSchema).query(async ({ ctx, input }) => {
+      const findUniquePrescriptionAttachmentOrThrow = await ctx.prisma.prescriptionAttachment.findUniqueOrThrow(input);
+      return findUniquePrescriptionAttachmentOrThrow;
     }),
-  groupByprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentGroupBySchema).query(async ({ ctx, input }) => {
-      const groupByprescriptionAttachment = await ctx.prisma.prescriptionAttachment.groupBy({ where: input.where, orderBy: input.orderBy, by: input.by, having: input.having, take: input.take, skip: input.skip });
-      return groupByprescriptionAttachment;
+  groupByPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentGroupBySchema).query(async ({ ctx, input }) => {
+      const groupByPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.groupBy({ where: input.where, orderBy: input.orderBy, by: input.by, having: input.having, take: input.take, skip: input.skip });
+      return groupByPrescriptionAttachment;
     }),
-  updateManyprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentUpdateManySchema).mutation(async ({ ctx, input }) => {
-      const updateManyprescriptionAttachment = await ctx.prisma.prescriptionAttachment.updateMany(input);
-      return updateManyprescriptionAttachment;
+  updateManyPrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentUpdateManySchema).mutation(async ({ ctx, input }) => {
+      const updateManyPrescriptionAttachment = await ctx.prisma.prescriptionAttachment.updateMany(input);
+      return updateManyPrescriptionAttachment;
     }),
-  updateOneprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentUpdateOneSchema).mutation(async ({ ctx, input }) => {
-      const updateOneprescriptionAttachment = await ctx.prisma.prescriptionAttachment.update(input);
-      return updateOneprescriptionAttachment;
+  updateOnePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentUpdateOneSchema).mutation(async ({ ctx, input }) => {
+      const updateOnePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.update(input);
+      return updateOnePrescriptionAttachment;
     }),
-  upsertOneprescriptionAttachment: publicProcedure
-    .input(prescriptionAttachmentUpsertSchema).mutation(async ({ ctx, input }) => {
-      const upsertOneprescriptionAttachment = await ctx.prisma.prescriptionAttachment.upsert(input);
-      return upsertOneprescriptionAttachment;
+  upsertOnePrescriptionAttachment: publicProcedure
+    .input(PrescriptionAttachmentUpsertSchema).mutation(async ({ ctx, input }) => {
+      const upsertOnePrescriptionAttachment = await ctx.prisma.prescriptionAttachment.upsert(input);
+      return upsertOnePrescriptionAttachment;
     }),
 
 }) 

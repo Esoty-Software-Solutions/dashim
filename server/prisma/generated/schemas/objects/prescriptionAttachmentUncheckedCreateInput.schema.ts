@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentUncheckedCreateInput> = z
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentUncheckedCreateInput> = z
   .object({
     id: z.string(),
     createdAt: z.coerce.date().optional(),
@@ -12,4 +12,4 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentUncheckedCreateInput> = z
   })
   .strict();
 
-export const prescriptionAttachmentUncheckedCreateInputObjectSchema = Schema;
+export const PrescriptionAttachmentUncheckedCreateInputObjectSchema = Schema;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { prescriptionAttachmentWhereInputObjectSchema } from './objects/prescriptionAttachmentWhereInput.schema';
+import { PrescriptionAttachmentWhereInputObjectSchema } from './objects/PrescriptionAttachmentWhereInput.schema';
 
-export const prescriptionAttachmentDeleteManySchema = z.object({
-  where: prescriptionAttachmentWhereInputObjectSchema.optional(),
+export const PrescriptionAttachmentDeleteManySchema = z.object({
+  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
 });

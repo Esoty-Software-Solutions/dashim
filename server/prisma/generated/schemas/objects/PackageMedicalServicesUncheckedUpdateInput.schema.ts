@@ -5,7 +5,6 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { PatientServiceUncheckedUpdateManyWithoutServiceNestedInputObjectSchema } from './PatientServiceUncheckedUpdateManyWithoutServiceNestedInput.schema';
-import { PatientExaminationUncheckedUpdateManyWithoutServiceNestedInputObjectSchema } from './PatientExaminationUncheckedUpdateManyWithoutServiceNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -82,12 +81,6 @@ const Schema: z.ZodType<Prisma.PackageMedicalServicesUncheckedUpdateInput> = z
       .lazy(
         () =>
           PatientServiceUncheckedUpdateManyWithoutServiceNestedInputObjectSchema,
-      )
-      .optional(),
-    patientExaminations: z
-      .lazy(
-        () =>
-          PatientExaminationUncheckedUpdateManyWithoutServiceNestedInputObjectSchema,
       )
       .optional(),
   })

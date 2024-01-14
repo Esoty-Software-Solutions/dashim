@@ -63,6 +63,9 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
     entryRecordId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
+    name: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
     Note: z
       .union([
         z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
@@ -73,16 +76,28 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
     isWorkInjury: z
       .union([z.lazy(() => BoolWithAggregatesFilterObjectSchema), z.boolean()])
       .optional(),
-    name: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+    isExamination: z
+      .union([z.lazy(() => BoolWithAggregatesFilterObjectSchema), z.boolean()])
       .optional(),
-    cash: z
+    billedAmmount: z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
-    limit: z
+    allowedAmmount: z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
-    deffered: z
+    copayAmmount: z
+      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+      .optional(),
+    cashAmount: z
+      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+      .optional(),
+    coveredAmount: z
+      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+      .optional(),
+    defferedAmount: z
+      .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+      .optional(),
+    coinsuranceAmount: z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
     transactionReviewStatusId: z
@@ -91,13 +106,10 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
     medicalReviewStatusId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
-    patientExaminationId: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
     serviceId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
-    groupId: z
+    groupCode: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
   })

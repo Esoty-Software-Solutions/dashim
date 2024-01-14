@@ -59,7 +59,7 @@ const Schema: z.ZodType<Prisma.EntryRecordScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     fingerprintId: z

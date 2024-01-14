@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FingerprintCreateNestedManyWithoutFingerTypeInputObjectSchema } from './FingerprintCreateNestedManyWithoutFingerTypeInput.schema';
+import { FingerprintBiometricCreateNestedManyWithoutFingerTypeInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutFingerTypeInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,7 +14,10 @@ const Schema: z.ZodType<Prisma.FingerTypeCreateInput> = z
     english: z.string().optional().nullable(),
     name: z.string(),
     fingerType: z
-      .lazy(() => FingerprintCreateNestedManyWithoutFingerTypeInputObjectSchema)
+      .lazy(
+        () =>
+          FingerprintBiometricCreateNestedManyWithoutFingerTypeInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

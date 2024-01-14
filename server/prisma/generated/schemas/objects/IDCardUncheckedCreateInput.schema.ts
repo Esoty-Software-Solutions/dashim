@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EntryRecordUncheckedCreateNestedManyWithoutIdCardInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutIdCardInput.schema';
+import { EntryRecordUncheckedCreateNestedManyWithoutIdCardBiometricInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutIdCardBiometricInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,11 +13,11 @@ const Schema: z.ZodType<Prisma.IDCardUncheckedCreateInput> = z
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     hash: z.string(),
-    subscriberGroupId: z.string(),
+    beneficiaryId: z.string(),
     entryRecords: z
       .lazy(
         () =>
-          EntryRecordUncheckedCreateNestedManyWithoutIdCardInputObjectSchema,
+          EntryRecordUncheckedCreateNestedManyWithoutIdCardBiometricInputObjectSchema,
       )
       .optional(),
   })

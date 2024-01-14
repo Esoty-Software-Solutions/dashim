@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { PatientServiceUncheckedCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutTransactionReviewStatusInput.schema';
 import { PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInput.schema';
-import { PatientExaminationUncheckedCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema } from './PatientExaminationUncheckedCreateNestedManyWithoutTransactionReviewStatusInput.schema';
-import { PatientExaminationUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema } from './PatientExaminationUncheckedCreateNestedManyWithoutMedicalReviewStatusInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -26,18 +24,6 @@ const Schema: z.ZodType<Prisma.ReviewStatusUncheckedCreateInput> = z
       .lazy(
         () =>
           PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema,
-      )
-      .optional(),
-    transactionPatientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationUncheckedCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema,
-      )
-      .optional(),
-    medicalPatientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema,
       )
       .optional(),
   })

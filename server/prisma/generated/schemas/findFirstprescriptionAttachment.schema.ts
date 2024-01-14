@@ -1,19 +1,19 @@
 import { z } from 'zod';
-import { prescriptionAttachmentOrderByWithRelationInputObjectSchema } from './objects/prescriptionAttachmentOrderByWithRelationInput.schema';
-import { prescriptionAttachmentWhereInputObjectSchema } from './objects/prescriptionAttachmentWhereInput.schema';
-import { prescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/prescriptionAttachmentWhereUniqueInput.schema';
-import { prescriptionAttachmentScalarFieldEnumSchema } from './enums/prescriptionAttachmentScalarFieldEnum.schema';
+import { PrescriptionAttachmentOrderByWithRelationInputObjectSchema } from './objects/PrescriptionAttachmentOrderByWithRelationInput.schema';
+import { PrescriptionAttachmentWhereInputObjectSchema } from './objects/PrescriptionAttachmentWhereInput.schema';
+import { PrescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/PrescriptionAttachmentWhereUniqueInput.schema';
+import { PrescriptionAttachmentScalarFieldEnumSchema } from './enums/PrescriptionAttachmentScalarFieldEnum.schema';
 
-export const prescriptionAttachmentFindFirstSchema = z.object({
+export const PrescriptionAttachmentFindFirstSchema = z.object({
   orderBy: z
     .union([
-      prescriptionAttachmentOrderByWithRelationInputObjectSchema,
-      prescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
+      PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
+      PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
     ])
     .optional(),
-  where: prescriptionAttachmentWhereInputObjectSchema.optional(),
-  cursor: prescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
+  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
+  cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.array(prescriptionAttachmentScalarFieldEnumSchema).optional(),
+  distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
 });

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SubscriberGroupUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema } from './SubscriberGroupUncheckedCreateNestedManyWithoutSubscriberInput.schema';
+import { BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema } from './BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,10 +14,10 @@ const Schema: z.ZodType<Prisma.SubscriberUncheckedCreateWithoutInsurancePolicyIn
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       institutionId: z.string(),
-      subscriberGroup: z
+      beneficiary: z
         .lazy(
           () =>
-            SubscriberGroupUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema,
+            BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema,
         )
         .optional(),
     })

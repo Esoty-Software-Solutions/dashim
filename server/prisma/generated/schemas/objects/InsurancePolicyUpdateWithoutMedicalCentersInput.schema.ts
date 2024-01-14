@@ -68,6 +68,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateWithoutMedicalCentersInput> 
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
+      serviceEntryTimeWindow: z
+        .union([
+          z.number(),
+          z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
       institution: z
         .lazy(
           () =>

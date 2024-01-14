@@ -3,7 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { CitiesUpdateManyWithoutCountryNestedInputObjectSchema } from './CitiesUpdateManyWithoutCountryNestedInput.schema';
+import { CityUpdateManyWithoutCountryNestedInputObjectSchema } from './CityUpdateManyWithoutCountryNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -66,7 +66,7 @@ const Schema: z.ZodType<Prisma.CountryUpdateInput> = z
       ])
       .optional(),
     cities: z
-      .lazy(() => CitiesUpdateManyWithoutCountryNestedInputObjectSchema)
+      .lazy(() => CityUpdateManyWithoutCountryNestedInputObjectSchema)
       .optional(),
   })
   .strict();

@@ -5,22 +5,22 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentWhereInput> = z
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentWhereInput> = z
   .object({
     AND: z
       .union([
-        z.lazy(() => prescriptionAttachmentWhereInputObjectSchema),
-        z.lazy(() => prescriptionAttachmentWhereInputObjectSchema).array(),
+        z.lazy(() => PrescriptionAttachmentWhereInputObjectSchema),
+        z.lazy(() => PrescriptionAttachmentWhereInputObjectSchema).array(),
       ])
       .optional(),
     OR: z
-      .lazy(() => prescriptionAttachmentWhereInputObjectSchema)
+      .lazy(() => PrescriptionAttachmentWhereInputObjectSchema)
       .array()
       .optional(),
     NOT: z
       .union([
-        z.lazy(() => prescriptionAttachmentWhereInputObjectSchema),
-        z.lazy(() => prescriptionAttachmentWhereInputObjectSchema).array(),
+        z.lazy(() => PrescriptionAttachmentWhereInputObjectSchema),
+        z.lazy(() => PrescriptionAttachmentWhereInputObjectSchema).array(),
       ])
       .optional(),
     id: z
@@ -41,4 +41,4 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentWhereInput> = z
   })
   .strict();
 
-export const prescriptionAttachmentWhereInputObjectSchema = Schema;
+export const PrescriptionAttachmentWhereInputObjectSchema = Schema;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { UserCreateNestedManyWithoutGenderInputObjectSchema } from './UserCreateNestedManyWithoutGenderInput.schema';
-import { SubscriberGroupCreateNestedManyWithoutGenderInputObjectSchema } from './SubscriberGroupCreateNestedManyWithoutGenderInput.schema';
+import { BeneficiaryCreateNestedManyWithoutGenderInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutGenderInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -17,8 +17,8 @@ const Schema: z.ZodType<Prisma.GenderCreateInput> = z
     user: z
       .lazy(() => UserCreateNestedManyWithoutGenderInputObjectSchema)
       .optional(),
-    subscriberGroup: z
-      .lazy(() => SubscriberGroupCreateNestedManyWithoutGenderInputObjectSchema)
+    beneficiary: z
+      .lazy(() => BeneficiaryCreateNestedManyWithoutGenderInputObjectSchema)
       .optional(),
   })
   .strict();

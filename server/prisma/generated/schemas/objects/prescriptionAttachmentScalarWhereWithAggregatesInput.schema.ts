@@ -5,19 +5,19 @@ import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentScalarWhereWithAggregatesInput> =
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentScalarWhereWithAggregatesInput> =
   z
     .object({
       AND: z
         .union([
           z.lazy(
             () =>
-              prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
+              PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
           ),
           z
             .lazy(
               () =>
-                prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
+                PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
             )
             .array(),
         ])
@@ -25,7 +25,7 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentScalarWhereWithAggregatesIn
       OR: z
         .lazy(
           () =>
-            prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
+            PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
         )
         .array()
         .optional(),
@@ -33,12 +33,12 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentScalarWhereWithAggregatesIn
         .union([
           z.lazy(
             () =>
-              prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
+              PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
           ),
           z
             .lazy(
               () =>
-                prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
+                PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema,
             )
             .array(),
         ])
@@ -76,5 +76,5 @@ const Schema: z.ZodType<Prisma.prescriptionAttachmentScalarWhereWithAggregatesIn
     })
     .strict();
 
-export const prescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema =
+export const PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema =
   Schema;

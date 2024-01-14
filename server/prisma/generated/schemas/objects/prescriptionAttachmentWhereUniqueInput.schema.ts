@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 import type { Prisma } from '@prisma/client';
 
-const Schema: z.ZodType<Prisma.prescriptionAttachmentWhereUniqueInput> = z
+const Schema: z.ZodType<Prisma.PrescriptionAttachmentWhereUniqueInput> = z
   .object({
     id: z.string().optional(),
   })
   .strict();
 
-export const prescriptionAttachmentWhereUniqueInputObjectSchema = Schema;
+export const PrescriptionAttachmentWhereUniqueInputObjectSchema = Schema;

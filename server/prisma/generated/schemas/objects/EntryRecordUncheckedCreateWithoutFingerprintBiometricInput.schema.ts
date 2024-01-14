@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { PatientServiceUncheckedCreateNestedManyWithoutEntryRecordInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutEntryRecordInput.schema';
-import { PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInputObjectSchema } from './PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,7 +13,7 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedCreateWithoutFingerprintBiome
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
-      subscriberGroupId: z.string(),
+      beneficiaryId: z.string(),
       idCardId: z.string().optional().nullable(),
       faceId: z.string().optional().nullable(),
       voiceId: z.string().optional().nullable(),
@@ -25,12 +24,6 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedCreateWithoutFingerprintBiome
         .lazy(
           () =>
             PatientServiceUncheckedCreateNestedManyWithoutEntryRecordInputObjectSchema,
-        )
-        .optional(),
-      patientExamination: z
-        .lazy(
-          () =>
-            PatientExaminationUncheckedCreateNestedOneWithoutEntryRecordInputObjectSchema,
         )
         .optional(),
     })

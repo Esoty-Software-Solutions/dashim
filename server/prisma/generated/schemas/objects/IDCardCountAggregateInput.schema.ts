@@ -12,7 +12,7 @@ const Schema: z.ZodType<Prisma.IDCardCountAggregateInputType> = z
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
     hash: z.literal(true).optional(),
-    subscriberGroupId: z.literal(true).optional(),
+    beneficiaryId: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })
   .strict();

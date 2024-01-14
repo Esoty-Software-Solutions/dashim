@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { PatientServiceUncheckedCreateNestedManyWithoutServiceInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutServiceInput.schema';
-import { PatientExaminationUncheckedCreateNestedManyWithoutServiceInputObjectSchema } from './PatientExaminationUncheckedCreateNestedManyWithoutServiceInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -21,12 +20,6 @@ const Schema: z.ZodType<Prisma.PackageMedicalServicesUncheckedCreateWithoutBenef
         .lazy(
           () =>
             PatientServiceUncheckedCreateNestedManyWithoutServiceInputObjectSchema,
-        )
-        .optional(),
-      patientExaminations: z
-        .lazy(
-          () =>
-            PatientExaminationUncheckedCreateNestedManyWithoutServiceInputObjectSchema,
         )
         .optional(),
     })

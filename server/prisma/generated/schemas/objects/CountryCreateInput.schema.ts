@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CitiesCreateNestedManyWithoutCountryInputObjectSchema } from './CitiesCreateNestedManyWithoutCountryInput.schema';
+import { CityCreateNestedManyWithoutCountryInputObjectSchema } from './CityCreateNestedManyWithoutCountryInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -15,7 +15,7 @@ const Schema: z.ZodType<Prisma.CountryCreateInput> = z
     name: z.string(),
     code: z.string(),
     cities: z
-      .lazy(() => CitiesCreateNestedManyWithoutCountryInputObjectSchema)
+      .lazy(() => CityCreateNestedManyWithoutCountryInputObjectSchema)
       .optional(),
   })
   .strict();

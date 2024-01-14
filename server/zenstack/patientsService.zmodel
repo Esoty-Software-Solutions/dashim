@@ -1,0 +1,84 @@
+import 'base'
+import 'medicalCenter';
+import 'verification'
+import 'policy'
+
+model EntryRecord extends Base, ActivationStatus {
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+
+  fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
+  fingerprintId String?
+
+  idCardBiometric IDCard? @relation(fields: [idCardId], references: [id])
+  idCardId String?
+
+  faceBiometric FaceBiometric? @relation(fields: [faceId], references: [id])
+  faceId String?
+
+  voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
+  voiceId String?
+
+  isValidated Boolean
+  isManuallyInserted Boolean @default(false)
+
+  patientServices PatientService[]
+
+  medicalCenterId String
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+}
+
+
+model PatientService extends Base, ActivationStatus {
+  entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
+  entryRecordId String
+  name String
+  Note String?
+  isWorkInjury Boolean @default(false) // TODO: connect this to the insurance policy
+  isExamination Boolean @default(false) // is this service is examination or not
+
+  // الحقول الأسفل تخزن بالقرش
+  billedAmmount Int // قيمة الخدمة المفوترة
+  allowedAmmount Int // قيمة الخدمة المسموح بها
+  copayAmmount Int  // قيمة المتحمله على المستفيد
+  cashAmount Int // قيمة المدفوعه نقديا من قبل المريض
+  coveredAmount Int // قيمة المغطاه من قبل الشركة
+  defferedAmount Int // قيمة المؤجله من قبل الشركة
+  coinsuranceAmount Int // قيمة التأمين المشترك
+
+  transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
+  transactionReviewStatusId String
+
+  medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatusId String
+
+  service PackageMedicalServices @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  groupCode String //used to group services in the same group
+}
+
+model ReviewStatus extends Base, LangLocale {
+  name String @unique
+  transactionPatientServices PatientService[] @relation("transactionReviewStatus")
+  medicalPatientServices PatientService[] @relation("medicalReviewStatus")
+}
+
+model BeneficiaryBalance extends Base {
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+
+  beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
+  beneftiPackageId String
+
+  balance Float
+}
+
+model DiagnosisAttachment extends Base, Attachment {
+}
+
+model LabReportAttachment extends Base {
+}
+
+model PrescriptionAttachment extends Base {
+}

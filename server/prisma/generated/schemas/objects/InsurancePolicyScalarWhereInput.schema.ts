@@ -56,6 +56,9 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereInput> = z
     institutionId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
+    serviceEntryTimeWindow: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
   })
   .strict();
 

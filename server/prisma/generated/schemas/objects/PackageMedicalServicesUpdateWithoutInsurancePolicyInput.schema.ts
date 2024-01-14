@@ -7,7 +7,6 @@ import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOpera
 import { BenefitPackageUpdateOneRequiredWithoutMedicalServicesNestedInputObjectSchema } from './BenefitPackageUpdateOneRequiredWithoutMedicalServicesNestedInput.schema';
 import { MedicalCenterUpdateOneRequiredWithoutBeneftiPackagesNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutBeneftiPackagesNestedInput.schema';
 import { PatientServiceUpdateManyWithoutServiceNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutServiceNestedInput.schema';
-import { PatientExaminationUpdateManyWithoutServiceNestedInputObjectSchema } from './PatientExaminationUpdateManyWithoutServiceNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -78,12 +77,6 @@ const Schema: z.ZodType<Prisma.PackageMedicalServicesUpdateWithoutInsurancePolic
       patientServices: z
         .lazy(
           () => PatientServiceUpdateManyWithoutServiceNestedInputObjectSchema,
-        )
-        .optional(),
-      patientExaminations: z
-        .lazy(
-          () =>
-            PatientExaminationUpdateManyWithoutServiceNestedInputObjectSchema,
         )
         .optional(),
     })

@@ -4,9 +4,13 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.PatientServiceSumAggregateInputType> = z
   .object({
-    cash: z.literal(true).optional(),
-    limit: z.literal(true).optional(),
-    deffered: z.literal(true).optional(),
+    billedAmmount: z.literal(true).optional(),
+    allowedAmmount: z.literal(true).optional(),
+    copayAmmount: z.literal(true).optional(),
+    cashAmount: z.literal(true).optional(),
+    coveredAmount: z.literal(true).optional(),
+    defferedAmount: z.literal(true).optional(),
+    coinsuranceAmount: z.literal(true).optional(),
   })
   .strict();
 

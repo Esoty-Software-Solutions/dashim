@@ -8,7 +8,7 @@ export const EntryRecordScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
-  'subscriberGroupId',
+  'beneficiaryId',
   'fingerprintId',
   'idCardId',
   'faceId',

@@ -11,7 +11,7 @@ const Schema: z.ZodType<Prisma.EntryRecordMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
-    subscriberGroupId: z.literal(true).optional(),
+    beneficiaryId: z.literal(true).optional(),
     fingerprintId: z.literal(true).optional(),
     idCardId: z.literal(true).optional(),
     faceId: z.literal(true).optional(),

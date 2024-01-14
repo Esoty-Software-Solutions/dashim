@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
-import { PatientExaminationOrderByRelationAggregateInputObjectSchema } from './PatientExaminationOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -31,12 +30,6 @@ const Schema: z.ZodType<Prisma.ReviewStatusOrderByWithRelationInput> = z
       .optional(),
     medicalPatientServices: z
       .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
-      .optional(),
-    transactionPatientExamination: z
-      .lazy(() => PatientExaminationOrderByRelationAggregateInputObjectSchema)
-      .optional(),
-    medicalPatientExamination: z
-      .lazy(() => PatientExaminationOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

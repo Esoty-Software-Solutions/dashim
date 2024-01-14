@@ -6,6 +6,7 @@ import type { Prisma } from '@prisma/client';
 const Schema: z.ZodType<Prisma.InsurancePolicySumOrderByAggregateInput> = z
   .object({
     limit: z.lazy(() => SortOrderSchema).optional(),
+    serviceEntryTimeWindow: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

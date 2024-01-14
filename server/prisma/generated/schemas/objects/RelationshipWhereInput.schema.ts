@@ -3,7 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { SubscriberGroupListRelationFilterObjectSchema } from './SubscriberGroupListRelationFilter.schema';
+import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -51,8 +51,8 @@ const Schema: z.ZodType<Prisma.RelationshipWhereInput> = z
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberGroup: z
-      .lazy(() => SubscriberGroupListRelationFilterObjectSchema)
+    beneficiary: z
+      .lazy(() => BeneficiaryListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

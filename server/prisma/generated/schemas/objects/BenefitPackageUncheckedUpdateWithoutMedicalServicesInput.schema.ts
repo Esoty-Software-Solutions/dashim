@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { BenefitPackageUpdatecopayDistrubtionInputObjectSchema } from './BenefitPackageUpdatecopayDistrubtionInput.schema';
 import { BenefitPackageUpdatethreasholdInputObjectSchema } from './BenefitPackageUpdatethreasholdInput.schema';
-import { SubscriberGroupBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './SubscriberGroupBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
+import { BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -76,7 +76,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateWithoutMedicalServic
       spents: z
         .lazy(
           () =>
-            SubscriberGroupBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema,
+            BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema,
         )
         .optional(),
     })

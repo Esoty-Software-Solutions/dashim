@@ -5,6 +5,7 @@ import type { Prisma } from '@prisma/client';
 const Schema: z.ZodType<Prisma.InsurancePolicySumAggregateInputType> = z
   .object({
     limit: z.literal(true).optional(),
+    serviceEntryTimeWindow: z.literal(true).optional(),
   })
   .strict();
 

@@ -1,11 +1,10 @@
 import { z } from 'zod';
-import { SubscriberGroupCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './SubscriberGroupCreateNestedOneWithoutEntryRecordsInput.schema';
-import { FingerprintCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FingerprintCreateNestedOneWithoutEntryRecordsInput.schema';
+import { BeneficiaryCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './BeneficiaryCreateNestedOneWithoutEntryRecordsInput.schema';
+import { FingerprintBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FingerprintBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { IDCardCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './IDCardCreateNestedOneWithoutEntryRecordsInput.schema';
-import { FaceCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FaceCreateNestedOneWithoutEntryRecordsInput.schema';
-import { VoiceCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './VoiceCreateNestedOneWithoutEntryRecordsInput.schema';
+import { FaceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FaceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
+import { VoiceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './VoiceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema } from './PatientServiceCreateNestedManyWithoutEntryRecordInput.schema';
-import { PatientExaminationCreateNestedOneWithoutEntryRecordInputObjectSchema } from './PatientExaminationCreateNestedOneWithoutEntryRecordInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -20,32 +19,31 @@ const Schema: z.ZodType<Prisma.EntryRecordCreateWithoutMedicalCenterInput> = z
     deactivationReason: z.string().optional().nullable(),
     isValidated: z.boolean(),
     isManuallyInserted: z.boolean().optional(),
-    subscriberGroup: z.lazy(
-      () => SubscriberGroupCreateNestedOneWithoutEntryRecordsInputObjectSchema,
+    beneficiary: z.lazy(
+      () => BeneficiaryCreateNestedOneWithoutEntryRecordsInputObjectSchema,
     ),
     fingerprintBiometric: z
       .lazy(
-        () => FingerprintCreateNestedOneWithoutEntryRecordsInputObjectSchema,
+        () =>
+          FingerprintBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema,
       )
       .optional(),
-    idCard: z
+    idCardBiometric: z
       .lazy(() => IDCardCreateNestedOneWithoutEntryRecordsInputObjectSchema)
       .optional(),
-    face: z
-      .lazy(() => FaceCreateNestedOneWithoutEntryRecordsInputObjectSchema)
+    faceBiometric: z
+      .lazy(
+        () => FaceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema,
+      )
       .optional(),
-    voice: z
-      .lazy(() => VoiceCreateNestedOneWithoutEntryRecordsInputObjectSchema)
+    voiceBiometric: z
+      .lazy(
+        () => VoiceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema,
+      )
       .optional(),
     patientServices: z
       .lazy(
         () => PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema,
-      )
-      .optional(),
-    patientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationCreateNestedOneWithoutEntryRecordInputObjectSchema,
       )
       .optional(),
   })

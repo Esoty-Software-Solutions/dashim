@@ -5,8 +5,6 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { PatientServiceUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutTransactionReviewStatusNestedInput.schema';
 import { PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInput.schema';
-import { PatientExaminationUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema } from './PatientExaminationUpdateManyWithoutTransactionReviewStatusNestedInput.schema';
-import { PatientExaminationUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema } from './PatientExaminationUpdateManyWithoutMedicalReviewStatusNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -72,18 +70,6 @@ const Schema: z.ZodType<Prisma.ReviewStatusUpdateInput> = z
       .lazy(
         () =>
           PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema,
-      )
-      .optional(),
-    transactionPatientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema,
-      )
-      .optional(),
-    medicalPatientExamination: z
-      .lazy(
-        () =>
-          PatientExaminationUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema,
       )
       .optional(),
   })

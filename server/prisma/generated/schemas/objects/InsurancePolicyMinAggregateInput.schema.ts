@@ -14,6 +14,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMinAggregateInputType> = z
     name: z.literal(true).optional(),
     limit: z.literal(true).optional(),
     institutionId: z.literal(true).optional(),
+    serviceEntryTimeWindow: z.literal(true).optional(),
   })
   .strict();
 

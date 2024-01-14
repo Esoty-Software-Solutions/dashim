@@ -4,7 +4,6 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
-import { PatientExaminationListRelationFilterObjectSchema } from './PatientExaminationListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -57,12 +56,6 @@ const Schema: z.ZodType<Prisma.ReviewStatusWhereInput> = z
       .optional(),
     medicalPatientServices: z
       .lazy(() => PatientServiceListRelationFilterObjectSchema)
-      .optional(),
-    transactionPatientExamination: z
-      .lazy(() => PatientExaminationListRelationFilterObjectSchema)
-      .optional(),
-    medicalPatientExamination: z
-      .lazy(() => PatientExaminationListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

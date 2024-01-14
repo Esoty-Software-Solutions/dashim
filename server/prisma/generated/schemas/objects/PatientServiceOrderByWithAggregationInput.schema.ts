@@ -24,6 +24,7 @@ const Schema: z.ZodType<Prisma.PatientServiceOrderByWithAggregationInput> = z
       ])
       .optional(),
     entryRecordId: z.lazy(() => SortOrderSchema).optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
     Note: z
       .union([
         z.lazy(() => SortOrderSchema),
@@ -31,15 +32,18 @@ const Schema: z.ZodType<Prisma.PatientServiceOrderByWithAggregationInput> = z
       ])
       .optional(),
     isWorkInjury: z.lazy(() => SortOrderSchema).optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
-    cash: z.lazy(() => SortOrderSchema).optional(),
-    limit: z.lazy(() => SortOrderSchema).optional(),
-    deffered: z.lazy(() => SortOrderSchema).optional(),
+    isExamination: z.lazy(() => SortOrderSchema).optional(),
+    billedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    allowedAmmount: z.lazy(() => SortOrderSchema).optional(),
+    copayAmmount: z.lazy(() => SortOrderSchema).optional(),
+    cashAmount: z.lazy(() => SortOrderSchema).optional(),
+    coveredAmount: z.lazy(() => SortOrderSchema).optional(),
+    defferedAmount: z.lazy(() => SortOrderSchema).optional(),
+    coinsuranceAmount: z.lazy(() => SortOrderSchema).optional(),
     transactionReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
     medicalReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
-    patientExaminationId: z.lazy(() => SortOrderSchema).optional(),
     serviceId: z.lazy(() => SortOrderSchema).optional(),
-    groupId: z.lazy(() => SortOrderSchema).optional(),
+    groupCode: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => PatientServiceCountOrderByAggregateInputObjectSchema)
       .optional(),

@@ -1,82 +1,82 @@
 import 'base'
 import 'verification'
 import 'policy'
-import 'patientsServices'
+import 'patientsService'
 
 
 model Institution extends Base, ActivationStatus {
-    name String
-    code String @unique
-    legacyCode String?
-    description String?
-    cityHQ String?
-    address String?
-    phoneArray String[] @unique
-    emailArray String[] @unique
-    // TODO: Normalize the phone and email array
-    // TODO: Normalize links
-    website String @url
-    facebookLink String @url
-    googleMapsLink String @url
-    twitterLink String @url
-    instagramLink String @url
+  name String
+  code String @unique
+  legacyCode String?
+  description String?
+  cityHQ String?
+  address String?
+  phoneArray String[] @unique
+  emailArray String[] @unique
+  // TODO: Normalize the phone and email array
+  // TODO: Normalize links
+  website String @url
+  facebookLink String @url
+  googleMapsLink String @url
+  twitterLink String @url
+  instagramLink String @url
 
-    latitude Float?
-    longitude Float?
+  latitude Float?
+  longitude Float?
 
-    // managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    // managingTenantId String @unique
+  // managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+  // managingTenantId String @unique
 
-    policies InsurancePolicy[]
-    members Subscriber[]
+  policies InsurancePolicy[]
+  members Subscriber[]
 }
 
 model Subscriber extends Base, ActivationStatus {
-    institution Institution @relation(fields: [institutionId], references: [id])
-    institutionId String
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
 
-    insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
-    insurancePolicyId String
+  insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
+  insurancePolicyId String
 
 
 
-    beneficiary Beneficiary[]
+  beneficiary Beneficiary[]
 
-    @@index([institutionId, id])
-    @@unique([institutionId, id])
+  @@index([institutionId, id])
+  @@unique([institutionId, id])
 }
 
 
 model Beneficiary extends Base, HumanProfile, ActivationStatus {
-    subscriber Subscriber @relation(fields: [subscriberId], references: [id])
-    subscriberId String
-    legacyCode String?
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+  subscriberId String
+  legacyCode String?
 
-    relationship Relationship @relation(fields: [relationshipId], references: [id])
-    relationshipId String
+  relationship Relationship @relation(fields: [relationshipId], references: [id])
+  relationshipId String
 
-    isFingerprintVerificationActive Boolean @default(false)
-    isIdCardVerificationActive Boolean @default(false)
-    isFaceVerificationActive Boolean @default(false)
-    isVoiceVerificationActive Boolean @default(false)
+  isFingerprintVerificationActive Boolean @default(false)
+  isIdCardVerificationActive Boolean @default(false)
+  isFaceVerificationActive Boolean @default(false)
+  isVoiceVerificationActive Boolean @default(false)
 
-    fingerprint FingerprintBiometric []
-    idCard IDCard[]
-    face FaceBiometric[]
-    voice VoiceBiometric[]
+  fingerprint FingerprintBiometric []
+  idCard IDCard[]
+  face FaceBiometric[]
+  voice VoiceBiometric[]
 
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 
-    spents BeneficiaryBalance[]
+  spents BeneficiaryBalance[]
 
-    @@index([subscriberId, id])
-    @@unique([subscriberId, id])
+  @@index([subscriberId, id])
+  @@unique([subscriberId, id])
 }
 
 
 model Relationship extends Base, LangLocale {
-    name String @unique
-    beneficiary Beneficiary[]
+  name String @unique
+  beneficiary Beneficiary[]
 }
 
 // enum Relationship {

@@ -4,8 +4,7 @@ import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './TenantOrderByWithRelationInput.schema';
 import { MedicalCenterServiceOrderByRelationAggregateInputObjectSchema } from './MedicalCenterServiceOrderByRelationAggregateInput.schema';
 import { PackageMedicalServicesOrderByRelationAggregateInputObjectSchema } from './PackageMedicalServicesOrderByRelationAggregateInput.schema';
-import { InsurancePolicyMedicalCentersOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCentersOrderByRelationAggregateInput.schema';
-import { TimeWindowOrderByWithRelationInputObjectSchema } from './TimeWindowOrderByWithRelationInput.schema';
+import { InsurancePolicyMedicalCenterOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCenterOrderByRelationAggregateInput.schema';
 import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -68,11 +67,8 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
     insurancePolicy: z
       .lazy(
         () =>
-          InsurancePolicyMedicalCentersOrderByRelationAggregateInputObjectSchema,
+          InsurancePolicyMedicalCenterOrderByRelationAggregateInputObjectSchema,
       )
-      .optional(),
-    timeWindow: z
-      .lazy(() => TimeWindowOrderByWithRelationInputObjectSchema)
       .optional(),
     entryRecords: z
       .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)

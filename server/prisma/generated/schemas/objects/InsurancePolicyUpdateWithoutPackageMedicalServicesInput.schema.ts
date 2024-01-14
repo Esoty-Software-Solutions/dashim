@@ -6,7 +6,7 @@ import { NullableStringFieldUpdateOperationsInputObjectSchema } from './Nullable
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { InstitutionUpdateOneRequiredWithoutPoliciesNestedInputObjectSchema } from './InstitutionUpdateOneRequiredWithoutPoliciesNestedInput.schema';
 import { SubscriberUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './SubscriberUpdateManyWithoutInsurancePolicyNestedInput.schema';
-import { InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInput.schema';
+import { InsurancePolicyMedicalCenterUpdateManyWithoutInsurancePolicyNestedInputObjectSchema } from './InsurancePolicyMedicalCenterUpdateManyWithoutInsurancePolicyNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -68,6 +68,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateWithoutPackageMedicalService
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
+      serviceEntryTimeWindow: z
+        .union([
+          z.number(),
+          z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
       institution: z
         .lazy(
           () =>
@@ -83,7 +89,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateWithoutPackageMedicalService
       medicalCenters: z
         .lazy(
           () =>
-            InsurancePolicyMedicalCentersUpdateManyWithoutInsurancePolicyNestedInputObjectSchema,
+            InsurancePolicyMedicalCenterUpdateManyWithoutInsurancePolicyNestedInputObjectSchema,
         )
         .optional(),
     })

@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { UserUncheckedUpdateManyWithoutGenderNestedInputObjectSchema } from './UserUncheckedUpdateManyWithoutGenderNestedInput.schema';
-import { SubscriberGroupUncheckedUpdateManyWithoutGenderNestedInputObjectSchema } from './SubscriberGroupUncheckedUpdateManyWithoutGenderNestedInput.schema';
+import { BeneficiaryUncheckedUpdateManyWithoutGenderNestedInputObjectSchema } from './BeneficiaryUncheckedUpdateManyWithoutGenderNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -63,10 +63,10 @@ const Schema: z.ZodType<Prisma.GenderUncheckedUpdateInput> = z
     user: z
       .lazy(() => UserUncheckedUpdateManyWithoutGenderNestedInputObjectSchema)
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .lazy(
         () =>
-          SubscriberGroupUncheckedUpdateManyWithoutGenderNestedInputObjectSchema,
+          BeneficiaryUncheckedUpdateManyWithoutGenderNestedInputObjectSchema,
       )
       .optional(),
   })

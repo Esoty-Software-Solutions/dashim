@@ -11,4 +11,5 @@ export const InsurancePolicyScalarFieldEnumSchema = z.enum([
   'name',
   'limit',
   'institutionId',
+  'serviceEntryTimeWindow',
 ]);

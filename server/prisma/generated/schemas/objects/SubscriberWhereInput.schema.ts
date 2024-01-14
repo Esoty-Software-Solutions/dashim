@@ -7,7 +7,7 @@ import { InstitutionRelationFilterObjectSchema } from './InstitutionRelationFilt
 import { InstitutionWhereInputObjectSchema } from './InstitutionWhereInput.schema';
 import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
 import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
-import { SubscriberGroupListRelationFilterObjectSchema } from './SubscriberGroupListRelationFilter.schema';
+import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -69,8 +69,8 @@ const Schema: z.ZodType<Prisma.SubscriberWhereInput> = z
         z.lazy(() => InsurancePolicyWhereInputObjectSchema),
       ])
       .optional(),
-    subscriberGroup: z
-      .lazy(() => SubscriberGroupListRelationFilterObjectSchema)
+    beneficiary: z
+      .lazy(() => BeneficiaryListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

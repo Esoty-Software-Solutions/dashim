@@ -11,7 +11,6 @@ import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.s
 import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
 import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
 import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
-import { PatientExaminationListRelationFilterObjectSchema } from './PatientExaminationListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -87,9 +86,6 @@ const Schema: z.ZodType<Prisma.PackageMedicalServicesWhereInput> = z
       .optional(),
     patientServices: z
       .lazy(() => PatientServiceListRelationFilterObjectSchema)
-      .optional(),
-    patientExaminations: z
-      .lazy(() => PatientExaminationListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

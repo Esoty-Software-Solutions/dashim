@@ -51,7 +51,7 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
       ])
       .optional()
       .nullable(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

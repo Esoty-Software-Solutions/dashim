@@ -3,58 +3,58 @@ import 'institution'
 
 model FingerprintBiometric extends Base, ActivationStatus {
 
-    fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
-    fingerTypeId String
+  fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
+  fingerTypeId String
 
-    hash String @unique
-    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
-    beneficiaryId String
+  hash String @unique
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
-    entryRecords EntryRecord []
+  entryRecords EntryRecord[]
 
-    @@index([beneficiaryId, id])
-    @@unique([beneficiaryId, id])
+  @@index([beneficiaryId, id])
+  @@unique([beneficiaryId, id])
 
-    @@index([id,fingerTypeId])
-    @@unique([id,fingerTypeId])
+  @@index([id,fingerTypeId])
+  @@unique([id,fingerTypeId])
 }
 
 model IDCard extends Base, ActivationStatus {
-    hash String @unique
-    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
-    beneficiaryId String
+  hash String @unique
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 
-    @@index([beneficiaryId, id])
-    @@unique([beneficiaryId, id])
+  @@index([beneficiaryId, id])
+  @@unique([beneficiaryId, id])
 }
 
 model FaceBiometric extends Base, ActivationStatus {
-    hash String @unique
-    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
-    beneficiaryId String
+  hash String @unique
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 
-    @@index([beneficiaryId, id])
-    @@unique([beneficiaryId, id])
+  @@index([beneficiaryId, id])
+  @@unique([beneficiaryId, id])
 }
 
 model VoiceBiometric extends Base, ActivationStatus {
-    hash String @unique
-    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
-    beneficiaryId String
+  hash String @unique
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
 
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 
-    @@index([beneficiaryId, id])
-    @@unique([beneficiaryId, id])
+  @@index([beneficiaryId, id])
+  @@unique([beneficiaryId, id])
 }
 
 model FingerType extends Base, LangLocale {
-    name String @unique
-    fingerType FingerprintBiometric[]
+  name String @unique
+  fingerType FingerprintBiometric[]
 }
 
 // enum FingerType {

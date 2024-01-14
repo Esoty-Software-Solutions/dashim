@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SubscriberGroupCreateNestedManyWithoutRelationshipInputObjectSchema } from './SubscriberGroupCreateNestedManyWithoutRelationshipInput.schema';
+import { BeneficiaryCreateNestedManyWithoutRelationshipInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutRelationshipInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,10 +13,9 @@ const Schema: z.ZodType<Prisma.RelationshipCreateInput> = z
     arabic: z.string().optional().nullable(),
     english: z.string().optional().nullable(),
     name: z.string(),
-    subscriberGroup: z
+    beneficiary: z
       .lazy(
-        () =>
-          SubscriberGroupCreateNestedManyWithoutRelationshipInputObjectSchema,
+        () => BeneficiaryCreateNestedManyWithoutRelationshipInputObjectSchema,
       )
       .optional(),
   })

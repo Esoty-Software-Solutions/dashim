@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { SubscriberGroupOrderByWithRelationInputObjectSchema } from './SubscriberGroupOrderByWithRelationInput.schema';
-import { FingerprintOrderByWithRelationInputObjectSchema } from './FingerprintOrderByWithRelationInput.schema';
+import { BeneficiaryOrderByWithRelationInputObjectSchema } from './BeneficiaryOrderByWithRelationInput.schema';
+import { FingerprintBiometricOrderByWithRelationInputObjectSchema } from './FingerprintBiometricOrderByWithRelationInput.schema';
 import { IDCardOrderByWithRelationInputObjectSchema } from './IDCardOrderByWithRelationInput.schema';
-import { FaceOrderByWithRelationInputObjectSchema } from './FaceOrderByWithRelationInput.schema';
-import { VoiceOrderByWithRelationInputObjectSchema } from './VoiceOrderByWithRelationInput.schema';
+import { FaceBiometricOrderByWithRelationInputObjectSchema } from './FaceBiometricOrderByWithRelationInput.schema';
+import { VoiceBiometricOrderByWithRelationInputObjectSchema } from './VoiceBiometricOrderByWithRelationInput.schema';
 import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
-import { PatientExaminationOrderByWithRelationInputObjectSchema } from './PatientExaminationOrderByWithRelationInput.schema';
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -26,7 +25,7 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
+    beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerprintId: z
       .union([
         z.lazy(() => SortOrderSchema),
@@ -54,20 +53,23 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
     isValidated: z.lazy(() => SortOrderSchema).optional(),
     isManuallyInserted: z.lazy(() => SortOrderSchema).optional(),
     medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
-    subscriberGroup: z
-      .lazy(() => SubscriberGroupOrderByWithRelationInputObjectSchema)
+    beneficiary: z
+      .lazy(() => BeneficiaryOrderByWithRelationInputObjectSchema)
       .optional(),
     fingerprintBiometric: z
-      .lazy(() => FingerprintOrderByWithRelationInputObjectSchema)
+      .lazy(() => FingerprintBiometricOrderByWithRelationInputObjectSchema)
       .optional(),
-    idCard: z.lazy(() => IDCardOrderByWithRelationInputObjectSchema).optional(),
-    face: z.lazy(() => FaceOrderByWithRelationInputObjectSchema).optional(),
-    voice: z.lazy(() => VoiceOrderByWithRelationInputObjectSchema).optional(),
+    idCardBiometric: z
+      .lazy(() => IDCardOrderByWithRelationInputObjectSchema)
+      .optional(),
+    faceBiometric: z
+      .lazy(() => FaceBiometricOrderByWithRelationInputObjectSchema)
+      .optional(),
+    voiceBiometric: z
+      .lazy(() => VoiceBiometricOrderByWithRelationInputObjectSchema)
+      .optional(),
     patientServices: z
       .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
-      .optional(),
-    patientExamination: z
-      .lazy(() => PatientExaminationOrderByWithRelationInputObjectSchema)
       .optional(),
     medicalCenter: z
       .lazy(() => MedicalCenterOrderByWithRelationInputObjectSchema)

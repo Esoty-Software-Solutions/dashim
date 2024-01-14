@@ -9,5 +9,5 @@ export const IDCardScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'hash',
-  'subscriberGroupId',
+  'beneficiaryId',
 ]);

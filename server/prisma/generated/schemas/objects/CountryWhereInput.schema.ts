@@ -3,7 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { CitiesListRelationFilterObjectSchema } from './CitiesListRelationFilter.schema';
+import { CityListRelationFilterObjectSchema } from './CityListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -54,7 +54,7 @@ const Schema: z.ZodType<Prisma.CountryWhereInput> = z
     code: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    cities: z.lazy(() => CitiesListRelationFilterObjectSchema).optional(),
+    cities: z.lazy(() => CityListRelationFilterObjectSchema).optional(),
   })
   .strict();
 

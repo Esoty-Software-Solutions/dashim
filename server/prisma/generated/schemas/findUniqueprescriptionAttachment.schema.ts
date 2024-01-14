@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { prescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/prescriptionAttachmentWhereUniqueInput.schema';
+import { PrescriptionAttachmentWhereUniqueInputObjectSchema } from './objects/PrescriptionAttachmentWhereUniqueInput.schema';
 
-export const prescriptionAttachmentFindUniqueSchema = z.object({
-  where: prescriptionAttachmentWhereUniqueInputObjectSchema,
+export const PrescriptionAttachmentFindUniqueSchema = z.object({
+  where: PrescriptionAttachmentWhereUniqueInputObjectSchema,
 });

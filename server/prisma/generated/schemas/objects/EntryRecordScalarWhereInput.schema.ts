@@ -46,7 +46,7 @@ const Schema: z.ZodType<Prisma.EntryRecordScalarWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     fingerprintId: z

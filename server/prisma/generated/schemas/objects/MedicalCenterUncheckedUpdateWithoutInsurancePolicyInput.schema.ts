@@ -8,7 +8,6 @@ import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdate
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInput.schema';
-import { TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInputObjectSchema } from './TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInput.schema';
 import { EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -162,12 +161,6 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateWithoutInsurancePolic
         .lazy(
           () =>
             PackageMedicalServicesUncheckedUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
-        )
-        .optional(),
-      timeWindow: z
-        .lazy(
-          () =>
-            TimeWindowUncheckedUpdateOneWithoutMedicalCenterNestedInputObjectSchema,
         )
         .optional(),
       entryRecords: z

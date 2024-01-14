@@ -3,19 +3,17 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { SubscriberGroupRelationFilterObjectSchema } from './SubscriberGroupRelationFilter.schema';
-import { SubscriberGroupWhereInputObjectSchema } from './SubscriberGroupWhereInput.schema';
-import { FingerprintRelationFilterObjectSchema } from './FingerprintRelationFilter.schema';
-import { FingerprintWhereInputObjectSchema } from './FingerprintWhereInput.schema';
+import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
+import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
+import { FingerprintBiometricRelationFilterObjectSchema } from './FingerprintBiometricRelationFilter.schema';
+import { FingerprintBiometricWhereInputObjectSchema } from './FingerprintBiometricWhereInput.schema';
 import { IDCardRelationFilterObjectSchema } from './IDCardRelationFilter.schema';
 import { IDCardWhereInputObjectSchema } from './IDCardWhereInput.schema';
-import { FaceRelationFilterObjectSchema } from './FaceRelationFilter.schema';
-import { FaceWhereInputObjectSchema } from './FaceWhereInput.schema';
-import { VoiceRelationFilterObjectSchema } from './VoiceRelationFilter.schema';
-import { VoiceWhereInputObjectSchema } from './VoiceWhereInput.schema';
+import { FaceBiometricRelationFilterObjectSchema } from './FaceBiometricRelationFilter.schema';
+import { FaceBiometricWhereInputObjectSchema } from './FaceBiometricWhereInput.schema';
+import { VoiceBiometricRelationFilterObjectSchema } from './VoiceBiometricRelationFilter.schema';
+import { VoiceBiometricWhereInputObjectSchema } from './VoiceBiometricWhereInput.schema';
 import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
-import { PatientExaminationRelationFilterObjectSchema } from './PatientExaminationRelationFilter.schema';
-import { PatientExaminationWhereInputObjectSchema } from './PatientExaminationWhereInput.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
 
@@ -61,7 +59,7 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    subscriberGroupId: z
+    beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     fingerprintId: z
@@ -89,50 +87,43 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
     medicalCenterId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .union([
-        z.lazy(() => SubscriberGroupRelationFilterObjectSchema),
-        z.lazy(() => SubscriberGroupWhereInputObjectSchema),
+        z.lazy(() => BeneficiaryRelationFilterObjectSchema),
+        z.lazy(() => BeneficiaryWhereInputObjectSchema),
       ])
       .optional(),
     fingerprintBiometric: z
       .union([
-        z.lazy(() => FingerprintRelationFilterObjectSchema),
-        z.lazy(() => FingerprintWhereInputObjectSchema),
+        z.lazy(() => FingerprintBiometricRelationFilterObjectSchema),
+        z.lazy(() => FingerprintBiometricWhereInputObjectSchema),
       ])
       .optional()
       .nullable(),
-    idCard: z
+    idCardBiometric: z
       .union([
         z.lazy(() => IDCardRelationFilterObjectSchema),
         z.lazy(() => IDCardWhereInputObjectSchema),
       ])
       .optional()
       .nullable(),
-    face: z
+    faceBiometric: z
       .union([
-        z.lazy(() => FaceRelationFilterObjectSchema),
-        z.lazy(() => FaceWhereInputObjectSchema),
+        z.lazy(() => FaceBiometricRelationFilterObjectSchema),
+        z.lazy(() => FaceBiometricWhereInputObjectSchema),
       ])
       .optional()
       .nullable(),
-    voice: z
+    voiceBiometric: z
       .union([
-        z.lazy(() => VoiceRelationFilterObjectSchema),
-        z.lazy(() => VoiceWhereInputObjectSchema),
+        z.lazy(() => VoiceBiometricRelationFilterObjectSchema),
+        z.lazy(() => VoiceBiometricWhereInputObjectSchema),
       ])
       .optional()
       .nullable(),
     patientServices: z
       .lazy(() => PatientServiceListRelationFilterObjectSchema)
       .optional(),
-    patientExamination: z
-      .union([
-        z.lazy(() => PatientExaminationRelationFilterObjectSchema),
-        z.lazy(() => PatientExaminationWhereInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     medicalCenter: z
       .union([
         z.lazy(() => MedicalCenterRelationFilterObjectSchema),

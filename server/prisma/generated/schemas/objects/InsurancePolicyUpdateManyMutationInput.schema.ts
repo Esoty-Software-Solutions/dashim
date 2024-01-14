@@ -64,6 +64,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUpdateManyMutationInput> = z
         z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    serviceEntryTimeWindow: z
+      .union([
+        z.number(),
+        z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
   })
   .strict();
 

@@ -3,7 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInputObjectSchema } from './SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInput.schema';
+import { BeneficiaryUpdateOneRequiredWithoutIdCardNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutIdCardNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -58,10 +58,9 @@ const Schema: z.ZodType<Prisma.IDCardUpdateWithoutEntryRecordsInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    subscriberGroup: z
+    beneficiary: z
       .lazy(
-        () =>
-          SubscriberGroupUpdateOneRequiredWithoutIdCardNestedInputObjectSchema,
+        () => BeneficiaryUpdateOneRequiredWithoutIdCardNestedInputObjectSchema,
       )
       .optional(),
   })

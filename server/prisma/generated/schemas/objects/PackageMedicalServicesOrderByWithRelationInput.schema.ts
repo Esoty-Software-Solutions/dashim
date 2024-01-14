@@ -5,7 +5,6 @@ import { BenefitPackageOrderByWithRelationInputObjectSchema } from './BenefitPac
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
 import { InsurancePolicyOrderByWithRelationInputObjectSchema } from './InsurancePolicyOrderByWithRelationInput.schema';
 import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
-import { PatientExaminationOrderByRelationAggregateInputObjectSchema } from './PatientExaminationOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -39,9 +38,6 @@ const Schema: z.ZodType<Prisma.PackageMedicalServicesOrderByWithRelationInput> =
         .optional(),
       patientServices: z
         .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
-        .optional(),
-      patientExaminations: z
-        .lazy(() => PatientExaminationOrderByRelationAggregateInputObjectSchema)
         .optional(),
     })
     .strict();

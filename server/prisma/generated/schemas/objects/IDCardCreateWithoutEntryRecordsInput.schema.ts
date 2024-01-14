@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SubscriberGroupCreateNestedOneWithoutIdCardInputObjectSchema } from './SubscriberGroupCreateNestedOneWithoutIdCardInput.schema';
+import { BeneficiaryCreateNestedOneWithoutIdCardInputObjectSchema } from './BeneficiaryCreateNestedOneWithoutIdCardInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,8 +13,8 @@ const Schema: z.ZodType<Prisma.IDCardCreateWithoutEntryRecordsInput> = z
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     hash: z.string(),
-    subscriberGroup: z.lazy(
-      () => SubscriberGroupCreateNestedOneWithoutIdCardInputObjectSchema,
+    beneficiary: z.lazy(
+      () => BeneficiaryCreateNestedOneWithoutIdCardInputObjectSchema,
     ),
   })
   .strict();

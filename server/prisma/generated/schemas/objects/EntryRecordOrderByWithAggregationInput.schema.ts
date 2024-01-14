@@ -21,7 +21,7 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    subscriberGroupId: z.lazy(() => SortOrderSchema).optional(),
+    beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerprintId: z
       .union([
         z.lazy(() => SortOrderSchema),

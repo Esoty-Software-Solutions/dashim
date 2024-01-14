@@ -50,6 +50,9 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereInput> = z
     entryRecordId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
+    name: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
     Note: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
@@ -57,14 +60,28 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereInput> = z
     isWorkInjury: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
-    name: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+    isExamination: z
+      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
-    cash: z.union([z.lazy(() => IntFilterObjectSchema), z.number()]).optional(),
-    limit: z
+    billedAmmount: z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
-    deffered: z
+    allowedAmmount: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    copayAmmount: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    cashAmount: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    coveredAmount: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    defferedAmount: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    coinsuranceAmount: z
       .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
     transactionReviewStatusId: z
@@ -73,13 +90,10 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereInput> = z
     medicalReviewStatusId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    patientExaminationId: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
     serviceId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    groupId: z
+    groupCode: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
   })

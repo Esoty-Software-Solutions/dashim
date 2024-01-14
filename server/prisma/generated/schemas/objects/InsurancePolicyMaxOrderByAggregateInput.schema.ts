@@ -15,6 +15,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMaxOrderByAggregateInput> = z
     name: z.lazy(() => SortOrderSchema).optional(),
     limit: z.lazy(() => SortOrderSchema).optional(),
     institutionId: z.lazy(() => SortOrderSchema).optional(),
+    serviceEntryTimeWindow: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

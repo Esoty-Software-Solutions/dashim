@@ -13,7 +13,7 @@ model InsurancePolicy extends Base, ActivationStatus {
   serviceEntryTimeWindow Int @default(24) // time in hours
 
   packageMedicalServices PackageMedicalServices[]
-  medicalCenters InsurancePolicyMedicalCenters[]
+  medicalCenters InsurancePolicyMedicalCenter[]
 }
 
 
@@ -43,7 +43,7 @@ model PackageMedicalServices extends Base, ActivationStatus {
   @@index([insurancePolicyId, beneftiPackageId, medicalServiceId])
 }
 
-model InsurancePolicyMedicalCenters extends Base, ActivationStatus {
+model InsurancePolicyMedicalCenter extends Base, ActivationStatus {
   insurancePolicyId String
   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
 

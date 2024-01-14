@@ -14,6 +14,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateManyInput> = z
     name: z.string(),
     limit: z.number(),
     institutionId: z.string(),
+    serviceEntryTimeWindow: z.number().optional(),
   })
   .strict();
 
