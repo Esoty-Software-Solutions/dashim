@@ -28,7 +28,7 @@ model BenefitPackage extends Base, ActivationStatus {
   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
   insurancePolicyId String
 
-  spents BeneficiaryBalance[] // TODO: swtich to benefitPackageBalance
+  beneficiaryBalances BeneficiaryBalance[]
 }
 
 // model PackageMedicalServices extends Base, ActivationStatus {
