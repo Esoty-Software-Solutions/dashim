@@ -74,3 +74,12 @@ model Country extends Base, LangLocale {
   cities Cities[]
 }
 
+abstract model Attachment {
+  name String
+  link String // holds s3 secret link
+  size Int // in bytes
+  contentType String
+  metadata Json
+}
+
+

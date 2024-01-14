@@ -35,6 +35,11 @@ model EntryRecord extends Base, ActivationStatus {
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
 }
 
+// abstract model ServiceRecord {
+//   isActive Boolean @default(true)
+//   deactivationReason String?
+// }
+
 model PatientService extends Base, ActivationStatus {
   entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
   entryRecordId String
@@ -109,26 +114,11 @@ model SubscriberGroupBalance extends Base {
   balance Float
 }
 
-model DiagnosesAttachment extends Base {
-  name String
-  link String // holds s3 secret link
-  size Int // in bytes
-  contentType String
-  metadata Json
+model DiagnosesAttachment extends Base, Attachment {
 }
 
 model LabReportAttachment extends Base {
-  name String
-  link String // holds s3 secret link
-  size Int // in bytes
-  contentType String
-  metadata Json
 }
 
 model prescriptionAttachment extends Base {
-  name String
-  link String // holds s3 secret link
-  size Int // in bytes
-  contentType String
-  metadata Json
 }
