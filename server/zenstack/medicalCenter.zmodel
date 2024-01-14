@@ -1,5 +1,7 @@
 import 'base'
 import 'user'
+import 'policy'
+import 'patientService'
 
 
 model MedicalCenter extends Base, ActivationStatus {
@@ -24,11 +26,25 @@ model MedicalCenter extends Base, ActivationStatus {
 
   services MedicalCenterService[]
 
-  beneftiPackages PackageMedicalServices []
-
   insurancePolicy InsurancePolicyMedicalCenter []
 
   entryRecords EntryRecord[]
+}
+
+model BenefitPackageMedicalCenterServiceTemplate extends Base, ActivationStatus {
+
+  benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
+  benefitPackageId String
+
+  medicalCenterServiceTemplate MedicalCenterServiceTemplate @relation(fields: [medicalCenterServiceTemplateId], references: [id])
+  medicalCenterServiceTemplateId String
+
+  @@index([benefitPackageId, medicalCenterServiceTemplateId])
+  @@unique([benefitPackageId, medicalCenterServiceTemplateId])
+
+  // * Service Template can be connected to many Benefit Packages
+  // * However this can cause issues where a single service can
+  // * belong to multiple benefit packages with copayments & limits
 }
 
 model MedicalCenterServiceTemplate extends Base, ActivationStatus {
@@ -36,6 +52,7 @@ model MedicalCenterServiceTemplate extends Base, ActivationStatus {
   dalilCode String
   basePrice String
 
+  beneftiPackages BenefitPackageMedicalCenterServiceTemplate[]
   services MedicalCenterService[]
 }
 
@@ -45,14 +62,15 @@ model MedicalCenterService extends Base, ActivationStatus {
   basePrice String
 
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-  medicalCenterId String @unique
+  medicalCenterId String
 
-  @@index([medicalCenterId, medicalCenterCode])
-  @@unique([medicalCenterId, medicalCenterCode])
-
+  patientServices PatientService[]
 
   template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
   templateId String
+
+  @@index([medicalCenterId, medicalCenterCode])
+  @@unique([medicalCenterId, medicalCenterCode])
   @@index([templateId,medicalCenterId,  medicalCenterCode])
   @@unique([templateId,medicalCenterId,  medicalCenterCode])
 }

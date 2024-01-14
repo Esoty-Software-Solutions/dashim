@@ -1,7 +1,7 @@
 import 'base'
 import 'verification'
 import 'policy'
-import 'patientsService'
+import 'patientService'
 
 
 model Institution extends Base, ActivationStatus {
@@ -40,7 +40,7 @@ model Subscriber extends Base, ActivationStatus {
 
 
 
-  beneficiary Beneficiary[]
+  beneficiaries Beneficiary[]
 
   @@index([institutionId, id])
   @@unique([institutionId, id])

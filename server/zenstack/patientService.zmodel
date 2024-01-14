@@ -52,8 +52,8 @@ model PatientService extends Base, ActivationStatus {
   medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
-  service PackageMedicalServices @relation(fields: [serviceId], references: [id])
-  serviceId String
+  medicalService MedicalCenterService @relation(fields: [medicalServiceId], references: [id])
+  medicalServiceId String
 
   groupCode String //used to group services in the same group
 }
@@ -72,6 +72,9 @@ model BeneficiaryBalance extends Base {
   beneftiPackageId String
 
   balance Float
+
+  @@index([beneficiaryId, beneftiPackageId])
+  @@unique([beneficiaryId, beneftiPackageId])
 }
 
 model DiagnosisAttachment extends Base, Attachment {
