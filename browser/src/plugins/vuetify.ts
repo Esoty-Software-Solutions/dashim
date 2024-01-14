@@ -1,6 +1,8 @@
 /**
  * Vuetify3 Plugin
  */
+import { useI18n } from "vue-i18n";
+
 import {
   createVuetify,
   type VuetifyOptions,
@@ -8,13 +10,18 @@ import {
 } from "vuetify";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 // Translations provided by Vuetify
-import { en } from "vuetify/locale";
+import { en, ar } from "vuetify/locale";
+import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 
-// Misc
 import { loadFonts } from "@/plugins/webfontloader";
+
+import i18n from "./i18n";
 
 // Styles
 import "vuetify/styles";
+
+i18n.global.mergeLocaleMessage("en", en);
+i18n.global.mergeLocaleMessage("ar", ar);
 
 await loadFonts();
 
@@ -61,9 +68,8 @@ let vuetifyConfig: VuetifyOptions = {
   // Internationalization (i18n)
   // https://vuetifyjs.com/en/features/internationalization/#internationalization-i18n
   locale: {
-    locale: "en",
-    fallback: "en",
-    messages: { en },
+    // @ts-expect-error
+    adapter: createVueI18nAdapter({ i18n, useI18n }),
   },
   // Theme
   // https://vuetifyjs.com/en/features/theme/

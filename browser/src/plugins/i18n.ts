@@ -3,6 +3,8 @@ import { createI18n } from "vue-i18n";
 const i18n = createI18n({
   fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE ?? "en",
 
+  locale: "en",
+
   legacy: false,
 
   pluralizationRules: {
