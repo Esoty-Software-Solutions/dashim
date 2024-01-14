@@ -5,6 +5,16 @@ node_modules
 /public/build
 .env
 
+# Prisma
+/prisma/db.sqlite
+/prisma/DB.sqlite-journal
+/prisma/dbml
+/prisma/fakeData
+/prisma/generated
+.zenstack_repl_history
+
+*.tsbuildinfo
+
 # Logs
 logs
 *.log

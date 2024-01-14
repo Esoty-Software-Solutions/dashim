@@ -501,6 +501,80 @@ model InsurancePolicyMedicalCenter {
 }
 
 /// @@allow('all', true && isPublished)
+model MedicalCenter {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    name String
+    code String
+    description String
+    cityHQ String
+    address String?
+    phone String[] @unique()
+    email String[] @unique()
+    /// @url
+    website String
+    /// @url
+    facebookLink String
+    /// @url
+    googleMapsLink String
+    /// @url
+    twitterLink String
+    /// @url
+    instagramLink String
+    latitude Float?
+    longitude Float?
+    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+    managingTenantId String @unique()
+    services MedicalCenterService[]
+    beneftiPackages PackageMedicalServices[]
+    insurancePolicy InsurancePolicyMedicalCenter[]
+    entryRecords EntryRecord[]
+}
+
+/// @@allow('all', true && isPublished)
+model MedicalCenterServiceTemplate {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    name String
+    dalilCode String
+    basePrice String
+    services MedicalCenterService[]
+}
+
+/// @@allow('all', true && isPublished)
+model MedicalCenterService {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    name String
+    medicalCenterCode String
+    basePrice String
+    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+    medicalCenterId String @unique()
+    template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
+    templateId String
+
+    @@index([medicalCenterId, medicalCenterCode])
+    @@unique([medicalCenterId, medicalCenterCode])
+    @@index([templateId, medicalCenterId, medicalCenterCode])
+    @@unique([templateId, medicalCenterId, medicalCenterCode])
+}
+
+/// @@allow('all', true && isPublished)
 model EntryRecord {
     id String @id()
     createdAt DateTime @default(now())
@@ -615,78 +689,4 @@ model PrescriptionAttachment {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
-}
-
-/// @@allow('all', true && isPublished)
-model MedicalCenter {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    isActive Boolean @default(true)
-    deactivationReason String?
-    name String
-    code String
-    description String
-    cityHQ String
-    address String?
-    phone String[] @unique()
-    email String[] @unique()
-    /// @url
-    website String
-    /// @url
-    facebookLink String
-    /// @url
-    googleMapsLink String
-    /// @url
-    twitterLink String
-    /// @url
-    instagramLink String
-    latitude Float?
-    longitude Float?
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique()
-    services MedicalCenterService[]
-    beneftiPackages PackageMedicalServices[]
-    insurancePolicy InsurancePolicyMedicalCenter[]
-    entryRecords EntryRecord[]
-}
-
-/// @@allow('all', true && isPublished)
-model MedicalCenterServiceTemplate {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    isActive Boolean @default(true)
-    deactivationReason String?
-    name String
-    dalilCode String
-    basePrice String
-    services MedicalCenterService[]
-}
-
-/// @@allow('all', true && isPublished)
-model MedicalCenterService {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    isActive Boolean @default(true)
-    deactivationReason String?
-    name String
-    medicalCenterCode String
-    basePrice String
-    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-    medicalCenterId String @unique()
-    template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
-    templateId String
-
-    @@index([medicalCenterId, medicalCenterCode])
-    @@unique([medicalCenterId, medicalCenterCode])
-    @@index([templateId, medicalCenterId, medicalCenterCode])
-    @@unique([templateId, medicalCenterId, medicalCenterCode])
 }
