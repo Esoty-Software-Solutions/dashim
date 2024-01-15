@@ -10,6 +10,8 @@ import {
 import useSession from "@/modules/auth/stores/session";
 import useGlobal from "@/modules/shared/stores/globalStore";
 
+import useConfig from "./modules/shared/stores/configStore";
+
 /** Router Rules */
 const routes: RouteRecordRaw[] = [
   {
@@ -87,6 +89,14 @@ router.beforeEach(async () => {
     globalStore.setLoading(true);
     await sessionStore.initialize();
   }
+});
+
+// locale fetching
+// IMPORTANT: keep this guard after user data/signIn to make sure locale is loaded
+//            according to user preferences
+router.beforeEach(async () => {
+  const config = useConfig();
+  await config.initializeI18n();
 });
 
 /***

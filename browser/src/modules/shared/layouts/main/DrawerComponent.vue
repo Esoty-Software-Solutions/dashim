@@ -1,14 +1,25 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-import { mdiThemeLightDark, mdiAccountGroup, mdiLogout } from "@mdi/js";
+import {
+  mdiThemeLightDark,
+  mdiAccountGroup,
+  mdiLogout,
+  mdiTranslateVariant,
+  mdiChevronDown,
+} from "@mdi/js";
 import { useDisplay } from "vuetify";
+
+import LocaleMenu from "../../components/LocaleMenu.vue";
 
 import useSession from "@/modules/auth/stores/session";
 import useConfig from "@/modules/shared/stores/configStore";
 import useLayoutStore from "@/modules/shared/stores/layoutStore";
 
 import type { DrawerMenuItem } from "../../interfaces";
+
+const { t } = useI18n();
 
 const sessionStore = useSession();
 
@@ -48,6 +59,14 @@ const items: DrawerMenuItem[] = [
  * theme state
  */
 const configStore = useConfig();
+
+/**
+ * Locale dropdown
+ */
+const localeName = computed(() => {
+  const currentLocale = configStore.locale;
+  return t(`locale.${currentLocale}.name`);
+});
 </script>
 
 <template>
@@ -115,13 +134,30 @@ const configStore = useConfig();
       </template>
 
       <VDivider />
-      <VListItem :prepend-icon="mdiThemeLightDark" title="Dark mode">
+      <VListItem
+        :prepend-icon="mdiThemeLightDark"
+        :title="t('common.darkMode')"
+      >
         <template #append>
           <VListItemAction end>
             <VSwitch v-model="configStore.dark" color="primary" hide-details />
           </VListItemAction>
         </template>
       </VListItem>
+
+      <VMenu>
+        <template #default>
+          <LocaleMenu />
+        </template>
+        <template #activator="{ props }">
+          <VListItem
+            :prepend-icon="mdiTranslateVariant"
+            :title="localeName"
+            :append-icon="mdiChevronDown"
+            v-bind="props"
+          />
+        </template>
+      </VMenu>
     </VList>
     <template #append>
       <div class="pa-2">

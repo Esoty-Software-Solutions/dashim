@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch, type Ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { mdiClose } from "@mdi/js";
 import { useTheme } from "vuetify";
@@ -33,6 +34,15 @@ watch(
   (isDark) => (theme.global.name.value = isDark ? "dalil-dark" : "dalil-light"),
   {
     immediate: true,
+  },
+);
+
+// locale switching
+const i18n = useI18n();
+watch(
+  () => configStore.locale,
+  (locale) => {
+    i18n.locale.value = locale;
   },
 );
 </script>

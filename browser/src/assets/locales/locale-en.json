@@ -1,0 +1,15 @@
+{
+  "common": {
+    "darkMode": "Dark mode"
+  },
+  "locale": {
+    "en": {
+      "name": "English",
+      "nativeName": "English"
+    },
+    "ar": {
+      "name": "Arabic",
+      "nativeName": "العربية"
+    }
+  }
+}
