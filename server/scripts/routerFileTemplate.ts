@@ -4,18 +4,33 @@ import {
   throwCustomError,
 } from "@routers/_trpc.router";
 import { z } from "zod";
-import { User, type UserType } from "@models/user";
+import { User } from "../src/models/user";
+import {
+  UserAggregateSchema,
+  UserCreateManySchema,
+  UserCreateOneSchema,
+  UserDeleteManySchema,
+  UserDeleteOneSchema,
+  UserFindFirstSchema,
+  UserFindManySchema,
+  UserFindUniqueSchema,
+  UserGroupBySchema,
+  UserUpdateManySchema,
+  UserUpdateOneSchema,
+  UserUpsertSchema,
+  UserCountSchema,
+} from "@schemas/UserRouter.schema";
 
 export const userRouter = router({
-  aggregate: publicProcedure
-    .input(UserAggregateSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.user.aggregate(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+  // aggregate: publicProcedure
+  //   .input(UserAggregateSchema)
+  //   .query(async ({ ctx, input }) => {
+  //     try {
+  //       return await ctx.prisma.user.aggregate(input);
+  //     } catch (error) {
+  //       throwCustomError(error);
+  //     }
+  //   }),
 
   createMany: publicProcedure
     .input(UserCreateManySchema)
