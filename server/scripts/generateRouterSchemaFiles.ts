@@ -5,8 +5,7 @@ import path from "path";
 const TableNames = Object.values(Prisma.ModelName);
 const __dirname = path.dirname(new URL(import.meta.url).pathname.substring(1));
 
-const templatePath = path.join(__dirname, "modelFileTemplate.ts");
-const template = fs.readFileSync(templatePath, "utf-8");
+const tableNamesCO = ["User"];
 
 const sourceEnumsDir: string = path.resolve(
   __dirname,
@@ -42,6 +41,31 @@ const outputObjectDir: string = path.resolve(
   "objects",
 );
 
+const SchemaTemplatePath = path.join(__dirname, "schemaRouterFileTemplate.ts");
+const SchemaTemplate = fs.readFileSync(SchemaTemplatePath, "utf-8");
+
+const SchemaTemplatePathCO = path.join(
+  __dirname,
+  "schemaRouterCOFileTemplate.ts",
+);
+const SchemaTemplateCO = fs.readFileSync(SchemaTemplatePathCO, "utf-8");
+
+const SchemaOutputDir: string = path.resolve(
+  __dirname,
+  "..",
+  "src",
+  "schemas",
+  "routers",
+);
+
+const routeTemplatePath = path.join(__dirname, "routerFileTemplate.ts");
+const routeTemplate = fs.readFileSync(routeTemplatePath, "utf-8");
+
+const routeTemplatePathCO = path.join(__dirname, "routerCOFileTemplate.ts");
+const routeTemplateCO = fs.readFileSync(routeTemplatePathCO, "utf-8");
+
+const routeOutputDir: string = path.resolve(__dirname, "..", "src", "routers");
+
 // console.info("source are:\n", sourceEnumsDir, "\n", sourceObjectDir);
 // console.info("output are:\n", outputEnumsDir, "\n", outputObjectDir);
 
@@ -49,14 +73,16 @@ const outputObjectDir: string = path.resolve(
 console.info("removing files in output directory");
 fs.rmSync(outputEnumsDir, { recursive: true, force: true });
 fs.rmSync(outputObjectDir, { recursive: true, force: true });
+fs.rmSync(SchemaOutputDir, { recursive: true, force: true });
 // Recreate the directories
 fs.mkdirSync(outputEnumsDir, { recursive: true });
 fs.mkdirSync(outputObjectDir, { recursive: true });
+fs.mkdirSync(SchemaOutputDir, { recursive: true });
 
 // Read the source directory
 function copyFiles(sourceDirectory: string, destinationDirectory: string) {
   console.info(
-    "copying files from: ",
+    "copying object schema files from: ",
     sourceDirectory,
     "to: ",
     destinationDirectory,
@@ -99,3 +125,53 @@ function copyFiles(sourceDirectory: string, destinationDirectory: string) {
 
 copyFiles(sourceEnumsDir, outputEnumsDir);
 copyFiles(sourceObjectDir, outputObjectDir);
+
+let fileCounter = 0;
+
+TableNames.forEach((TableName) => {
+  const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+  let output: string = "";
+  if (tableNamesCO.includes(TableName)) {
+    console.info("generating schema file for: ", TableName);
+    output = SchemaTemplate.replace(/User/g, TableName).replace(
+      /user(?!Id)/g,
+      tableName,
+    );
+  } else {
+    output = SchemaTemplateCO.replace(/User/g, TableName).replace(
+      /user(?!Id)/g,
+      tableName,
+    );
+  }
+  fs.writeFileSync(
+    path.join(SchemaOutputDir, `${tableName}.schema.ts`),
+    output,
+  );
+  fileCounter++;
+});
+
+console.info(`Generated ${fileCounter} files`);
+console.info("Schema output is: ", SchemaOutputDir);
+
+fileCounter = 0;
+
+TableNames.forEach((TableName) => {
+  const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+  let output: string = "";
+  if (tableName in tableNamesCO) {
+    output = routeTemplate
+      .replace(/User/g, TableName)
+      .replace(/user(?!Id)/g, tableName);
+  } else {
+    output = routeTemplateCO
+      .replace(/User/g, TableName)
+      .replace(/user(?!Id)/g, tableName);
+  }
+  fs.writeFileSync(path.join(routeOutputDir, `${tableName}.router.ts`), output);
+  fileCounter++;
+});
+
+console.info(`Generated ${fileCounter} files`);
+console.info("output is: ", routeOutputDir);
+
+// TODO: edit the _.router.ts files to import the correct schema files

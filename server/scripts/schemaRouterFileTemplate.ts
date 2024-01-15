@@ -7,12 +7,12 @@ import { UserWhereInputObjectSchema } from "@schemas/objects/UserWhereInput.sche
 import { UserOrderByWithRelationInputObjectSchema } from "@schemas/objects/UserOrderByWithRelationInput.schema";
 import { UserWhereUniqueInputObjectSchema } from "@schemas/objects/UserWhereUniqueInput.schema";
 import { UserUncheckedUpdateInputObjectSchema } from "@schemas/objects/UserUncheckedUpdateInput.schema";
-import { UserOrderByWithAggregationInputObjectSchema } from "@schemas/objects/UserOrderByWithAggregationInput.schema"; //
-import { UserScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/UserScalarWhereWithAggregatesInput.schema"; //
-import { UserUpdateManyMutationInputObjectSchema } from "@schemas/objects/UserUpdateManyMutationInput.schema"; //
-import { UserCountAggregateInputObjectSchema } from "@schemas/objects/UserCountAggregateInput.schema"; //
-import { UserMinAggregateInputObjectSchema } from "@schemas/objects/UserMinAggregateInput.schema"; //
-import { UserMaxAggregateInputObjectSchema } from "@schemas/objects/UserMaxAggregateInput.schema"; //
+import { UserOrderByWithAggregationInputObjectSchema } from "@schemas/objects/UserOrderByWithAggregationInput.schema";
+import { UserScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/UserScalarWhereWithAggregatesInput.schema";
+import { UserUpdateManyMutationInputObjectSchema } from "@schemas/objects/UserUpdateManyMutationInput.schema";
+import { UserCountAggregateInputObjectSchema } from "@schemas/objects/UserCountAggregateInput.schema";
+import { UserMinAggregateInputObjectSchema } from "@schemas/objects/UserMinAggregateInput.schema";
+import { UserMaxAggregateInputObjectSchema } from "@schemas/objects/UserMaxAggregateInput.schema";
 
 export const UserAggregateSchema = z.object({
   orderBy: z
@@ -30,7 +30,7 @@ export const UserAggregateSchema = z.object({
     .optional(),
   _min: UserMinAggregateInputObjectSchema.optional(),
   _max: UserMaxAggregateInputObjectSchema.optional(),
-}); //
+});
 
 export const UserCreateManySchema = z.object({
   data: z.union([
@@ -46,6 +46,10 @@ export const UserCreateOneSchema = z.object({
 
 export const UserDeleteManySchema = z.object({
   where: UserWhereInputObjectSchema.optional(),
+});
+
+export const UserDeleteOneSchema = z.object({
+  where: UserWhereUniqueInputObjectSchema.optional(),
 });
 
 export const UserFindFirstSchema = z.object({
@@ -92,12 +96,12 @@ export const UserGroupBySchema = z.object({
   take: z.number().optional(),
   skip: z.number().optional(),
   by: z.array(UserScalarFieldEnumSchema),
-}); //
+});
 
 export const UserUpdateManySchema = z.object({
   data: UserUpdateManyMutationInputObjectSchema,
   where: UserWhereInputObjectSchema.optional(),
-}); //
+});
 
 export const UserUpdateOneSchema = z.object({
   data: UserUncheckedUpdateInputObjectSchema,
@@ -108,7 +112,7 @@ export const UserUpsertSchema = z.object({
   where: UserWhereUniqueInputObjectSchema,
   create: UserUncheckedCreateInputObjectSchema,
   update: UserUncheckedCreateInputObjectSchema,
-}); //
+});
 
 export const UserCountSchema = z.object({
   // orderBy: z
@@ -119,6 +123,6 @@ export const UserCountSchema = z.object({
   //   .optional(),
   where: UserWhereInputObjectSchema.optional(),
   // cursor: UserWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
+  // take: z.number().optional(),
+  // skip: z.number().optional(),
 });
