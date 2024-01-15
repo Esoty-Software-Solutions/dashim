@@ -39,24 +39,6 @@ model BenefitPackage extends Base, ActivationStatus {
   beneficiaryBalances BeneficiaryBalance[]
 }
 
-// model PackageMedicalServices extends Base, ActivationStatus {
-//   beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
-//   beneftiPackageId String
-
-//   medicalService MedicalCenter @relation(fields: [medicalServiceId], references: [id])
-//   medicalServiceId String
-
-//   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
-//   insurancePolicyId String
-
-//   price Int
-
-//   patientServices PatientService[]
-
-//   @@unique([insurancePolicyId, beneftiPackageId, medicalServiceId ])
-//   @@index([insurancePolicyId, beneftiPackageId, medicalServiceId])
-// }
-
 model InsurancePolicyMedicalCenter extends Base, ActivationStatus {
   insurancePolicyId String
   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
