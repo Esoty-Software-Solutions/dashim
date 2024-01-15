@@ -1,16 +1,153 @@
-import { router, publicProcedure } from "~/routers/_.router";
+import {
+  router,
+  publicProcedure,
+  throwCustomError,
+} from "@routers/_trpc.router";
 import { z } from "zod";
+import { User, type UserType } from "@models/user";
+
 export const userRouter = router({
-  // GET http://localhost:3000/trpc/user.getOne?input="test"
-  getOne: publicProcedure.input(z.string()).query((opts) => {
-    opts.input; // string
-    return { response: "user getOne" };
-  }),
-  // POST http://localhost:3000/trpc/user.createOne with body { name: "test" }
+  aggregate: publicProcedure
+    .input(UserAggregateSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.aggregate(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+
+  createMany: publicProcedure
+    .input(UserCreateManySchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.createMany(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
   createOne: publicProcedure
-    .input(z.object({ name: z.string().min(5) }))
-    .mutation(async (opts) => {
-      // use your ORM of choice
-      return { response: "user createOne" };
+    .input(UserCreateOneSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.create(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  deleteMany: publicProcedure
+    .input(UserDeleteManySchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.deleteMany(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  deleteOne: publicProcedure
+    .input(UserDeleteOneSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.delete(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  findFirst: publicProcedure
+    .input(UserFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  findFirstOrThrow: publicProcedure
+    .input(UserFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.findFirstOrThrow(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  findMany: publicProcedure
+    .input(UserFindManySchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.findMany(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  findUnique: publicProcedure
+    .input(UserFindUniqueSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.findUnique(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  findUniqueOrThrow: publicProcedure
+    .input(UserFindUniqueSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.user.findUniqueOrThrow(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  groupBy: publicProcedure
+    .input(UserGroupBySchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.groupBy({
+          where: input.where,
+          orderBy: input.orderBy,
+          by: input.by,
+          having: input.having,
+          take: input.take,
+          skip: input.skip,
+        });
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  updateMany: publicProcedure
+    .input(UserUpdateManySchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.updateMany(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  updateOne: publicProcedure
+    .input(UserUpdateOneSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.update(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  upsertOne: publicProcedure
+    .input(UserUpsertSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.upsert(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  count: publicProcedure
+    .input(UserCountSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.user.count(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
     }),
 });
