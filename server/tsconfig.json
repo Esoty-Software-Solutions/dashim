@@ -24,7 +24,8 @@
       "@config/*": ["./src/config/*"],
       "@models/*": ["./src/models/*"],
       "@routers/*": ["src/routers/*"],
-      "@utilities/*": ["./src/utilities/*"]
+      "@utilities/*": ["./src/utilities/*"],
+      "@schemas/*": ["./src/schemas/*"]
     }
   }
 }
