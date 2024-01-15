@@ -111,8 +111,8 @@ model User {
     lastName String
     searchName String
     birthDate DateTime
-    gender Gender? @relation(fields: [genderId], references: [id])
-    genderId String?
+    gender Gender @relation(fields: [genderId], references: [id])
+    genderId String
     nationality String?
     nationalID String? @unique()
     residence String?
@@ -263,6 +263,7 @@ model Institution {
     longitude Float?
     policies InsurancePolicy[]
     members Subscriber[]
+    MedicalCenterPricing InstitutionMedicalCeneterService[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -298,8 +299,8 @@ model Beneficiary {
     lastName String
     searchName String
     birthDate DateTime
-    gender Gender? @relation(fields: [genderId], references: [id])
-    genderId String?
+    gender Gender @relation(fields: [genderId], references: [id])
+    genderId String
     nationality String?
     nationalID String? @unique()
     residence String?
@@ -337,6 +338,25 @@ model Relationship {
     english String?
     name String @unique()
     beneficiary Beneficiary[]
+}
+
+/// @@allow('all', true && isPublished)
+model InstitutionMedicalCeneterService {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    isActive Boolean @default(true)
+    deactivationReason String?
+    institution Institution @relation(fields: [institutionId], references: [id])
+    institutionId String
+    medicalCenterService MedicalCenterService @relation(fields: [medicalCenterServiceId], references: [id])
+    medicalCenterServiceId String
+    basePrice Int
+
+    @@index([institutionId, medicalCenterServiceId])
+    @@unique([institutionId, medicalCenterServiceId])
 }
 
 /// @@allow('all', true && isPublished)
@@ -438,10 +458,13 @@ model InsurancePolicy {
     isActive Boolean @default(true)
     deactivationReason String?
     name String @unique()
-    limit Int
+    Accumulatedlimit Int
+    BalanceResetDate DateTime
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
     subscribers Subscriber[]
+    issueDate DateTime
+    renewalDate DateTime
     serviceEntryTimeWindow Int @default(24)
     benefitPackages BenefitPackage[]
     medicalCenters InsurancePolicyMedicalCenter[]
@@ -478,6 +501,9 @@ model InsurancePolicyMedicalCenter {
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     medicalCenterId String
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+
+    @@unique([insurancePolicyId, medicalCenterId])
+    @@index([insurancePolicyId, medicalCenterId])
 }
 
 /// @@allow('all', true && isPublished)
@@ -545,6 +571,8 @@ model MedicalCenterServiceTemplate {
     name String
     dalilCode String
     basePrice String
+    IsPriceVaried Boolean @default(false)
+    description String
     beneftiPackages BenefitPackageMedicalCenterServiceTemplate[]
     services MedicalCenterService[]
 }
@@ -560,10 +588,11 @@ model MedicalCenterService {
     deactivationReason String?
     name String
     medicalCenterCode String
-    basePrice String
+    basePrice Int
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
     medicalCenterId String
     patientServices PatientService[]
+    institutionPricing InstitutionMedicalCeneterService[]
     template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
     templateId String
 
