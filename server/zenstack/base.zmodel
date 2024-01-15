@@ -31,7 +31,7 @@ abstract model HumanProfile {
   genderId String
 
   nationality String?
-  nationalID String? @unique
+  nationalID String?
 
   residence String?
   address String?

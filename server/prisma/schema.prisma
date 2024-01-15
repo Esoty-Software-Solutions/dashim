@@ -114,7 +114,7 @@ model User {
     gender Gender @relation(fields: [genderId], references: [id])
     genderId String
     nationality String?
-    nationalID String? @unique()
+    nationalID String?
     residence String?
     address String?
     username String @unique()
@@ -302,7 +302,7 @@ model Beneficiary {
     gender Gender @relation(fields: [genderId], references: [id])
     genderId String
     nationality String?
-    nationalID String? @unique()
+    nationalID String?
     residence String?
     address String?
     isActive Boolean @default(true)
