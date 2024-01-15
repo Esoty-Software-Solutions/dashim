@@ -1,19 +1,4 @@
 import { z } from "zod";
-// import {
-// UserCreateManyInputObjectSchema,
-// UserUncheckedCreateInputObjectSchema,
-// UserWhereInputObjectSchema,
-// UserOrderByWithRelationInputObjectSchema,
-// UserWhereUniqueInputObjectSchema,
-// UserScalarFieldEnumSchema,
-// UserOrderByWithAggregationInputObjectSchema,
-// UserScalarWhereWithAggregatesInputObjectSchema,
-// UserUpdateManyMutationInputObjectSchema,
-// UserUncheckedUpdateInputObjectSchema,
-// UserCountAggregateInputObjectSchema,
-// UserMinAggregateInputObjectSchema,
-// UserMaxAggregateInputObjectSchema,
-// } from "@schemas/objects/UserObject.schema";
 
 import { UserScalarFieldEnumSchema } from "@schemas/enums/UserScalarFieldEnum.schema";
 import { UserCreateManyInputObjectSchema } from "@schemas/objects/UserCreateManyInput.schema";
