@@ -3,8 +3,11 @@ import 'medicalCenter'
 
 model InsurancePolicy extends Base, ActivationStatus {
   name String @unique
-  copayDistrubtion Int[]
-  threashold Int[]
+  // copayDistrubtion Int[] //* application for it in the future
+  // threashold Int[] //* application for it in the future
+
+  Accumulatedlimit Int
+
   BalanceResetDate DateTime
 
   institution Institution @relation(fields: [institutionId], references: [id])
