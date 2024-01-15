@@ -3,12 +3,17 @@ import 'medicalCenter'
 
 model InsurancePolicy extends Base, ActivationStatus {
   name String @unique
-  limit Int
+  copayDistrubtion Int[]
+  threashold Int[]
+  BalanceResetDate DateTime
 
   institution Institution @relation(fields: [institutionId], references: [id])
   institutionId String
 
   subscribers Subscriber[]
+
+  issueDate DateTime
+  renewalDate DateTime
 
 
   serviceEntryTimeWindow Int @default(24) // time in hours
