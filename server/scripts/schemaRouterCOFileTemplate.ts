@@ -66,19 +66,21 @@ export const UserDeleteOneSchema = z.object({
 //   distinct: z.array(UserScalarFieldEnumSchema).optional(),
 // });
 
-export const UserFindManySchema = z.object({
-  orderBy: z
-    .union([
-      UserOrderByWithRelationInputObjectSchema,
-      UserOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: UserWhereInputObjectSchema.optional(),
-  cursor: UserWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(UserScalarFieldEnumSchema).optional(),
-});
+export const UserFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        UserOrderByWithRelationInputObjectSchema,
+        UserOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: UserWhereInputObjectSchema.optional(),
+    cursor: UserWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(UserScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const UserFindUniqueSchema = z.object({
   where: UserWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const UserUpdateOneSchema = z.object({
 //   update: UserUncheckedCreateInputObjectSchema,
 // });
 
-export const UserCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     UserOrderByWithRelationInputObjectSchema,
-  //     UserOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: UserWhereInputObjectSchema.optional(),
-  // cursor: UserWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const UserCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     UserOrderByWithRelationInputObjectSchema,
+    //     UserOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: UserWhereInputObjectSchema.optional(),
+    // cursor: UserWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();
