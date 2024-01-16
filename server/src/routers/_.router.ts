@@ -86,7 +86,8 @@ const routerObject = router({
   prescriptionAttachment: prescriptionAttachmentRouter,
 });
 
-export const appRouter = mergeRouters(routerObject);
+// export const appRouter = mergeRouters(routerObject); //! This exceeds Max type inference serialization
+export const appRouter = routerObject;
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
