@@ -66,19 +66,21 @@ export const PatientServiceDeleteOneSchema = z.object({
 //   distinct: z.array(PatientServiceScalarFieldEnumSchema).optional(),
 // });
 
-export const PatientServiceFindManySchema = z.object({
-  orderBy: z
-    .union([
-      PatientServiceOrderByWithRelationInputObjectSchema,
-      PatientServiceOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: PatientServiceWhereInputObjectSchema.optional(),
-  cursor: PatientServiceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(PatientServiceScalarFieldEnumSchema).optional(),
-});
+export const PatientServiceFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        PatientServiceOrderByWithRelationInputObjectSchema,
+        PatientServiceOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: PatientServiceWhereInputObjectSchema.optional(),
+    cursor: PatientServiceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(PatientServiceScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const PatientServiceFindUniqueSchema = z.object({
   where: PatientServiceWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const PatientServiceUpdateOneSchema = z.object({
 //   update: PatientServiceUncheckedCreateInputObjectSchema,
 // });
 
-export const PatientServiceCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     PatientServiceOrderByWithRelationInputObjectSchema,
-  //     PatientServiceOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: PatientServiceWhereInputObjectSchema.optional(),
-  // cursor: PatientServiceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const PatientServiceCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     PatientServiceOrderByWithRelationInputObjectSchema,
+    //     PatientServiceOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: PatientServiceWhereInputObjectSchema.optional(),
+    // cursor: PatientServiceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

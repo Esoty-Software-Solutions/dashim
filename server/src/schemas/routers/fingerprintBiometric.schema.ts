@@ -66,19 +66,21 @@ export const FingerprintBiometricDeleteOneSchema = z.object({
 //   distinct: z.array(FingerprintBiometricScalarFieldEnumSchema).optional(),
 // });
 
-export const FingerprintBiometricFindManySchema = z.object({
-  orderBy: z
-    .union([
-      FingerprintBiometricOrderByWithRelationInputObjectSchema,
-      FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: FingerprintBiometricWhereInputObjectSchema.optional(),
-  cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(FingerprintBiometricScalarFieldEnumSchema).optional(),
-});
+export const FingerprintBiometricFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        FingerprintBiometricOrderByWithRelationInputObjectSchema,
+        FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: FingerprintBiometricWhereInputObjectSchema.optional(),
+    cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(FingerprintBiometricScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const FingerprintBiometricFindUniqueSchema = z.object({
   where: FingerprintBiometricWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const FingerprintBiometricUpdateOneSchema = z.object({
 //   update: FingerprintBiometricUncheckedCreateInputObjectSchema,
 // });
 
-export const FingerprintBiometricCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     FingerprintBiometricOrderByWithRelationInputObjectSchema,
-  //     FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: FingerprintBiometricWhereInputObjectSchema.optional(),
-  // cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const FingerprintBiometricCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     FingerprintBiometricOrderByWithRelationInputObjectSchema,
+    //     FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: FingerprintBiometricWhereInputObjectSchema.optional(),
+    // cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const BenefitPackageDeleteOneSchema = z.object({
 //   distinct: z.array(BenefitPackageScalarFieldEnumSchema).optional(),
 // });
 
-export const BenefitPackageFindManySchema = z.object({
-  orderBy: z
-    .union([
-      BenefitPackageOrderByWithRelationInputObjectSchema,
-      BenefitPackageOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: BenefitPackageWhereInputObjectSchema.optional(),
-  cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(BenefitPackageScalarFieldEnumSchema).optional(),
-});
+export const BenefitPackageFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        BenefitPackageOrderByWithRelationInputObjectSchema,
+        BenefitPackageOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: BenefitPackageWhereInputObjectSchema.optional(),
+    cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(BenefitPackageScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const BenefitPackageFindUniqueSchema = z.object({
   where: BenefitPackageWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const BenefitPackageUpdateOneSchema = z.object({
 //   update: BenefitPackageUncheckedCreateInputObjectSchema,
 // });
 
-export const BenefitPackageCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     BenefitPackageOrderByWithRelationInputObjectSchema,
-  //     BenefitPackageOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: BenefitPackageWhereInputObjectSchema.optional(),
-  // cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const BenefitPackageCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     BenefitPackageOrderByWithRelationInputObjectSchema,
+    //     BenefitPackageOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: BenefitPackageWhereInputObjectSchema.optional(),
+    // cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

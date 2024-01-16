@@ -66,19 +66,21 @@ export const InsurancePolicyMedicalCenterDeleteOneSchema = z.object({
 //   distinct: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema).optional(),
 // });
 
-export const InsurancePolicyMedicalCenterFindManySchema = z.object({
-  orderBy: z
-    .union([
-      InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
-      InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
-  cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema).optional(),
-});
+export const InsurancePolicyMedicalCenterFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
+        InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
+    cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const InsurancePolicyMedicalCenterFindUniqueSchema = z.object({
   where: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const InsurancePolicyMedicalCenterUpdateOneSchema = z.object({
 //   update: InsurancePolicyMedicalCenterUncheckedCreateInputObjectSchema,
 // });
 
-export const InsurancePolicyMedicalCenterCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
-  //     InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
-  // cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const InsurancePolicyMedicalCenterCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
+    //     InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
+    // cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

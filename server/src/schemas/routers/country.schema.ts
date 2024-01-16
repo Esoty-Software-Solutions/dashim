@@ -66,19 +66,21 @@ export const CountryDeleteOneSchema = z.object({
 //   distinct: z.array(CountryScalarFieldEnumSchema).optional(),
 // });
 
-export const CountryFindManySchema = z.object({
-  orderBy: z
-    .union([
-      CountryOrderByWithRelationInputObjectSchema,
-      CountryOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: CountryWhereInputObjectSchema.optional(),
-  cursor: CountryWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(CountryScalarFieldEnumSchema).optional(),
-});
+export const CountryFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        CountryOrderByWithRelationInputObjectSchema,
+        CountryOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: CountryWhereInputObjectSchema.optional(),
+    cursor: CountryWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(CountryScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const CountryFindUniqueSchema = z.object({
   where: CountryWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const CountryUpdateOneSchema = z.object({
 //   update: CountryUncheckedCreateInputObjectSchema,
 // });
 
-export const CountryCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     CountryOrderByWithRelationInputObjectSchema,
-  //     CountryOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: CountryWhereInputObjectSchema.optional(),
-  // cursor: CountryWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const CountryCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     CountryOrderByWithRelationInputObjectSchema,
+    //     CountryOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: CountryWhereInputObjectSchema.optional(),
+    // cursor: CountryWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

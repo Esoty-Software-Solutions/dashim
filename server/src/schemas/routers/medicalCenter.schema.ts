@@ -66,19 +66,21 @@ export const MedicalCenterDeleteOneSchema = z.object({
 //   distinct: z.array(MedicalCenterScalarFieldEnumSchema).optional(),
 // });
 
-export const MedicalCenterFindManySchema = z.object({
-  orderBy: z
-    .union([
-      MedicalCenterOrderByWithRelationInputObjectSchema,
-      MedicalCenterOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: MedicalCenterWhereInputObjectSchema.optional(),
-  cursor: MedicalCenterWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(MedicalCenterScalarFieldEnumSchema).optional(),
-});
+export const MedicalCenterFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        MedicalCenterOrderByWithRelationInputObjectSchema,
+        MedicalCenterOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: MedicalCenterWhereInputObjectSchema.optional(),
+    cursor: MedicalCenterWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(MedicalCenterScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const MedicalCenterFindUniqueSchema = z.object({
   where: MedicalCenterWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const MedicalCenterUpdateOneSchema = z.object({
 //   update: MedicalCenterUncheckedCreateInputObjectSchema,
 // });
 
-export const MedicalCenterCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     MedicalCenterOrderByWithRelationInputObjectSchema,
-  //     MedicalCenterOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: MedicalCenterWhereInputObjectSchema.optional(),
-  // cursor: MedicalCenterWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const MedicalCenterCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     MedicalCenterOrderByWithRelationInputObjectSchema,
+    //     MedicalCenterOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: MedicalCenterWhereInputObjectSchema.optional(),
+    // cursor: MedicalCenterWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

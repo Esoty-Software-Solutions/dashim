@@ -66,19 +66,21 @@ export const TenantTypeDeleteOneSchema = z.object({
 //   distinct: z.array(TenantTypeScalarFieldEnumSchema).optional(),
 // });
 
-export const TenantTypeFindManySchema = z.object({
-  orderBy: z
-    .union([
-      TenantTypeOrderByWithRelationInputObjectSchema,
-      TenantTypeOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: TenantTypeWhereInputObjectSchema.optional(),
-  cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(TenantTypeScalarFieldEnumSchema).optional(),
-});
+export const TenantTypeFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        TenantTypeOrderByWithRelationInputObjectSchema,
+        TenantTypeOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: TenantTypeWhereInputObjectSchema.optional(),
+    cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(TenantTypeScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const TenantTypeFindUniqueSchema = z.object({
   where: TenantTypeWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const TenantTypeUpdateOneSchema = z.object({
 //   update: TenantTypeUncheckedCreateInputObjectSchema,
 // });
 
-export const TenantTypeCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     TenantTypeOrderByWithRelationInputObjectSchema,
-  //     TenantTypeOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: TenantTypeWhereInputObjectSchema.optional(),
-  // cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const TenantTypeCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     TenantTypeOrderByWithRelationInputObjectSchema,
+    //     TenantTypeOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: TenantTypeWhereInputObjectSchema.optional(),
+    // cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const RelationshipDeleteOneSchema = z.object({
 //   distinct: z.array(RelationshipScalarFieldEnumSchema).optional(),
 // });
 
-export const RelationshipFindManySchema = z.object({
-  orderBy: z
-    .union([
-      RelationshipOrderByWithRelationInputObjectSchema,
-      RelationshipOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: RelationshipWhereInputObjectSchema.optional(),
-  cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(RelationshipScalarFieldEnumSchema).optional(),
-});
+export const RelationshipFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        RelationshipOrderByWithRelationInputObjectSchema,
+        RelationshipOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: RelationshipWhereInputObjectSchema.optional(),
+    cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(RelationshipScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const RelationshipFindUniqueSchema = z.object({
   where: RelationshipWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const RelationshipUpdateOneSchema = z.object({
 //   update: RelationshipUncheckedCreateInputObjectSchema,
 // });
 
-export const RelationshipCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     RelationshipOrderByWithRelationInputObjectSchema,
-  //     RelationshipOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: RelationshipWhereInputObjectSchema.optional(),
-  // cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const RelationshipCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     RelationshipOrderByWithRelationInputObjectSchema,
+    //     RelationshipOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: RelationshipWhereInputObjectSchema.optional(),
+    // cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

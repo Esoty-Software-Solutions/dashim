@@ -66,19 +66,21 @@ export const ReviewStatusDeleteOneSchema = z.object({
 //   distinct: z.array(ReviewStatusScalarFieldEnumSchema).optional(),
 // });
 
-export const ReviewStatusFindManySchema = z.object({
-  orderBy: z
-    .union([
-      ReviewStatusOrderByWithRelationInputObjectSchema,
-      ReviewStatusOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: ReviewStatusWhereInputObjectSchema.optional(),
-  cursor: ReviewStatusWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(ReviewStatusScalarFieldEnumSchema).optional(),
-});
+export const ReviewStatusFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        ReviewStatusOrderByWithRelationInputObjectSchema,
+        ReviewStatusOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: ReviewStatusWhereInputObjectSchema.optional(),
+    cursor: ReviewStatusWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(ReviewStatusScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const ReviewStatusFindUniqueSchema = z.object({
   where: ReviewStatusWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const ReviewStatusUpdateOneSchema = z.object({
 //   update: ReviewStatusUncheckedCreateInputObjectSchema,
 // });
 
-export const ReviewStatusCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     ReviewStatusOrderByWithRelationInputObjectSchema,
-  //     ReviewStatusOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: ReviewStatusWhereInputObjectSchema.optional(),
-  // cursor: ReviewStatusWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const ReviewStatusCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     ReviewStatusOrderByWithRelationInputObjectSchema,
+    //     ReviewStatusOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: ReviewStatusWhereInputObjectSchema.optional(),
+    // cursor: ReviewStatusWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const MedicalCenterServiceTemplateDeleteOneSchema = z.object({
 //   distinct: z.array(MedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
 // });
 
-export const MedicalCenterServiceTemplateFindManySchema = z.object({
-  orderBy: z
-    .union([
-      MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
-      MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: MedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
-  cursor: MedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(MedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
-});
+export const MedicalCenterServiceTemplateFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
+        MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: MedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
+    cursor: MedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(MedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const MedicalCenterServiceTemplateFindUniqueSchema = z.object({
   where: MedicalCenterServiceTemplateWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const MedicalCenterServiceTemplateUpdateOneSchema = z.object({
 //   update: MedicalCenterServiceTemplateUncheckedCreateInputObjectSchema,
 // });
 
-export const MedicalCenterServiceTemplateCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
-  //     MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: MedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
-  // cursor: MedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const MedicalCenterServiceTemplateCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
+    //     MedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: MedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
+    // cursor: MedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const IDCardDeleteOneSchema = z.object({
 //   distinct: z.array(IDCardScalarFieldEnumSchema).optional(),
 // });
 
-export const IDCardFindManySchema = z.object({
-  orderBy: z
-    .union([
-      IDCardOrderByWithRelationInputObjectSchema,
-      IDCardOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: IDCardWhereInputObjectSchema.optional(),
-  cursor: IDCardWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(IDCardScalarFieldEnumSchema).optional(),
-});
+export const IDCardFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        IDCardOrderByWithRelationInputObjectSchema,
+        IDCardOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: IDCardWhereInputObjectSchema.optional(),
+    cursor: IDCardWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(IDCardScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const IDCardFindUniqueSchema = z.object({
   where: IDCardWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const IDCardUpdateOneSchema = z.object({
 //   update: IDCardUncheckedCreateInputObjectSchema,
 // });
 
-export const IDCardCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     IDCardOrderByWithRelationInputObjectSchema,
-  //     IDCardOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: IDCardWhereInputObjectSchema.optional(),
-  // cursor: IDCardWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const IDCardCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     IDCardOrderByWithRelationInputObjectSchema,
+    //     IDCardOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: IDCardWhereInputObjectSchema.optional(),
+    // cursor: IDCardWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

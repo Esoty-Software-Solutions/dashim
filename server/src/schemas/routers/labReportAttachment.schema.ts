@@ -66,19 +66,21 @@ export const LabReportAttachmentDeleteOneSchema = z.object({
 //   distinct: z.array(LabReportAttachmentScalarFieldEnumSchema).optional(),
 // });
 
-export const LabReportAttachmentFindManySchema = z.object({
-  orderBy: z
-    .union([
-      LabReportAttachmentOrderByWithRelationInputObjectSchema,
-      LabReportAttachmentOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: LabReportAttachmentWhereInputObjectSchema.optional(),
-  cursor: LabReportAttachmentWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(LabReportAttachmentScalarFieldEnumSchema).optional(),
-});
+export const LabReportAttachmentFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        LabReportAttachmentOrderByWithRelationInputObjectSchema,
+        LabReportAttachmentOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: LabReportAttachmentWhereInputObjectSchema.optional(),
+    cursor: LabReportAttachmentWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(LabReportAttachmentScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const LabReportAttachmentFindUniqueSchema = z.object({
   where: LabReportAttachmentWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const LabReportAttachmentUpdateOneSchema = z.object({
 //   update: LabReportAttachmentUncheckedCreateInputObjectSchema,
 // });
 
-export const LabReportAttachmentCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     LabReportAttachmentOrderByWithRelationInputObjectSchema,
-  //     LabReportAttachmentOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: LabReportAttachmentWhereInputObjectSchema.optional(),
-  // cursor: LabReportAttachmentWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const LabReportAttachmentCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     LabReportAttachmentOrderByWithRelationInputObjectSchema,
+    //     LabReportAttachmentOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: LabReportAttachmentWhereInputObjectSchema.optional(),
+    // cursor: LabReportAttachmentWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const InsurancePolicyDeleteOneSchema = z.object({
 //   distinct: z.array(InsurancePolicyScalarFieldEnumSchema).optional(),
 // });
 
-export const InsurancePolicyFindManySchema = z.object({
-  orderBy: z
-    .union([
-      InsurancePolicyOrderByWithRelationInputObjectSchema,
-      InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: InsurancePolicyWhereInputObjectSchema.optional(),
-  cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(InsurancePolicyScalarFieldEnumSchema).optional(),
-});
+export const InsurancePolicyFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        InsurancePolicyOrderByWithRelationInputObjectSchema,
+        InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: InsurancePolicyWhereInputObjectSchema.optional(),
+    cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(InsurancePolicyScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const InsurancePolicyFindUniqueSchema = z.object({
   where: InsurancePolicyWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const InsurancePolicyUpdateOneSchema = z.object({
 //   update: InsurancePolicyUncheckedCreateInputObjectSchema,
 // });
 
-export const InsurancePolicyCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     InsurancePolicyOrderByWithRelationInputObjectSchema,
-  //     InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: InsurancePolicyWhereInputObjectSchema.optional(),
-  // cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const InsurancePolicyCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     InsurancePolicyOrderByWithRelationInputObjectSchema,
+    //     InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: InsurancePolicyWhereInputObjectSchema.optional(),
+    // cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

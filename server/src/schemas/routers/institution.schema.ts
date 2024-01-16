@@ -66,19 +66,21 @@ export const InstitutionDeleteOneSchema = z.object({
 //   distinct: z.array(InstitutionScalarFieldEnumSchema).optional(),
 // });
 
-export const InstitutionFindManySchema = z.object({
-  orderBy: z
-    .union([
-      InstitutionOrderByWithRelationInputObjectSchema,
-      InstitutionOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: InstitutionWhereInputObjectSchema.optional(),
-  cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(InstitutionScalarFieldEnumSchema).optional(),
-});
+export const InstitutionFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        InstitutionOrderByWithRelationInputObjectSchema,
+        InstitutionOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: InstitutionWhereInputObjectSchema.optional(),
+    cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(InstitutionScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const InstitutionFindUniqueSchema = z.object({
   where: InstitutionWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const InstitutionUpdateOneSchema = z.object({
 //   update: InstitutionUncheckedCreateInputObjectSchema,
 // });
 
-export const InstitutionCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     InstitutionOrderByWithRelationInputObjectSchema,
-  //     InstitutionOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: InstitutionWhereInputObjectSchema.optional(),
-  // cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const InstitutionCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     InstitutionOrderByWithRelationInputObjectSchema,
+    //     InstitutionOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: InstitutionWhereInputObjectSchema.optional(),
+    // cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const InstitutionMedicalCeneterServiceDeleteOneSchema = z.object({
 //   distinct: z.array(InstitutionMedicalCeneterServiceScalarFieldEnumSchema).optional(),
 // });
 
-export const InstitutionMedicalCeneterServiceFindManySchema = z.object({
-  orderBy: z
-    .union([
-      InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema,
-      InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: InstitutionMedicalCeneterServiceWhereInputObjectSchema.optional(),
-  cursor: InstitutionMedicalCeneterServiceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(InstitutionMedicalCeneterServiceScalarFieldEnumSchema).optional(),
-});
+export const InstitutionMedicalCeneterServiceFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema,
+        InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: InstitutionMedicalCeneterServiceWhereInputObjectSchema.optional(),
+    cursor: InstitutionMedicalCeneterServiceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(InstitutionMedicalCeneterServiceScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const InstitutionMedicalCeneterServiceFindUniqueSchema = z.object({
   where: InstitutionMedicalCeneterServiceWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const InstitutionMedicalCeneterServiceUpdateOneSchema = z.object({
 //   update: InstitutionMedicalCeneterServiceUncheckedCreateInputObjectSchema,
 // });
 
-export const InstitutionMedicalCeneterServiceCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema,
-  //     InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: InstitutionMedicalCeneterServiceWhereInputObjectSchema.optional(),
-  // cursor: InstitutionMedicalCeneterServiceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const InstitutionMedicalCeneterServiceCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema,
+    //     InstitutionMedicalCeneterServiceOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: InstitutionMedicalCeneterServiceWhereInputObjectSchema.optional(),
+    // cursor: InstitutionMedicalCeneterServiceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

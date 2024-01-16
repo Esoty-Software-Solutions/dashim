@@ -66,19 +66,21 @@ export const FingerTypeDeleteOneSchema = z.object({
 //   distinct: z.array(FingerTypeScalarFieldEnumSchema).optional(),
 // });
 
-export const FingerTypeFindManySchema = z.object({
-  orderBy: z
-    .union([
-      FingerTypeOrderByWithRelationInputObjectSchema,
-      FingerTypeOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: FingerTypeWhereInputObjectSchema.optional(),
-  cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(FingerTypeScalarFieldEnumSchema).optional(),
-});
+export const FingerTypeFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        FingerTypeOrderByWithRelationInputObjectSchema,
+        FingerTypeOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: FingerTypeWhereInputObjectSchema.optional(),
+    cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(FingerTypeScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const FingerTypeFindUniqueSchema = z.object({
   where: FingerTypeWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const FingerTypeUpdateOneSchema = z.object({
 //   update: FingerTypeUncheckedCreateInputObjectSchema,
 // });
 
-export const FingerTypeCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     FingerTypeOrderByWithRelationInputObjectSchema,
-  //     FingerTypeOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: FingerTypeWhereInputObjectSchema.optional(),
-  // cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const FingerTypeCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     FingerTypeOrderByWithRelationInputObjectSchema,
+    //     FingerTypeOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: FingerTypeWhereInputObjectSchema.optional(),
+    // cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

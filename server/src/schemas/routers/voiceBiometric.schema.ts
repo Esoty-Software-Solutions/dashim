@@ -66,19 +66,21 @@ export const VoiceBiometricDeleteOneSchema = z.object({
 //   distinct: z.array(VoiceBiometricScalarFieldEnumSchema).optional(),
 // });
 
-export const VoiceBiometricFindManySchema = z.object({
-  orderBy: z
-    .union([
-      VoiceBiometricOrderByWithRelationInputObjectSchema,
-      VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: VoiceBiometricWhereInputObjectSchema.optional(),
-  cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(VoiceBiometricScalarFieldEnumSchema).optional(),
-});
+export const VoiceBiometricFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        VoiceBiometricOrderByWithRelationInputObjectSchema,
+        VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: VoiceBiometricWhereInputObjectSchema.optional(),
+    cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(VoiceBiometricScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const VoiceBiometricFindUniqueSchema = z.object({
   where: VoiceBiometricWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const VoiceBiometricUpdateOneSchema = z.object({
 //   update: VoiceBiometricUncheckedCreateInputObjectSchema,
 // });
 
-export const VoiceBiometricCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     VoiceBiometricOrderByWithRelationInputObjectSchema,
-  //     VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: VoiceBiometricWhereInputObjectSchema.optional(),
-  // cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const VoiceBiometricCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     VoiceBiometricOrderByWithRelationInputObjectSchema,
+    //     VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: VoiceBiometricWhereInputObjectSchema.optional(),
+    // cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

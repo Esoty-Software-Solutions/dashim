@@ -66,19 +66,21 @@ export const CurrencyDeleteOneSchema = z.object({
 //   distinct: z.array(CurrencyScalarFieldEnumSchema).optional(),
 // });
 
-export const CurrencyFindManySchema = z.object({
-  orderBy: z
-    .union([
-      CurrencyOrderByWithRelationInputObjectSchema,
-      CurrencyOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: CurrencyWhereInputObjectSchema.optional(),
-  cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(CurrencyScalarFieldEnumSchema).optional(),
-});
+export const CurrencyFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        CurrencyOrderByWithRelationInputObjectSchema,
+        CurrencyOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: CurrencyWhereInputObjectSchema.optional(),
+    cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(CurrencyScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const CurrencyFindUniqueSchema = z.object({
   where: CurrencyWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const CurrencyUpdateOneSchema = z.object({
 //   update: CurrencyUncheckedCreateInputObjectSchema,
 // });
 
-export const CurrencyCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     CurrencyOrderByWithRelationInputObjectSchema,
-  //     CurrencyOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: CurrencyWhereInputObjectSchema.optional(),
-  // cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const CurrencyCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     CurrencyOrderByWithRelationInputObjectSchema,
+    //     CurrencyOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: CurrencyWhereInputObjectSchema.optional(),
+    // cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

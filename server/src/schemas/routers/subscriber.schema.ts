@@ -66,19 +66,21 @@ export const SubscriberDeleteOneSchema = z.object({
 //   distinct: z.array(SubscriberScalarFieldEnumSchema).optional(),
 // });
 
-export const SubscriberFindManySchema = z.object({
-  orderBy: z
-    .union([
-      SubscriberOrderByWithRelationInputObjectSchema,
-      SubscriberOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: SubscriberWhereInputObjectSchema.optional(),
-  cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(SubscriberScalarFieldEnumSchema).optional(),
-});
+export const SubscriberFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        SubscriberOrderByWithRelationInputObjectSchema,
+        SubscriberOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: SubscriberWhereInputObjectSchema.optional(),
+    cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(SubscriberScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const SubscriberFindUniqueSchema = z.object({
   where: SubscriberWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const SubscriberUpdateOneSchema = z.object({
 //   update: SubscriberUncheckedCreateInputObjectSchema,
 // });
 
-export const SubscriberCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     SubscriberOrderByWithRelationInputObjectSchema,
-  //     SubscriberOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: SubscriberWhereInputObjectSchema.optional(),
-  // cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const SubscriberCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     SubscriberOrderByWithRelationInputObjectSchema,
+    //     SubscriberOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: SubscriberWhereInputObjectSchema.optional(),
+    // cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

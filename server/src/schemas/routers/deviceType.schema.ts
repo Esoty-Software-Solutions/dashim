@@ -66,19 +66,21 @@ export const DeviceTypeDeleteOneSchema = z.object({
 //   distinct: z.array(DeviceTypeScalarFieldEnumSchema).optional(),
 // });
 
-export const DeviceTypeFindManySchema = z.object({
-  orderBy: z
-    .union([
-      DeviceTypeOrderByWithRelationInputObjectSchema,
-      DeviceTypeOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: DeviceTypeWhereInputObjectSchema.optional(),
-  cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(DeviceTypeScalarFieldEnumSchema).optional(),
-});
+export const DeviceTypeFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        DeviceTypeOrderByWithRelationInputObjectSchema,
+        DeviceTypeOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: DeviceTypeWhereInputObjectSchema.optional(),
+    cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(DeviceTypeScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const DeviceTypeFindUniqueSchema = z.object({
   where: DeviceTypeWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const DeviceTypeUpdateOneSchema = z.object({
 //   update: DeviceTypeUncheckedCreateInputObjectSchema,
 // });
 
-export const DeviceTypeCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     DeviceTypeOrderByWithRelationInputObjectSchema,
-  //     DeviceTypeOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: DeviceTypeWhereInputObjectSchema.optional(),
-  // cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const DeviceTypeCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     DeviceTypeOrderByWithRelationInputObjectSchema,
+    //     DeviceTypeOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: DeviceTypeWhereInputObjectSchema.optional(),
+    // cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

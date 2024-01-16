@@ -66,19 +66,21 @@ export const DeviceTokenDeleteOneSchema = z.object({
 //   distinct: z.array(DeviceTokenScalarFieldEnumSchema).optional(),
 // });
 
-export const DeviceTokenFindManySchema = z.object({
-  orderBy: z
-    .union([
-      DeviceTokenOrderByWithRelationInputObjectSchema,
-      DeviceTokenOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: DeviceTokenWhereInputObjectSchema.optional(),
-  cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(DeviceTokenScalarFieldEnumSchema).optional(),
-});
+export const DeviceTokenFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        DeviceTokenOrderByWithRelationInputObjectSchema,
+        DeviceTokenOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: DeviceTokenWhereInputObjectSchema.optional(),
+    cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(DeviceTokenScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const DeviceTokenFindUniqueSchema = z.object({
   where: DeviceTokenWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const DeviceTokenUpdateOneSchema = z.object({
 //   update: DeviceTokenUncheckedCreateInputObjectSchema,
 // });
 
-export const DeviceTokenCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     DeviceTokenOrderByWithRelationInputObjectSchema,
-  //     DeviceTokenOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: DeviceTokenWhereInputObjectSchema.optional(),
-  // cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const DeviceTokenCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     DeviceTokenOrderByWithRelationInputObjectSchema,
+    //     DeviceTokenOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: DeviceTokenWhereInputObjectSchema.optional(),
+    // cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const FaceBiometricDeleteOneSchema = z.object({
 //   distinct: z.array(FaceBiometricScalarFieldEnumSchema).optional(),
 // });
 
-export const FaceBiometricFindManySchema = z.object({
-  orderBy: z
-    .union([
-      FaceBiometricOrderByWithRelationInputObjectSchema,
-      FaceBiometricOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: FaceBiometricWhereInputObjectSchema.optional(),
-  cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(FaceBiometricScalarFieldEnumSchema).optional(),
-});
+export const FaceBiometricFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        FaceBiometricOrderByWithRelationInputObjectSchema,
+        FaceBiometricOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: FaceBiometricWhereInputObjectSchema.optional(),
+    cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(FaceBiometricScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const FaceBiometricFindUniqueSchema = z.object({
   where: FaceBiometricWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const FaceBiometricUpdateOneSchema = z.object({
 //   update: FaceBiometricUncheckedCreateInputObjectSchema,
 // });
 
-export const FaceBiometricCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     FaceBiometricOrderByWithRelationInputObjectSchema,
-  //     FaceBiometricOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: FaceBiometricWhereInputObjectSchema.optional(),
-  // cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const FaceBiometricCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     FaceBiometricOrderByWithRelationInputObjectSchema,
+    //     FaceBiometricOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: FaceBiometricWhereInputObjectSchema.optional(),
+    // cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

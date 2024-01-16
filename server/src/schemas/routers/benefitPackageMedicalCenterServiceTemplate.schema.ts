@@ -66,19 +66,21 @@ export const BenefitPackageMedicalCenterServiceTemplateDeleteOneSchema = z.objec
 //   distinct: z.array(BenefitPackageMedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
 // });
 
-export const BenefitPackageMedicalCenterServiceTemplateFindManySchema = z.object({
-  orderBy: z
-    .union([
-      BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
-      BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: BenefitPackageMedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
-  cursor: BenefitPackageMedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(BenefitPackageMedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
-});
+export const BenefitPackageMedicalCenterServiceTemplateFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
+        BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: BenefitPackageMedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
+    cursor: BenefitPackageMedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(BenefitPackageMedicalCenterServiceTemplateScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const BenefitPackageMedicalCenterServiceTemplateFindUniqueSchema = z.object({
   where: BenefitPackageMedicalCenterServiceTemplateWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const BenefitPackageMedicalCenterServiceTemplateUpdateOneSchema = z.objec
 //   update: BenefitPackageMedicalCenterServiceTemplateUncheckedCreateInputObjectSchema,
 // });
 
-export const BenefitPackageMedicalCenterServiceTemplateCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
-  //     BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: BenefitPackageMedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
-  // cursor: BenefitPackageMedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const BenefitPackageMedicalCenterServiceTemplateCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema,
+    //     BenefitPackageMedicalCenterServiceTemplateOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: BenefitPackageMedicalCenterServiceTemplateWhereInputObjectSchema.optional(),
+    // cursor: BenefitPackageMedicalCenterServiceTemplateWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

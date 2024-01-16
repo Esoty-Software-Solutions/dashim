@@ -66,19 +66,21 @@ export const BeneficiaryDeleteOneSchema = z.object({
 //   distinct: z.array(BeneficiaryScalarFieldEnumSchema).optional(),
 // });
 
-export const BeneficiaryFindManySchema = z.object({
-  orderBy: z
-    .union([
-      BeneficiaryOrderByWithRelationInputObjectSchema,
-      BeneficiaryOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: BeneficiaryWhereInputObjectSchema.optional(),
-  cursor: BeneficiaryWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(BeneficiaryScalarFieldEnumSchema).optional(),
-});
+export const BeneficiaryFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        BeneficiaryOrderByWithRelationInputObjectSchema,
+        BeneficiaryOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: BeneficiaryWhereInputObjectSchema.optional(),
+    cursor: BeneficiaryWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(BeneficiaryScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const BeneficiaryFindUniqueSchema = z.object({
   where: BeneficiaryWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const BeneficiaryUpdateOneSchema = z.object({
 //   update: BeneficiaryUncheckedCreateInputObjectSchema,
 // });
 
-export const BeneficiaryCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     BeneficiaryOrderByWithRelationInputObjectSchema,
-  //     BeneficiaryOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: BeneficiaryWhereInputObjectSchema.optional(),
-  // cursor: BeneficiaryWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const BeneficiaryCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     BeneficiaryOrderByWithRelationInputObjectSchema,
+    //     BeneficiaryOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: BeneficiaryWhereInputObjectSchema.optional(),
+    // cursor: BeneficiaryWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

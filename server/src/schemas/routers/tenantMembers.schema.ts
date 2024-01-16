@@ -66,19 +66,21 @@ export const TenantMembersDeleteOneSchema = z.object({
 //   distinct: z.array(TenantMembersScalarFieldEnumSchema).optional(),
 // });
 
-export const TenantMembersFindManySchema = z.object({
-  orderBy: z
-    .union([
-      TenantMembersOrderByWithRelationInputObjectSchema,
-      TenantMembersOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: TenantMembersWhereInputObjectSchema.optional(),
-  cursor: TenantMembersWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(TenantMembersScalarFieldEnumSchema).optional(),
-});
+export const TenantMembersFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        TenantMembersOrderByWithRelationInputObjectSchema,
+        TenantMembersOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: TenantMembersWhereInputObjectSchema.optional(),
+    cursor: TenantMembersWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(TenantMembersScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const TenantMembersFindUniqueSchema = z.object({
   where: TenantMembersWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const TenantMembersUpdateOneSchema = z.object({
 //   update: TenantMembersUncheckedCreateInputObjectSchema,
 // });
 
-export const TenantMembersCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     TenantMembersOrderByWithRelationInputObjectSchema,
-  //     TenantMembersOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: TenantMembersWhereInputObjectSchema.optional(),
-  // cursor: TenantMembersWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const TenantMembersCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     TenantMembersOrderByWithRelationInputObjectSchema,
+    //     TenantMembersOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: TenantMembersWhereInputObjectSchema.optional(),
+    // cursor: TenantMembersWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

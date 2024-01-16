@@ -66,19 +66,21 @@ export const BeneficiaryBalanceDeleteOneSchema = z.object({
 //   distinct: z.array(BeneficiaryBalanceScalarFieldEnumSchema).optional(),
 // });
 
-export const BeneficiaryBalanceFindManySchema = z.object({
-  orderBy: z
-    .union([
-      BeneficiaryBalanceOrderByWithRelationInputObjectSchema,
-      BeneficiaryBalanceOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
-  cursor: BeneficiaryBalanceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(BeneficiaryBalanceScalarFieldEnumSchema).optional(),
-});
+export const BeneficiaryBalanceFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        BeneficiaryBalanceOrderByWithRelationInputObjectSchema,
+        BeneficiaryBalanceOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
+    cursor: BeneficiaryBalanceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(BeneficiaryBalanceScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const BeneficiaryBalanceFindUniqueSchema = z.object({
   where: BeneficiaryBalanceWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const BeneficiaryBalanceUpdateOneSchema = z.object({
 //   update: BeneficiaryBalanceUncheckedCreateInputObjectSchema,
 // });
 
-export const BeneficiaryBalanceCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     BeneficiaryBalanceOrderByWithRelationInputObjectSchema,
-  //     BeneficiaryBalanceOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
-  // cursor: BeneficiaryBalanceWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const BeneficiaryBalanceCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     BeneficiaryBalanceOrderByWithRelationInputObjectSchema,
+    //     BeneficiaryBalanceOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
+    // cursor: BeneficiaryBalanceWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

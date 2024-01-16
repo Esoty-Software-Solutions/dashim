@@ -66,19 +66,21 @@ export const PrescriptionAttachmentDeleteOneSchema = z.object({
 //   distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
 // });
 
-export const PrescriptionAttachmentFindManySchema = z.object({
-  orderBy: z
-    .union([
-      PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
-      PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
-  cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
-});
+export const PrescriptionAttachmentFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
+        PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
+    cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const PrescriptionAttachmentFindUniqueSchema = z.object({
   where: PrescriptionAttachmentWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const PrescriptionAttachmentUpdateOneSchema = z.object({
 //   update: PrescriptionAttachmentUncheckedCreateInputObjectSchema,
 // });
 
-export const PrescriptionAttachmentCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
-  //     PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
-  // cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const PrescriptionAttachmentCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
+    //     PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
+    // cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

@@ -66,19 +66,21 @@ export const GenderDeleteOneSchema = z.object({
 //   distinct: z.array(GenderScalarFieldEnumSchema).optional(),
 // });
 
-export const GenderFindManySchema = z.object({
-  orderBy: z
-    .union([
-      GenderOrderByWithRelationInputObjectSchema,
-      GenderOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: GenderWhereInputObjectSchema.optional(),
-  cursor: GenderWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(GenderScalarFieldEnumSchema).optional(),
-});
+export const GenderFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        GenderOrderByWithRelationInputObjectSchema,
+        GenderOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: GenderWhereInputObjectSchema.optional(),
+    cursor: GenderWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(GenderScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const GenderFindUniqueSchema = z.object({
   where: GenderWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const GenderUpdateOneSchema = z.object({
 //   update: GenderUncheckedCreateInputObjectSchema,
 // });
 
-export const GenderCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     GenderOrderByWithRelationInputObjectSchema,
-  //     GenderOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: GenderWhereInputObjectSchema.optional(),
-  // cursor: GenderWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const GenderCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     GenderOrderByWithRelationInputObjectSchema,
+    //     GenderOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: GenderWhereInputObjectSchema.optional(),
+    // cursor: GenderWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();

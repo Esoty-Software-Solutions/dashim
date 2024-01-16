@@ -66,19 +66,21 @@ export const EntryRecordDeleteOneSchema = z.object({
 //   distinct: z.array(EntryRecordScalarFieldEnumSchema).optional(),
 // });
 
-export const EntryRecordFindManySchema = z.object({
-  orderBy: z
-    .union([
-      EntryRecordOrderByWithRelationInputObjectSchema,
-      EntryRecordOrderByWithRelationInputObjectSchema.array(),
-    ])
-    .optional(),
-  where: EntryRecordWhereInputObjectSchema.optional(),
-  cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.array(EntryRecordScalarFieldEnumSchema).optional(),
-});
+export const EntryRecordFindManySchema = z
+  .object({
+    orderBy: z
+      .union([
+        EntryRecordOrderByWithRelationInputObjectSchema,
+        EntryRecordOrderByWithRelationInputObjectSchema.array(),
+      ])
+      .optional(),
+    where: EntryRecordWhereInputObjectSchema.optional(),
+    cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    distinct: z.array(EntryRecordScalarFieldEnumSchema).optional(),
+  })
+  .optional();
 
 export const EntryRecordFindUniqueSchema = z.object({
   where: EntryRecordWhereUniqueInputObjectSchema,
@@ -114,15 +116,17 @@ export const EntryRecordUpdateOneSchema = z.object({
 //   update: EntryRecordUncheckedCreateInputObjectSchema,
 // });
 
-export const EntryRecordCountSchema = z.object({
-  // orderBy: z
-  //   .union([
-  //     EntryRecordOrderByWithRelationInputObjectSchema,
-  //     EntryRecordOrderByWithRelationInputObjectSchema.array(),
-  //   ])
-  //   .optional(),
-  where: EntryRecordWhereInputObjectSchema.optional(),
-  // cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-});
+export const EntryRecordCountSchema = z
+  .object({
+    // orderBy: z
+    //   .union([
+    //     EntryRecordOrderByWithRelationInputObjectSchema,
+    //     EntryRecordOrderByWithRelationInputObjectSchema.array(),
+    //   ])
+    //   .optional(),
+    where: EntryRecordWhereInputObjectSchema.optional(),
+    // cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+  })
+  .optional();
