@@ -29,7 +29,7 @@ model Institution extends Base, ActivationStatus {
 
   policies InsurancePolicy[]
   members Subscriber[]
-  MedicalCenterPricing InstitutionMedicalCeneterService[]
+  MedicalCenterPricing InstitutionMedicalService[]
 }
 
 model Subscriber extends Base, ActivationStatus {
@@ -97,15 +97,15 @@ model Relationship extends Base, LangLocale {
 //     OTHER
 // }
 
-model InstitutionMedicalCeneterService extends Base, ActivationStatus {
+model InstitutionMedicalService extends Base, ActivationStatus {
   institution Institution @relation(fields: [institutionId], references: [id])
   institutionId String
 
-  medicalCenterService MedicalCenterService @relation(fields: [medicalCenterServiceId], references: [id])
-  medicalCenterServiceId String
+  medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
+  medicalServiceId String
 
   basePrice Int
 
-  @@index([institutionId, medicalCenterServiceId])
-  @@unique([institutionId, medicalCenterServiceId])
+  @@index([institutionId, medicalServiceId])
+  @@unique([institutionId, medicalServiceId])
 }

@@ -52,7 +52,7 @@ model PatientService extends Base, ActivationStatus {
   medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
 
-  medicalService MedicalCenterService @relation(fields: [medicalServiceId], references: [id])
+  medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
   medicalServiceId String
 
   groupCode String //used to group services in the same group
