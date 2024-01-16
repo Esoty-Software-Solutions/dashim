@@ -4,6 +4,8 @@
   "description": "Dalil",
   "main": "index.js",
   "scripts": {
+    "installServer": "npm install --workspace=server",
+    "runServer": "npm run dev --workspace=server"
   },
   "author": "",
   "license": "ISC",
