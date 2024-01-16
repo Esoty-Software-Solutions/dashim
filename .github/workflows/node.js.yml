@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "spa-vue" ]
+    branches: [ "deploy-test" ]
   pull_request:
-    branches: [ "spa-vue" ]
+    branches: [ "deploy-test" ]
 
 jobs:
   build:
