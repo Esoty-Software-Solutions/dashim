@@ -18,10 +18,10 @@ model User extends Base, ActivationStatus, HumanProfile {
 
   ownerOf Tenant[]
 
-  memberOf TenantMembers[]
+  memberOf TenantMember[]
 }
 
-model TenantMembers extends Base, ActivationStatus {
+model TenantMember extends Base, ActivationStatus {
 
   tenant Tenant @relation(fields: [tenantId], references: [id])
   tenantId String
@@ -54,7 +54,7 @@ model Tenant extends Base, ActivationStatus {
   ownerId String
 
   // needs review
-  members TenantMembers[]
+  members TenantMember[]
 }
 
 model DeviceToken extends Base, ActivationStatus {
