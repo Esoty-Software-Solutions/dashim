@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 import fs from "fs";
 import path from "path";
+// const { Project } = require("ts-morph");
+import { Project, ts } from "ts-morph";
 
 const TableNames = Object.values(Prisma.ModelName);
 const __dirname = path.dirname(new URL(import.meta.url).pathname.substring(1));
@@ -175,3 +177,31 @@ console.info(`Generated ${fileCounter} files`);
 console.info("output is: ", routeOutputDir);
 
 // TODO: edit the _.router.ts files to import the correct schema files
+
+const routerFilePath = path.join(routeOutputDir, "_.router.ts"); // adjust the path as needed
+let fileContent = fs.readFileSync(routerFilePath, "utf8");
+
+fileCounter = 0;
+TableNames.forEach((TableName) => {
+  const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+
+  const importRegex = new RegExp(`\\b${tableName}Router\\b`);
+  if (importRegex.test(fileContent)) {
+    return; // skip this iteration and go to the next one
+  }
+
+  // Add the import statement
+  const importStatement = `import { ${tableName}Router } from './${tableName}.router';\n`;
+  const importBlockRegex = /(import .*\n)+/;
+  fileContent = fileContent.replace(importBlockRegex, `$&${importStatement}`);
+
+  // Add the router to the routerObject
+  const routerObjectRegex = /(router\({)([\s\S]*?)(}\);)/;
+  fileContent = fileContent.replace(
+    routerObjectRegex,
+    `$1$2${tableName}: ${tableName}Router,\n$3`,
+  );
+  fileCounter++;
+});
+console.log(`Added ${fileCounter} imports and routers to _.router.ts`);
+fs.writeFileSync(routerFilePath, fileContent);
