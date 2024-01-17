@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "installServer": "npm install --workspace=server",
+    "buildServer": "npm run build --workspace=server",
     "runServer": "npm run dev --workspace=server"
   },
   "author": "",
