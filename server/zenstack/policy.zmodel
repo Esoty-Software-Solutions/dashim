@@ -2,32 +2,29 @@ import 'base'
 import 'medicalCenter'
 
 model InsurancePolicy extends Base, ActivationStatus {
-  name String @unique
+  name String
   // copayDistrubtion Int[] //* application for it in the future
   // threashold Int[] //* application for it in the future
-
   Accumulatedlimit Int
-
   BalanceResetDate DateTime
+  issueDate DateTime
+  renewalDate DateTime
+  serviceEntryTimeWindow Int @default(24) // time in hours
 
   institution Institution @relation(fields: [institutionId], references: [id])
   institutionId String
 
   subscribers Subscriber[]
-
-  issueDate DateTime
-  renewalDate DateTime
-
-
-  serviceEntryTimeWindow Int @default(24) // time in hours
-
   benefitPackages BenefitPackage[]
   medicalCenters InsurancePolicyMedicalCenter[]
+
+  @@index([institutionId, name])
+  @@unique([institutionId, name])
 }
 
 
 model BenefitPackage extends Base, ActivationStatus {
-  name String @unique
+  name String
   copayDistrubtion Int[]
   threashold Int[]
 
@@ -37,6 +34,9 @@ model BenefitPackage extends Base, ActivationStatus {
   insurancePolicyId String
 
   beneficiaryBalances BeneficiaryBalance[]
+
+  @@index([insurancePolicyId, name])
+  @@unique([insurancePolicyId, name])
 }
 
 model InsurancePolicyMedicalCenter extends Base, ActivationStatus {
