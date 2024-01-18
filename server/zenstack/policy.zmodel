@@ -27,7 +27,7 @@ model InsurancePolicy extends Base, ActivationStatus {
 
 
 model BenefitPackage extends Base, ActivationStatus {
-  name String @unique
+  name String
   copayDistrubtion Int[]
   threashold Int[]
 
@@ -37,6 +37,9 @@ model BenefitPackage extends Base, ActivationStatus {
   insurancePolicyId String
 
   beneficiaryBalances BeneficiaryBalance[]
+
+  @@index([insurancePolicyId, name])
+  @@unique([insurancePolicyId, name])
 }
 
 model InsurancePolicyMedicalCenter extends Base, ActivationStatus {
