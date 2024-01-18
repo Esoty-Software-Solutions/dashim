@@ -63,9 +63,11 @@ model Currency extends Base, LangLocale {
 }
 
 model City extends Base, LangLocale {
-  name String @unique
+  name String
   country Country @relation(fields: [countryId], references: [id])
   countryId String
+  @@index([name, countryId])
+  @@unique([name, countryId])
 }
 
 model Country extends Base, LangLocale {
