@@ -58,7 +58,8 @@ model Tenant extends Base, ActivationStatus {
 }
 
 model DeviceToken extends Base, ActivationStatus {
-  name String
+  deviceName String
+  token String
 
   deviceType DeviceType @relation(fields: [deviceTypeId], references: [id])
   deviceTypeId String
@@ -66,8 +67,9 @@ model DeviceToken extends Base, ActivationStatus {
   user User @relation(fields: [userId], references: [id])
   userId String
 
-  @@index([userId, name])
-  @@unique([userId, name])
+  @@index([userId])
+  @@unique([userId, deviceName])
+  @@unique([userId, token])
 }
 
 model TenantType extends Base, LangLocale {
