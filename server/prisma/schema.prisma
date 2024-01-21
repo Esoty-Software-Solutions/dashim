@@ -76,9 +76,12 @@ model City {
     isSoftDeleted Boolean @default(false)
     arabic String?
     english String?
-    name String @unique()
+    name String
     country Country @relation(fields: [countryId], references: [id])
     countryId String
+
+    @@index([name, countryId])
+    @@unique([name, countryId])
 }
 
 /// @@allow('all', true && isPublished)
@@ -184,14 +187,16 @@ model DeviceToken {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    name String
+    deviceName String
+    token String
     deviceType DeviceType @relation(fields: [deviceTypeId], references: [id])
     deviceTypeId String
     user User @relation(fields: [userId], references: [id])
     userId String
 
-    @@index([userId, name])
-    @@unique([userId, name])
+    @@index([userId])
+    @@unique([userId, deviceName])
+    @@unique([userId, token])
 }
 
 /// @@allow('all', true && isPublished)
@@ -453,17 +458,20 @@ model InsurancePolicy {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    name String @unique()
+    name String
     Accumulatedlimit Int
     BalanceResetDate DateTime
-    institution Institution @relation(fields: [institutionId], references: [id])
-    institutionId String
-    subscribers Subscriber[]
     issueDate DateTime
     renewalDate DateTime
     serviceEntryTimeWindow Int @default(24)
+    institution Institution @relation(fields: [institutionId], references: [id])
+    institutionId String
+    subscribers Subscriber[]
     benefitPackages BenefitPackage[]
     medicalCenters InsurancePolicyMedicalCenter[]
+
+    @@index([institutionId, name])
+    @@unique([institutionId, name])
 }
 
 /// @@allow('all', true && isPublished)
@@ -475,13 +483,16 @@ model BenefitPackage {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    name String @unique()
+    name String
     copayDistrubtion Int[]
     threashold Int[]
     medicalServiceTemplates BenefitPackageMedicalServiceTemplate[]
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
     beneficiaryBalances BeneficiaryBalance[]
+
+    @@index([insurancePolicyId, name])
+    @@unique([insurancePolicyId, name])
 }
 
 /// @@allow('all', true && isPublished)
