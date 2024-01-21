@@ -19,13 +19,11 @@ abstract model BaseWithUser {
   isPublished Boolean @default(true)
   isSoftDeleted Boolean @default(false)
 
-  CreatedBy User @relation(fields: [createdById], references: [id])
-  createdById String
+  CreatedBy User? @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById String?
 
-  UpdatedBy User @relation(fields: [updatedById], references: [id])
+  UpdatedBy User @relation("UpdatedBy", fields: [updatedById], references: [id])
   updatedById String
-
-
 
   // author has full access
   // @@allow('all', auth() != null && published)
@@ -43,7 +41,7 @@ abstract model ActivationStatusWithUser {
   deactivationReason String?
   deactivationDate DateTime?
 
-  StatusSetBy User @relation(fields: [statusSetById], references: [id])
+  StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
   statusSetById String
 }
 
