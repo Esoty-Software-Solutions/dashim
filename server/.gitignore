@@ -11,6 +11,7 @@ node_modules
 /prisma/dbml
 /prisma/fakeData
 /prisma/generated
+/prisma/ERD.svg
 .zenstack_repl_history
 
 *.tsbuildinfo
