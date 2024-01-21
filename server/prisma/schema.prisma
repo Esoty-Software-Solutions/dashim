@@ -308,10 +308,10 @@ model SubscriberFutureStatusChange {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
-    CreatedBy User? @relation("CreatedBy", fields: [createdById], references: [id])
-    createdById String?
-    UpdatedBy User @relation("UpdatedBy", fields: [updatedById], references: [id])
-    updatedById String
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
     changeDate DateTime
     futureStatus Boolean
     description String?
@@ -375,10 +375,10 @@ model BeneficiaryFutureStatusChange {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
-    CreatedBy User? @relation("CreatedBy", fields: [createdById], references: [id])
-    createdById String?
-    UpdatedBy User @relation("UpdatedBy", fields: [updatedById], references: [id])
-    updatedById String
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
     changeDate DateTime
     futureStatus Boolean
     description String?
