@@ -6,6 +6,7 @@ import * as GeneratedFunctions from "../prisma/fakeData/functions";
 import { isCuid } from "@paralleldrive/cuid2";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
+import { computed } from "vue";
 
 const tablesFullObject = Prisma.ModelName;
 const tablesFullList = Object.values(Prisma.ModelName);
@@ -93,7 +94,10 @@ export interface Object {
   [key: string]: any;
 }
 
-async function fieldOverride(object: Object, randomness = 0.5) {
+async function fieldOverride(
+  object: Object,
+  { randomness = 0.5, tableName = "" } = {},
+) {
   function sanityCheck(key: string, OverrideDefined = false) {
     if (key in object) {
       if (
@@ -168,13 +172,43 @@ async function fieldOverride(object: Object, randomness = 0.5) {
     object["address"] = faker.location.streetAddress();
   }
 
-  if (sanityCheck("name")) {
-    //replace name with english
-    object["name"] = object["english"];
+  if (sanityCheck("deviceName", true)) {
+    object["deviceName"] = faker.person.fullName();
+  }
+
+  if (sanityCheck("token", true)) {
+    object["deviceName"] = faker.string.alphanumeric({
+      length: { min: 5, max: 15 },
+    });
+  }
+
+  if ((tableName !== "" && sanityCheck("name", true)) || sanityCheck("name")) {
+    switch (tableName) {
+      case "Institution" || "MedicalCenter" || "Tenant":
+        //Statements executed when the result of expression matches value1
+        object["name"] = faker.company.name();
+        break;
+      case "DiagnosisAttachment":
+        //Statements executed when the result of expression matches value1
+        object["name"] = faker.system.fileName();
+        break;
+      case "PatientService" || "MedicalService" || "MedicalServiceTemplate":
+        //Statements executed when the result of expression matches value1
+        object["name"] = faker.commerce.productName();
+        break;
+      case "BenefitPackage" || "InsurancePolicy":
+        //Statements executed when the result of expression matches value1
+        object["name"] = faker.commerce.product();
+        break;
+      default:
+        //Statements executed when none of the values match the value of the expression
+        object["name"] = faker.person.firstName();
+        break;
+    }
   }
 
   // TODO: Produce Arabic text
-  if (sanityCheck("english")) {
+  if (sanityCheck("english", true) || tableName !== "") {
     object["english"] = faker.string.alpha({ length: { min: 5, max: 15 } });
     if (object["name"]) {
       //replace name with english
