@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { router, publicProcedure } from "./_trpc.router";
+// Automated, Do not alter //
 import { genderRouter } from "./gender.router";
 import { currencyRouter } from "./currency.router";
 import { cityRouter } from "./city.router";
@@ -37,6 +38,7 @@ import { beneficiaryBalanceRouter } from "./beneficiaryBalance.router";
 import { diagnosisAttachmentRouter } from "./diagnosisAttachment.router";
 import { labReportAttachmentRouter } from "./labReportAttachment.router";
 import { prescriptionAttachmentRouter } from "./prescriptionAttachment.router";
+// End Automated //
 
 const routerObject = router({
   // GET http://localhost:3000/trpc/greeting
@@ -50,6 +52,7 @@ const routerObject = router({
   healthCheck: publicProcedure.query(() => {
     return "hello from tRPC v10!.";
   }),
+  // Automated, Do not alter //
   gender: genderRouter,
   currency: currencyRouter,
   city: cityRouter,
@@ -88,6 +91,7 @@ const routerObject = router({
   diagnosisAttachment: diagnosisAttachmentRouter,
   labReportAttachment: labReportAttachmentRouter,
   prescriptionAttachment: prescriptionAttachmentRouter,
+  // End Automated //
 });
 
 // export const appRouter = mergeRouters(routerObject); //! This exceeds Max type inference serialization
