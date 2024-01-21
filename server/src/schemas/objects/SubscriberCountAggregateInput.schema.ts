@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.SubscriberCountAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
-    institutionId: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
+    statusSetById: z.literal(true).optional(),
     insurancePolicyId: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })

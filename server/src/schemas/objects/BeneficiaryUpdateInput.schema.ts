@@ -3,7 +3,9 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
+import { UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInput.schema';
 import { SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
 import { RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
@@ -12,6 +14,7 @@ import { FaceBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from
 import { VoiceBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './VoiceBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { EntryRecordUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { BeneficiaryBalanceUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './BeneficiaryBalanceUpdateManyWithoutBeneficiaryNestedInput.schema';
+import { BeneficiaryFutureStatusChangeUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutBeneficiaryNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -133,6 +136,13 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateInput> = z
       ])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     legacyCode: z
       .union([
         z.string(),
@@ -167,6 +177,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateInput> = z
     gender: z
       .lazy(
         () => GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
+      )
+      .optional(),
+    StatusSetBy: z
+      .lazy(
+        () =>
+          UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema,
       )
       .optional(),
     subscriber: z
@@ -209,6 +225,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateInput> = z
       .lazy(
         () =>
           BeneficiaryBalanceUpdateManyWithoutBeneficiaryNestedInputObjectSchema,
+      )
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUpdateManyWithoutBeneficiaryNestedInputObjectSchema,
       )
       .optional(),
   })

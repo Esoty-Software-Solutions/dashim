@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterMinAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
     name: z.literal(true).optional(),
     code: z.literal(true).optional(),
     description: z.literal(true).optional(),

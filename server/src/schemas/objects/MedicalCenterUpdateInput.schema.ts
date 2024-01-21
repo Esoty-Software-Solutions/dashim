@@ -3,11 +3,12 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { MedicalCenterUpdatephoneInputObjectSchema } from './MedicalCenterUpdatephoneInput.schema';
 import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdateemailInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInputObjectSchema } from './TenantUpdateOneRequiredWithoutAssignedToMedicalCenterNestedInput.schema';
-import { MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { MedicalServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalServiceUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { InsurancePolicyMedicalCenterUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCenterUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutMedicalCenterNestedInput.schema';
 
@@ -55,6 +56,13 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateInput> = z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
       ])
       .optional()
       .nullable(),
@@ -154,7 +162,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateInput> = z
     services: z
       .lazy(
         () =>
-          MedicalCenterServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+          MedicalServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
       )
       .optional(),
     insurancePolicy: z

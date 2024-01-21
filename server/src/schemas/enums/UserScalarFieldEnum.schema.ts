@@ -8,6 +8,7 @@ export const UserScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'firstName',
   'secondName',
   'thirdName',

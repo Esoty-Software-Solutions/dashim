@@ -3,8 +3,11 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema';
 import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
+import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
+import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
 import { SubscriberRelationFilterObjectSchema } from './SubscriberRelationFilter.schema';
 import { SubscriberWhereInputObjectSchema } from './SubscriberWhereInput.schema';
 import { RelationshipRelationFilterObjectSchema } from './RelationshipRelationFilter.schema';
@@ -15,6 +18,7 @@ import { FaceBiometricListRelationFilterObjectSchema } from './FaceBiometricList
 import { VoiceBiometricListRelationFilterObjectSchema } from './VoiceBiometricListRelationFilter.schema';
 import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 import { BeneficiaryBalanceListRelationFilterObjectSchema } from './BeneficiaryBalanceListRelationFilter.schema';
+import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -101,6 +105,16 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
+      .optional()
+      .nullable(),
+    statusSetById: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
     subscriberId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -129,6 +143,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
         z.lazy(() => GenderWhereInputObjectSchema),
       ])
       .optional(),
+    StatusSetBy: z
+      .union([
+        z.lazy(() => UserRelationFilterObjectSchema),
+        z.lazy(() => UserWhereInputObjectSchema),
+      ])
+      .optional(),
     subscriber: z
       .union([
         z.lazy(() => SubscriberRelationFilterObjectSchema),
@@ -154,6 +174,9 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .optional(),
     beneficiaryBalances: z
       .lazy(() => BeneficiaryBalanceListRelationFilterObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

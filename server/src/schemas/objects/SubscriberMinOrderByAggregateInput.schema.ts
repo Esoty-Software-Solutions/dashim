@@ -12,7 +12,8 @@ const Schema: z.ZodType<Prisma.SubscriberMinOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
-    institutionId: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z.lazy(() => SortOrderSchema).optional(),
+    statusSetById: z.lazy(() => SortOrderSchema).optional(),
     insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();

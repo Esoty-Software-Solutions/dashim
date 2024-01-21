@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderCreateNestedOneWithoutBeneficiaryInput.schema';
+import { UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryStatusChangesInput.schema';
 import { SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './SubscriberCreateNestedOneWithoutBeneficiariesInput.schema';
 import { RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipCreateNestedOneWithoutBeneficiaryInput.schema';
 import { FingerprintBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -8,6 +9,7 @@ import { FaceBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from
 import { VoiceBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './VoiceBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
 import { EntryRecordCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './EntryRecordCreateNestedManyWithoutBeneficiaryInput.schema';
 import { BeneficiaryBalanceCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './BeneficiaryBalanceCreateNestedManyWithoutBeneficiaryInput.schema';
+import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutBeneficiaryInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -31,6 +33,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateInput> = z
     address: z.string().optional().nullable(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     legacyCode: z.string().optional().nullable(),
     isFingerprintVerificationActive: z.boolean().optional(),
     isIdCardVerificationActive: z.boolean().optional(),
@@ -38,6 +41,9 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateInput> = z
     isVoiceVerificationActive: z.boolean().optional(),
     gender: z.lazy(
       () => GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema,
+    ),
+    StatusSetBy: z.lazy(
+      () => UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema,
     ),
     subscriber: z.lazy(
       () => SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema,
@@ -73,6 +79,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateInput> = z
       .lazy(
         () =>
           BeneficiaryBalanceCreateNestedManyWithoutBeneficiaryInputObjectSchema,
+      )
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeCreateNestedManyWithoutBeneficiaryInputObjectSchema,
       )
       .optional(),
   })

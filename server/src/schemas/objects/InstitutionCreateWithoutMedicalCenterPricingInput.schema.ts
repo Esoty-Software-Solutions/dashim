@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { InstitutionCreatephoneArrayInputObjectSchema } from './InstitutionCreatephoneArrayInput.schema';
 import { InstitutionCreateemailArrayInputObjectSchema } from './InstitutionCreateemailArrayInput.schema';
 import { InsurancePolicyCreateNestedManyWithoutInstitutionInputObjectSchema } from './InsurancePolicyCreateNestedManyWithoutInstitutionInput.schema';
-import { SubscriberCreateNestedManyWithoutInstitutionInputObjectSchema } from './SubscriberCreateNestedManyWithoutInstitutionInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -16,6 +15,7 @@ const Schema: z.ZodType<Prisma.InstitutionCreateWithoutMedicalCenterPricingInput
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       name: z.string(),
       code: z.string(),
       legacyCode: z.string().optional().nullable(),
@@ -45,11 +45,6 @@ const Schema: z.ZodType<Prisma.InstitutionCreateWithoutMedicalCenterPricingInput
         .lazy(
           () =>
             InsurancePolicyCreateNestedManyWithoutInstitutionInputObjectSchema,
-        )
-        .optional(),
-      members: z
-        .lazy(
-          () => SubscriberCreateNestedManyWithoutInstitutionInputObjectSchema,
         )
         .optional(),
     })

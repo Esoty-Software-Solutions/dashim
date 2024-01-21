@@ -3,6 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
 import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { FingerprintBiometricRelationFilterObjectSchema } from './FingerprintBiometricRelationFilter.schema';
@@ -13,9 +14,9 @@ import { FaceBiometricRelationFilterObjectSchema } from './FaceBiometricRelation
 import { FaceBiometricWhereInputObjectSchema } from './FaceBiometricWhereInput.schema';
 import { VoiceBiometricRelationFilterObjectSchema } from './VoiceBiometricRelationFilter.schema';
 import { VoiceBiometricWhereInputObjectSchema } from './VoiceBiometricWhereInput.schema';
-import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
+import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -59,6 +60,19 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
+      .optional()
+      .nullable(),
+    isValidated: z
+      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
+      .optional(),
+    isManuallyInserted: z
+      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
+      .optional(),
     beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -78,12 +92,6 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    isValidated: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isManuallyInserted: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
     medicalCenterId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -121,14 +129,14 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
       ])
       .optional()
       .nullable(),
-    patientServices: z
-      .lazy(() => PatientServiceListRelationFilterObjectSchema)
-      .optional(),
     medicalCenter: z
       .union([
         z.lazy(() => MedicalCenterRelationFilterObjectSchema),
         z.lazy(() => MedicalCenterWhereInputObjectSchema),
       ])
+      .optional(),
+    patientServices: z
+      .lazy(() => PatientServiceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

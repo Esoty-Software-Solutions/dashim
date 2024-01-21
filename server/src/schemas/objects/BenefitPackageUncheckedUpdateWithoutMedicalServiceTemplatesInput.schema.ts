@@ -3,6 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { BenefitPackageUpdatecopayDistrubtionInputObjectSchema } from './BenefitPackageUpdatecopayDistrubtionInput.schema';
 import { BenefitPackageUpdatethreasholdInputObjectSchema } from './BenefitPackageUpdatethreasholdInput.schema';
 import { BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
@@ -52,6 +53,13 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateWithoutMedicalServic
         .union([
           z.string(),
           z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
         ])
         .optional()
         .nullable(),

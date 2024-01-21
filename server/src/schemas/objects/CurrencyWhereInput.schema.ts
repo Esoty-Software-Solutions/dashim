@@ -57,7 +57,7 @@ const Schema: z.ZodType<Prisma.CurrencyWhereInput> = z
     symbol: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    BuyexchangeRate: z
+    buyExchangeRate: z
       .union([z.lazy(() => FloatFilterObjectSchema), z.number()])
       .optional(),
     SellExchangeRate: z

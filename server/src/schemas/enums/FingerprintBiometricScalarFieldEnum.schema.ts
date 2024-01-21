@@ -8,6 +8,7 @@ export const FingerprintBiometricScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'fingerTypeId',
   'hash',
   'beneficiaryId',

@@ -3,12 +3,14 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { FingerprintBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { IDCardUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './IDCardUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { FaceBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FaceBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { VoiceBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './VoiceBiometricUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { EntryRecordUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { BeneficiaryBalanceUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './BeneficiaryBalanceUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
+import { BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -130,6 +132,19 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateWithoutGenderInput> = z
       ])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    statusSetById: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
     subscriberId: z
       .union([
         z.string(),
@@ -207,6 +222,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateWithoutGenderInput> = z
       .lazy(
         () =>
           BeneficiaryBalanceUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema,
+      )
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryNestedInputObjectSchema,
       )
       .optional(),
   })

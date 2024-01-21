@@ -3,6 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -51,6 +52,25 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
       ])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    isValidated: z
+      .union([
+        z.boolean(),
+        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
+    isManuallyInserted: z
+      .union([
+        z.boolean(),
+        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
     beneficiaryId: z
       .union([
         z.string(),
@@ -85,18 +105,6 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
       ])
       .optional()
       .nullable(),
-    isValidated: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isManuallyInserted: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
     medicalCenterId: z
       .union([
         z.string(),

@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageCountOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z.lazy(() => SortOrderSchema).optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
     threashold: z.lazy(() => SortOrderSchema).optional(),

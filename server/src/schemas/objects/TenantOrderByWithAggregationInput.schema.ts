@@ -21,6 +21,12 @@ const Schema: z.ZodType<Prisma.TenantOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     typeId: z.lazy(() => SortOrderSchema).optional(),
     description: z

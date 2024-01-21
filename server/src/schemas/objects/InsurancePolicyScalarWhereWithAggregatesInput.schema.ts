@@ -3,6 +3,7 @@ import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFi
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter.schema';
 import { StringNullableWithAggregatesFilterObjectSchema } from './StringNullableWithAggregatesFilter.schema';
+import { DateTimeNullableWithAggregatesFilterObjectSchema } from './DateTimeNullableWithAggregatesFilter.schema';
 import { IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -81,6 +82,13 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
         ])
         .optional()
         .nullable(),
+      deactivationDate: z
+        .union([
+          z.lazy(() => DateTimeNullableWithAggregatesFilterObjectSchema),
+          z.coerce.date(),
+        ])
+        .optional()
+        .nullable(),
       name: z
         .union([
           z.lazy(() => StringWithAggregatesFilterObjectSchema),
@@ -94,12 +102,6 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
         .union([
           z.lazy(() => DateTimeWithAggregatesFilterObjectSchema),
           z.coerce.date(),
-        ])
-        .optional(),
-      institutionId: z
-        .union([
-          z.lazy(() => StringWithAggregatesFilterObjectSchema),
-          z.string(),
         ])
         .optional(),
       issueDate: z
@@ -116,6 +118,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyScalarWhereWithAggregatesInput> =
         .optional(),
       serviceEntryTimeWindow: z
         .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+        .optional(),
+      institutionId: z
+        .union([
+          z.lazy(() => StringWithAggregatesFilterObjectSchema),
+          z.string(),
+        ])
         .optional(),
     })
     .strict();

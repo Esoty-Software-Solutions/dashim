@@ -1,7 +1,13 @@
 import { z } from 'zod';
 import { GenderCreateNestedOneWithoutUserInputObjectSchema } from './GenderCreateNestedOneWithoutUserInput.schema';
 import { TenantCreateNestedManyWithoutOwnerInputObjectSchema } from './TenantCreateNestedManyWithoutOwnerInput.schema';
-import { TenantMembersCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMembersCreateNestedManyWithoutMemberInput.schema';
+import { TenantMemberCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMemberCreateNestedManyWithoutMemberInput.schema';
+import { SubscriberCreateNestedManyWithoutStatusSetByInputObjectSchema } from './SubscriberCreateNestedManyWithoutStatusSetByInput.schema';
+import { BeneficiaryCreateNestedManyWithoutStatusSetByInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutStatusSetByInput.schema';
+import { SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
+import { SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
+import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
+import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,6 +20,7 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutDeviceTokenInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     firstName: z.string(),
     secondName: z.string().optional().nullable(),
     thirdName: z.string().optional().nullable(),
@@ -37,7 +44,39 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutDeviceTokenInput> = z
       .lazy(() => TenantCreateNestedManyWithoutOwnerInputObjectSchema)
       .optional(),
     memberOf: z
-      .lazy(() => TenantMembersCreateNestedManyWithoutMemberInputObjectSchema)
+      .lazy(() => TenantMemberCreateNestedManyWithoutMemberInputObjectSchema)
+      .optional(),
+    subscriberStatusChanges: z
+      .lazy(() => SubscriberCreateNestedManyWithoutStatusSetByInputObjectSchema)
+      .optional(),
+    beneficiaryStatusChanges: z
+      .lazy(
+        () => BeneficiaryCreateNestedManyWithoutStatusSetByInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusCreations: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusChanges: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusCreations: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

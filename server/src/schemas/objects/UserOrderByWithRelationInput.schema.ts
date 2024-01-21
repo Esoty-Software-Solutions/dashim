@@ -4,7 +4,11 @@ import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { GenderOrderByWithRelationInputObjectSchema } from './GenderOrderByWithRelationInput.schema';
 import { DeviceTokenOrderByRelationAggregateInputObjectSchema } from './DeviceTokenOrderByRelationAggregateInput.schema';
 import { TenantOrderByRelationAggregateInputObjectSchema } from './TenantOrderByRelationAggregateInput.schema';
-import { TenantMembersOrderByRelationAggregateInputObjectSchema } from './TenantMembersOrderByRelationAggregateInput.schema';
+import { TenantMemberOrderByRelationAggregateInputObjectSchema } from './TenantMemberOrderByRelationAggregateInput.schema';
+import { SubscriberOrderByRelationAggregateInputObjectSchema } from './SubscriberOrderByRelationAggregateInput.schema';
+import { BeneficiaryOrderByRelationAggregateInputObjectSchema } from './BeneficiaryOrderByRelationAggregateInput.schema';
+import { SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './SubscriberFutureStatusChangeOrderByRelationAggregateInput.schema';
+import { BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryFutureStatusChangeOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -17,6 +21,12 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    deactivationDate: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
@@ -94,7 +104,37 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
       .lazy(() => TenantOrderByRelationAggregateInputObjectSchema)
       .optional(),
     memberOf: z
-      .lazy(() => TenantMembersOrderByRelationAggregateInputObjectSchema)
+      .lazy(() => TenantMemberOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    subscriberStatusChanges: z
+      .lazy(() => SubscriberOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    beneficiaryStatusChanges: z
+      .lazy(() => BeneficiaryOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    subscriberFutureStatusCreations: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusChanges: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusCreations: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

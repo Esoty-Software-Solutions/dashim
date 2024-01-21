@@ -1,12 +1,11 @@
 import { z } from "zod";
-import { router, publicProcedure, mergeRouters } from "./_trpc.router";
-import { beneficiaryRouter } from "./beneficiary.router";
+import { router, publicProcedure } from "./_trpc.router";
 import { genderRouter } from "./gender.router";
 import { currencyRouter } from "./currency.router";
 import { cityRouter } from "./city.router";
 import { countryRouter } from "./country.router";
 import { userRouter } from "./user.router";
-import { tenantMembersRouter } from "./tenantMembers.router";
+import { tenantMemberRouter } from "./tenantMember.router";
 import { tenantRouter } from "./tenant.router";
 import { deviceTokenRouter } from "./deviceToken.router";
 import { tenantTypeRouter } from "./tenantType.router";
@@ -14,8 +13,11 @@ import { roleRouter } from "./role.router";
 import { deviceTypeRouter } from "./deviceType.router";
 import { institutionRouter } from "./institution.router";
 import { subscriberRouter } from "./subscriber.router";
+import { subscriberFutureStatusChangeRouter } from "./subscriberFutureStatusChange.router";
+import { beneficiaryRouter } from "./beneficiary.router";
+import { beneficiaryFutureStatusChangeRouter } from "./beneficiaryFutureStatusChange.router";
 import { relationshipRouter } from "./relationship.router";
-import { institutionMedicalCeneterServiceRouter } from "./institutionMedicalCeneterService.router";
+import { institutionMedicalServiceRouter } from "./institutionMedicalService.router";
 import { fingerprintBiometricRouter } from "./fingerprintBiometric.router";
 import { iDCardRouter } from "./iDCard.router";
 import { faceBiometricRouter } from "./faceBiometric.router";
@@ -25,9 +27,9 @@ import { insurancePolicyRouter } from "./insurancePolicy.router";
 import { benefitPackageRouter } from "./benefitPackage.router";
 import { insurancePolicyMedicalCenterRouter } from "./insurancePolicyMedicalCenter.router";
 import { medicalCenterRouter } from "./medicalCenter.router";
-import { benefitPackageMedicalCenterServiceTemplateRouter } from "./benefitPackageMedicalCenterServiceTemplate.router";
-import { medicalCenterServiceTemplateRouter } from "./medicalCenterServiceTemplate.router";
-import { medicalCenterServiceRouter } from "./medicalCenterService.router";
+import { benefitPackageMedicalServiceTemplateRouter } from "./benefitPackageMedicalServiceTemplate.router";
+import { medicalServiceTemplateRouter } from "./medicalServiceTemplate.router";
+import { medicalServiceRouter } from "./medicalService.router";
 import { entryRecordRouter } from "./entryRecord.router";
 import { patientServiceRouter } from "./patientService.router";
 import { reviewStatusRouter } from "./reviewStatus.router";
@@ -48,13 +50,12 @@ const routerObject = router({
   healthCheck: publicProcedure.query(() => {
     return "hello from tRPC v10!.";
   }),
-  beneficiary: beneficiaryRouter,
   gender: genderRouter,
   currency: currencyRouter,
   city: cityRouter,
   country: countryRouter,
   user: userRouter,
-  tenantMembers: tenantMembersRouter,
+  tenantMember: tenantMemberRouter,
   tenant: tenantRouter,
   deviceToken: deviceTokenRouter,
   tenantType: tenantTypeRouter,
@@ -62,8 +63,11 @@ const routerObject = router({
   deviceType: deviceTypeRouter,
   institution: institutionRouter,
   subscriber: subscriberRouter,
+  subscriberFutureStatusChange: subscriberFutureStatusChangeRouter,
+  beneficiary: beneficiaryRouter,
+  beneficiaryFutureStatusChange: beneficiaryFutureStatusChangeRouter,
   relationship: relationshipRouter,
-  institutionMedicalCeneterService: institutionMedicalCeneterServiceRouter,
+  institutionMedicalService: institutionMedicalServiceRouter,
   fingerprintBiometric: fingerprintBiometricRouter,
   iDCard: iDCardRouter,
   faceBiometric: faceBiometricRouter,
@@ -73,10 +77,10 @@ const routerObject = router({
   benefitPackage: benefitPackageRouter,
   insurancePolicyMedicalCenter: insurancePolicyMedicalCenterRouter,
   medicalCenter: medicalCenterRouter,
-  benefitPackageMedicalCenterServiceTemplate:
-    benefitPackageMedicalCenterServiceTemplateRouter,
-  medicalCenterServiceTemplate: medicalCenterServiceTemplateRouter,
-  medicalCenterService: medicalCenterServiceRouter,
+  benefitPackageMedicalServiceTemplate:
+    benefitPackageMedicalServiceTemplateRouter,
+  medicalServiceTemplate: medicalServiceTemplateRouter,
+  medicalService: medicalServiceRouter,
   entryRecord: entryRecordRouter,
   patientService: patientServiceRouter,
   reviewStatus: reviewStatusRouter,

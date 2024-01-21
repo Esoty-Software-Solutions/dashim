@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.InstitutionMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
     name: z.literal(true).optional(),
     code: z.literal(true).optional(),
     legacyCode: z.literal(true).optional(),

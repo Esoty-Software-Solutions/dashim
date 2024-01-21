@@ -3,11 +3,13 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
-import { InstitutionRelationFilterObjectSchema } from './InstitutionRelationFilter.schema';
-import { InstitutionWhereInputObjectSchema } from './InstitutionWhereInput.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
+import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
+import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
 import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
 import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
 import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
+import { SubscriberFutureStatusChangeListRelationFilterObjectSchema } from './SubscriberFutureStatusChangeListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -51,16 +53,23 @@ const Schema: z.ZodType<Prisma.SubscriberWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    institutionId: z
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
+      .optional()
+      .nullable(),
+    statusSetById: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     insurancePolicyId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    institution: z
+    StatusSetBy: z
       .union([
-        z.lazy(() => InstitutionRelationFilterObjectSchema),
-        z.lazy(() => InstitutionWhereInputObjectSchema),
+        z.lazy(() => UserRelationFilterObjectSchema),
+        z.lazy(() => UserWhereInputObjectSchema),
       ])
       .optional(),
     insurancePolicy: z
@@ -71,6 +80,9 @@ const Schema: z.ZodType<Prisma.SubscriberWhereInput> = z
       .optional(),
     beneficiaries: z
       .lazy(() => BeneficiaryListRelationFilterObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(() => SubscriberFutureStatusChangeListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

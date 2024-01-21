@@ -3,6 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
 import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
@@ -47,6 +48,13 @@ const Schema: z.ZodType<Prisma.FaceBiometricWhereInput> = z
       .optional(),
     deactivationReason: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
       .optional()
       .nullable(),
     hash: z

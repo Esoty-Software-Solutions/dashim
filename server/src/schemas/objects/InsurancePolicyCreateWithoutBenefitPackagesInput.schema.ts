@@ -15,6 +15,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateWithoutBenefitPackagesInput>
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       name: z.string(),
       Accumulatedlimit: z.number(),
       BalanceResetDate: z.coerce.date(),

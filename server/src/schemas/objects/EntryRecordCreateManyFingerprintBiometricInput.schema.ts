@@ -12,12 +12,13 @@ const Schema: z.ZodType<Prisma.EntryRecordCreateManyFingerprintBiometricInput> =
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
+      isValidated: z.boolean(),
+      isManuallyInserted: z.boolean().optional(),
       beneficiaryId: z.string(),
       idCardId: z.string().optional().nullable(),
       faceId: z.string().optional().nullable(),
       voiceId: z.string().optional().nullable(),
-      isValidated: z.boolean(),
-      isManuallyInserted: z.boolean().optional(),
       medicalCenterId: z.string(),
     })
     .strict();

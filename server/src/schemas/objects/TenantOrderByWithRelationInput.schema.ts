@@ -4,7 +4,7 @@ import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { TenantTypeOrderByWithRelationInputObjectSchema } from './TenantTypeOrderByWithRelationInput.schema';
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
 import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
-import { TenantMembersOrderByRelationAggregateInputObjectSchema } from './TenantMembersOrderByRelationAggregateInput.schema';
+import { TenantMemberOrderByRelationAggregateInputObjectSchema } from './TenantMemberOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -17,6 +17,12 @@ const Schema: z.ZodType<Prisma.TenantOrderByWithRelationInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    deactivationDate: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
@@ -81,7 +87,7 @@ const Schema: z.ZodType<Prisma.TenantOrderByWithRelationInput> = z
       .optional(),
     owner: z.lazy(() => UserOrderByWithRelationInputObjectSchema).optional(),
     members: z
-      .lazy(() => TenantMembersOrderByRelationAggregateInputObjectSchema)
+      .lazy(() => TenantMemberOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

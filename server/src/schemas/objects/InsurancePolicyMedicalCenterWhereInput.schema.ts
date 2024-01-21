@@ -3,6 +3,7 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
 import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
@@ -52,6 +53,13 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMedicalCenterWhereInput> = z
       .optional(),
     deactivationReason: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
       .optional()
       .nullable(),
     insurancePolicyId: z

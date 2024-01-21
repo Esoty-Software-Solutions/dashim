@@ -3,7 +3,9 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { BeneficiaryUncheckedUpdateManyWithoutSubscriberNestedInputObjectSchema } from './BeneficiaryUncheckedUpdateManyWithoutSubscriberNestedInput.schema';
+import { SubscriberFutureStatusChangeUncheckedUpdateManyWithoutSubscriberNestedInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedUpdateManyWithoutSubscriberNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -53,7 +55,14 @@ const Schema: z.ZodType<Prisma.SubscriberUncheckedUpdateWithoutInsurancePolicyIn
         ])
         .optional()
         .nullable(),
-      institutionId: z
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
+      statusSetById: z
         .union([
           z.string(),
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
@@ -63,6 +72,12 @@ const Schema: z.ZodType<Prisma.SubscriberUncheckedUpdateWithoutInsurancePolicyIn
         .lazy(
           () =>
             BeneficiaryUncheckedUpdateManyWithoutSubscriberNestedInputObjectSchema,
+        )
+        .optional(),
+      futureStatus: z
+        .lazy(
+          () =>
+            SubscriberFutureStatusChangeUncheckedUpdateManyWithoutSubscriberNestedInputObjectSchema,
         )
         .optional(),
     })

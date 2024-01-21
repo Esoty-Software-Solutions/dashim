@@ -1,7 +1,13 @@
 import { z } from 'zod';
 import { DeviceTokenUncheckedCreateNestedManyWithoutUserInputObjectSchema } from './DeviceTokenUncheckedCreateNestedManyWithoutUserInput.schema';
 import { TenantUncheckedCreateNestedManyWithoutOwnerInputObjectSchema } from './TenantUncheckedCreateNestedManyWithoutOwnerInput.schema';
-import { TenantMembersUncheckedCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMembersUncheckedCreateNestedManyWithoutMemberInput.schema';
+import { TenantMemberUncheckedCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMemberUncheckedCreateNestedManyWithoutMemberInput.schema';
+import { SubscriberUncheckedCreateNestedManyWithoutStatusSetByInputObjectSchema } from './SubscriberUncheckedCreateNestedManyWithoutStatusSetByInput.schema';
+import { BeneficiaryUncheckedCreateNestedManyWithoutStatusSetByInputObjectSchema } from './BeneficiaryUncheckedCreateNestedManyWithoutStatusSetByInput.schema';
+import { SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInput.schema';
+import { SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInput.schema';
+import { BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInput.schema';
+import { BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,6 +20,7 @@ const Schema: z.ZodType<Prisma.UserUncheckedCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     firstName: z.string(),
     secondName: z.string().optional().nullable(),
     thirdName: z.string().optional().nullable(),
@@ -44,7 +51,43 @@ const Schema: z.ZodType<Prisma.UserUncheckedCreateInput> = z
     memberOf: z
       .lazy(
         () =>
-          TenantMembersUncheckedCreateNestedManyWithoutMemberInputObjectSchema,
+          TenantMemberUncheckedCreateNestedManyWithoutMemberInputObjectSchema,
+      )
+      .optional(),
+    subscriberStatusChanges: z
+      .lazy(
+        () =>
+          SubscriberUncheckedCreateNestedManyWithoutStatusSetByInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryUncheckedCreateNestedManyWithoutStatusSetByInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusCreations: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusChanges: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusCreations: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutCreatedByInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutUpdatedByInputObjectSchema,
       )
       .optional(),
   })

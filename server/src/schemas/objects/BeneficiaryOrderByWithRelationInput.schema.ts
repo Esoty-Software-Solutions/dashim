@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { GenderOrderByWithRelationInputObjectSchema } from './GenderOrderByWithRelationInput.schema';
+import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 import { SubscriberOrderByWithRelationInputObjectSchema } from './SubscriberOrderByWithRelationInput.schema';
 import { RelationshipOrderByWithRelationInputObjectSchema } from './RelationshipOrderByWithRelationInput.schema';
 import { FingerprintBiometricOrderByRelationAggregateInputObjectSchema } from './FingerprintBiometricOrderByRelationAggregateInput.schema';
@@ -10,6 +11,7 @@ import { FaceBiometricOrderByRelationAggregateInputObjectSchema } from './FaceBi
 import { VoiceBiometricOrderByRelationAggregateInputObjectSchema } from './VoiceBiometricOrderByRelationAggregateInput.schema';
 import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 import { BeneficiaryBalanceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryBalanceOrderByRelationAggregateInput.schema';
+import { BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryFutureStatusChangeOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -74,6 +76,13 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    statusSetById: z.lazy(() => SortOrderSchema).optional(),
     subscriberId: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z
       .union([
@@ -87,6 +96,9 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
     isFaceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
     isVoiceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
     gender: z.lazy(() => GenderOrderByWithRelationInputObjectSchema).optional(),
+    StatusSetBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
+      .optional(),
     subscriber: z
       .lazy(() => SubscriberOrderByWithRelationInputObjectSchema)
       .optional(),
@@ -110,6 +122,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
       .optional(),
     beneficiaryBalances: z
       .lazy(() => BeneficiaryBalanceOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

@@ -3,8 +3,10 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { InstitutionUpdateOneRequiredWithoutMembersNestedInputObjectSchema } from './InstitutionUpdateOneRequiredWithoutMembersNestedInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
+import { UserUpdateOneRequiredWithoutSubscriberStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutSubscriberStatusChangesNestedInput.schema';
 import { BeneficiaryUpdateManyWithoutSubscriberNestedInputObjectSchema } from './BeneficiaryUpdateManyWithoutSubscriberNestedInput.schema';
+import { SubscriberFutureStatusChangeUpdateManyWithoutSubscriberNestedInputObjectSchema } from './SubscriberFutureStatusChangeUpdateManyWithoutSubscriberNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -53,13 +55,27 @@ const Schema: z.ZodType<Prisma.SubscriberUpdateWithoutInsurancePolicyInput> = z
       ])
       .optional()
       .nullable(),
-    institution: z
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    StatusSetBy: z
       .lazy(
-        () => InstitutionUpdateOneRequiredWithoutMembersNestedInputObjectSchema,
+        () =>
+          UserUpdateOneRequiredWithoutSubscriberStatusChangesNestedInputObjectSchema,
       )
       .optional(),
     beneficiaries: z
       .lazy(() => BeneficiaryUpdateManyWithoutSubscriberNestedInputObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUpdateManyWithoutSubscriberNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

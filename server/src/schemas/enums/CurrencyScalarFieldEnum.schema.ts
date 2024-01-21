@@ -11,6 +11,6 @@ export const CurrencyScalarFieldEnumSchema = z.enum([
   'name',
   'code',
   'symbol',
-  'BuyexchangeRate',
+  'buyExchangeRate',
   'SellExchangeRate',
 ]);

@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.UserMaxOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z.lazy(() => SortOrderSchema).optional(),
     firstName: z.lazy(() => SortOrderSchema).optional(),
     secondName: z.lazy(() => SortOrderSchema).optional(),
     thirdName: z.lazy(() => SortOrderSchema).optional(),

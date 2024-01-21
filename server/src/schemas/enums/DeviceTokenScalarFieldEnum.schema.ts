@@ -8,7 +8,9 @@ export const DeviceTokenScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
-  'name',
+  'deactivationDate',
+  'deviceName',
+  'token',
   'deviceTypeId',
   'userId',
 ]);

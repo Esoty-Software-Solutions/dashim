@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMedicalCenterCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     insurancePolicy: z.lazy(
       () =>
         InsurancePolicyCreateNestedOneWithoutMedicalCentersInputObjectSchema,

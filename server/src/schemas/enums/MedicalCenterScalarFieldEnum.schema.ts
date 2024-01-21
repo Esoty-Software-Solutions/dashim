@@ -8,6 +8,7 @@ export const MedicalCenterScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'name',
   'code',
   'description',

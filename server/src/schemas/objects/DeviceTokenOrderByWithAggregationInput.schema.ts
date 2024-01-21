@@ -21,7 +21,14 @@ const Schema: z.ZodType<Prisma.DeviceTokenOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    deviceName: z.lazy(() => SortOrderSchema).optional(),
+    token: z.lazy(() => SortOrderSchema).optional(),
     deviceTypeId: z.lazy(() => SortOrderSchema).optional(),
     userId: z.lazy(() => SortOrderSchema).optional(),
     _count: z

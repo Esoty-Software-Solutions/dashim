@@ -8,6 +8,7 @@ export const TenantScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'name',
   'typeId',
   'description',

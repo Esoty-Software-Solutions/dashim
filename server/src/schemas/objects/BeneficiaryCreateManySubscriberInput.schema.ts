@@ -23,6 +23,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateManySubscriberInput> = z
     address: z.string().optional().nullable(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
+    statusSetById: z.string(),
     legacyCode: z.string().optional().nullable(),
     relationshipId: z.string(),
     isFingerprintVerificationActive: z.boolean().optional(),

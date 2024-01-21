@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema } from './BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInput.schema';
+import { SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutSubscriberInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -12,12 +13,19 @@ const Schema: z.ZodType<Prisma.SubscriberUncheckedCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    institutionId: z.string(),
+    deactivationDate: z.coerce.date().optional().nullable(),
+    statusSetById: z.string(),
     insurancePolicyId: z.string(),
     beneficiaries: z
       .lazy(
         () =>
           BeneficiaryUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema,
+      )
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUncheckedCreateNestedManyWithoutSubscriberInputObjectSchema,
       )
       .optional(),
   })

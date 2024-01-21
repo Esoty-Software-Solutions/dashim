@@ -14,7 +14,7 @@ const Schema: z.ZodType<Prisma.CurrencyCountAggregateInputType> = z
     name: z.literal(true).optional(),
     code: z.literal(true).optional(),
     symbol: z.literal(true).optional(),
-    BuyexchangeRate: z.literal(true).optional(),
+    buyExchangeRate: z.literal(true).optional(),
     SellExchangeRate: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })

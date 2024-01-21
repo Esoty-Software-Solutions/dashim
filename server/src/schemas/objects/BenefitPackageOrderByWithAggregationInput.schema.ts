@@ -23,6 +23,12 @@ const Schema: z.ZodType<Prisma.BenefitPackageOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
     threashold: z.lazy(() => SortOrderSchema).optional(),

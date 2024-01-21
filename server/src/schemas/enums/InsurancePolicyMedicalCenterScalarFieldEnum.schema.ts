@@ -8,6 +8,7 @@ export const InsurancePolicyMedicalCenterScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'insurancePolicyId',
   'medicalCenterId',
 ]);

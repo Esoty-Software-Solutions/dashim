@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.IDCardMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
     hash: z.literal(true).optional(),
     beneficiaryId: z.literal(true).optional(),
   })

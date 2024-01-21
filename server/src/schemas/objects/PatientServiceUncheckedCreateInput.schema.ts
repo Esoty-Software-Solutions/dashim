@@ -11,11 +11,12 @@ const Schema: z.ZodType<Prisma.PatientServiceUncheckedCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    entryRecordId: z.string(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     name: z.string(),
     Note: z.string().optional().nullable(),
     isWorkInjury: z.boolean().optional(),
     isExamination: z.boolean().optional(),
+    groupCode: z.string(),
     billedAmmount: z.number(),
     allowedAmmount: z.number(),
     copayAmmount: z.number(),
@@ -23,10 +24,10 @@ const Schema: z.ZodType<Prisma.PatientServiceUncheckedCreateInput> = z
     coveredAmount: z.number(),
     defferedAmount: z.number(),
     coinsuranceAmount: z.number(),
+    entryRecordId: z.string(),
     transactionReviewStatusId: z.string(),
     medicalReviewStatusId: z.string(),
     medicalServiceId: z.string(),
-    groupCode: z.string(),
   })
   .strict();
 

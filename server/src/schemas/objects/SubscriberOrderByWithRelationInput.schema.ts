@@ -1,9 +1,10 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { InstitutionOrderByWithRelationInputObjectSchema } from './InstitutionOrderByWithRelationInput.schema';
+import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 import { InsurancePolicyOrderByWithRelationInputObjectSchema } from './InsurancePolicyOrderByWithRelationInput.schema';
 import { BeneficiaryOrderByRelationAggregateInputObjectSchema } from './BeneficiaryOrderByRelationAggregateInput.schema';
+import { SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './SubscriberFutureStatusChangeOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -21,16 +22,28 @@ const Schema: z.ZodType<Prisma.SubscriberOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    institutionId: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    statusSetById: z.lazy(() => SortOrderSchema).optional(),
     insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
-    institution: z
-      .lazy(() => InstitutionOrderByWithRelationInputObjectSchema)
+    StatusSetBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
       .optional(),
     insurancePolicy: z
       .lazy(() => InsurancePolicyOrderByWithRelationInputObjectSchema)
       .optional(),
     beneficiaries: z
       .lazy(() => BeneficiaryOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

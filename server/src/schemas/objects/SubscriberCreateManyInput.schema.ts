@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.SubscriberCreateManyInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    institutionId: z.string(),
+    deactivationDate: z.coerce.date().optional().nullable(),
+    statusSetById: z.string(),
     insurancePolicyId: z.string(),
   })
   .strict();

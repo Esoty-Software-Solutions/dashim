@@ -68,6 +68,13 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    statusSetById: z.lazy(() => SortOrderSchema).optional(),
     subscriberId: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z
       .union([

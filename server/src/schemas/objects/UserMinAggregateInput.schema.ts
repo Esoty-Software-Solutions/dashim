@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.UserMinAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
     firstName: z.literal(true).optional(),
     secondName: z.literal(true).optional(),
     thirdName: z.literal(true).optional(),

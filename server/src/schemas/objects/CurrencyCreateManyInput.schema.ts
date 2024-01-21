@@ -14,7 +14,7 @@ const Schema: z.ZodType<Prisma.CurrencyCreateManyInput> = z
     name: z.string(),
     code: z.string(),
     symbol: z.string(),
-    BuyexchangeRate: z.number().optional(),
+    buyExchangeRate: z.number().optional(),
     SellExchangeRate: z.number().optional(),
   })
   .strict();

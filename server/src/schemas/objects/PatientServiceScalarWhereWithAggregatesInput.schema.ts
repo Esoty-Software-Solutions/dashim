@@ -3,6 +3,7 @@ import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFi
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter.schema';
 import { StringNullableWithAggregatesFilterObjectSchema } from './StringNullableWithAggregatesFilter.schema';
+import { DateTimeNullableWithAggregatesFilterObjectSchema } from './DateTimeNullableWithAggregatesFilter.schema';
 import { IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -60,9 +61,13 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    entryRecordId: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableWithAggregatesFilterObjectSchema),
+        z.coerce.date(),
+      ])
+      .optional()
+      .nullable(),
     name: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
@@ -78,6 +83,9 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
       .optional(),
     isExamination: z
       .union([z.lazy(() => BoolWithAggregatesFilterObjectSchema), z.boolean()])
+      .optional(),
+    groupCode: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     billedAmmount: z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
@@ -100,6 +108,9 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
     coinsuranceAmount: z
       .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
+    entryRecordId: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
     transactionReviewStatusId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
@@ -107,9 +118,6 @@ const Schema: z.ZodType<Prisma.PatientServiceScalarWhereWithAggregatesInput> = z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     medicalServiceId: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
-    groupCode: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
   })

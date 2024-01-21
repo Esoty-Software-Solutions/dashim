@@ -20,6 +20,8 @@ export const BeneficiaryScalarFieldEnumSchema = z.enum([
   'address',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
+  'statusSetById',
   'subscriberId',
   'legacyCode',
   'relationshipId',

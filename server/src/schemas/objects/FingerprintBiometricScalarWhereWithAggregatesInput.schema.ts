@@ -3,6 +3,7 @@ import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFi
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter.schema';
 import { StringNullableWithAggregatesFilterObjectSchema } from './StringNullableWithAggregatesFilter.schema';
+import { DateTimeNullableWithAggregatesFilterObjectSchema } from './DateTimeNullableWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -83,6 +84,13 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricScalarWhereWithAggregatesInpu
         .union([
           z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
           z.string(),
+        ])
+        .optional()
+        .nullable(),
+      deactivationDate: z
+        .union([
+          z.lazy(() => DateTimeNullableWithAggregatesFilterObjectSchema),
+          z.coerce.date(),
         ])
         .optional()
         .nullable(),

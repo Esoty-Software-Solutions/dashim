@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.IDCardMinOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z.lazy(() => SortOrderSchema).optional(),
     hash: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
   })

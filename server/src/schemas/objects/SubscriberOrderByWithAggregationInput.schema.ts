@@ -21,7 +21,13 @@ const Schema: z.ZodType<Prisma.SubscriberOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    institutionId: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    statusSetById: z.lazy(() => SortOrderSchema).optional(),
     insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => SubscriberCountOrderByAggregateInputObjectSchema)

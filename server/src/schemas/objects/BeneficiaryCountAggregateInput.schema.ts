@@ -23,6 +23,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryCountAggregateInputType> = z
     address: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
+    statusSetById: z.literal(true).optional(),
     subscriberId: z.literal(true).optional(),
     legacyCode: z.literal(true).optional(),
     relationshipId: z.literal(true).optional(),

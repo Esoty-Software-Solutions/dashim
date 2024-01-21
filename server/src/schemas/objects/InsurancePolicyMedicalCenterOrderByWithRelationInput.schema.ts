@@ -21,6 +21,12 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMedicalCenterOrderByWithRelationIn
           z.lazy(() => SortOrderInputObjectSchema),
         ])
         .optional(),
+      deactivationDate: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputObjectSchema),
+        ])
+        .optional(),
       insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
       medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
       insurancePolicy: z

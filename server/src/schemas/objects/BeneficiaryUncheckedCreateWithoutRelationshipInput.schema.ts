@@ -5,6 +5,7 @@ import { FaceBiometricUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSche
 import { VoiceBiometricUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './VoiceBiometricUncheckedCreateNestedManyWithoutBeneficiaryInput.schema';
 import { EntryRecordUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './EntryRecordUncheckedCreateNestedManyWithoutBeneficiaryInput.schema';
 import { BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneficiaryInput.schema';
+import { BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutBeneficiaryInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -30,6 +31,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedCreateWithoutRelationshipInpu
       address: z.string().optional().nullable(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
+      statusSetById: z.string(),
       subscriberId: z.string(),
       legacyCode: z.string().optional().nullable(),
       isFingerprintVerificationActive: z.boolean().optional(),
@@ -70,6 +73,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedCreateWithoutRelationshipInpu
         .lazy(
           () =>
             BeneficiaryBalanceUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema,
+        )
+        .optional(),
+      futureStatus: z
+        .lazy(
+          () =>
+            BeneficiaryFutureStatusChangeUncheckedCreateNestedManyWithoutBeneficiaryInputObjectSchema,
         )
         .optional(),
     })

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './TenantOrderByWithRelationInput.schema';
-import { MedicalCenterServiceOrderByRelationAggregateInputObjectSchema } from './MedicalCenterServiceOrderByRelationAggregateInput.schema';
+import { MedicalServiceOrderByRelationAggregateInputObjectSchema } from './MedicalServiceOrderByRelationAggregateInput.schema';
 import { InsurancePolicyMedicalCenterOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCenterOrderByRelationAggregateInput.schema';
 import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
@@ -17,6 +17,12 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    deactivationDate: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
@@ -56,7 +62,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
       .lazy(() => TenantOrderByWithRelationInputObjectSchema)
       .optional(),
     services: z
-      .lazy(() => MedicalCenterServiceOrderByRelationAggregateInputObjectSchema)
+      .lazy(() => MedicalServiceOrderByRelationAggregateInputObjectSchema)
       .optional(),
     insurancePolicy: z
       .lazy(

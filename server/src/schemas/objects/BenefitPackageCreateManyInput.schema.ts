@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageCreateManyInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     name: z.string(),
     copayDistrubtion: z
       .union([

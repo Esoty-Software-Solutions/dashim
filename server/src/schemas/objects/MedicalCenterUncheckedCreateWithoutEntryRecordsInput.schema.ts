@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { MedicalCenterCreatephoneInputObjectSchema } from './MedicalCenterCreatephoneInput.schema';
 import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreateemailInput.schema';
-import { MedicalCenterServiceUncheckedCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalCenterServiceUncheckedCreateNestedManyWithoutMedicalCenterInput.schema';
+import { MedicalServiceUncheckedCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalServiceUncheckedCreateNestedManyWithoutMedicalCenterInput.schema';
 import { InsurancePolicyMedicalCenterUncheckedCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './InsurancePolicyMedicalCenterUncheckedCreateNestedManyWithoutMedicalCenterInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -16,6 +16,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedCreateWithoutEntryRecordsIn
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       name: z.string(),
       code: z.string(),
       description: z.string(),
@@ -44,7 +45,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedCreateWithoutEntryRecordsIn
       services: z
         .lazy(
           () =>
-            MedicalCenterServiceUncheckedCreateNestedManyWithoutMedicalCenterInputObjectSchema,
+            MedicalServiceUncheckedCreateNestedManyWithoutMedicalCenterInputObjectSchema,
         )
         .optional(),
       insurancePolicy: z

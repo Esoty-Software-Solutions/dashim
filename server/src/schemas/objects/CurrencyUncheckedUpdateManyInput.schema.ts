@@ -71,7 +71,7 @@ const Schema: z.ZodType<Prisma.CurrencyUncheckedUpdateManyInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    BuyexchangeRate: z
+    buyExchangeRate: z
       .union([
         z.number(),
         z.lazy(() => FloatFieldUpdateOperationsInputObjectSchema),

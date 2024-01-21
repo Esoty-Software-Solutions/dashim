@@ -11,10 +11,12 @@ const Schema: z.ZodType<Prisma.PatientServiceCreateManyEntryRecordInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     name: z.string(),
     Note: z.string().optional().nullable(),
     isWorkInjury: z.boolean().optional(),
     isExamination: z.boolean().optional(),
+    groupCode: z.string(),
     billedAmmount: z.number(),
     allowedAmmount: z.number(),
     copayAmmount: z.number(),
@@ -25,7 +27,6 @@ const Schema: z.ZodType<Prisma.PatientServiceCreateManyEntryRecordInput> = z
     transactionReviewStatusId: z.string(),
     medicalReviewStatusId: z.string(),
     medicalServiceId: z.string(),
-    groupCode: z.string(),
   })
   .strict();
 

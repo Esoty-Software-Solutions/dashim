@@ -8,6 +8,7 @@ export const InstitutionScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'name',
   'code',
   'legacyCode',

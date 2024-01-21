@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMedicalCenterMaxOrderByAggregateIn
       isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
       isActive: z.lazy(() => SortOrderSchema).optional(),
       deactivationReason: z.lazy(() => SortOrderSchema).optional(),
+      deactivationDate: z.lazy(() => SortOrderSchema).optional(),
       insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
       medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
     })

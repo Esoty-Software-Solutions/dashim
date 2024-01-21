@@ -73,7 +73,7 @@ const Schema: z.ZodType<Prisma.CurrencyScalarWhereWithAggregatesInput> = z
     symbol: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
-    BuyexchangeRate: z
+    buyExchangeRate: z
       .union([z.lazy(() => FloatWithAggregatesFilterObjectSchema), z.number()])
       .optional(),
     SellExchangeRate: z

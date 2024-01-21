@@ -8,6 +8,7 @@ export const SubscriberScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
-  'institutionId',
+  'deactivationDate',
+  'statusSetById',
   'insurancePolicyId',
 ]);

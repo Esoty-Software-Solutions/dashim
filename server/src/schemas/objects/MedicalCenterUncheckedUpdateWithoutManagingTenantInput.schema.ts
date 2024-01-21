@@ -3,10 +3,11 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { MedicalCenterUpdatephoneInputObjectSchema } from './MedicalCenterUpdatephoneInput.schema';
 import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdateemailInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
-import { MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
+import { MedicalServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalServiceUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { InsurancePolicyMedicalCenterUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCenterUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutMedicalCenterNestedInput.schema';
 
@@ -55,6 +56,13 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateWithoutManagingTenant
         .union([
           z.string(),
           z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
         ])
         .optional()
         .nullable(),
@@ -148,7 +156,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateWithoutManagingTenant
       services: z
         .lazy(
           () =>
-            MedicalCenterServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
+            MedicalServiceUncheckedUpdateManyWithoutMedicalCenterNestedInputObjectSchema,
         )
         .optional(),
       insurancePolicy: z

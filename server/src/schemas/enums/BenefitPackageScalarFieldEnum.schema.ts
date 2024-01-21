@@ -8,6 +8,7 @@ export const BenefitPackageScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'isActive',
   'deactivationReason',
+  'deactivationDate',
   'name',
   'copayDistrubtion',
   'threashold',

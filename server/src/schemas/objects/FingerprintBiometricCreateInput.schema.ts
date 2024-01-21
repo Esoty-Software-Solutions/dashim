@@ -14,6 +14,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     hash: z.string(),
     fingerType: z.lazy(
       () => FingerTypeCreateNestedOneWithoutFingerTypeInputObjectSchema,

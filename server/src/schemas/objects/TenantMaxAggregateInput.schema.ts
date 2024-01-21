@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.TenantMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
+    deactivationDate: z.literal(true).optional(),
     name: z.literal(true).optional(),
     typeId: z.literal(true).optional(),
     description: z.literal(true).optional(),

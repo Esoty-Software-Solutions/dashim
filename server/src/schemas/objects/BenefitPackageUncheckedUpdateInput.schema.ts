@@ -3,9 +3,10 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { BenefitPackageUpdatecopayDistrubtionInputObjectSchema } from './BenefitPackageUpdatecopayDistrubtionInput.schema';
 import { BenefitPackageUpdatethreasholdInputObjectSchema } from './BenefitPackageUpdatethreasholdInput.schema';
-import { BenefitPackageMedicalCenterServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema } from './BenefitPackageMedicalCenterServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInput.schema';
+import { BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema } from './BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInput.schema';
 import { BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -55,6 +56,13 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateInput> = z
       ])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     name: z
       .union([
         z.string(),
@@ -82,7 +90,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateInput> = z
     medicalServiceTemplates: z
       .lazy(
         () =>
-          BenefitPackageMedicalCenterServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema,
+          BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema,
       )
       .optional(),
     beneficiaryBalances: z

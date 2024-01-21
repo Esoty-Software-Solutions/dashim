@@ -3,9 +3,16 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutUserNestedInput.schema';
 import { DeviceTokenUpdateManyWithoutUserNestedInputObjectSchema } from './DeviceTokenUpdateManyWithoutUserNestedInput.schema';
 import { TenantUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUpdateManyWithoutOwnerNestedInput.schema';
+import { SubscriberUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './SubscriberUpdateManyWithoutStatusSetByNestedInput.schema';
+import { BeneficiaryUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryUpdateManyWithoutStatusSetByNestedInput.schema';
+import { SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
+import { SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -51,6 +58,13 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutMemberOfInput> = z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
       ])
       .optional()
       .nullable(),
@@ -179,6 +193,38 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutMemberOfInput> = z
       .optional(),
     ownerOf: z
       .lazy(() => TenantUpdateManyWithoutOwnerNestedInputObjectSchema)
+      .optional(),
+    subscriberStatusChanges: z
+      .lazy(() => SubscriberUpdateManyWithoutStatusSetByNestedInputObjectSchema)
+      .optional(),
+    beneficiaryStatusChanges: z
+      .lazy(
+        () => BeneficiaryUpdateManyWithoutStatusSetByNestedInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusCreations: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    subscriberFutureStatusChanges: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusCreations: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryFutureStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

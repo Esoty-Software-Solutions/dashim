@@ -13,7 +13,9 @@ const Schema: z.ZodType<Prisma.DeviceTokenCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    name: z.string(),
+    deactivationDate: z.coerce.date().optional().nullable(),
+    deviceName: z.string(),
+    token: z.string(),
     deviceType: z.lazy(
       () => DeviceTypeCreateNestedOneWithoutDeviceTokenInputObjectSchema,
     ),

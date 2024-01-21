@@ -3,6 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { EntryRecordUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema } from './EntryRecordUpdateOneRequiredWithoutPatientServicesNestedInput.schema';
 import { ReviewStatusUpdateOneRequiredWithoutTransactionPatientServicesNestedInputObjectSchema } from './ReviewStatusUpdateOneRequiredWithoutTransactionPatientServicesNestedInput.schema';
@@ -56,6 +57,13 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutMedicalServiceInput> =
         ])
         .optional()
         .nullable(),
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
       name: z
         .union([
           z.string(),
@@ -79,6 +87,12 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutMedicalServiceInput> =
         .union([
           z.boolean(),
           z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
+      groupCode: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
       billedAmmount: z
@@ -121,12 +135,6 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutMedicalServiceInput> =
         .union([
           z.number(),
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      groupCode: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
       entryRecord: z

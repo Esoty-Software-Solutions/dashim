@@ -3,12 +3,12 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
 import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
 import { InsurancePolicyUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InsurancePolicyUpdateManyWithoutInstitutionNestedInput.schema';
-import { SubscriberUpdateManyWithoutInstitutionNestedInputObjectSchema } from './SubscriberUpdateManyWithoutInstitutionNestedInput.schema';
-import { InstitutionMedicalCeneterServiceUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalCeneterServiceUpdateManyWithoutInstitutionNestedInput.schema';
+import { InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -54,6 +54,13 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateInput> = z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
       ])
       .optional()
       .nullable(),
@@ -159,13 +166,10 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateInput> = z
           InsurancePolicyUpdateManyWithoutInstitutionNestedInputObjectSchema,
       )
       .optional(),
-    members: z
-      .lazy(() => SubscriberUpdateManyWithoutInstitutionNestedInputObjectSchema)
-      .optional(),
     MedicalCenterPricing: z
       .lazy(
         () =>
-          InstitutionMedicalCeneterServiceUpdateManyWithoutInstitutionNestedInputObjectSchema,
+          InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInputObjectSchema,
       )
       .optional(),
   })

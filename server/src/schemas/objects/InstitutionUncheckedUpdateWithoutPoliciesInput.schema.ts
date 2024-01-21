@@ -3,11 +3,11 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
 import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
-import { SubscriberUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema } from './SubscriberUncheckedUpdateManyWithoutInstitutionNestedInput.schema';
-import { InstitutionMedicalCeneterServiceUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalCeneterServiceUncheckedUpdateManyWithoutInstitutionNestedInput.schema';
+import { InstitutionMedicalServiceUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalServiceUncheckedUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -54,6 +54,13 @@ const Schema: z.ZodType<Prisma.InstitutionUncheckedUpdateWithoutPoliciesInput> =
         .union([
           z.string(),
           z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
         ])
         .optional()
         .nullable(),
@@ -153,16 +160,10 @@ const Schema: z.ZodType<Prisma.InstitutionUncheckedUpdateWithoutPoliciesInput> =
         ])
         .optional()
         .nullable(),
-      members: z
-        .lazy(
-          () =>
-            SubscriberUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema,
-        )
-        .optional(),
       MedicalCenterPricing: z
         .lazy(
           () =>
-            InstitutionMedicalCeneterServiceUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema,
+            InstitutionMedicalServiceUncheckedUpdateManyWithoutInstitutionNestedInputObjectSchema,
         )
         .optional(),
     })

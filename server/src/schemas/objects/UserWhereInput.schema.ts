@@ -3,11 +3,16 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema';
 import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
 import { DeviceTokenListRelationFilterObjectSchema } from './DeviceTokenListRelationFilter.schema';
 import { TenantListRelationFilterObjectSchema } from './TenantListRelationFilter.schema';
-import { TenantMembersListRelationFilterObjectSchema } from './TenantMembersListRelationFilter.schema';
+import { TenantMemberListRelationFilterObjectSchema } from './TenantMemberListRelationFilter.schema';
+import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
+import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
+import { SubscriberFutureStatusChangeListRelationFilterObjectSchema } from './SubscriberFutureStatusChangeListRelationFilter.schema';
+import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -49,6 +54,13 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .optional(),
     deactivationReason: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
       .optional()
       .nullable(),
     firstName: z
@@ -128,7 +140,25 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .optional(),
     ownerOf: z.lazy(() => TenantListRelationFilterObjectSchema).optional(),
     memberOf: z
-      .lazy(() => TenantMembersListRelationFilterObjectSchema)
+      .lazy(() => TenantMemberListRelationFilterObjectSchema)
+      .optional(),
+    subscriberStatusChanges: z
+      .lazy(() => SubscriberListRelationFilterObjectSchema)
+      .optional(),
+    beneficiaryStatusChanges: z
+      .lazy(() => BeneficiaryListRelationFilterObjectSchema)
+      .optional(),
+    subscriberFutureStatusCreations: z
+      .lazy(() => SubscriberFutureStatusChangeListRelationFilterObjectSchema)
+      .optional(),
+    subscriberFutureStatusChanges: z
+      .lazy(() => SubscriberFutureStatusChangeListRelationFilterObjectSchema)
+      .optional(),
+    beneficiaryFutureStatusCreations: z
+      .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
+      .optional(),
+    beneficiaryFutureStatusChanges: z
+      .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

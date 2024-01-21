@@ -23,13 +23,19 @@ const Schema: z.ZodType<Prisma.InsurancePolicyOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     Accumulatedlimit: z.lazy(() => SortOrderSchema).optional(),
     BalanceResetDate: z.lazy(() => SortOrderSchema).optional(),
-    institutionId: z.lazy(() => SortOrderSchema).optional(),
     issueDate: z.lazy(() => SortOrderSchema).optional(),
     renewalDate: z.lazy(() => SortOrderSchema).optional(),
     serviceEntryTimeWindow: z.lazy(() => SortOrderSchema).optional(),
+    institutionId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => InsurancePolicyCountOrderByAggregateInputObjectSchema)
       .optional(),

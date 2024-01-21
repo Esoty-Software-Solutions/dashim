@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { BenefitPackageCreatecopayDistrubtionInputObjectSchema } from './BenefitPackageCreatecopayDistrubtionInput.schema';
 import { BenefitPackageCreatethreasholdInputObjectSchema } from './BenefitPackageCreatethreasholdInput.schema';
-import { BenefitPackageMedicalCenterServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema } from './BenefitPackageMedicalCenterServiceTemplateCreateNestedManyWithoutBenefitPackageInput.schema';
+import { BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema } from './BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInput.schema';
 import { BeneficiaryBalanceCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './BeneficiaryBalanceCreateNestedManyWithoutBeneftiPackageInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -16,6 +16,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageCreateWithoutInsurancePolicyInput> 
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       name: z.string(),
       copayDistrubtion: z
         .union([
@@ -32,7 +33,7 @@ const Schema: z.ZodType<Prisma.BenefitPackageCreateWithoutInsurancePolicyInput> 
       medicalServiceTemplates: z
         .lazy(
           () =>
-            BenefitPackageMedicalCenterServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema,
+            BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema,
         )
         .optional(),
       beneficiaryBalances: z

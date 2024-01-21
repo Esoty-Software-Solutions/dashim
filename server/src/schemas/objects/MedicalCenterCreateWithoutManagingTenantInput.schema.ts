@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { MedicalCenterCreatephoneInputObjectSchema } from './MedicalCenterCreatephoneInput.schema';
 import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreateemailInput.schema';
-import { MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInput.schema';
+import { MedicalServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalServiceCreateNestedManyWithoutMedicalCenterInput.schema';
 import { InsurancePolicyMedicalCenterCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './InsurancePolicyMedicalCenterCreateNestedManyWithoutMedicalCenterInput.schema';
 import { EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './EntryRecordCreateNestedManyWithoutMedicalCenterInput.schema';
 
@@ -17,6 +17,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutManagingTenantInput> =
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       name: z.string(),
       code: z.string(),
       description: z.string(),
@@ -44,7 +45,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutManagingTenantInput> =
       services: z
         .lazy(
           () =>
-            MedicalCenterServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema,
+            MedicalServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema,
         )
         .optional(),
       insurancePolicy: z

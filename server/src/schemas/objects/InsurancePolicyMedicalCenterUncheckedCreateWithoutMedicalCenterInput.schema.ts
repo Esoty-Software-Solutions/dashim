@@ -12,6 +12,7 @@ const Schema: z.ZodType<Prisma.InsurancePolicyMedicalCenterUncheckedCreateWithou
       isSoftDeleted: z.boolean().optional(),
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
+      deactivationDate: z.coerce.date().optional().nullable(),
       insurancePolicyId: z.string(),
     })
     .strict();

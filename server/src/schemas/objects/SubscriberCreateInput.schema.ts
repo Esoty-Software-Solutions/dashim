@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { InstitutionCreateNestedOneWithoutMembersInputObjectSchema } from './InstitutionCreateNestedOneWithoutMembersInput.schema';
+import { UserCreateNestedOneWithoutSubscriberStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutSubscriberStatusChangesInput.schema';
 import { InsurancePolicyCreateNestedOneWithoutSubscribersInputObjectSchema } from './InsurancePolicyCreateNestedOneWithoutSubscribersInput.schema';
 import { BeneficiaryCreateNestedManyWithoutSubscriberInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutSubscriberInput.schema';
+import { SubscriberFutureStatusChangeCreateNestedManyWithoutSubscriberInputObjectSchema } from './SubscriberFutureStatusChangeCreateNestedManyWithoutSubscriberInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,14 +15,21 @@ const Schema: z.ZodType<Prisma.SubscriberCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
-    institution: z.lazy(
-      () => InstitutionCreateNestedOneWithoutMembersInputObjectSchema,
+    deactivationDate: z.coerce.date().optional().nullable(),
+    StatusSetBy: z.lazy(
+      () => UserCreateNestedOneWithoutSubscriberStatusChangesInputObjectSchema,
     ),
     insurancePolicy: z.lazy(
       () => InsurancePolicyCreateNestedOneWithoutSubscribersInputObjectSchema,
     ),
     beneficiaries: z
       .lazy(() => BeneficiaryCreateNestedManyWithoutSubscriberInputObjectSchema)
+      .optional(),
+    futureStatus: z
+      .lazy(
+        () =>
+          SubscriberFutureStatusChangeCreateNestedManyWithoutSubscriberInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

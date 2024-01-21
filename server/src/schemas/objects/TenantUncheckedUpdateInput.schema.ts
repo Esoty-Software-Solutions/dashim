@@ -3,8 +3,9 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { MedicalCenterUncheckedUpdateOneWithoutManagingTenantNestedInputObjectSchema } from './MedicalCenterUncheckedUpdateOneWithoutManagingTenantNestedInput.schema';
-import { TenantMembersUncheckedUpdateManyWithoutTenantNestedInputObjectSchema } from './TenantMembersUncheckedUpdateManyWithoutTenantNestedInput.schema';
+import { TenantMemberUncheckedUpdateManyWithoutTenantNestedInputObjectSchema } from './TenantMemberUncheckedUpdateManyWithoutTenantNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -50,6 +51,13 @@ const Schema: z.ZodType<Prisma.TenantUncheckedUpdateInput> = z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
       ])
       .optional()
       .nullable(),
@@ -136,7 +144,7 @@ const Schema: z.ZodType<Prisma.TenantUncheckedUpdateInput> = z
     members: z
       .lazy(
         () =>
-          TenantMembersUncheckedUpdateManyWithoutTenantNestedInputObjectSchema,
+          TenantMemberUncheckedUpdateManyWithoutTenantNestedInputObjectSchema,
       )
       .optional(),
   })

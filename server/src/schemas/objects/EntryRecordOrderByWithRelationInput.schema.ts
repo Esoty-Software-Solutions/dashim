@@ -6,8 +6,8 @@ import { FingerprintBiometricOrderByWithRelationInputObjectSchema } from './Fing
 import { IDCardOrderByWithRelationInputObjectSchema } from './IDCardOrderByWithRelationInput.schema';
 import { FaceBiometricOrderByWithRelationInputObjectSchema } from './FaceBiometricOrderByWithRelationInput.schema';
 import { VoiceBiometricOrderByWithRelationInputObjectSchema } from './VoiceBiometricOrderByWithRelationInput.schema';
-import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
+import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -25,6 +25,14 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
+    isValidated: z.lazy(() => SortOrderSchema).optional(),
+    isManuallyInserted: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerprintId: z
       .union([
@@ -50,8 +58,6 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    isValidated: z.lazy(() => SortOrderSchema).optional(),
-    isManuallyInserted: z.lazy(() => SortOrderSchema).optional(),
     medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
     beneficiary: z
       .lazy(() => BeneficiaryOrderByWithRelationInputObjectSchema)
@@ -68,11 +74,11 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
     voiceBiometric: z
       .lazy(() => VoiceBiometricOrderByWithRelationInputObjectSchema)
       .optional(),
-    patientServices: z
-      .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
-      .optional(),
     medicalCenter: z
       .lazy(() => MedicalCenterOrderByWithRelationInputObjectSchema)
+      .optional(),
+    patientServices: z
+      .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

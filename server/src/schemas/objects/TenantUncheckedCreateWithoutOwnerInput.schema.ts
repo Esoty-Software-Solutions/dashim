@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { MedicalCenterUncheckedCreateNestedOneWithoutManagingTenantInputObjectSchema } from './MedicalCenterUncheckedCreateNestedOneWithoutManagingTenantInput.schema';
-import { TenantMembersUncheckedCreateNestedManyWithoutTenantInputObjectSchema } from './TenantMembersUncheckedCreateNestedManyWithoutTenantInput.schema';
+import { TenantMemberUncheckedCreateNestedManyWithoutTenantInputObjectSchema } from './TenantMemberUncheckedCreateNestedManyWithoutTenantInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,6 +13,7 @@ const Schema: z.ZodType<Prisma.TenantUncheckedCreateWithoutOwnerInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     name: z.string(),
     typeId: z.string(),
     description: z.string().optional().nullable(),
@@ -32,7 +33,7 @@ const Schema: z.ZodType<Prisma.TenantUncheckedCreateWithoutOwnerInput> = z
     members: z
       .lazy(
         () =>
-          TenantMembersUncheckedCreateNestedManyWithoutTenantInputObjectSchema,
+          TenantMemberUncheckedCreateNestedManyWithoutTenantInputObjectSchema,
       )
       .optional(),
   })

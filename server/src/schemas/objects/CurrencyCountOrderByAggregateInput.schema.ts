@@ -15,7 +15,7 @@ const Schema: z.ZodType<Prisma.CurrencyCountOrderByAggregateInput> = z
     name: z.lazy(() => SortOrderSchema).optional(),
     code: z.lazy(() => SortOrderSchema).optional(),
     symbol: z.lazy(() => SortOrderSchema).optional(),
-    BuyexchangeRate: z.lazy(() => SortOrderSchema).optional(),
+    buyExchangeRate: z.lazy(() => SortOrderSchema).optional(),
     SellExchangeRate: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();

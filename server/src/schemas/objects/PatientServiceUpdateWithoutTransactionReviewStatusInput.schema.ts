@@ -3,10 +3,11 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
 import { EntryRecordUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema } from './EntryRecordUpdateOneRequiredWithoutPatientServicesNestedInput.schema';
 import { ReviewStatusUpdateOneRequiredWithoutMedicalPatientServicesNestedInputObjectSchema } from './ReviewStatusUpdateOneRequiredWithoutMedicalPatientServicesNestedInput.schema';
-import { MedicalCenterServiceUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema } from './MedicalCenterServiceUpdateOneRequiredWithoutPatientServicesNestedInput.schema';
+import { MedicalServiceUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema } from './MedicalServiceUpdateOneRequiredWithoutPatientServicesNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -56,6 +57,13 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutTransactionReviewStatu
         ])
         .optional()
         .nullable(),
+      deactivationDate: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
       name: z
         .union([
           z.string(),
@@ -79,6 +87,12 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutTransactionReviewStatu
         .union([
           z.boolean(),
           z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
+      groupCode: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
       billedAmmount: z
@@ -123,12 +137,6 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutTransactionReviewStatu
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
-      groupCode: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
       entryRecord: z
         .lazy(
           () =>
@@ -144,7 +152,7 @@ const Schema: z.ZodType<Prisma.PatientServiceUpdateWithoutTransactionReviewStatu
       medicalService: z
         .lazy(
           () =>
-            MedicalCenterServiceUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema,
+            MedicalServiceUpdateOneRequiredWithoutPatientServicesNestedInputObjectSchema,
         )
         .optional(),
     })

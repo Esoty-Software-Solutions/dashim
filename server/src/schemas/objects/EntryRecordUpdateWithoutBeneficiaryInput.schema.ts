@@ -3,12 +3,13 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './IDCardUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { FaceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FaceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './VoiceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
-import { PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutEntryRecordNestedInput.schema';
 import { MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
+import { PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutEntryRecordNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -57,6 +58,13 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutBeneficiaryInput> = z
       ])
       .optional()
       .nullable(),
+    deactivationDate: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     isValidated: z
       .union([
         z.boolean(),
@@ -88,15 +96,15 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutBeneficiaryInput> = z
         () => VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema,
       )
       .optional(),
-    patientServices: z
-      .lazy(
-        () => PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
-      )
-      .optional(),
     medicalCenter: z
       .lazy(
         () =>
           MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema,
+      )
+      .optional(),
+    patientServices: z
+      .lazy(
+        () => PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
       )
       .optional(),
   })

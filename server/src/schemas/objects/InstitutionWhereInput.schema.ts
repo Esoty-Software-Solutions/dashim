@@ -3,11 +3,11 @@ import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
+import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { StringNullableListFilterObjectSchema } from './StringNullableListFilter.schema';
 import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
 import { InsurancePolicyListRelationFilterObjectSchema } from './InsurancePolicyListRelationFilter.schema';
-import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
-import { InstitutionMedicalCeneterServiceListRelationFilterObjectSchema } from './InstitutionMedicalCeneterServiceListRelationFilter.schema';
+import { InstitutionMedicalServiceListRelationFilterObjectSchema } from './InstitutionMedicalServiceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -49,6 +49,13 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       .optional(),
     deactivationReason: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
+    deactivationDate: z
+      .union([
+        z.lazy(() => DateTimeNullableFilterObjectSchema),
+        z.coerce.date(),
+      ])
       .optional()
       .nullable(),
     name: z
@@ -101,11 +108,8 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
     policies: z
       .lazy(() => InsurancePolicyListRelationFilterObjectSchema)
       .optional(),
-    members: z.lazy(() => SubscriberListRelationFilterObjectSchema).optional(),
     MedicalCenterPricing: z
-      .lazy(
-        () => InstitutionMedicalCeneterServiceListRelationFilterObjectSchema,
-      )
+      .lazy(() => InstitutionMedicalServiceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

@@ -11,6 +11,7 @@ const Schema: z.ZodType<Prisma.TenantCreateManyInput> = z
     isSoftDeleted: z.boolean().optional(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
+    deactivationDate: z.coerce.date().optional().nullable(),
     name: z.string(),
     typeId: z.string(),
     description: z.string().optional().nullable(),

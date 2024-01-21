@@ -5,7 +5,7 @@ import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.CurrencyAvgOrderByAggregateInput> = z
   .object({
-    BuyexchangeRate: z.lazy(() => SortOrderSchema).optional(),
+    buyExchangeRate: z.lazy(() => SortOrderSchema).optional(),
     SellExchangeRate: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();

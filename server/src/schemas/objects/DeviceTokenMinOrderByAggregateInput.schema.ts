@@ -12,7 +12,9 @@ const Schema: z.ZodType<Prisma.DeviceTokenMinOrderByAggregateInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
+    deactivationDate: z.lazy(() => SortOrderSchema).optional(),
+    deviceName: z.lazy(() => SortOrderSchema).optional(),
+    token: z.lazy(() => SortOrderSchema).optional(),
     deviceTypeId: z.lazy(() => SortOrderSchema).optional(),
     userId: z.lazy(() => SortOrderSchema).optional(),
   })
