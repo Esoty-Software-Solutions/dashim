@@ -10,15 +10,19 @@ model User extends Base, ActivationStatus, HumanProfile {
   phone String?
   isPhoneVerified Boolean @default(false)
   passwordHash String @omit
-
-  deviceToken DeviceToken[]
-
-
   avatar String? // base64?
 
+  deviceToken DeviceToken[]
   ownerOf Tenant[]
-
   memberOf TenantMember[]
+
+  subscriberStatusChanges Subscriber[] @relation("StatusSetBy")
+  beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
+
+  subscriberFutureStatusCreations SubscriberFutureStatusChange[] @relation("CreatedBy")
+  subscriberFutureStatusChanges SubscriberFutureStatusChange[] @relation("UpdatedBy")
+  beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
+  beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
 }
 
 model TenantMember extends Base, ActivationStatus {

@@ -107,6 +107,7 @@ model User {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     firstName String
     secondName String?
     thirdName String?
@@ -128,10 +129,16 @@ model User {
     isPhoneVerified Boolean @default(false)
     /// @omit
     passwordHash String
-    deviceToken DeviceToken[]
     avatar String?
+    deviceToken DeviceToken[]
     ownerOf Tenant[]
     memberOf TenantMember[]
+    subscriberStatusChanges Subscriber[] @relation("StatusSetBy")
+    beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
+    subscriberFutureStatusCreations SubscriberFutureStatusChange[] @relation("CreatedBy")
+    subscriberFutureStatusChanges SubscriberFutureStatusChange[] @relation("UpdatedBy")
+    beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
+    beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
 }
 
 /// @@allow('all', true && isPublished)
@@ -143,6 +150,7 @@ model TenantMember {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     tenant Tenant @relation(fields: [tenantId], references: [id])
     tenantId String
     member User @relation(fields: [memberId], references: [id])
@@ -161,6 +169,7 @@ model Tenant {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     type TenantType @relation(fields: [typeId], references: [id])
     typeId String
@@ -187,6 +196,7 @@ model DeviceToken {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     deviceName String
     token String
     deviceType DeviceType @relation(fields: [deviceTypeId], references: [id])
@@ -246,6 +256,7 @@ model Institution {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     code String @unique()
     legacyCode String?
@@ -279,11 +290,36 @@ model Subscriber {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
+    StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
+    statusSetById String
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
     beneficiaries Beneficiary[]
+    futureStatus SubscriberFutureStatusChange[]
 
     @@index([insurancePolicyId, id])
+}
+
+/// @@allow('all', true && isPublished)
+model SubscriberFutureStatusChange {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
+    changeDate DateTime
+    futureStatus Boolean
+    description String?
+    subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+    subscriberId String @unique()
+
+    @@index([subscriberId, id])
+    @@unique([subscriberId, changeDate])
 }
 
 /// @@allow('all', true && isPublished)
@@ -308,6 +344,9 @@ model Beneficiary {
     address String?
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
+    StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
+    statusSetById String
     subscriber Subscriber @relation(fields: [subscriberId], references: [id])
     subscriberId String
     legacyCode String?
@@ -323,9 +362,31 @@ model Beneficiary {
     voice VoiceBiometric[]
     entryRecords EntryRecord[]
     beneficiaryBalances BeneficiaryBalance[]
+    futureStatus BeneficiaryFutureStatusChange[]
 
     @@index([subscriberId, id])
     @@unique([subscriberId, id])
+}
+
+/// @@allow('all', true && isPublished)
+model BeneficiaryFutureStatusChange {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
+    changeDate DateTime
+    futureStatus Boolean
+    description String?
+    beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+    beneficiaryId String
+
+    @@index([beneficiaryId, id])
+    @@unique([beneficiaryId, changeDate])
 }
 
 /// @@allow('all', true && isPublished)
@@ -350,6 +411,7 @@ model InstitutionMedicalService {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
     medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
@@ -369,6 +431,7 @@ model FingerprintBiometric {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
     fingerTypeId String
     hash String @unique()
@@ -391,6 +454,7 @@ model IDCard {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     hash String @unique()
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
@@ -409,6 +473,7 @@ model FaceBiometric {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     hash String @unique()
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
@@ -427,6 +492,7 @@ model VoiceBiometric {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     hash String @unique()
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
@@ -458,6 +524,7 @@ model InsurancePolicy {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     Accumulatedlimit Int
     BalanceResetDate DateTime
@@ -483,6 +550,7 @@ model BenefitPackage {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     copayDistrubtion Int[]
     threashold Int[]
@@ -504,6 +572,7 @@ model InsurancePolicyMedicalCenter {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     insurancePolicyId String
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     medicalCenterId String
@@ -522,6 +591,7 @@ model MedicalCenter {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     code String
     description String
@@ -557,6 +627,7 @@ model BenefitPackageMedicalServiceTemplate {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
     benefitPackageId String
     medicalServiceTemplate MedicalServiceTemplate @relation(fields: [medicalServiceTemplateId], references: [id])
@@ -575,6 +646,7 @@ model MedicalServiceTemplate {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     dalilCode String
     basePrice String
@@ -593,6 +665,7 @@ model MedicalService {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
     name String
     medicalCenterCode String
     basePrice Int
@@ -618,6 +691,9 @@ model EntryRecord {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
+    deactivationDate DateTime?
+    isValidated Boolean
+    isManuallyInserted Boolean @default(false)
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
     fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
@@ -628,11 +704,9 @@ model EntryRecord {
     faceId String?
     voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
     voiceId String?
-    isValidated Boolean
-    isManuallyInserted Boolean @default(false)
-    patientServices PatientService[]
-    medicalCenterId String
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+    medicalCenterId String
+    patientServices PatientService[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -644,12 +718,12 @@ model PatientService {
     isSoftDeleted Boolean @default(false)
     isActive Boolean @default(true)
     deactivationReason String?
-    entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
-    entryRecordId String
+    deactivationDate DateTime?
     name String
     Note String?
     isWorkInjury Boolean @default(false)
     isExamination Boolean @default(false)
+    groupCode String
     billedAmmount Int
     allowedAmmount Int
     copayAmmount Int
@@ -657,13 +731,14 @@ model PatientService {
     coveredAmount Int
     defferedAmount Int
     coinsuranceAmount Int
+    entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
+    entryRecordId String
     transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
     transactionReviewStatusId String
     medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
     medicalReviewStatusId String
     medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
     medicalServiceId String
-    groupCode String
 }
 
 /// @@allow('all', true && isPublished)

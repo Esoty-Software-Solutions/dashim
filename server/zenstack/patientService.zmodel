@@ -4,38 +4,32 @@ import 'verification'
 import 'policy'
 
 model EntryRecord extends Base, ActivationStatus {
-  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
-  beneficiaryId String
-
-  fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
-  fingerprintId String?
-
-  idCardBiometric IDCard? @relation(fields: [idCardId], references: [id])
-  idCardId String?
-
-  faceBiometric FaceBiometric? @relation(fields: [faceId], references: [id])
-  faceId String?
-
-  voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
-  voiceId String?
-
   isValidated Boolean
   isManuallyInserted Boolean @default(false)
 
-  patientServices PatientService[]
-
-  medicalCenterId String
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+  fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
+  fingerprintId String?
+  idCardBiometric IDCard? @relation(fields: [idCardId], references: [id])
+  idCardId String?
+  faceBiometric FaceBiometric? @relation(fields: [faceId], references: [id])
+  faceId String?
+  voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
+  voiceId String?
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  medicalCenterId String
+
+  patientServices PatientService[]
 }
 
 
 model PatientService extends Base, ActivationStatus {
-  entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
-  entryRecordId String
   name String
   Note String?
   isWorkInjury Boolean @default(false) // TODO: connect this to the insurance policy
   isExamination Boolean @default(false) // is this service is examination or not
+  groupCode String //used to group services in the same group
 
   // الحقول الأسفل تخزن بالقرش
   billedAmmount Int // قيمة الخدمة المفوترة
@@ -46,16 +40,14 @@ model PatientService extends Base, ActivationStatus {
   defferedAmount Int // قيمة المؤجله من قبل الشركة
   coinsuranceAmount Int // قيمة التأمين المشترك
 
+  entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
+  entryRecordId String
   transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
   transactionReviewStatusId String
-
   medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
   medicalReviewStatusId String
-
   medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
   medicalServiceId String
-
-  groupCode String //used to group services in the same group
 }
 
 model ReviewStatus extends Base, LangLocale {
