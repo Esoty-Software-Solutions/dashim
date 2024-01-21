@@ -12,9 +12,39 @@ abstract model Base {
   @@allow('all', true && isPublished)
 }
 
+abstract model BaseWithUser {
+  id String @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  isPublished Boolean @default(true)
+  isSoftDeleted Boolean @default(false)
+
+  CreatedBy User @relation(fields: [createdById], references: [id])
+  createdById String
+
+  UpdatedBy User @relation(fields: [updatedById], references: [id])
+  updatedById String
+
+
+
+  // author has full access
+  // @@allow('all', auth() != null && published)
+  @@allow('all', true && isPublished)
+}
+
 abstract model ActivationStatus {
   isActive Boolean @default(true)
   deactivationReason String?
+  deactivationDate DateTime?
+}
+
+abstract model ActivationStatusWithUser {
+  isActive Boolean @default(true)
+  deactivationReason String?
+  deactivationDate DateTime?
+
+  StatusSetBy User @relation(fields: [statusSetById], references: [id])
+  statusSetById String
 }
 
 abstract model HumanProfile {

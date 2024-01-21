@@ -32,7 +32,7 @@ model Institution extends Base, ActivationStatus {
   MedicalCenterPricing InstitutionMedicalService[]
 }
 
-model Subscriber extends Base, ActivationStatus {
+model Subscriber extends Base, ActivationStatusWithUser {
   // institution Institution @relation(fields: [institutionId], references: [id])
   // institutionId String
 
@@ -41,12 +41,27 @@ model Subscriber extends Base, ActivationStatus {
 
   beneficiaries Beneficiary[]
 
+  futureStatus SubscriberFutureStatusChange[]
+
   @@index([insurancePolicyId, id])
   // @@unique([insurancePolicyId, id]) // Unnecessary because id is unique
 }
 
+model SubscriberFutureStatusChange extends BaseWithUser {
+  changeDate DateTime
+  futureStatus Boolean
+  description String?
 
-model Beneficiary extends Base, HumanProfile, ActivationStatus {
+  // document link to document that triggered the change
+
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+  subscriberId String @unique
+
+  @@index([subscriberId, id])
+  @@unique([subscriberId, changeDate])
+}
+
+model Beneficiary extends Base, HumanProfile, ActivationStatusWithUser {
   subscriber Subscriber @relation(fields: [subscriberId], references: [id])
   subscriberId String
   legacyCode String?
@@ -63,13 +78,27 @@ model Beneficiary extends Base, HumanProfile, ActivationStatus {
   idCard IDCard[]
   face FaceBiometric[]
   voice VoiceBiometric[]
-
   entryRecords EntryRecord[]
-
   beneficiaryBalances BeneficiaryBalance[]
+
+  futureStatus BeneficiaryFutureStatusChange[]
 
   @@index([subscriberId, id])
   @@unique([subscriberId, id])
+}
+
+model BeneficiaryFutureStatusChange extends BaseWithUser {
+  changeDate DateTime
+  futureStatus Boolean
+  description String?
+  
+  // document link to document that triggered the change
+
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+
+  @@index([beneficiaryId, id])
+  @@unique([beneficiaryId, changeDate])
 }
 
 
