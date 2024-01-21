@@ -28,21 +28,21 @@ model Institution extends Base, ActivationStatus {
   // managingTenantId String @unique
 
   policies InsurancePolicy[]
-  members Subscriber[]
+  // members Subscriber[]
   MedicalCenterPricing InstitutionMedicalService[]
 }
 
 model Subscriber extends Base, ActivationStatus {
-  institution Institution @relation(fields: [institutionId], references: [id])
-  institutionId String
+  // institution Institution @relation(fields: [institutionId], references: [id])
+  // institutionId String
 
   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
   insurancePolicyId String
 
   beneficiaries Beneficiary[]
 
-  @@index([institutionId, id])
-  @@unique([institutionId, id])
+  @@index([insurancePolicyId, id])
+  // @@unique([insurancePolicyId, id]) // Unnecessary because id is unique
 }
 
 

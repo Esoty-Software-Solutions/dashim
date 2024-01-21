@@ -16,7 +16,7 @@
     "genRouter": "tsx scripts/generateModelsFiles.ts",
     "setup": "zenstack generate prisma generate && prisma db push && npm run genCRUD && prisma db seed",
     "seed": "prisma db seed",
-    "resetDB": "npx prisma migrate reset",
+    "resetDB": "npx prisma migrate reset --skip-generate --skip-seed",
     "typecheck": "tsc"
   },
   "dependencies": {

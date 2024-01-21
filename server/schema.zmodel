@@ -23,7 +23,11 @@ generator erd {
 generator fakeData {
   provider = "prisma-generator-fake-data"
   output   = "./fakeData/functions.ts"
+  // extraImport = "import {myCustomFunction} from '../utils/fakeImports'"
+  // emptyValueAs = "myCustomFunction()"
+  // ExtraImport = 	"export * from '../utils/fakeImports'"
 }
+
 
 generator dbml {
   provider = "prisma-dbml-generator"
