@@ -6,6 +6,8 @@ import { createId } from "@paralleldrive/cuid2";
 import { SeedHelper } from "../scripts/generateSeederFiles";
 import * as functions from "../prisma/fakeData/functions";
 
+// testing github actions
+
 // const prisma = new PrismaClient()
 
 // async function seed() {
