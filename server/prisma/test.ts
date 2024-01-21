@@ -3,6 +3,9 @@ import { SeedHelper, type Object } from "../scripts/generateSeederFiles";
 import { unGuardedPrisma } from "@config/db";
 import { type Prisma, PrismaClient } from "@prisma/client";
 import * as enumData from "./enumData";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // const obj1 = functions.fakeBeneficiary();
 // console.log(Object.keys(obj1));
@@ -50,13 +53,14 @@ export type enumTableType = {
 
 const enumTableData: enumTableType = enumData;
 
-const SKIP_SEEDED_TABLES = true;
+const SKIP_SEEDED_TABLES = process.env.SKIP_SEEDED_TABLES === "false"; // if variable is not set, it will be undefined, which is falsey
 const prisma = new PrismaClient();
 
 await prisma.$connect();
 console.info("prisma connected...");
 
 console.info("Seeding ", SeedHelper.tablesFullList.length, " tables");
+console.info("Skip populated Tables: ", SKIP_SEEDED_TABLES);
 // TODO: script to seed tables that have no dependencies
 for (const TableName of SeedHelper.tablesFullList) {
   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
@@ -68,9 +72,10 @@ for (const TableName of SeedHelper.tablesFullList) {
     // const test = await unGuardedPrisma['country'].findMany({where: {}, take: 0, skip: 0, orderBy:{}, select: {}});
     const count: number = await (unGuardedPrisma as any)[tableName].count(); // TODO: put in a try and catch
     console.log("Count before insertion: ", count);
-    if (count > 0 && SKIP_SEEDED_TABLES) {
+    if (!(SKIP_SEEDED_TABLES && count > 0)) {
       // await (unGuardedPrisma as any)[tableName].deleteMany();
-      const size = 1000; // replace with your desired size
+      console.log("Skipping ", TableName);
+      const size = 100; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
@@ -151,7 +156,7 @@ for (const TableName of SeedHelper.sortedTable) {
       const count: number = await (unGuardedPrisma as any)[tableName].count(); // TODO: put in a try and catch
       console.log("Count before insertion: ", count);
       // await (unGuardedPrisma as any)[tableName].deleteMany();
-      const size = 2000; // replace with your desired size
+      const size = 200; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
