@@ -305,10 +305,14 @@ export default function useDataFilters<
               },
             },
             () =>
-              h(VRow, {
-                dense: true,
-                class: ["mx-2 py-2", collapsableRowClasses.value],
-              }),
+              h(
+                VRow,
+                {
+                  dense: true,
+                  class: ["mx-2 py-2", collapsableRowClasses.value],
+                },
+                () => nodes,
+              ),
           ),
         ]);
       }
@@ -380,6 +384,7 @@ export default function useDataFilters<
             {
               color: "surface",
               density: "compact",
+              tag: "section",
             },
             () => [
               // content (title + filters + collapsable area + button)
@@ -390,7 +395,7 @@ export default function useDataFilters<
                 // filter bay (in the center)
                 h(
                   "div",
-                  { class: "flex-grow-1" },
+                  { flat: true, class: "flex-grow-1" },
                   h(
                     VDefaultsProvider,
                     {
