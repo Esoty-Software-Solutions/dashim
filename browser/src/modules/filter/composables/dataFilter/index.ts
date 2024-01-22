@@ -24,6 +24,8 @@ import {
 
 import DataFilterBase from "../../components/DataFilterBase.vue";
 
+import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGetter";
+
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
@@ -83,39 +85,18 @@ export default function useDataFilters<
       const focusedRef = ref(false);
       const hoveredRef = ref(false);
 
-      const internalEnabledPersis = ref(false);
-      watch(
-        () => toValue(filter.enabled),
-        (newValue) => {
-          internalEnabledPersis.value = newValue ?? false;
-        },
-        {
-          immediate: true,
-        },
-      );
-      const internalEnabled = computed({
-        set(value: boolean) {
-          internalEnabledPersis.value = value;
-
-          if (isRef(filter.enabled)) {
-            filter.enabled = value;
-          }
-        },
-        get() {
-          return internalEnabledPersis.value;
-        },
-      });
+      const enabled = useProxiedRefOrGetter(filter.enabled, false);
 
       injections[filterKey] = {
         update(...value: any[]) {
-          internalEnabled.value = true;
+          enabled.value = true;
 
           emit("update:value", filterKey, ...value);
         },
 
-        enabled: internalEnabled,
+        enabled,
         setEnabled(value) {
-          internalEnabled.value = value;
+          enabled.value = value;
           emit("update:enabled", filterKey, value);
         },
 
@@ -125,7 +106,7 @@ export default function useDataFilters<
 
           // enable filter on hover
           if (value) {
-            internalEnabled.value = true;
+            enabled.value = true;
           }
         },
 
@@ -179,34 +160,16 @@ export default function useDataFilters<
         (): boolean => collapsableFilters.value.length >= 1,
       );
 
-      const internalCollapsePersis = ref(false);
-      watch(
-        () => toValue(options.collapse),
-        (newValue) => {
-          internalCollapsePersis.value = newValue ?? false;
-        },
-        {
-          immediate: true,
-        },
+      const internalCollapse = useProxiedRefOrGetter(
+        options.collapse,
+        false,
+        (value) => emit("collapse", value ?? false),
       );
-      const internalCollapse = computed({
-        set(value: boolean) {
-          emit("collapse", value);
-          internalCollapsePersis.value = value;
-
-          if (isRef(options.collapse)) {
-            options.collapse.value = value;
-          }
-        },
-        get() {
-          return collapsable.value && internalCollapsePersis.value;
-        },
-      });
 
       // collapsable filters
       const collapsableRowClasses = computed(() => {
         const classList = [];
-        if (!internalCollapse.value) {
+        if (collapsable.value && !internalCollapse.value) {
           classList.push("filter-toolbar-expanded");
         }
         return classList;
