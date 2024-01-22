@@ -452,9 +452,12 @@ function computeDisplayClasses(
     const classes: string[] = [];
 
     for (const key in config) {
+      // @ts-expect-error
+      const value = config[key];
+      const classSuffix = value === 0 ? "" : `-${value}`;
+
       const breakpointClass =
-        // @ts-expect-error
-        key === "xs" ? `v-col-${config[key]}` : `v-col-${key}-${config[key]}`;
+        key === "xs" ? `v-col${classSuffix}` : `v-col-${key}${classSuffix}`;
       classes.push(breakpointClass);
     }
 
