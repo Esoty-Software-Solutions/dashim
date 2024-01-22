@@ -73,6 +73,76 @@ export default function useDataFilters<
    */
   type FilterName = Extract<keyof TFilter, string>;
 
+  function useFiltersInjections(emit: (event: string, ...args: any[]) => void) {
+    const injections: {
+      [Property in FilterName]?: DataFilterInjection;
+    } = {};
+
+    for (const filterKey in options.filter) {
+      const filter = options.filter[filterKey];
+      const focusedRef = ref(false);
+      const hoveredRef = ref(false);
+
+      const internalEnabledPersis = ref(false);
+      watch(
+        () => toValue(filter.enabled),
+        (newValue) => {
+          internalEnabledPersis.value = newValue ?? false;
+        },
+        {
+          immediate: true,
+        },
+      );
+      const internalEnabled = computed({
+        set(value: boolean) {
+          internalEnabledPersis.value = value;
+
+          if (isRef(filter.enabled)) {
+            filter.enabled = value;
+          }
+        },
+        get() {
+          return internalEnabledPersis.value;
+        },
+      });
+
+      injections[filterKey] = {
+        update(...value: any[]) {
+          internalEnabled.value = true;
+
+          emit("update:value", filterKey, ...value);
+        },
+
+        enabled: internalEnabled,
+        setEnabled(value) {
+          internalEnabled.value = value;
+          emit("update:enabled", filterKey, value);
+        },
+
+        focused: focusedRef,
+        setFocus(value) {
+          focusedRef.value = value ?? true;
+
+          // enable filter on hover
+          if (value) {
+            internalEnabled.value = true;
+          }
+        },
+
+        hovered: hoveredRef,
+        hoverIn() {
+          hoveredRef.value = true;
+        },
+
+        hoverOut() {
+          hoveredRef.value = true;
+        },
+      };
+    }
+
+    return injections;
+  }
+
   const FilterComponent = defineComponent({
     slots: Object as SlotsType<{
       [Property in FilterName as `filter.${Property}`]: {
@@ -82,7 +152,7 @@ export default function useDataFilters<
 
     emits: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      collapse: (value: boolean) => {
+      collapse(value: boolean) {
         return true;
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -142,72 +212,9 @@ export default function useDataFilters<
         return classList;
       });
 
-      const filterInjections: {
-        [Property in FilterName]?: DataFilterInjection;
-      } = {};
-
-      for (const filterKey in options.filter) {
-        const filter = options.filter[filterKey];
-        const focusedRef = ref(false);
-        const hoveredRef = ref(false);
-
-        const internalEnabledPersis = ref(false);
-        watch(
-          () => toValue(filter.enabled),
-          (newValue) => {
-            internalEnabledPersis.value = newValue ?? false;
-          },
-          {
-            immediate: true,
-          },
-        );
-        const internalEnabled = computed({
-          set(value: boolean) {
-            internalEnabledPersis.value = value;
-
-            if (isRef(filter.enabled)) {
-              filter.enabled = value;
-            }
-          },
-          get() {
-            return internalEnabledPersis.value;
-          },
-        });
-
-        filterInjections[filterKey] = {
-          update(...value: any[]) {
-            internalEnabled.value = true;
-
-            emit("update:value", filterKey, ...value);
-          },
-
-          enabled: internalEnabled,
-          setEnabled(value) {
-            internalEnabled.value = value;
-            emit("update:enabled", filterKey, value);
-          },
-
-          focused: focusedRef,
-          setFocus(value) {
-            focusedRef.value = value ?? true;
-
-            // enable filter on hover
-            if (value) {
-              internalEnabled.value = true;
-            }
-          },
-
-          hovered: hoveredRef,
-          hoverIn() {
-            hoveredRef.value = true;
-          },
-
-          hoverOut() {
-            hoveredRef.value = true;
-          },
-        };
-      }
-
+      const filterInjections = useFiltersInjections(
+        emit as unknown as (event: string, ...args: any[]) => void,
+      );
       function filterToNode(key: FilterName, definition: DataFilter): VNode {
         // executed in render context
         const globalDisplay = toValue(options?.display);
