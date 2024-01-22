@@ -1,7 +1,7 @@
-import { z } from 'zod'
-import { enhancedPrisma, unGuardedPrisma } from '@config/db'
-import type { Prisma } from '@prisma/client'
-import bcrypt from 'bcryptjs'
+import { z } from "zod";
+import { enhancedPrisma, unGuardedPrisma } from "@config/db";
+import type { Prisma } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const createUserDataSchema = z.object({
   id: z.string(),
@@ -12,7 +12,7 @@ const createUserDataSchema = z.object({
   lastName: z.string(),
   searchName: z.string().nullish(),
   birthDate: z.date().refine((date) => date <= new Date(), {
-    message: 'Birth date cannot be in the future',
+    message: "Birth date cannot be in the future",
   }),
   genderId: z.string().nullish(),
   nationality: z.string().nullish(),
@@ -24,36 +24,36 @@ const createUserDataSchema = z.object({
   phone: z.string().optional(),
   password: z.string().min(8),
   avatar: z.string().nullish(),
-})
+});
 
-type createUserData = z.infer<typeof createUserDataSchema>
+type createUserData = z.infer<typeof createUserDataSchema>;
 
 export async function _createUser(userId: string, data: createUserData) {
-  const validatedData = createUserDataSchema.parse(data)
+  const validatedData = createUserDataSchema.parse(data);
 
-  const hashedPassword = await bcrypt.hash(validatedData.password, 10)
+  const hashedPassword = await bcrypt.hash(validatedData.password, 10);
   const searchName: string =
     validatedData.firstName +
     validatedData.secondName +
     validatedData.thirdName +
-    validatedData.lastName
-  const { password, ...userWithoutPassword } = validatedData
+    validatedData.lastName;
+  const { password, ...userWithoutPassword } = validatedData;
   const ProcessedData: Prisma.UserCreateInput = {
     ...userWithoutPassword,
     passwordHash: hashedPassword,
     searchName,
-  }
-  return await enhancedPrisma(userId).user.create({ data: ProcessedData })
+  };
+  return await enhancedPrisma(userId).user.create({ data: ProcessedData });
 }
 
 const verifyLoginDataSchema = z.object({
   username: z.string(),
   password: z.string(),
-})
-type verifyLoginData = z.infer<typeof verifyLoginDataSchema>
+});
+type verifyLoginData = z.infer<typeof verifyLoginDataSchema>;
 
 export async function _verifyLogin(data: verifyLoginData) {
-  const validatedData = verifyLoginDataSchema.parse(data)
+  const validatedData = verifyLoginDataSchema.parse(data);
   const user = await unGuardedPrisma.user.findUnique({
     where: {
       username: validatedData.username,
@@ -64,18 +64,18 @@ export async function _verifyLogin(data: verifyLoginData) {
       email: true,
       passwordHash: true,
     },
-  })
+  });
 
-  if (!user) return null
+  if (!user) return null;
 
   const isValid = await bcrypt.compare(
     validatedData.password,
-    user.passwordHash
-  )
-  if (!isValid) return null
+    user.passwordHash,
+  );
+  if (!isValid) return null;
 
   // Remove passwordHash from user object
-  const { passwordHash, ...userWithoutPassword } = user
+  const { passwordHash, ...userWithoutPassword } = user;
 
-  return userWithoutPassword
+  return userWithoutPassword;
 }

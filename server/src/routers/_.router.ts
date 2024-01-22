@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { router, publicProcedure } from "./_trpc.router";
+import { viewTableRouter } from "./_tableView.router";
 // Automated, Do not alter //
 import { genderRouter } from "./gender.router";
 import { currencyRouter } from "./currency.router";
@@ -52,6 +53,8 @@ const routerObject = router({
   healthCheck: publicProcedure.query(() => {
     return "hello from tRPC v10!.";
   }),
+  viewTable: viewTableRouter,
+
   // Automated, Do not alter //
   gender: genderRouter,
   currency: currencyRouter,
