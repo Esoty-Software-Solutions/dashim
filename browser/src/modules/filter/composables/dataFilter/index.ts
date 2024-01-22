@@ -56,6 +56,8 @@ type Icon = (typeof VIcon)["$props"]["icon"];
 interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
   filter: TFilter;
 
+  title?: MaybeRefOrGetter<string>;
+
   collapsableIcon?: MaybeRefOrGetter<Icon>;
   collapsableActiveClass?: MaybeRefOrGetter<any>;
   /**
@@ -386,6 +388,7 @@ export default function useDataFilters<
       }
 
       return () => {
+        const title = toValue(options.title);
         return h("div", null, [
           h(
             VCard,
@@ -398,7 +401,9 @@ export default function useDataFilters<
               // content (title + filters + collapsable area + button)
               h("div", { class: "data-filter__content d-flex" }, [
                 // title
-                h("h2", { class: "ms-2 pa-2 text-h6" }, "Filter"),
+                title
+                  ? h("h2", { class: "ms-2 pa-2 text-h6" }, title)
+                  : undefined,
 
                 // filter bay (in the center)
                 h(
