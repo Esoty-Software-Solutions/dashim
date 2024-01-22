@@ -127,7 +127,7 @@ export default function useDataFilters<
         },
 
         hoverOut() {
-          hoveredRef.value = true;
+          hoveredRef.value = false;
         },
       };
     }
