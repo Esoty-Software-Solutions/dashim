@@ -23,6 +23,12 @@ const routes: RouteRecordRaw[] = [
         name: "Home",
         component: () => import("@/modules/home/Home.vue"),
       },
+
+      {
+        path: "/institution",
+        name: "Institution",
+        component: () => import("@/modules/institution/Institution.vue"),
+      },
     ],
     meta: {
       requiresAuth: true,
