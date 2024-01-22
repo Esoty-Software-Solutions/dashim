@@ -180,21 +180,32 @@ export default function useDataFilters<
     },
 
     setup(props, { slots, emit }) {
-      const collapsableFilters = computed(() =>
-        Object.values(options.filter).filter((filter) =>
-          toValue(filter.collapsable),
-        ),
+      const filterInjections = useFiltersInjections(
+        emit as unknown as (event: string, ...args: any[]) => void,
       );
 
+      const collapsableFilters = computed(() => {
+        const collapsibles: { [key in FilterName]?: DataFilter } = {};
+        for (const key in options.filter) {
+          const filter = options.filter[key];
+          if (toValue(filter.collapsable)) {
+            collapsibles[key] = filter;
+          }
+        }
+        return collapsibles;
+      });
+
       const enabledCollapsableFilter = computed(() =>
-        collapsableFilters.value.some((filter) => filter.enabled),
+        Object.keys(collapsableFilters.value).some(
+          (filterKey) => filterInjections[filterKey]?.enabled?.value,
+        ),
       );
 
       /**
        * Whether there are collapsable filters or not
        */
       const collapsable = computed(
-        (): boolean => collapsableFilters.value.length >= 1,
+        (): boolean => Object.keys(collapsableFilters.value).length >= 1,
       );
 
       const internalCollapse = useProxiedRefOrGetter(
@@ -212,9 +223,6 @@ export default function useDataFilters<
         return classList;
       });
 
-      const filterInjections = useFiltersInjections(
-        emit as unknown as (event: string, ...args: any[]) => void,
-      );
       function filterToNode(key: FilterName, definition: DataFilter): VNode {
         // executed in render context
         const globalDisplay = toValue(options?.display);
