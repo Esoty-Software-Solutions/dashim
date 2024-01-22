@@ -9,7 +9,6 @@ import {
   computed,
   watch,
   isRef,
-  mergeProps,
 } from "vue";
 
 import { mdiChevronDown } from "@mdi/js";
@@ -98,7 +97,7 @@ export default function useDataFilters<
 
     setup(props, { slots, emit }) {
       const collapsableFilters = computed(() =>
-        Object.values(toValue(options.filter)).filter((filter) =>
+        Object.values(options.filter).filter((filter) =>
           toValue(filter.collapsable),
         ),
       );
@@ -143,111 +142,102 @@ export default function useDataFilters<
         return classList;
       });
 
-      // render filters
-      const globalDisplay = toValue(options?.display);
-
       const filterInjections: {
         [Property in FilterName]?: DataFilterInjection;
       } = {};
 
-      watch(
-        () => toValue(options.filter),
-        (filters) => {
-          for (const filterKey in filters) {
-            const filter = filters[filterKey];
-            const focusedRef = ref(false);
-            const hoveredRef = ref(false);
+      for (const filterKey in options.filter) {
+        const filter = options.filter[filterKey];
+        const focusedRef = ref(false);
+        const hoveredRef = ref(false);
 
-            const internalEnabledPersis = ref(false);
-            watch(
-              () => toValue(filter.enabled),
-              (newValue) => {
-                internalEnabledPersis.value = newValue ?? false;
-              },
-              {
-                immediate: true,
-              },
-            );
-            const internalEnabled = computed({
-              set(value: boolean) {
-                internalEnabledPersis.value = value;
+        const internalEnabledPersis = ref(false);
+        watch(
+          () => toValue(filter.enabled),
+          (newValue) => {
+            internalEnabledPersis.value = newValue ?? false;
+          },
+          {
+            immediate: true,
+          },
+        );
+        const internalEnabled = computed({
+          set(value: boolean) {
+            internalEnabledPersis.value = value;
 
-                if (isRef(filter.enabled)) {
-                  filter.enabled = value;
-                }
-              },
-              get() {
-                return internalEnabledPersis.value;
-              },
-            });
+            if (isRef(filter.enabled)) {
+              filter.enabled = value;
+            }
+          },
+          get() {
+            return internalEnabledPersis.value;
+          },
+        });
 
-            filterInjections[filterKey] = {
-              update(...value: any[]) {
-                internalEnabled.value = true;
+        filterInjections[filterKey] = {
+          update(...value: any[]) {
+            internalEnabled.value = true;
 
-                emit("update:value", filterKey, ...value);
-              },
+            emit("update:value", filterKey, ...value);
+          },
 
-              enabled: internalEnabled,
-              setEnabled(value) {
-                internalEnabled.value = value;
-                emit("update:enabled", filterKey, value);
-              },
+          enabled: internalEnabled,
+          setEnabled(value) {
+            internalEnabled.value = value;
+            emit("update:enabled", filterKey, value);
+          },
 
-              focused: focusedRef,
-              setFocus(value) {
-                focusedRef.value = value ?? true;
+          focused: focusedRef,
+          setFocus(value) {
+            focusedRef.value = value ?? true;
 
-                // enable filter on hover
-                if (value) {
-                  internalEnabled.value = true;
-                }
-              },
+            // enable filter on hover
+            if (value) {
+              internalEnabled.value = true;
+            }
+          },
 
-              hovered: hoveredRef,
-              hoverIn() {
-                hoveredRef.value = true;
-              },
+          hovered: hoveredRef,
+          hoverIn() {
+            hoveredRef.value = true;
+          },
 
-              hoverOut() {
-                hoveredRef.value = true;
-              },
-            };
-          }
-        },
-        { immediate: true, deep: false },
-      );
-
-      function filtersToNodes(filterKeys: FilterName[]) {
-        const filtersRaw: TFilter = options.filter;
-        const filtersRenderMap = {} as unknown as {
-          [key in FilterName]: VNode;
+          hoverOut() {
+            hoveredRef.value = true;
+          },
         };
-        for (const filterKey of filterKeys) {
-          const filterDefinition = filtersRaw[filterKey];
+      }
 
-          const baseStaticProps = {
-            class: [
-              computeDisplayClasses(globalDisplay, filterDefinition.display),
-            ],
+      function filterToNode(key: FilterName, definition: DataFilter): VNode {
+        // executed in render context
+        const globalDisplay = toValue(options?.display);
 
-            [`data-filter-name`]: filterKey,
-          };
+        // props passed down to filter node
+        const nodeProps = {
+          class: ["flex-grow-1"],
+        };
 
-          const nodeProps = {
-            class: ["flex-grow-1"],
-          };
+        let filterNode: VNode = h("div");
+        const injection = filterInjections[key]!;
 
-          let filterNode: VNode = h("div");
-          const injection = filterInjections[filterKey]!;
+        if (definition.type === "text") {
+          filterNode = renderText(definition, injection, nodeProps);
+        } else if (definition.type === "select") {
+          filterNode = renderSelect(definition, injection, nodeProps);
+        }
+        // TODO: render other types of filters
 
-          if (filterDefinition.type === "text") {
-            filterNode = renderText(filterDefinition, injection, nodeProps);
-          } else if (filterDefinition.type === "select") {
-            filterNode = renderSelect(filterDefinition, injection, nodeProps);
-          }
-          // render other types of filters
+        const filterSlotFunction = slots?.[`filter.${key}`];
 
+        if (filterSlotFunction) {
+          return h(
+            "div",
+            // @ts-expect-error
+            filterSlotFunction({
+              filterName: key,
+            }),
+          );
+        } else {
           // Wrap the rendered filter in a DataFilterBase
           const baseProps = {
             enabled: injection.enabled.value,
@@ -256,51 +246,31 @@ export default function useDataFilters<
             },
 
             focused: injection.focused.value,
+
+            class: [computeDisplayClasses(globalDisplay, definition.display)],
+
+            [`data-filter-name`]: key,
           };
 
-          filtersRenderMap[filterKey] = h(
-            DataFilterBase,
-            mergeProps(baseProps, baseStaticProps),
-            () => filterNode,
-          );
+          return h(DataFilterBase, baseProps, () => filterNode);
         }
-
-        const filtersVNodes: VNode[] = [];
-
-        for (const filterKey in filtersRenderMap) {
-          const filterSlotFunction = slots?.[`filter.${filterKey}`];
-
-          let renderFn = null;
-          if (filterSlotFunction) {
-            renderFn = h(
-              "div",
-              // @ts-expect-error
-              filterSlotFunction({
-                filterName: filterKey,
-              }),
-            );
-          } else {
-            const filterNode = filtersRenderMap[filterKey];
-            renderFn = filterNode;
-          }
-
-          filtersVNodes.push(renderFn);
-        }
-
-        return filtersVNodes;
       }
 
       function renderFilters() {
-        const filtersRaw = toValue(options.filter);
+        // executed in render context
+        const filtersRaw = options.filter;
 
         let nodes: VNode[] = [];
         if (collapsable.value) {
-          const permanentFilters = Object.entries(filtersRaw)
+          nodes = Object.entries(filtersRaw)
             .filter(([key, definition]) => !toValue(definition.collapsable))
-            .map(([key]) => key) as FilterName[];
-          nodes = filtersToNodes(permanentFilters);
+            .map(([key, definition]) =>
+              filterToNode(key as FilterName, definition),
+            );
         } else {
-          nodes = filtersToNodes(Object.keys(filtersRaw) as FilterName[]);
+          nodes = Object.entries(filtersRaw).map(([key, definition]) =>
+            filterToNode(key as FilterName, definition),
+          );
         }
 
         return h(VCardItem, { class: ["flex-row pa-1"] }, () =>
@@ -308,15 +278,17 @@ export default function useDataFilters<
         );
       }
 
-      function renderCollapsableFilters() {
+      function renderCollapsableArea() {
         if (!collapsable.value) {
           return undefined;
         }
 
-        const filtersRaw = toValue(options.filter);
-        const collapsableKey = Object.entries(filtersRaw)
+        const filtersRaw = options.filter;
+        const nodes = Object.entries(filtersRaw)
           .filter(([key, definition]) => toValue(definition.collapsable))
-          .map(([key]) => key) as FilterName[];
+          .map(([key, definition]) =>
+            filterToNode(key as FilterName, definition),
+          );
 
         return h(VCardItem, { class: "pa-1" }, () => [
           h(
@@ -334,7 +306,7 @@ export default function useDataFilters<
                   dense: true,
                   class: ["mx-2 py-2", collapsableRowClasses.value],
                 },
-                () => filtersToNodes(collapsableKey),
+                () => nodes,
               ),
           ),
         ]);
@@ -371,7 +343,7 @@ export default function useDataFilters<
                     renderFilters(),
 
                     // collapsable filters
-                    renderCollapsableFilters(),
+                    renderCollapsableArea(),
                   ],
                 ),
               ),
