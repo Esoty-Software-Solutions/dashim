@@ -7,14 +7,13 @@ import {
   type MaybeRefOrGetter,
   type SlotsType,
   computed,
-  watch,
-  isRef,
 } from "vue";
 
 import { mdiChevronDown } from "@mdi/js";
 import {
   VRow,
   VCard,
+  VCardActions,
   VExpandTransition,
   VBtn,
   VIcon,
@@ -32,6 +31,7 @@ import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
 import type { DataFiltersDisplay, DataFilterInjection } from "./types";
+import type { Merge } from "@/utils";
 
 /*
  * Filter Types
@@ -125,12 +125,34 @@ export default function useDataFilters<
     return injections;
   }
 
-  const FilterComponent = defineComponent({
-    slots: Object as SlotsType<{
-      [Property in FilterName as `filter.${Property}`]: {
+  type NamedSlots = {
+    [Property in FilterName as `filter.${Property}`]: Merge<
+      {
         filterName: Property;
-      };
-    }>,
+        /**
+         * Ready-baked props to be passed to `DataFilterBase` component
+         */
+        baseProps: Record<string, any>;
+
+        /**
+         * Classes to be applied for proper sizing and fitting of wrapper
+         */
+        wrapperClass: any;
+      },
+      {
+        [InjectKey in keyof DataFilterInjection]: DataFilterInjection[InjectKey];
+      }
+    >;
+  };
+
+  type SingleSlots = {
+    append?: {};
+  };
+
+  type FilterSlots = SlotsType<Merge<NamedSlots, SingleSlots>>;
+
+  const FilterComponent = defineComponent({
+    slots: Object as FilterSlots,
 
     emits: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -195,33 +217,31 @@ export default function useDataFilters<
           filterNode = renderText(definition, injection, nodeProps);
         } else if (definition.type === "select") {
           filterNode = renderSelect(definition, injection, nodeProps);
-        }
-        // TODO: render other types of filters
+        } // TODO: render other types of filters
 
-        const filterSlotFunction = slots?.[`filter.${key}`];
+        const baseProps = {
+          enabled: injection.enabled.value,
+          "onUpdate:enabled": (newValue: boolean) => {
+            injection.setEnabled(newValue);
+          },
+          focused: injection.focused.value,
 
-        if (filterSlotFunction) {
-          return h(
-            "div",
-            // @ts-expect-error
-            filterSlotFunction({
-              filterName: key,
-            }),
-          );
+          class: [computeDisplayClasses(globalDisplay, definition.display)],
+          [`data-filter-name`]: key,
+        };
+        const filterNamedSlot = slots?.[`filter.${key as FilterName}`];
+
+        if (filterNamedSlot) {
+          // @ts-expect-error
+          return filterNamedSlot({
+            filterName: key,
+
+            wrapperClass: baseProps.class,
+            baseProps,
+            ...injection,
+          });
         } else {
           // Wrap the rendered filter in a DataFilterBase
-          const baseProps = {
-            enabled: injection.enabled.value,
-            "onUpdate:enabled": (newValue: boolean) => {
-              injection.setEnabled(newValue);
-            },
-
-            focused: injection.focused.value,
-
-            class: [computeDisplayClasses(globalDisplay, definition.display)],
-
-            [`data-filter-name`]: key,
-          };
 
           return h(DataFilterBase, baseProps, () => filterNode);
         }
@@ -271,77 +291,90 @@ export default function useDataFilters<
               },
             },
             () =>
-              h(
-                VRow,
-                {
-                  dense: true,
-                  class: ["mx-2 py-2", collapsableRowClasses.value],
-                },
-                () => nodes,
-              ),
+              h(VRow, {
+                dense: true,
+                class: ["mx-2 py-2", collapsableRowClasses.value],
+              }),
           ),
         ]);
       }
 
+      function appendSlot(): VNode | undefined {
+        if (slots.append) {
+          return h(
+            VCardActions,
+            { "data-filter-append": true, class: "data-filter__append" },
+            // @ts-expect-error
+            () => slots.append(),
+          );
+        }
+      }
+
       return () => {
         return h("div", null, [
-          // toolbar
           h(
             VCard,
             {
               color: "surface",
               density: "compact",
-              class: "d-flex",
             },
             () => [
-              h("h2", { class: "ms-2 pa-2 text-h6" }, "Filter"),
+              // content (title + filters + collapsable area + button)
+              h("div", { class: "data-filter__content d-flex" }, [
+                // title
+                h("h2", { class: "ms-2 pa-2 text-h6" }, "Filter"),
 
-              h(
-                "div",
-                { class: "flex-grow-1" },
+                // filter bay (in the center)
                 h(
-                  VDefaultsProvider,
-                  {
-                    defaults: {
-                      global: {
-                        hideDetails: true,
-                        baseColor: "primary",
-                        variant: "outlined",
+                  "div",
+                  { class: "flex-grow-1" },
+                  h(
+                    VDefaultsProvider,
+                    {
+                      defaults: {
+                        global: {
+                          hideDetails: true,
+                          baseColor: "primary",
+                          variant: "outlined",
+                        },
                       },
                     },
-                  },
-                  () => [
-                    renderFilters(),
-
-                    // collapsable filters
-                    renderCollapsableArea(),
-                  ],
-                ),
-              ),
-
-              // collapse button
-              collapsable.value
-                ? h(
-                    VBtn,
-                    {
-                      icon: true,
-                      variant: "plain",
-                      class: ["me-2 mt-4"],
-                      onClick: () =>
-                        (internalCollapse.value = !internalCollapse.value),
-                    },
                     () => [
-                      h(VIcon, {
-                        style: {
-                          transform: !internalCollapse.value
-                            ? "rotateX(180deg)"
-                            : "",
-                        },
-                        icon: mdiChevronDown,
-                      }),
+                      renderFilters(),
+
+                      // collapsable filters
+                      renderCollapsableArea(),
                     ],
-                  )
-                : undefined,
+                  ),
+                ),
+
+                // collapse button
+                collapsable.value
+                  ? h(
+                      VBtn,
+                      {
+                        icon: true,
+                        variant: "plain",
+                        class: ["me-2 mt-4"],
+                        onClick: () =>
+                          (internalCollapse.value = !internalCollapse.value),
+                      },
+                      () => [
+                        h(VIcon, {
+                          style: {
+                            transform: !internalCollapse.value
+                              ? "rotateX(180deg)"
+                              : "",
+                          },
+                          icon: mdiChevronDown,
+                        }),
+                      ],
+                    )
+                  : undefined,
+              ]),
+
+              // append slots
+              appendSlot(),
             ],
           ),
         ]);
