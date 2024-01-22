@@ -1,4 +1,4 @@
-import { User, type UserType } from "@models/user";
+import { type UserType } from "@models/user.model";
 // import { getSession } from '@utilities/session'
 import { unGuardedPrisma } from "@config/db";
 import type { Request as ExpressRequest } from "express";
