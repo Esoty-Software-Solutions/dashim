@@ -13,6 +13,10 @@
     "streetsidesoftware.code-spell-checker",
     "aaron-bond.better-comments",
     "editorconfig.editorconfig",
+
+    "matt-meyers.vscode-dbml"
+
     "lokalise.i18n-ally"
+
   ]
 }

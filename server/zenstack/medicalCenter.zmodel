@@ -1,60 +1,79 @@
 import 'base'
 import 'user'
+import 'policy'
+import 'patientService'
 
 
-model MedicalCenter extends Base, ActivationStatus{
-    name String
-    code String
-    description String
-    cityHQ String
-    address String?
-    phone String[] @unique
-    email String[] @unique
-    website String @url
-    facebookLink String @url
-    googleMapsLink String @url
-    twitterLink String @url
-    instagramLink String @url
+model MedicalCenter extends Base, ActivationStatus {
+  name String
+  code String
+  description String
+  cityHQ String
+  address String?
+  phone String[] @unique
+  email String[] @unique
+  website String @url
+  facebookLink String @url
+  googleMapsLink String @url
+  twitterLink String @url
+  instagramLink String @url
 
-    latitude Float?
-    longitude Float?
+  latitude Float?
+  longitude Float?
 
-    managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
-    managingTenantId String @unique
+  managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
+  managingTenantId String @unique
 
-    services MedicalCenterService[]
-    
-    beneftiPackages PackageMedicalServices []
+  services MedicalService[]
 
-    insurancePolicy InsurancePolicyMedicalCenters []
+  insurancePolicy InsurancePolicyMedicalCenter []
 
-    timeWindow TimeWindow?
-
-    entryRecords EntryRecord[]
+  entryRecords EntryRecord[]
 }
 
-model MedicalCenterServiceTemplate extends Base, ActivationStatus {
-    name String
-    dalilCode String
-    basePrice String
+model BenefitPackageMedicalServiceTemplate extends Base, ActivationStatus {
 
-    services MedicalCenterService[]
+  benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
+  benefitPackageId String
+
+  medicalServiceTemplate MedicalServiceTemplate @relation(fields: [medicalServiceTemplateId], references: [id])
+  medicalServiceTemplateId String
+
+  @@index([benefitPackageId, medicalServiceTemplateId])
+  @@unique([benefitPackageId, medicalServiceTemplateId])
+
+  // * Service Template can be connected to many Benefit Packages
+  // * However this can cause issues where a single service can
+  // * belong to multiple benefit packages with copayments & limits
 }
 
-model MedicalCenterService extends Base, ActivationStatus {
-    name String
-    medicalCenterCode String
-    basePrice String
+model MedicalServiceTemplate extends Base, ActivationStatus {
+  name String
+  dalilCode String
+  basePrice String
+  IsPriceVaried Boolean @default(false)
+  description String
 
-    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
-    medicalCenterId String @unique
+  beneftiPackages BenefitPackageMedicalServiceTemplate[]
+  services MedicalService[]
+}
 
-    @@index([medicalCenterId, medicalCenterCode])
-    @@unique([medicalCenterId, medicalCenterCode])
+model MedicalService extends Base, ActivationStatus {
+  name String
+  medicalCenterCode String
+  basePrice Int
 
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  medicalCenterId String
 
-    template MedicalCenterServiceTemplate @relation(fields: [templateId], references: [id])
-    templateId String 
-    @@index([templateId,medicalCenterId,  medicalCenterCode])
-    @@unique([templateId,medicalCenterId,  medicalCenterCode])
+  patientServices PatientService[]
+  institutionPricing InstitutionMedicalService[]
+
+  template MedicalServiceTemplate @relation(fields: [templateId], references: [id])
+  templateId String
+
+  @@index([medicalCenterId, medicalCenterCode])
+  @@unique([medicalCenterId, medicalCenterCode])
+  @@index([templateId,medicalCenterId,  medicalCenterCode])
+  @@unique([templateId,medicalCenterId,  medicalCenterCode])
 }

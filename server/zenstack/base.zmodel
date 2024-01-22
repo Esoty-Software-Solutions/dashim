@@ -12,9 +12,37 @@ abstract model Base {
   @@allow('all', true && isPublished)
 }
 
+abstract model BaseWithUser {
+  id String @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  isPublished Boolean @default(true)
+  isSoftDeleted Boolean @default(false)
+
+  CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById String
+
+  UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+  updatedById String?
+
+  // author has full access
+  // @@allow('all', auth() != null && published)
+  @@allow('all', true && isPublished)
+}
+
 abstract model ActivationStatus {
   isActive Boolean @default(true)
   deactivationReason String?
+  deactivationDate DateTime?
+}
+
+abstract model ActivationStatusWithUser {
+  isActive Boolean @default(true)
+  deactivationReason String?
+  deactivationDate DateTime?
+
+  StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
+  statusSetById String
 }
 
 abstract model HumanProfile {
@@ -27,11 +55,11 @@ abstract model HumanProfile {
 
   birthDate DateTime
 
-  gender Gender? @relation(fields: [genderId], references: [id])
-  genderId String?
+  gender Gender @relation(fields: [genderId], references: [id])
+  genderId String
 
   nationality String?
-  nationalID String? @unique
+  nationalID String?
 
   residence String?
   address String?
@@ -45,7 +73,7 @@ abstract model LangLocale {
 model Gender extends Base, LangLocale {
   name String @unique
   user User[]
-  subscriberGroup SubscriberGroup[]
+  beneficiary Beneficiary[]
 }
 
 // enum Gender {
@@ -58,6 +86,30 @@ model Currency extends Base, LangLocale {
   name String @unique
   code String @unique
   symbol String
-  BuyexchangeRate Float @default(1)
+  buyExchangeRate Float @default(1)
   SellExchangeRate Float @default(1)
 }
+
+model City extends Base, LangLocale {
+  name String
+  country Country @relation(fields: [countryId], references: [id])
+  countryId String
+  @@index([name, countryId])
+  @@unique([name, countryId])
+}
+
+model Country extends Base, LangLocale {
+  name String @unique
+  code String @unique
+  cities City[]
+}
+
+abstract model Attachment {
+  name String
+  link String // holds s3 secret link
+  size Int // in bytes
+  contentType String
+  metadata Json
+}
+
+

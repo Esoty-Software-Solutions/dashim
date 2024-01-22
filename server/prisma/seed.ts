@@ -1,65 +1,67 @@
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
-import { User } from '@models/user'
-import { create } from 'domain'
-import { createId } from '@paralleldrive/cuid2'
-import { SeedHelper } from '../scripts/generateSeederFiles'
-import * as functions from '../prisma/fakeData/functions'
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import { User } from "@models/user";
+import { create } from "domain";
+import { createId } from "@paralleldrive/cuid2";
+import { SeedHelper } from "../scripts/generateSeederFiles";
+import * as functions from "../prisma/fakeData/functions";
 
-const prisma = new PrismaClient()
+// testing github actions
 
-async function seed() {
-  const email = 'a@a.com'
+// const prisma = new PrismaClient()
 
-  // cleanup the existing database
-  await prisma.user.deleteMany().catch(() => {
-    // no worries if it doesn't exist yet
-  })
+// async function seed() {
+//   const email = 'a@a.com'
 
-  const hashedPassword = await bcrypt.hash('12345678', 10)
+//   // cleanup the existing database
+//   await prisma.user.deleteMany().catch(() => {
+//     // no worries if it doesn't exist yet
+//   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const user = await User.createOne({
-    data: {
-      email,
-      passwordHash: hashedPassword,
-      username: 'aaaa',
-      birthDate: new Date(),
-      avatar: 'sdfasdfasd',
-      firstName: 'aaaa',
-      lastName: 'aaaa',
-      id: createId(),
-      searchName: 'aaaa',
-      DeviceToken: {
-        create: {
-          name: 'fds',
-          id: createId(),
-          deviceType: {
-            create: {
-              name: 'ios',
-              id: createId(),
-            },
-          },
-        },
-      },
-    },
-  })
+//   const hashedPassword = await bcrypt.hash('12345678', 10)
 
-  // await User.createOne({
-  //   data: {
-  //     email: email2,
-  //     passwordHash: hashedPassword,
-  //   },
-  // })
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   const user = await User.createOne({
+//     data: {
+//       email,
+//       passwordHash: hashedPassword,
+//       username: 'aaaa',
+//       birthDate: new Date(),
+//       avatar: 'sdfasdfasd',
+//       firstName: 'aaaa',
+//       lastName: 'aaaa',
+//       id: createId(),
+//       searchName: 'aaaa',
+//       DeviceToken: {
+//         create: {
+//           name: 'fds',
+//           id: createId(),
+//           deviceType: {
+//             create: {
+//               name: 'ios',
+//               id: createId(),
+//             },
+//           },
+//         },
+//       },
+//     },
+//   })
 
-  console.log(`Database has been seeded. 🌱`)
-}
+//   // await User.createOne({
+//   //   data: {
+//   //     email: email2,
+//   //     passwordHash: hashedPassword,
+//   //   },
+//   // })
 
-seed()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+//   console.log(`Database has been seeded. 🌱`)
+// }
+
+// seed()
+//   .catch((e) => {
+//     console.error(e)
+//     process.exit(1)
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect()
+//   })

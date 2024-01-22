@@ -23,8 +23,9 @@
       "@controllers/*": ["./src/controllers/*"],
       "@config/*": ["./src/config/*"],
       "@models/*": ["./src/models/*"],
-      "@router/*": ["src/routers/*"],
-      "@utilities/*": ["./src/utilities/*"]
+      "@routers/*": ["src/routers/*"],
+      "@utilities/*": ["./src/utilities/*"],
+      "@schemas/*": ["./src/schemas/*"]
     }
   }
 }

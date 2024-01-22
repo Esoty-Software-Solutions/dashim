@@ -1,0 +1,28 @@
+import { z } from 'zod';
+
+export const PatientServiceScalarFieldEnumSchema = z.enum([
+  'id',
+  'createdAt',
+  'updatedAt',
+  'isPublished',
+  'isSoftDeleted',
+  'isActive',
+  'deactivationReason',
+  'deactivationDate',
+  'name',
+  'Note',
+  'isWorkInjury',
+  'isExamination',
+  'groupCode',
+  'billedAmmount',
+  'allowedAmmount',
+  'copayAmmount',
+  'cashAmount',
+  'coveredAmount',
+  'defferedAmount',
+  'coinsuranceAmount',
+  'entryRecordId',
+  'transactionReviewStatusId',
+  'medicalReviewStatusId',
+  'medicalServiceId',
+]);

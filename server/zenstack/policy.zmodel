@@ -1,52 +1,51 @@
 import 'base'
-
+import 'medicalCenter'
 
 model InsurancePolicy extends Base, ActivationStatus {
-    name String @unique
-    coPay Int
-    limit Int
+  name String
+  // copayDistrubtion Int[] //* application for it in the future
+  // threashold Int[] //* application for it in the future
+  Accumulatedlimit Int
+  BalanceResetDate DateTime
+  issueDate DateTime
+  renewalDate DateTime
+  serviceEntryTimeWindow Int @default(24) // time in hours
 
-    institution Institution @relation(fields: [institutionId], references: [id])
-    institutionId String
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
 
-    subscribers Subscriber[]
+  subscribers Subscriber[]
+  benefitPackages BenefitPackage[]
+  medicalCenters InsurancePolicyMedicalCenter[]
 
-    packageMedicalServices PackageMedicalServices[]
-    medicalCenters InsurancePolicyMedicalCenters[]
-    
-} 
+  @@index([institutionId, name])
+  @@unique([institutionId, name])
+}
 
 
 model BenefitPackage extends Base, ActivationStatus {
-    name String @unique
-    limit Int
-    medicalServices PackageMedicalServices[]
-    spents SubscriberGroupBalance[]
+  name String
+  copayDistrubtion Int[]
+  threashold Int[]
+
+  medicalServiceTemplates BenefitPackageMedicalServiceTemplate[]
+
+  insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
+  insurancePolicyId String
+
+  beneficiaryBalances BeneficiaryBalance[]
+
+  @@index([insurancePolicyId, name])
+  @@unique([insurancePolicyId, name])
 }
 
-model PackageMedicalServices extends Base, ActivationStatus {
-    beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
-    beneftiPackageId String
+model InsurancePolicyMedicalCenter extends Base, ActivationStatus {
+  insurancePolicyId String
+  insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
 
-    medicalService MedicalCenter @relation(fields: [medicalServiceId], references: [id])
-    medicalServiceId String
+  medicalCenterId String
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
 
-    insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
-    insurancePolicyId String
-
-    price Int
-
-    patientServices PatientService[]
-    patientExaminations PatientExamination[]
-
-    @@unique([insurancePolicyId, beneftiPackageId, medicalServiceId ])
-    @@index([insurancePolicyId, beneftiPackageId, medicalServiceId])
-}
-
-model InsurancePolicyMedicalCenters extends Base, ActivationStatus {
-    insurancePolicyId String
-    insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
-    
-    medicalCenterId String
-    medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  @@unique([insurancePolicyId, medicalCenterId])
+  @@index([insurancePolicyId, medicalCenterId])
 }
