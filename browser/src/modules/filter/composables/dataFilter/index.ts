@@ -9,7 +9,7 @@ import {
   computed,
 } from "vue";
 
-import { mdiChevronDown } from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import {
   VRow,
   VCard,
@@ -19,6 +19,7 @@ import {
   VIcon,
   VCardItem,
   VDefaultsProvider,
+  VBadge,
 } from "vuetify/components";
 
 import DataFilterBase from "../../components/DataFilterBase.vue";
@@ -50,8 +51,17 @@ import type { Merge } from "@/utils";
 
 type DataFilter = TextDataFilter | SelectDataFilter;
 
+type Icon = (typeof VIcon)["$props"]["icon"];
+
 interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
   filter: TFilter;
+
+  collapsableIcon?: MaybeRefOrGetter<Icon>;
+  collapsableActiveClass?: MaybeRefOrGetter<any>;
+  /**
+   * Icon to display when not-collapsed
+   */
+  collapsableActiveIcon?: MaybeRefOrGetter<Icon>;
 
   /**
    * Whether to collapse the collapsable section of the filters (if it exists)
@@ -174,6 +184,10 @@ export default function useDataFilters<
         Object.values(options.filter).filter((filter) =>
           toValue(filter.collapsable),
         ),
+      );
+
+      const enabledCollapsableFilter = computed(() =>
+        collapsableFilters.value.some((filter) => filter.enabled),
       );
 
       /**
@@ -299,6 +313,55 @@ export default function useDataFilters<
         ]);
       }
 
+      function collapsableButton(): VNode | undefined {
+        // executed in render context
+        if (!collapsable.value) {
+          return;
+        }
+
+        /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+        const providedActive = toValue(options.collapsableActiveIcon);
+        const providedInactive = toValue(options.collapsableIcon);
+        let icon = providedInactive ?? mdiChevronDown;
+        if (!internalCollapse.value) {
+          // active state
+
+          if (providedActive) {
+            icon = providedActive;
+          } else if (providedInactive) {
+            icon = providedInactive;
+          } else {
+            icon = mdiChevronUp;
+          }
+        }
+        /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+        return h(
+          VBtn,
+          {
+            icon: true,
+            variant: "plain",
+            class: ["me-2 mt-4"],
+            onClick: () => (internalCollapse.value = !internalCollapse.value),
+          },
+          () => [
+            // show badge when collapsable filters are there
+            h(
+              VBadge,
+              {
+                color: "primary",
+                dot: true,
+                modelValue: enabledCollapsableFilter.value,
+              },
+              () =>
+                h(VIcon, {
+                  icon,
+                }),
+            ),
+          ],
+        );
+      }
+
       function appendSlot(): VNode | undefined {
         if (slots.append) {
           return h(
@@ -349,28 +412,7 @@ export default function useDataFilters<
                 ),
 
                 // collapse button
-                collapsable.value
-                  ? h(
-                      VBtn,
-                      {
-                        icon: true,
-                        variant: "plain",
-                        class: ["me-2 mt-4"],
-                        onClick: () =>
-                          (internalCollapse.value = !internalCollapse.value),
-                      },
-                      () => [
-                        h(VIcon, {
-                          style: {
-                            transform: !internalCollapse.value
-                              ? "rotateX(180deg)"
-                              : "",
-                          },
-                          icon: mdiChevronDown,
-                        }),
-                      ],
-                    )
-                  : undefined,
+                collapsableButton(),
               ]),
 
               // append slots
