@@ -21,6 +21,11 @@ export interface DataFilterBase {
    *
    */
   enabled?: MaybeRefOrGetter<boolean>;
+
+  /**
+   * @default true
+   */
+  enableOnFocus?: MaybeRefOrGetter<boolean>;
 }
 
 export interface DataFilterInjection {
@@ -45,10 +50,4 @@ export interface DataFilterInjection {
   hoverIn(): void;
 
   hoverOut(): void;
-
-  // update value
-  // update enable
-  // disable
-  // update focus
-  // update hover
 }

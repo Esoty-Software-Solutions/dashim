@@ -81,11 +81,11 @@ export default function useDataFilters<
     } = {};
 
     for (const filterKey in options.filter) {
-      const filter = options.filter[filterKey];
+      const definition = options.filter[filterKey];
       const focusedRef = ref(false);
       const hoveredRef = ref(false);
 
-      const enabled = useProxiedRefOrGetter(filter.enabled, false);
+      const enabled = useProxiedRefOrGetter(definition.enabled, false);
 
       injections[filterKey] = {
         update(...value: any[]) {
@@ -104,8 +104,9 @@ export default function useDataFilters<
         setFocus(value) {
           focusedRef.value = value ?? true;
 
-          // enable filter on hover
-          if (value) {
+          // enable filter on hover (if option is set so)
+          const enableOnFocus = toValue(definition.enableOnFocus) ?? true;
+          if (enableOnFocus && value) {
             enabled.value = true;
           }
         },
