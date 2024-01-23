@@ -19,19 +19,26 @@ type IInputBase = {
   [x: string]: any;
 };
 
-type FindCallback<
-  TInput extends IInputBase,
-  TOutput extends Record<string, any>,
-> = (input: TInput, opts?: ProcedureOptions) => Promise<TOutput[]>;
+interface MetadataBase {
+  unFilteredCount: number;
+  [key: string]: any;
+}
 
-type CountCallback<TInput extends IInputBase> = (
-  input: Omit<TInput, "skip" | "take"> & { _count: any },
+interface IOutputBase {
+  data: Record<string, any>[];
+  filteredCount: number;
+  metaData: MetadataBase;
+  statistics: { key: string; value: any }[];
+}
+
+type FindCallback<TInput extends IInputBase, TOutput extends IOutputBase> = (
+  input: TInput,
   opts?: ProcedureOptions,
-) => Promise<{ _count: any }>;
+) => Promise<TOutput | null | undefined>;
 
 export interface UseQuerierOptions<
   TInput extends IInputBase,
-  TOutput extends Record<string, any>,
+  TOutputRaw extends IOutputBase = IOutputBase,
 > {
   storageKey: string;
   /**
@@ -53,18 +60,17 @@ export interface UseQuerierOptions<
    */
   debounceInterval?: number;
 
-  findCallback: FindCallback<TInput, TOutput>;
-  countCallback: CountCallback<TInput>;
+  findCallback: FindCallback<TInput, TOutputRaw>;
+  // countCallback: CountCallback<TInput>;
 
   onError?: (...args: any[]) => void;
 }
 
 function useQuerierTable<
   TInput extends IInputBase,
-  TOutputRaw extends Record<string, any>[],
-  TOutput extends Record<string, any> = TOutputRaw[number],
->(options: UseQuerierOptions<TInput, TOutput>) {
-  const items = ref([]) as Ref<TOutput[]>;
+  TOutputRaw extends IOutputBase = IOutputBase,
+>(options: UseQuerierOptions<TInput, TOutputRaw>) {
+  const items = ref([]) as Ref<TOutputRaw["data"]>;
 
   const { storageKey } = options;
 
@@ -82,23 +88,13 @@ function useQuerierTable<
     const input = toValue(options.input);
 
     pendingRequests.forEach((abController) => abController.abort());
+    pendingRequests.splice(0, pendingRequests.length);
 
     const [skip, take] = pageToSkipTake(pagination.page, pagination.pageSize);
 
     loading.value = true;
 
     try {
-      const countAbController = new AbortController();
-      const countPromise = options.countCallback(
-        {
-          ...input,
-          _count: { _all: true },
-        },
-        {
-          signal: countAbController.signal,
-        },
-      );
-
       const findAbController = new AbortController();
 
       const findPromise = options.findCallback(
@@ -114,12 +110,12 @@ function useQuerierTable<
         },
       );
 
-      pendingRequests.push(findAbController, countAbController);
-      const countRes = await countPromise;
+      pendingRequests.push(findAbController);
+      // const countRes = await countPromise;
       const findRes = await findPromise;
 
-      pagination.serverLength = countRes._count?._all ?? 0;
-      items.value = findRes ?? [];
+      pagination.serverLength = findRes?.filteredCount ?? 0;
+      items.value = findRes?.data ?? [];
     } catch (error: any) {
       if (
         error instanceof TRPCClientError &&
