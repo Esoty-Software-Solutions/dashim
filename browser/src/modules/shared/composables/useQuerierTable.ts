@@ -117,10 +117,7 @@ function useQuerierTable<
       pagination.serverLength = findRes?.filteredCount ?? 0;
       items.value = findRes?.data ?? [];
     } catch (error: any) {
-      if (
-        error instanceof TRPCClientError &&
-        error.name === "ObservableAbortError"
-      ) {
+      if (error instanceof TRPCClientError) {
         // console.log(error.name);
       } else {
         if (options.onError) options?.onError(error);
@@ -143,7 +140,12 @@ function useQuerierTable<
         pagination.page = 1;
         void triggerFetch();
       },
-      { deep: options.deep === false ? false : true },
+      {
+        deep: options.deep === false ? false : true,
+        onTrigger(event) {
+          console.log(event);
+        },
+      },
     );
 
     watch(() => pagination.page, triggerFetch, {
