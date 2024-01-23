@@ -396,55 +396,54 @@ export default function useDataFilters<
 
       return () => {
         const title = toValue(options.title);
-        return h("div", null, [
-          h(
-            VCard,
-            {
-              color: "surface",
-              density: "compact",
-              tag: "section",
-            },
-            () => [
-              // content (title + filters + collapsable area + button)
-              h("div", { class: "data-filter__content d-flex" }, [
-                // title
-                title
-                  ? h("h2", { class: "ms-2 pa-2 text-h6" }, title)
-                  : undefined,
+        return h(
+          VCard,
+          {
+            color: "surface",
+            density: "compact",
+            class: ["d-data-filter"],
+            tag: "section",
+          },
+          () => [
+            // content (title + filters + collapsable area + button)
+            h("div", { class: "data-filter__content d-flex" }, [
+              // title
+              title
+                ? h("h2", { class: "ms-2 pa-2 text-h6" }, title)
+                : undefined,
 
-                // filter bay (in the center)
+              // filter bay (in the center)
+              h(
+                "div",
+                { flat: true, class: "flex-grow-1" },
                 h(
-                  "div",
-                  { flat: true, class: "flex-grow-1" },
-                  h(
-                    VDefaultsProvider,
-                    {
-                      defaults: {
-                        global: {
-                          hideDetails: true,
-                          baseColor: "primary",
-                          variant: "outlined",
-                        },
+                  VDefaultsProvider,
+                  {
+                    defaults: {
+                      global: {
+                        hideDetails: true,
+                        baseColor: "primary",
+                        variant: "outlined",
                       },
                     },
-                    () => [
-                      renderFilters(),
+                  },
+                  () => [
+                    renderFilters(),
 
-                      // collapsable filters
-                      renderCollapsableArea(),
-                    ],
-                  ),
+                    // collapsable filters
+                    renderCollapsableArea(),
+                  ],
                 ),
+              ),
 
-                // collapse button
-                collapsableButton(),
-              ]),
+              // collapse button
+              collapsableButton(),
+            ]),
 
-              // append slots
-              appendSlot(),
-            ],
-          ),
-        ]);
+            // append slots
+            appendSlot(),
+          ],
+        );
       };
     },
   });
