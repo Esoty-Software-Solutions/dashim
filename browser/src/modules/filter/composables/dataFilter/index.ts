@@ -2,11 +2,13 @@ import {
   defineComponent,
   h,
   ref,
+  shallowRef,
   toValue,
   type VNode,
   type MaybeRefOrGetter,
   type SlotsType,
   computed,
+  readonly,
 } from "vue";
 
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
@@ -88,8 +90,9 @@ export default function useDataFilters<
   type FilterName = Extract<keyof TFilter, string>;
 
   function useFiltersInjections(emit: (event: string, ...args: any[]) => void) {
+    // @ts-expect-error
     const injections: {
-      [Property in FilterName]?: DataFilterInjection;
+      [Property in FilterName]: DataFilterInjection;
     } = {};
 
     for (const filterKey in options.filter) {
@@ -163,6 +166,9 @@ export default function useDataFilters<
 
   type FilterSlots = SlotsType<Merge<NamedSlots, SingleSlots>>;
 
+  const injections = shallowRef<ReturnType<typeof useFiltersInjections> | null>(
+    null,
+  );
   const FilterComponent = defineComponent({
     slots: Object as FilterSlots,
 
@@ -185,6 +191,7 @@ export default function useDataFilters<
       const filterInjections = useFiltersInjections(
         emit as unknown as (event: string, ...args: any[]) => void,
       );
+      injections.value = filterInjections;
 
       const collapsableFilters = computed(() => {
         const collapsibles: { [key in FilterName]?: DataFilter } = {};
@@ -244,11 +251,11 @@ export default function useDataFilters<
         } // TODO: render other types of filters
 
         const baseProps = {
-          enabled: injection.enabled.value,
+          enabled: toValue(injection.enabled),
           "onUpdate:enabled": (newValue: boolean) => {
             injection.setEnabled(newValue);
           },
-          focused: injection.focused.value,
+          focused: toValue(injection.focused),
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
@@ -444,6 +451,8 @@ export default function useDataFilters<
 
   return {
     FilterComponent,
+
+    handles: readonly(injections),
   };
 }
 
@@ -451,7 +460,7 @@ function computeDisplayClasses(
   globalConfig?: DataFilter["display"],
   filterConfig?: DataFilter["display"],
 ): string[] {
-  const defaultClasses = ["v-col-12 v-col-md-3"];
+  const defaultClasses = ["v-col-12 v-col-sm-6 v-col-md-3"];
 
   function configToClasses(config: DataFilter["display"]): string[] {
     const classes: string[] = [];
