@@ -2,9 +2,11 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
 import useQuerierTable from "@/modules/shared/composables/useQuerierTable";
+import useGlobal from "@/modules/shared/stores/globalStore";
 import { client } from "@/queries";
 
 const useQuerierTableExampleStore = defineStore("querierExampleStore", () => {
+  const globalStore = useGlobal();
   const idSearch = ref("");
   const idEnabled = ref(true);
 
@@ -13,15 +15,19 @@ const useQuerierTableExampleStore = defineStore("querierExampleStore", () => {
   // the first fetch is when the filters/page change
   const { binding, items, triggerFetch } = useQuerierTable({
     storageKey: "myKey",
-    input: () => ({
-      where: computed(() => ({
+    input: computed(() => ({
+      where: {
         id:
           idEnabled.value && idSearch.value.trim()
             ? { equals: idSearch.value.trim() }
             : undefined,
-      })),
-    }),
+      },
+    })),
     findCallback: client.viewTable.subscribers.query,
+    onError(error) {
+      globalStore.setMessage("Error while connection to server.");
+      console.error(error);
+    },
     immediate: true,
   });
 
