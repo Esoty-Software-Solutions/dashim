@@ -2,6 +2,7 @@ import {
   defineComponent,
   h,
   ref,
+  mergeProps,
   shallowRef,
   toValue,
   type VNode,
@@ -14,7 +15,6 @@ import {
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import {
   VRow,
-  VCard,
   VCardActions,
   VExpandTransition,
   VBtn,
@@ -22,6 +22,7 @@ import {
   VCardItem,
   VDefaultsProvider,
   VBadge,
+  VSheet,
 } from "vuetify/components";
 
 import DataFilterBase from "../../components/DataFilterBase.vue";
@@ -59,6 +60,8 @@ interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
   filter: TFilter;
 
   title?: MaybeRefOrGetter<string>;
+
+  sheetProps?: MaybeRefOrGetter<InstanceType<typeof VSheet>["$props"]>;
 
   collapsableIcon?: MaybeRefOrGetter<Icon>;
   collapsableActiveClass?: MaybeRefOrGetter<any>;
@@ -397,13 +400,16 @@ export default function useDataFilters<
       return () => {
         const title = toValue(options.title);
         return h(
-          VCard,
-          {
-            color: "surface",
-            density: "compact",
-            class: ["d-data-filter"],
-            tag: "section",
-          },
+          VSheet,
+          mergeProps(
+            {
+              color: "surface",
+              density: "compact",
+              class: ["d-data-filter"],
+              tag: "section",
+            },
+            toValue(options.sheetProps) ?? {},
+          ),
           () => [
             // content (title + filters + collapsable area + button)
             h("div", { class: "data-filter__content d-flex" }, [

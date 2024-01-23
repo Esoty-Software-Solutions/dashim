@@ -120,6 +120,11 @@ const { FilterComponent: FilterComponent2, handles } = useDataFilters({
     md: 3,
   },
 
+  // update style to be borderd
+  sheetProps: {
+    border: true,
+  },
+
   filter: {
     exx: text({
       props: {
