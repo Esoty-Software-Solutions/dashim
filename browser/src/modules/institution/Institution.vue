@@ -17,7 +17,7 @@ defineOptions({
 let tab = ref("");
 
 const tapName: { name: string; key: string }[] = [
-  { name: "Institution", key: "InstitutionPage" },
+  { name: "Institutions", key: "InstitutionPage" },
   { name: "Network", key: "NetworkPage" },
   { name: "Subscribers", key: "SubscribersPage" },
 ];
