@@ -4,8 +4,6 @@ import DrawerComponent from "@/modules/shared/layouts/main/DrawerComponent.vue";
 </script>
 
 <template>
-  <AppBar />
-
   <DrawerComponent />
 
   <VMain>

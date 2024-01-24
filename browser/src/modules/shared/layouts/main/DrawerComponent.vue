@@ -47,6 +47,12 @@ const items: DrawerMenuItem[] = [
     to: { name: "Home" },
     exact: true,
   },
+  {
+    title: "Institution",
+    icon: mdiAccountGroup,
+    to: { name: "Institution" },
+    exact: true,
+  },
   // {
   //   title: "Subscribers",
   //   icon: mdiClipboardEdit,

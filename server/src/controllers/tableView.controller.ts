@@ -51,7 +51,6 @@ export async function _getSubscribers(
             where: input?.where,
           });
           const unFilteredCount = await tx.subscriber.count();
-
           const activeCount = await tx.subscriber.count({
             where: { ...input?.where, isActive: true },
           });
