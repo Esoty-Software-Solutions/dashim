@@ -76,8 +76,6 @@
   "tailwindCSS.experimental.classRegex": ["className=\"([^\"\\n]*)\""],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.eol": "\n",
-  "i18n-ally.localesPaths": [
-    "browser/src/assets/locales"
-  ],
+  "i18n-ally.localesPaths": ["browser/src/assets/locales"],
   "i18n-ally.keystyle": "nested"
 }
