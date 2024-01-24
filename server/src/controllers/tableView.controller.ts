@@ -18,17 +18,11 @@ const DEFAULT_PAGE_NUMBER = 0;
   statistics: full table count, and other stats
   */
 
-const SubscriberFindManySchemaObject = SubscriberFindManySchema.unwrap();
-export const ExtendedSubscriberFindManySchema =
-  SubscriberFindManySchemaObject.extend({
-    include: z.object({}).strict().optional(),
-    select: z.object({}).strict().optional(),
-  }).optional();
+const StatusSetByFields: { select: Prisma.UserSelectScalar } = {
+  select: { id: true, firstName: true, lastName: true },
+};
 
-type _getSubscribersType = z.infer<typeof ExtendedSubscriberFindManySchema>;
-
-x = _getSubscribers("userID", {});
-
+type _getSubscribersType = z.infer<typeof SubscriberFindManySchema>;
 export async function _getSubscribers(
   userId: string,
   input: _getSubscribersType,
@@ -45,7 +39,43 @@ export async function _getSubscribers(
         async (tx) => {
           // Code running in a transaction...
           const subscribers = await tx.subscriber.findMany({
-            include: { beneficiaries: true },
+            where: input?.where,
+            skip: input?.skip,
+            take: input?.take,
+            // include: { //* This blows up the return type
+            //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+            //   StatusSetBy: selectStatusSetBy,
+            // },
+            select: {
+              id: true,
+              createdAt: true,
+              updatedAt: true,
+              isActive: true,
+              // TODO: add city
+              insurancePolicyId: true,
+              beneficiaries: {
+                select: {
+                  id: true,
+                  createdAt: true,
+                  updatedAt: true,
+                  isActive: true,
+                  firstName: true,
+                  secondName: true,
+                  thirdName: true,
+                  fourthName: true,
+                  lastName: true,
+                  birthDate: true,
+                  // residence: true, //TODO: rename into city and move to subscriber
+                  genderId: true,
+                  relationshipId: true,
+                  StatusSetBy: StatusSetByFields,
+                  beneficiaryBalances: {
+                    select: { id: true, balance: true, updatedAt: true },
+                  },
+                },
+              },
+              StatusSetBy: StatusSetByFields,
+            },
           });
           const filteredCount = await tx.subscriber.count({
             where: input?.where,
@@ -53,6 +83,13 @@ export async function _getSubscribers(
           const unFilteredCount = await tx.subscriber.count();
           const activeCount = await tx.subscriber.count({
             where: { ...input?.where, isActive: true },
+          });
+
+          subscribers.forEach((subscriber) => {
+            // subscriber.
+            subscriber.beneficiaries.forEach((beneficiary) => {
+              // beneficiary.
+            });
           });
           const inActiveCount = filteredCount - activeCount;
           // const maxAge = await tx.subscriber.aggregate({where: input.where, select: {age: true}})
@@ -62,10 +99,10 @@ export async function _getSubscribers(
             { key: "unFilteredCount", value: unFilteredCount },
           ];
           const metaData = {
-            unFilteredCount,
-            priceFilter: { min: 0, max: 1000 },
-            countryFilter: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
-            cityFilter: ["Cairo", "Alexandria", "Giza"],
+            balance: { min: 0, max: 1000 },
+            limit: { min: 0, max: 1000 },
+            country: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
+            city: ["Cairo", "Alexandria", "Giza"],
           };
 
           return { data: subscribers, filteredCount, metaData, statistics };
