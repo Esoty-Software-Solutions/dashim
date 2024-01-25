@@ -18,7 +18,12 @@ const DEFAULT_PAGE_NUMBER = 0;
   statistics: full table count, and other stats
   */
 
-const StatusSetByFields: { select: Prisma.UserSelectScalar } = {
+// const StatusSetByFields: { select: Prisma.UserSelectScalar } = {
+//   select: { id: true, firstName: true, lastName: true },
+// };
+
+const StatusSetByFields = {
+  //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
 };
 
@@ -65,7 +70,7 @@ export async function _getSubscribers(
                   fourthName: true,
                   lastName: true,
                   birthDate: true,
-                  // residence: true, //TODO: rename into city and move to subscriber
+                  residence: true, //TODO: rename into city and move to subscriber
                   genderId: true,
                   relationshipId: true,
                   StatusSetBy: StatusSetByFields,
