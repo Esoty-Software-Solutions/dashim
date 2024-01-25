@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
+import type { RouteLocationRaw } from "vue-router";
 
 import {
   mdiThemeLightDark,
@@ -8,8 +9,12 @@ import {
   mdiLogout,
   mdiTranslateVariant,
   mdiChevronDown,
+  mdiSettingsHelper,
+  mdiCarSettings,
+  mdiCog,
 } from "@mdi/js";
 import { useDisplay } from "vuetify";
+import { el } from "vuetify/locale";
 
 import LocaleMenu from "../../components/LocaleMenu.vue";
 
@@ -71,8 +76,21 @@ const configStore = useConfig();
  */
 const localeName = computed(() => {
   const currentLocale = configStore.locale;
-  return t(`locale.${currentLocale}.name`);
+  if (currentLocale == "ar") {
+    return t(`locale.en.name`);
+  } else {
+    return t(`locale.ar.name`);
+  }
 });
+
+function changeLocale() {
+  const currentLocale = configStore.locale;
+  if (currentLocale == "ar") {
+    configStore.setLocale("en");
+  } else {
+    configStore.setLocale("ar");
+  }
+}
 </script>
 
 <template>
@@ -142,45 +160,48 @@ const localeName = computed(() => {
       <VDivider />
       <VListItem
         :prepend-icon="mdiThemeLightDark"
-        :title="t('common.darkMode')"
-      >
-        <template #append>
-          <VListItemAction end>
-            <VSwitch v-model="configStore.dark" color="primary" hide-details />
-          </VListItemAction>
-        </template>
-      </VListItem>
+        :title="configStore.dark ? t('common.lightMode') : t('common.darkMode')"
+        @click="configStore.dark = !configStore.dark"
+      />
 
-      <VMenu>
-        <template #default>
-          <LocaleMenu />
-        </template>
-        <template #activator="{ props }">
-          <VListItem
-            :prepend-icon="mdiTranslateVariant"
-            :title="localeName"
-            :append-icon="mdiChevronDown"
-            v-bind="props"
-          />
-        </template>
-      </VMenu>
+      <VListItem
+        :prepend-icon="mdiTranslateVariant"
+        :title="localeName"
+        @click="changeLocale"
+      />
     </VList>
     <template #append>
       <div class="pa-2">
-        <VFadeTransition>
-          <VBtn
-            v-show="!rail || layoutStore.drawer"
-            color="primary"
-            density="comfortable"
-            block
-            @click="sessionStore.signOut"
-          >
-            <template #prepend>
-              <VIcon :icon="mdiLogout" />
-            </template>
-            Sign out
-          </VBtn>
-        </VFadeTransition>
+        <VList>
+          <VFadeTransition>
+            <VBtn
+              class="mb-2"
+              color="primary"
+              density="comfortable"
+              block
+              to="Setting"
+            >
+              <template #prepend>
+                <VIcon :icon="mdiCog" />
+              </template>
+              {{ !rail || layoutStore.drawer ? "Setting" : "" }}
+            </VBtn>
+          </VFadeTransition>
+
+          <VFadeTransition>
+            <VBtn
+              color="primary"
+              density="comfortable"
+              block
+              @click="sessionStore.signOut"
+            >
+              <template #prepend>
+                <VIcon :icon="mdiLogout" />
+              </template>
+              {{ !rail || layoutStore.drawer ? "Sign out" : "" }}
+            </VBtn>
+          </VFadeTransition>
+        </VList>
       </div>
     </template>
   </VNavigationDrawer>
