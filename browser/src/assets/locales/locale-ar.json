@@ -1,6 +1,7 @@
 {
   "common": {
-    "darkMode": "الوضع الداكن"
+    "darkMode": "الوضع الداكن",
+    "lightMode": "الوضع الموضي"
   },
   "locale": {
     "ar": {
