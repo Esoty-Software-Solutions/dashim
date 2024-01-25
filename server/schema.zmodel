@@ -17,6 +17,7 @@ generator client {
 generator erd {
   provider = "prisma-erd-generator"
   theme = "forest"
+  includeRelationFromFields = true
   output = "./ERD.svg"
 }
 
