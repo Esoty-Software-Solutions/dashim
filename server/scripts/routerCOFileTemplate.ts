@@ -94,7 +94,16 @@ export const userRouter = router({
     .input(UserFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        return await ctx.prisma.user.findMany(input);
+        const [fData, fCount, uFCount] = await Promise.all([
+          ctx.prisma.user.findMany(input),
+          ctx.prisma.user.count({ where: input?.where }),
+          ctx.prisma.user.count(),
+        ]);
+        return {
+          fData,
+          fCount,
+          uFCount,
+        };
       } catch (error) {
         throwCustomError(error);
       }
