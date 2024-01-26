@@ -9,7 +9,7 @@ import { SubscriberFutureStatusChangeWhereUniqueInputObjectSchema } from "@schem
 import { SubscriberFutureStatusChangeUncheckedUpdateInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeUncheckedUpdateInput.schema";
 // import { SubscriberFutureStatusChangeOrderByWithAggregationInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeOrderByWithAggregationInput.schema"; //
 // import { SubscriberFutureStatusChangeScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeScalarWhereWithAggregatesInput.schema"; //
-// import { SubscriberFutureStatusChangeUpdateManyMutationInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeUpdateManyMutationInput.schema"; //
+import { SubscriberFutureStatusChangeUpdateManyMutationInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeUpdateManyMutationInput.schema"; //
 // import { SubscriberFutureStatusChangeCountAggregateInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeCountAggregateInput.schema"; //
 // import { SubscriberFutureStatusChangeMinAggregateInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeMinAggregateInput.schema"; //
 // import { SubscriberFutureStatusChangeMaxAggregateInputObjectSchema } from "@schemas/objects/SubscriberFutureStatusChangeMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const SubscriberFutureStatusChangeDeleteManySchema = z.object({
 });
 
 export const SubscriberFutureStatusChangeDeleteOneSchema = z.object({
-  where: SubscriberFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
+  where: SubscriberFutureStatusChangeWhereUniqueInputObjectSchema,
 });
 
 // export const SubscriberFutureStatusChangeFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const SubscriberFutureStatusChangeFindUniqueSchema = z.object({
 //   by: z.array(SubscriberFutureStatusChangeScalarFieldEnumSchema),
 // });
 
-// export const SubscriberFutureStatusChangeUpdateManySchema = z.object({
-//   data: SubscriberFutureStatusChangeUpdateManyMutationInputObjectSchema,
-//   where: SubscriberFutureStatusChangeWhereInputObjectSchema.optional(),
-// });
+export const SubscriberFutureStatusChangeUpdateManySchema = z.object({
+  data: SubscriberFutureStatusChangeUpdateManyMutationInputObjectSchema,
+  where: SubscriberFutureStatusChangeWhereInputObjectSchema.optional(),
+});
 
 export const SubscriberFutureStatusChangeUpdateOneSchema = z.object({
   data: SubscriberFutureStatusChangeUncheckedUpdateInputObjectSchema,

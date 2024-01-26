@@ -9,7 +9,7 @@ import { CityWhereUniqueInputObjectSchema } from "@schemas/objects/CityWhereUniq
 import { CityUncheckedUpdateInputObjectSchema } from "@schemas/objects/CityUncheckedUpdateInput.schema";
 // import { CityOrderByWithAggregationInputObjectSchema } from "@schemas/objects/CityOrderByWithAggregationInput.schema"; //
 // import { CityScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/CityScalarWhereWithAggregatesInput.schema"; //
-// import { CityUpdateManyMutationInputObjectSchema } from "@schemas/objects/CityUpdateManyMutationInput.schema"; //
+import { CityUpdateManyMutationInputObjectSchema } from "@schemas/objects/CityUpdateManyMutationInput.schema"; //
 // import { CityCountAggregateInputObjectSchema } from "@schemas/objects/CityCountAggregateInput.schema"; //
 // import { CityMinAggregateInputObjectSchema } from "@schemas/objects/CityMinAggregateInput.schema"; //
 // import { CityMaxAggregateInputObjectSchema } from "@schemas/objects/CityMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const CityDeleteManySchema = z.object({
 });
 
 export const CityDeleteOneSchema = z.object({
-  where: CityWhereUniqueInputObjectSchema.optional(),
+  where: CityWhereUniqueInputObjectSchema,
 });
 
 // export const CityFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const CityFindUniqueSchema = z.object({
 //   by: z.array(CityScalarFieldEnumSchema),
 // });
 
-// export const CityUpdateManySchema = z.object({
-//   data: CityUpdateManyMutationInputObjectSchema,
-//   where: CityWhereInputObjectSchema.optional(),
-// });
+export const CityUpdateManySchema = z.object({
+  data: CityUpdateManyMutationInputObjectSchema,
+  where: CityWhereInputObjectSchema.optional(),
+});
 
 export const CityUpdateOneSchema = z.object({
   data: CityUncheckedUpdateInputObjectSchema,

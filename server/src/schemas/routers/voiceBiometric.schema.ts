@@ -9,7 +9,7 @@ import { VoiceBiometricWhereUniqueInputObjectSchema } from "@schemas/objects/Voi
 import { VoiceBiometricUncheckedUpdateInputObjectSchema } from "@schemas/objects/VoiceBiometricUncheckedUpdateInput.schema";
 // import { VoiceBiometricOrderByWithAggregationInputObjectSchema } from "@schemas/objects/VoiceBiometricOrderByWithAggregationInput.schema"; //
 // import { VoiceBiometricScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/VoiceBiometricScalarWhereWithAggregatesInput.schema"; //
-// import { VoiceBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/VoiceBiometricUpdateManyMutationInput.schema"; //
+import { VoiceBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/VoiceBiometricUpdateManyMutationInput.schema"; //
 // import { VoiceBiometricCountAggregateInputObjectSchema } from "@schemas/objects/VoiceBiometricCountAggregateInput.schema"; //
 // import { VoiceBiometricMinAggregateInputObjectSchema } from "@schemas/objects/VoiceBiometricMinAggregateInput.schema"; //
 // import { VoiceBiometricMaxAggregateInputObjectSchema } from "@schemas/objects/VoiceBiometricMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const VoiceBiometricDeleteManySchema = z.object({
 });
 
 export const VoiceBiometricDeleteOneSchema = z.object({
-  where: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
+  where: VoiceBiometricWhereUniqueInputObjectSchema,
 });
 
 // export const VoiceBiometricFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const VoiceBiometricFindUniqueSchema = z.object({
 //   by: z.array(VoiceBiometricScalarFieldEnumSchema),
 // });
 
-// export const VoiceBiometricUpdateManySchema = z.object({
-//   data: VoiceBiometricUpdateManyMutationInputObjectSchema,
-//   where: VoiceBiometricWhereInputObjectSchema.optional(),
-// });
+export const VoiceBiometricUpdateManySchema = z.object({
+  data: VoiceBiometricUpdateManyMutationInputObjectSchema,
+  where: VoiceBiometricWhereInputObjectSchema.optional(),
+});
 
 export const VoiceBiometricUpdateOneSchema = z.object({
   data: VoiceBiometricUncheckedUpdateInputObjectSchema,

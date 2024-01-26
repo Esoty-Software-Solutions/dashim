@@ -9,7 +9,7 @@ import { IDCardWhereUniqueInputObjectSchema } from "@schemas/objects/IDCardWhere
 import { IDCardUncheckedUpdateInputObjectSchema } from "@schemas/objects/IDCardUncheckedUpdateInput.schema";
 // import { IDCardOrderByWithAggregationInputObjectSchema } from "@schemas/objects/IDCardOrderByWithAggregationInput.schema"; //
 // import { IDCardScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/IDCardScalarWhereWithAggregatesInput.schema"; //
-// import { IDCardUpdateManyMutationInputObjectSchema } from "@schemas/objects/IDCardUpdateManyMutationInput.schema"; //
+import { IDCardUpdateManyMutationInputObjectSchema } from "@schemas/objects/IDCardUpdateManyMutationInput.schema"; //
 // import { IDCardCountAggregateInputObjectSchema } from "@schemas/objects/IDCardCountAggregateInput.schema"; //
 // import { IDCardMinAggregateInputObjectSchema } from "@schemas/objects/IDCardMinAggregateInput.schema"; //
 // import { IDCardMaxAggregateInputObjectSchema } from "@schemas/objects/IDCardMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const IDCardDeleteManySchema = z.object({
 });
 
 export const IDCardDeleteOneSchema = z.object({
-  where: IDCardWhereUniqueInputObjectSchema.optional(),
+  where: IDCardWhereUniqueInputObjectSchema,
 });
 
 // export const IDCardFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const IDCardFindUniqueSchema = z.object({
 //   by: z.array(IDCardScalarFieldEnumSchema),
 // });
 
-// export const IDCardUpdateManySchema = z.object({
-//   data: IDCardUpdateManyMutationInputObjectSchema,
-//   where: IDCardWhereInputObjectSchema.optional(),
-// });
+export const IDCardUpdateManySchema = z.object({
+  data: IDCardUpdateManyMutationInputObjectSchema,
+  where: IDCardWhereInputObjectSchema.optional(),
+});
 
 export const IDCardUpdateOneSchema = z.object({
   data: IDCardUncheckedUpdateInputObjectSchema,

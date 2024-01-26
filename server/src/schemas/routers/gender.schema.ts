@@ -9,7 +9,7 @@ import { GenderWhereUniqueInputObjectSchema } from "@schemas/objects/GenderWhere
 import { GenderUncheckedUpdateInputObjectSchema } from "@schemas/objects/GenderUncheckedUpdateInput.schema";
 // import { GenderOrderByWithAggregationInputObjectSchema } from "@schemas/objects/GenderOrderByWithAggregationInput.schema"; //
 // import { GenderScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/GenderScalarWhereWithAggregatesInput.schema"; //
-// import { GenderUpdateManyMutationInputObjectSchema } from "@schemas/objects/GenderUpdateManyMutationInput.schema"; //
+import { GenderUpdateManyMutationInputObjectSchema } from "@schemas/objects/GenderUpdateManyMutationInput.schema"; //
 // import { GenderCountAggregateInputObjectSchema } from "@schemas/objects/GenderCountAggregateInput.schema"; //
 // import { GenderMinAggregateInputObjectSchema } from "@schemas/objects/GenderMinAggregateInput.schema"; //
 // import { GenderMaxAggregateInputObjectSchema } from "@schemas/objects/GenderMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const GenderDeleteManySchema = z.object({
 });
 
 export const GenderDeleteOneSchema = z.object({
-  where: GenderWhereUniqueInputObjectSchema.optional(),
+  where: GenderWhereUniqueInputObjectSchema,
 });
 
 // export const GenderFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const GenderFindUniqueSchema = z.object({
 //   by: z.array(GenderScalarFieldEnumSchema),
 // });
 
-// export const GenderUpdateManySchema = z.object({
-//   data: GenderUpdateManyMutationInputObjectSchema,
-//   where: GenderWhereInputObjectSchema.optional(),
-// });
+export const GenderUpdateManySchema = z.object({
+  data: GenderUpdateManyMutationInputObjectSchema,
+  where: GenderWhereInputObjectSchema.optional(),
+});
 
 export const GenderUpdateOneSchema = z.object({
   data: GenderUncheckedUpdateInputObjectSchema,

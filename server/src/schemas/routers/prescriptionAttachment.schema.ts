@@ -9,7 +9,7 @@ import { PrescriptionAttachmentWhereUniqueInputObjectSchema } from "@schemas/obj
 import { PrescriptionAttachmentUncheckedUpdateInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentUncheckedUpdateInput.schema";
 // import { PrescriptionAttachmentOrderByWithAggregationInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentOrderByWithAggregationInput.schema"; //
 // import { PrescriptionAttachmentScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentScalarWhereWithAggregatesInput.schema"; //
-// import { PrescriptionAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentUpdateManyMutationInput.schema"; //
+import { PrescriptionAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentUpdateManyMutationInput.schema"; //
 // import { PrescriptionAttachmentCountAggregateInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentCountAggregateInput.schema"; //
 // import { PrescriptionAttachmentMinAggregateInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentMinAggregateInput.schema"; //
 // import { PrescriptionAttachmentMaxAggregateInputObjectSchema } from "@schemas/objects/PrescriptionAttachmentMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const PrescriptionAttachmentDeleteManySchema = z.object({
 });
 
 export const PrescriptionAttachmentDeleteOneSchema = z.object({
-  where: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
+  where: PrescriptionAttachmentWhereUniqueInputObjectSchema,
 });
 
 // export const PrescriptionAttachmentFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const PrescriptionAttachmentFindUniqueSchema = z.object({
 //   by: z.array(PrescriptionAttachmentScalarFieldEnumSchema),
 // });
 
-// export const PrescriptionAttachmentUpdateManySchema = z.object({
-//   data: PrescriptionAttachmentUpdateManyMutationInputObjectSchema,
-//   where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
-// });
+export const PrescriptionAttachmentUpdateManySchema = z.object({
+  data: PrescriptionAttachmentUpdateManyMutationInputObjectSchema,
+  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
+});
 
 export const PrescriptionAttachmentUpdateOneSchema = z.object({
   data: PrescriptionAttachmentUncheckedUpdateInputObjectSchema,

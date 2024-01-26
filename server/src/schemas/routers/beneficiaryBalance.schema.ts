@@ -9,7 +9,7 @@ import { BeneficiaryBalanceWhereUniqueInputObjectSchema } from "@schemas/objects
 import { BeneficiaryBalanceUncheckedUpdateInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceUncheckedUpdateInput.schema";
 // import { BeneficiaryBalanceOrderByWithAggregationInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceOrderByWithAggregationInput.schema"; //
 // import { BeneficiaryBalanceScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceScalarWhereWithAggregatesInput.schema"; //
-// import { BeneficiaryBalanceUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceUpdateManyMutationInput.schema"; //
+import { BeneficiaryBalanceUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceUpdateManyMutationInput.schema"; //
 // import { BeneficiaryBalanceCountAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceCountAggregateInput.schema"; //
 // import { BeneficiaryBalanceMinAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceMinAggregateInput.schema"; //
 // import { BeneficiaryBalanceMaxAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryBalanceMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const BeneficiaryBalanceDeleteManySchema = z.object({
 });
 
 export const BeneficiaryBalanceDeleteOneSchema = z.object({
-  where: BeneficiaryBalanceWhereUniqueInputObjectSchema.optional(),
+  where: BeneficiaryBalanceWhereUniqueInputObjectSchema,
 });
 
 // export const BeneficiaryBalanceFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const BeneficiaryBalanceFindUniqueSchema = z.object({
 //   by: z.array(BeneficiaryBalanceScalarFieldEnumSchema),
 // });
 
-// export const BeneficiaryBalanceUpdateManySchema = z.object({
-//   data: BeneficiaryBalanceUpdateManyMutationInputObjectSchema,
-//   where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
-// });
+export const BeneficiaryBalanceUpdateManySchema = z.object({
+  data: BeneficiaryBalanceUpdateManyMutationInputObjectSchema,
+  where: BeneficiaryBalanceWhereInputObjectSchema.optional(),
+});
 
 export const BeneficiaryBalanceUpdateOneSchema = z.object({
   data: BeneficiaryBalanceUncheckedUpdateInputObjectSchema,

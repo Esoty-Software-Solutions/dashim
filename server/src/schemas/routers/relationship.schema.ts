@@ -9,7 +9,7 @@ import { RelationshipWhereUniqueInputObjectSchema } from "@schemas/objects/Relat
 import { RelationshipUncheckedUpdateInputObjectSchema } from "@schemas/objects/RelationshipUncheckedUpdateInput.schema";
 // import { RelationshipOrderByWithAggregationInputObjectSchema } from "@schemas/objects/RelationshipOrderByWithAggregationInput.schema"; //
 // import { RelationshipScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/RelationshipScalarWhereWithAggregatesInput.schema"; //
-// import { RelationshipUpdateManyMutationInputObjectSchema } from "@schemas/objects/RelationshipUpdateManyMutationInput.schema"; //
+import { RelationshipUpdateManyMutationInputObjectSchema } from "@schemas/objects/RelationshipUpdateManyMutationInput.schema"; //
 // import { RelationshipCountAggregateInputObjectSchema } from "@schemas/objects/RelationshipCountAggregateInput.schema"; //
 // import { RelationshipMinAggregateInputObjectSchema } from "@schemas/objects/RelationshipMinAggregateInput.schema"; //
 // import { RelationshipMaxAggregateInputObjectSchema } from "@schemas/objects/RelationshipMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const RelationshipDeleteManySchema = z.object({
 });
 
 export const RelationshipDeleteOneSchema = z.object({
-  where: RelationshipWhereUniqueInputObjectSchema.optional(),
+  where: RelationshipWhereUniqueInputObjectSchema,
 });
 
 // export const RelationshipFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const RelationshipFindUniqueSchema = z.object({
 //   by: z.array(RelationshipScalarFieldEnumSchema),
 // });
 
-// export const RelationshipUpdateManySchema = z.object({
-//   data: RelationshipUpdateManyMutationInputObjectSchema,
-//   where: RelationshipWhereInputObjectSchema.optional(),
-// });
+export const RelationshipUpdateManySchema = z.object({
+  data: RelationshipUpdateManyMutationInputObjectSchema,
+  where: RelationshipWhereInputObjectSchema.optional(),
+});
 
 export const RelationshipUpdateOneSchema = z.object({
   data: RelationshipUncheckedUpdateInputObjectSchema,

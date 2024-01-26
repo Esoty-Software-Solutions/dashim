@@ -9,7 +9,7 @@ import { BeneficiaryWhereUniqueInputObjectSchema } from "@schemas/objects/Benefi
 import { BeneficiaryUncheckedUpdateInputObjectSchema } from "@schemas/objects/BeneficiaryUncheckedUpdateInput.schema";
 // import { BeneficiaryOrderByWithAggregationInputObjectSchema } from "@schemas/objects/BeneficiaryOrderByWithAggregationInput.schema"; //
 // import { BeneficiaryScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/BeneficiaryScalarWhereWithAggregatesInput.schema"; //
-// import { BeneficiaryUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryUpdateManyMutationInput.schema"; //
+import { BeneficiaryUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryUpdateManyMutationInput.schema"; //
 // import { BeneficiaryCountAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryCountAggregateInput.schema"; //
 // import { BeneficiaryMinAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryMinAggregateInput.schema"; //
 // import { BeneficiaryMaxAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const BeneficiaryDeleteManySchema = z.object({
 });
 
 export const BeneficiaryDeleteOneSchema = z.object({
-  where: BeneficiaryWhereUniqueInputObjectSchema.optional(),
+  where: BeneficiaryWhereUniqueInputObjectSchema,
 });
 
 // export const BeneficiaryFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const BeneficiaryFindUniqueSchema = z.object({
 //   by: z.array(BeneficiaryScalarFieldEnumSchema),
 // });
 
-// export const BeneficiaryUpdateManySchema = z.object({
-//   data: BeneficiaryUpdateManyMutationInputObjectSchema,
-//   where: BeneficiaryWhereInputObjectSchema.optional(),
-// });
+export const BeneficiaryUpdateManySchema = z.object({
+  data: BeneficiaryUpdateManyMutationInputObjectSchema,
+  where: BeneficiaryWhereInputObjectSchema.optional(),
+});
 
 export const BeneficiaryUpdateOneSchema = z.object({
   data: BeneficiaryUncheckedUpdateInputObjectSchema,

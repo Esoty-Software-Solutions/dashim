@@ -9,7 +9,7 @@ import { RoleWhereUniqueInputObjectSchema } from "@schemas/objects/RoleWhereUniq
 import { RoleUncheckedUpdateInputObjectSchema } from "@schemas/objects/RoleUncheckedUpdateInput.schema";
 // import { RoleOrderByWithAggregationInputObjectSchema } from "@schemas/objects/RoleOrderByWithAggregationInput.schema"; //
 // import { RoleScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/RoleScalarWhereWithAggregatesInput.schema"; //
-// import { RoleUpdateManyMutationInputObjectSchema } from "@schemas/objects/RoleUpdateManyMutationInput.schema"; //
+import { RoleUpdateManyMutationInputObjectSchema } from "@schemas/objects/RoleUpdateManyMutationInput.schema"; //
 // import { RoleCountAggregateInputObjectSchema } from "@schemas/objects/RoleCountAggregateInput.schema"; //
 // import { RoleMinAggregateInputObjectSchema } from "@schemas/objects/RoleMinAggregateInput.schema"; //
 // import { RoleMaxAggregateInputObjectSchema } from "@schemas/objects/RoleMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const RoleDeleteManySchema = z.object({
 });
 
 export const RoleDeleteOneSchema = z.object({
-  where: RoleWhereUniqueInputObjectSchema.optional(),
+  where: RoleWhereUniqueInputObjectSchema,
 });
 
 // export const RoleFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const RoleFindUniqueSchema = z.object({
 //   by: z.array(RoleScalarFieldEnumSchema),
 // });
 
-// export const RoleUpdateManySchema = z.object({
-//   data: RoleUpdateManyMutationInputObjectSchema,
-//   where: RoleWhereInputObjectSchema.optional(),
-// });
+export const RoleUpdateManySchema = z.object({
+  data: RoleUpdateManyMutationInputObjectSchema,
+  where: RoleWhereInputObjectSchema.optional(),
+});
 
 export const RoleUpdateOneSchema = z.object({
   data: RoleUncheckedUpdateInputObjectSchema,
