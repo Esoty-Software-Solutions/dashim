@@ -1,13 +1,12 @@
 import { Prisma } from "@prisma/client";
 import fs from "fs";
 import path from "path";
-// const { Project } = require("ts-morph");
-import { Project, ts } from "ts-morph";
+// import { Project, ts } from "ts-morph";
 
 const TableNames = Object.values(Prisma.ModelName);
 const __dirname = path.dirname(new URL(import.meta.url).pathname.substring(1));
 
-const tableNamesCO = ["User"];
+const tableNamesDoNotCO = [""];
 
 const sourceEnumsDir: string = path.resolve(
   __dirname,
@@ -76,10 +75,13 @@ console.info("removing files in output directory");
 fs.rmSync(outputEnumsDir, { recursive: true, force: true });
 fs.rmSync(outputObjectDir, { recursive: true, force: true });
 fs.rmSync(SchemaOutputDir, { recursive: true, force: true });
+fs.rmSync(path.join(routeOutputDir, "cruds"), { recursive: true, force: true });
+
 // Recreate the directories
 fs.mkdirSync(outputEnumsDir, { recursive: true });
 fs.mkdirSync(outputObjectDir, { recursive: true });
 fs.mkdirSync(SchemaOutputDir, { recursive: true });
+fs.mkdirSync(path.join(routeOutputDir, "cruds"), { recursive: true });
 
 // Read the source directory
 function copyFiles(sourceDirectory: string, destinationDirectory: string) {
@@ -133,8 +135,8 @@ let fileCounter = 0;
 TableNames.forEach((TableName) => {
   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
   let output: string = "";
-  if (tableNamesCO.includes(TableName)) {
-    console.info("generating schema file for: ", TableName);
+  console.info("generating schema file for: ", TableName);
+  if (tableNamesDoNotCO.includes(TableName)) {
     output = SchemaTemplate.replace(/User/g, TableName).replace(
       /user(?!Id)/g,
       tableName,
@@ -160,7 +162,7 @@ fileCounter = 0;
 TableNames.forEach((TableName) => {
   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
   let output: string = "";
-  if (tableName in tableNamesCO) {
+  if (tableName in tableNamesDoNotCO) {
     output = routeTemplate
       .replace(/User/g, TableName)
       .replace(/user(?!Id)/g, tableName);
@@ -169,39 +171,76 @@ TableNames.forEach((TableName) => {
       .replace(/User/g, TableName)
       .replace(/user(?!Id)/g, tableName);
   }
-  fs.writeFileSync(path.join(routeOutputDir, `${tableName}.router.ts`), output);
-  fileCounter++;
-});
-
-console.info(`Generated ${fileCounter} files`);
-console.info("output is: ", routeOutputDir);
-
-// TODO: edit the _.router.ts files to import the correct schema files
-
-const routerFilePath = path.join(routeOutputDir, "_.router.ts"); // adjust the path as needed
-let fileContent = fs.readFileSync(routerFilePath, "utf8");
-
-fileCounter = 0;
-TableNames.forEach((TableName) => {
-  const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
-
-  const importRegex = new RegExp(`\\b${tableName}Router\\b`);
-  if (importRegex.test(fileContent)) {
-    return; // skip this iteration and go to the next one
-  }
-
-  // Add the import statement
-  const importStatement = `import { ${tableName}Router } from './${tableName}.router';\n`;
-  const importBlockRegex = /(import .*\n)+/;
-  fileContent = fileContent.replace(importBlockRegex, `$&${importStatement}`);
-
-  // Add the router to the routerObject
-  const routerObjectRegex = /(router\({)([\s\S]*?)(}\);)/;
-  fileContent = fileContent.replace(
-    routerObjectRegex,
-    `$1$2${tableName}: ${tableName}Router,\n$3`,
+  fs.writeFileSync(
+    path.join(routeOutputDir, "cruds", `${tableName}.router.ts`),
+    output,
   );
   fileCounter++;
 });
-console.log(`Added ${fileCounter} imports and routers to _.router.ts`);
-fs.writeFileSync(routerFilePath, fileContent);
+
+console.info(`Generated ${fileCounter} router files`);
+console.info("output is: ", path.join(routeOutputDir, "cruds"));
+
+// creating the aggregate router
+
+const routerTemplate = `import { router } from "@routers/_trpc.router";`;
+
+function generateRouters(template: string) {
+  const routerFilePath = path.join(routeOutputDir, `${template}.router.ts`); // adjust the path as needed
+
+  // let crudRouterFile = routerTemplate;
+  let crudRouterFile = routerTemplate.replace(
+    "templateRouter",
+    `${template}Router`,
+  );
+
+  fileCounter = 0;
+  let importStatements = "";
+  let routerStatements = "";
+
+  TableNames.forEach((TableName) => {
+    const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+    // Generate import and router statements for each table
+    const importStatement = `import { ${tableName}Router } from './${template}s/${tableName}.router';\n`;
+    const routerStatement = `  ${tableName}: ${tableName}Router,\n`;
+
+    // Add import and router statements to their respective strings
+    importStatements += importStatement;
+    routerStatements += routerStatement;
+  });
+
+  // Add import statements to the top of the template
+  crudRouterFile = importStatements + crudRouterFile;
+
+  // Add router statements to the router object
+  crudRouterFile =
+    crudRouterFile +
+    `\n\nexport const ${template}Router = router({\n${routerStatements}\n});`;
+
+  console.log(`Added ${fileCounter} imports and routers to _.router.ts`);
+  fs.writeFileSync(routerFilePath, crudRouterFile);
+}
+
+generateRouters("crud");
+
+// TableNames.forEach((TableName) => {
+//   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+
+//   const importRegex = new RegExp(`\\b${tableName}Router\\b`);
+//   if (importRegex.test(fileContent)) {
+//     return; // skip this iteration and go to the next one
+//   }
+
+//   // Add the import statement
+//   const importStatement = `import { ${tableName}Router } from './${tableName}.router';\n`;
+//   const importBlockRegex = /(import .*\n)+/;
+//   fileContent = fileContent.replace(importBlockRegex, `$&${importStatement}`);
+
+//   // Add the router to the routerObject
+//   const routerObjectRegex = /(router\({)([\s\S]*?)(}\);)/;
+//   fileContent = fileContent.replace(
+//     routerObjectRegex,
+//     `$1$2${tableName}: ${tableName}Router,\n$3`,
+//   );
+//   fileCounter++;
+// });
