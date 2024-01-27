@@ -9,7 +9,7 @@ import { BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema } from
 import { BenefitPackageMedicalServiceTemplateUncheckedUpdateInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateUncheckedUpdateInput.schema";
 // import { BenefitPackageMedicalServiceTemplateOrderByWithAggregationInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateOrderByWithAggregationInput.schema"; //
 // import { BenefitPackageMedicalServiceTemplateScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateScalarWhereWithAggregatesInput.schema"; //
-// import { BenefitPackageMedicalServiceTemplateUpdateManyMutationInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateUpdateManyMutationInput.schema"; //
+import { BenefitPackageMedicalServiceTemplateUpdateManyMutationInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateUpdateManyMutationInput.schema"; //
 // import { BenefitPackageMedicalServiceTemplateCountAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateCountAggregateInput.schema"; //
 // import { BenefitPackageMedicalServiceTemplateMinAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateMinAggregateInput.schema"; //
 // import { BenefitPackageMedicalServiceTemplateMaxAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageMedicalServiceTemplateMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const BenefitPackageMedicalServiceTemplateDeleteManySchema = z.object({
 });
 
 export const BenefitPackageMedicalServiceTemplateDeleteOneSchema = z.object({
-  where: BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema.optional(),
+  where: BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema,
 });
 
 // export const BenefitPackageMedicalServiceTemplateFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const BenefitPackageMedicalServiceTemplateFindUniqueSchema = z.object({
 //   by: z.array(BenefitPackageMedicalServiceTemplateScalarFieldEnumSchema),
 // });
 
-// export const BenefitPackageMedicalServiceTemplateUpdateManySchema = z.object({
-//   data: BenefitPackageMedicalServiceTemplateUpdateManyMutationInputObjectSchema,
-//   where: BenefitPackageMedicalServiceTemplateWhereInputObjectSchema.optional(),
-// });
+export const BenefitPackageMedicalServiceTemplateUpdateManySchema = z.object({
+  data: BenefitPackageMedicalServiceTemplateUpdateManyMutationInputObjectSchema,
+  where: BenefitPackageMedicalServiceTemplateWhereInputObjectSchema.optional(),
+});
 
 export const BenefitPackageMedicalServiceTemplateUpdateOneSchema = z.object({
   data: BenefitPackageMedicalServiceTemplateUncheckedUpdateInputObjectSchema,

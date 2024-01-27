@@ -9,7 +9,7 @@ import { BenefitPackageWhereUniqueInputObjectSchema } from "@schemas/objects/Ben
 import { BenefitPackageUncheckedUpdateInputObjectSchema } from "@schemas/objects/BenefitPackageUncheckedUpdateInput.schema";
 // import { BenefitPackageOrderByWithAggregationInputObjectSchema } from "@schemas/objects/BenefitPackageOrderByWithAggregationInput.schema"; //
 // import { BenefitPackageScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/BenefitPackageScalarWhereWithAggregatesInput.schema"; //
-// import { BenefitPackageUpdateManyMutationInputObjectSchema } from "@schemas/objects/BenefitPackageUpdateManyMutationInput.schema"; //
+import { BenefitPackageUpdateManyMutationInputObjectSchema } from "@schemas/objects/BenefitPackageUpdateManyMutationInput.schema"; //
 // import { BenefitPackageCountAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageCountAggregateInput.schema"; //
 // import { BenefitPackageMinAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageMinAggregateInput.schema"; //
 // import { BenefitPackageMaxAggregateInputObjectSchema } from "@schemas/objects/BenefitPackageMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const BenefitPackageDeleteManySchema = z.object({
 });
 
 export const BenefitPackageDeleteOneSchema = z.object({
-  where: BenefitPackageWhereUniqueInputObjectSchema.optional(),
+  where: BenefitPackageWhereUniqueInputObjectSchema,
 });
 
 // export const BenefitPackageFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const BenefitPackageFindUniqueSchema = z.object({
 //   by: z.array(BenefitPackageScalarFieldEnumSchema),
 // });
 
-// export const BenefitPackageUpdateManySchema = z.object({
-//   data: BenefitPackageUpdateManyMutationInputObjectSchema,
-//   where: BenefitPackageWhereInputObjectSchema.optional(),
-// });
+export const BenefitPackageUpdateManySchema = z.object({
+  data: BenefitPackageUpdateManyMutationInputObjectSchema,
+  where: BenefitPackageWhereInputObjectSchema.optional(),
+});
 
 export const BenefitPackageUpdateOneSchema = z.object({
   data: BenefitPackageUncheckedUpdateInputObjectSchema,

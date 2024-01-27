@@ -2,10 +2,11 @@ import { z } from "zod";
 import { enhancedPrisma } from "@config/db";
 import { Prisma } from "@prisma/client";
 import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
-
-const DEFAULT_MAX_RETRIES = 5;
-const DEFAULT_PAGE_SIZE = 50;
-const DEFAULT_PAGE_NUMBER = 0;
+import {
+  DEFAULT_MAX_RETRIES,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE_NUMBER,
+} from "./_config.controller";
 
 type input = z.infer<typeof SubscriberFindManySchema>;
 

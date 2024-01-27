@@ -9,7 +9,7 @@ import { FingerTypeWhereUniqueInputObjectSchema } from "@schemas/objects/FingerT
 import { FingerTypeUncheckedUpdateInputObjectSchema } from "@schemas/objects/FingerTypeUncheckedUpdateInput.schema";
 // import { FingerTypeOrderByWithAggregationInputObjectSchema } from "@schemas/objects/FingerTypeOrderByWithAggregationInput.schema"; //
 // import { FingerTypeScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/FingerTypeScalarWhereWithAggregatesInput.schema"; //
-// import { FingerTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/FingerTypeUpdateManyMutationInput.schema"; //
+import { FingerTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/FingerTypeUpdateManyMutationInput.schema"; //
 // import { FingerTypeCountAggregateInputObjectSchema } from "@schemas/objects/FingerTypeCountAggregateInput.schema"; //
 // import { FingerTypeMinAggregateInputObjectSchema } from "@schemas/objects/FingerTypeMinAggregateInput.schema"; //
 // import { FingerTypeMaxAggregateInputObjectSchema } from "@schemas/objects/FingerTypeMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const FingerTypeDeleteManySchema = z.object({
 });
 
 export const FingerTypeDeleteOneSchema = z.object({
-  where: FingerTypeWhereUniqueInputObjectSchema.optional(),
+  where: FingerTypeWhereUniqueInputObjectSchema,
 });
 
 // export const FingerTypeFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const FingerTypeFindUniqueSchema = z.object({
 //   by: z.array(FingerTypeScalarFieldEnumSchema),
 // });
 
-// export const FingerTypeUpdateManySchema = z.object({
-//   data: FingerTypeUpdateManyMutationInputObjectSchema,
-//   where: FingerTypeWhereInputObjectSchema.optional(),
-// });
+export const FingerTypeUpdateManySchema = z.object({
+  data: FingerTypeUpdateManyMutationInputObjectSchema,
+  where: FingerTypeWhereInputObjectSchema.optional(),
+});
 
 export const FingerTypeUpdateOneSchema = z.object({
   data: FingerTypeUncheckedUpdateInputObjectSchema,

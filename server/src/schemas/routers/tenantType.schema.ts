@@ -9,7 +9,7 @@ import { TenantTypeWhereUniqueInputObjectSchema } from "@schemas/objects/TenantT
 import { TenantTypeUncheckedUpdateInputObjectSchema } from "@schemas/objects/TenantTypeUncheckedUpdateInput.schema";
 // import { TenantTypeOrderByWithAggregationInputObjectSchema } from "@schemas/objects/TenantTypeOrderByWithAggregationInput.schema"; //
 // import { TenantTypeScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/TenantTypeScalarWhereWithAggregatesInput.schema"; //
-// import { TenantTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/TenantTypeUpdateManyMutationInput.schema"; //
+import { TenantTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/TenantTypeUpdateManyMutationInput.schema"; //
 // import { TenantTypeCountAggregateInputObjectSchema } from "@schemas/objects/TenantTypeCountAggregateInput.schema"; //
 // import { TenantTypeMinAggregateInputObjectSchema } from "@schemas/objects/TenantTypeMinAggregateInput.schema"; //
 // import { TenantTypeMaxAggregateInputObjectSchema } from "@schemas/objects/TenantTypeMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const TenantTypeDeleteManySchema = z.object({
 });
 
 export const TenantTypeDeleteOneSchema = z.object({
-  where: TenantTypeWhereUniqueInputObjectSchema.optional(),
+  where: TenantTypeWhereUniqueInputObjectSchema,
 });
 
 // export const TenantTypeFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const TenantTypeFindUniqueSchema = z.object({
 //   by: z.array(TenantTypeScalarFieldEnumSchema),
 // });
 
-// export const TenantTypeUpdateManySchema = z.object({
-//   data: TenantTypeUpdateManyMutationInputObjectSchema,
-//   where: TenantTypeWhereInputObjectSchema.optional(),
-// });
+export const TenantTypeUpdateManySchema = z.object({
+  data: TenantTypeUpdateManyMutationInputObjectSchema,
+  where: TenantTypeWhereInputObjectSchema.optional(),
+});
 
 export const TenantTypeUpdateOneSchema = z.object({
   data: TenantTypeUncheckedUpdateInputObjectSchema,

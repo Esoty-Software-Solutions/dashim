@@ -9,7 +9,7 @@ import { BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema } from "@sche
 import { BeneficiaryFutureStatusChangeUncheckedUpdateInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeUncheckedUpdateInput.schema";
 // import { BeneficiaryFutureStatusChangeOrderByWithAggregationInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeOrderByWithAggregationInput.schema"; //
 // import { BeneficiaryFutureStatusChangeScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeScalarWhereWithAggregatesInput.schema"; //
-// import { BeneficiaryFutureStatusChangeUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeUpdateManyMutationInput.schema"; //
+import { BeneficiaryFutureStatusChangeUpdateManyMutationInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeUpdateManyMutationInput.schema"; //
 // import { BeneficiaryFutureStatusChangeCountAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeCountAggregateInput.schema"; //
 // import { BeneficiaryFutureStatusChangeMinAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeMinAggregateInput.schema"; //
 // import { BeneficiaryFutureStatusChangeMaxAggregateInputObjectSchema } from "@schemas/objects/BeneficiaryFutureStatusChangeMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const BeneficiaryFutureStatusChangeDeleteManySchema = z.object({
 });
 
 export const BeneficiaryFutureStatusChangeDeleteOneSchema = z.object({
-  where: BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
+  where: BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema,
 });
 
 // export const BeneficiaryFutureStatusChangeFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const BeneficiaryFutureStatusChangeFindUniqueSchema = z.object({
 //   by: z.array(BeneficiaryFutureStatusChangeScalarFieldEnumSchema),
 // });
 
-// export const BeneficiaryFutureStatusChangeUpdateManySchema = z.object({
-//   data: BeneficiaryFutureStatusChangeUpdateManyMutationInputObjectSchema,
-//   where: BeneficiaryFutureStatusChangeWhereInputObjectSchema.optional(),
-// });
+export const BeneficiaryFutureStatusChangeUpdateManySchema = z.object({
+  data: BeneficiaryFutureStatusChangeUpdateManyMutationInputObjectSchema,
+  where: BeneficiaryFutureStatusChangeWhereInputObjectSchema.optional(),
+});
 
 export const BeneficiaryFutureStatusChangeUpdateOneSchema = z.object({
   data: BeneficiaryFutureStatusChangeUncheckedUpdateInputObjectSchema,

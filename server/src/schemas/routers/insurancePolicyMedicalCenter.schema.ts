@@ -9,7 +9,7 @@ import { InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema } from "@schem
 import { InsurancePolicyMedicalCenterUncheckedUpdateInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterUncheckedUpdateInput.schema";
 // import { InsurancePolicyMedicalCenterOrderByWithAggregationInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterOrderByWithAggregationInput.schema"; //
 // import { InsurancePolicyMedicalCenterScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterScalarWhereWithAggregatesInput.schema"; //
-// import { InsurancePolicyMedicalCenterUpdateManyMutationInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterUpdateManyMutationInput.schema"; //
+import { InsurancePolicyMedicalCenterUpdateManyMutationInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterUpdateManyMutationInput.schema"; //
 // import { InsurancePolicyMedicalCenterCountAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterCountAggregateInput.schema"; //
 // import { InsurancePolicyMedicalCenterMinAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterMinAggregateInput.schema"; //
 // import { InsurancePolicyMedicalCenterMaxAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyMedicalCenterMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const InsurancePolicyMedicalCenterDeleteManySchema = z.object({
 });
 
 export const InsurancePolicyMedicalCenterDeleteOneSchema = z.object({
-  where: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
+  where: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema,
 });
 
 // export const InsurancePolicyMedicalCenterFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const InsurancePolicyMedicalCenterFindUniqueSchema = z.object({
 //   by: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema),
 // });
 
-// export const InsurancePolicyMedicalCenterUpdateManySchema = z.object({
-//   data: InsurancePolicyMedicalCenterUpdateManyMutationInputObjectSchema,
-//   where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
-// });
+export const InsurancePolicyMedicalCenterUpdateManySchema = z.object({
+  data: InsurancePolicyMedicalCenterUpdateManyMutationInputObjectSchema,
+  where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
+});
 
 export const InsurancePolicyMedicalCenterUpdateOneSchema = z.object({
   data: InsurancePolicyMedicalCenterUncheckedUpdateInputObjectSchema,

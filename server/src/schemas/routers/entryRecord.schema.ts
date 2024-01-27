@@ -9,7 +9,7 @@ import { EntryRecordWhereUniqueInputObjectSchema } from "@schemas/objects/EntryR
 import { EntryRecordUncheckedUpdateInputObjectSchema } from "@schemas/objects/EntryRecordUncheckedUpdateInput.schema";
 // import { EntryRecordOrderByWithAggregationInputObjectSchema } from "@schemas/objects/EntryRecordOrderByWithAggregationInput.schema"; //
 // import { EntryRecordScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/EntryRecordScalarWhereWithAggregatesInput.schema"; //
-// import { EntryRecordUpdateManyMutationInputObjectSchema } from "@schemas/objects/EntryRecordUpdateManyMutationInput.schema"; //
+import { EntryRecordUpdateManyMutationInputObjectSchema } from "@schemas/objects/EntryRecordUpdateManyMutationInput.schema"; //
 // import { EntryRecordCountAggregateInputObjectSchema } from "@schemas/objects/EntryRecordCountAggregateInput.schema"; //
 // import { EntryRecordMinAggregateInputObjectSchema } from "@schemas/objects/EntryRecordMinAggregateInput.schema"; //
 // import { EntryRecordMaxAggregateInputObjectSchema } from "@schemas/objects/EntryRecordMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const EntryRecordDeleteManySchema = z.object({
 });
 
 export const EntryRecordDeleteOneSchema = z.object({
-  where: EntryRecordWhereUniqueInputObjectSchema.optional(),
+  where: EntryRecordWhereUniqueInputObjectSchema,
 });
 
 // export const EntryRecordFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const EntryRecordFindUniqueSchema = z.object({
 //   by: z.array(EntryRecordScalarFieldEnumSchema),
 // });
 
-// export const EntryRecordUpdateManySchema = z.object({
-//   data: EntryRecordUpdateManyMutationInputObjectSchema,
-//   where: EntryRecordWhereInputObjectSchema.optional(),
-// });
+export const EntryRecordUpdateManySchema = z.object({
+  data: EntryRecordUpdateManyMutationInputObjectSchema,
+  where: EntryRecordWhereInputObjectSchema.optional(),
+});
 
 export const EntryRecordUpdateOneSchema = z.object({
   data: EntryRecordUncheckedUpdateInputObjectSchema,

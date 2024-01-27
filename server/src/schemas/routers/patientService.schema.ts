@@ -9,7 +9,7 @@ import { PatientServiceWhereUniqueInputObjectSchema } from "@schemas/objects/Pat
 import { PatientServiceUncheckedUpdateInputObjectSchema } from "@schemas/objects/PatientServiceUncheckedUpdateInput.schema";
 // import { PatientServiceOrderByWithAggregationInputObjectSchema } from "@schemas/objects/PatientServiceOrderByWithAggregationInput.schema"; //
 // import { PatientServiceScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/PatientServiceScalarWhereWithAggregatesInput.schema"; //
-// import { PatientServiceUpdateManyMutationInputObjectSchema } from "@schemas/objects/PatientServiceUpdateManyMutationInput.schema"; //
+import { PatientServiceUpdateManyMutationInputObjectSchema } from "@schemas/objects/PatientServiceUpdateManyMutationInput.schema"; //
 // import { PatientServiceCountAggregateInputObjectSchema } from "@schemas/objects/PatientServiceCountAggregateInput.schema"; //
 // import { PatientServiceMinAggregateInputObjectSchema } from "@schemas/objects/PatientServiceMinAggregateInput.schema"; //
 // import { PatientServiceMaxAggregateInputObjectSchema } from "@schemas/objects/PatientServiceMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const PatientServiceDeleteManySchema = z.object({
 });
 
 export const PatientServiceDeleteOneSchema = z.object({
-  where: PatientServiceWhereUniqueInputObjectSchema.optional(),
+  where: PatientServiceWhereUniqueInputObjectSchema,
 });
 
 // export const PatientServiceFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const PatientServiceFindUniqueSchema = z.object({
 //   by: z.array(PatientServiceScalarFieldEnumSchema),
 // });
 
-// export const PatientServiceUpdateManySchema = z.object({
-//   data: PatientServiceUpdateManyMutationInputObjectSchema,
-//   where: PatientServiceWhereInputObjectSchema.optional(),
-// });
+export const PatientServiceUpdateManySchema = z.object({
+  data: PatientServiceUpdateManyMutationInputObjectSchema,
+  where: PatientServiceWhereInputObjectSchema.optional(),
+});
 
 export const PatientServiceUpdateOneSchema = z.object({
   data: PatientServiceUncheckedUpdateInputObjectSchema,

@@ -9,7 +9,7 @@ import { MedicalCenterWhereUniqueInputObjectSchema } from "@schemas/objects/Medi
 import { MedicalCenterUncheckedUpdateInputObjectSchema } from "@schemas/objects/MedicalCenterUncheckedUpdateInput.schema";
 // import { MedicalCenterOrderByWithAggregationInputObjectSchema } from "@schemas/objects/MedicalCenterOrderByWithAggregationInput.schema"; //
 // import { MedicalCenterScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/MedicalCenterScalarWhereWithAggregatesInput.schema"; //
-// import { MedicalCenterUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalCenterUpdateManyMutationInput.schema"; //
+import { MedicalCenterUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalCenterUpdateManyMutationInput.schema"; //
 // import { MedicalCenterCountAggregateInputObjectSchema } from "@schemas/objects/MedicalCenterCountAggregateInput.schema"; //
 // import { MedicalCenterMinAggregateInputObjectSchema } from "@schemas/objects/MedicalCenterMinAggregateInput.schema"; //
 // import { MedicalCenterMaxAggregateInputObjectSchema } from "@schemas/objects/MedicalCenterMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const MedicalCenterDeleteManySchema = z.object({
 });
 
 export const MedicalCenterDeleteOneSchema = z.object({
-  where: MedicalCenterWhereUniqueInputObjectSchema.optional(),
+  where: MedicalCenterWhereUniqueInputObjectSchema,
 });
 
 // export const MedicalCenterFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const MedicalCenterFindUniqueSchema = z.object({
 //   by: z.array(MedicalCenterScalarFieldEnumSchema),
 // });
 
-// export const MedicalCenterUpdateManySchema = z.object({
-//   data: MedicalCenterUpdateManyMutationInputObjectSchema,
-//   where: MedicalCenterWhereInputObjectSchema.optional(),
-// });
+export const MedicalCenterUpdateManySchema = z.object({
+  data: MedicalCenterUpdateManyMutationInputObjectSchema,
+  where: MedicalCenterWhereInputObjectSchema.optional(),
+});
 
 export const MedicalCenterUpdateOneSchema = z.object({
   data: MedicalCenterUncheckedUpdateInputObjectSchema,

@@ -9,7 +9,7 @@ import { InsurancePolicyWhereUniqueInputObjectSchema } from "@schemas/objects/In
 import { InsurancePolicyUncheckedUpdateInputObjectSchema } from "@schemas/objects/InsurancePolicyUncheckedUpdateInput.schema";
 // import { InsurancePolicyOrderByWithAggregationInputObjectSchema } from "@schemas/objects/InsurancePolicyOrderByWithAggregationInput.schema"; //
 // import { InsurancePolicyScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/InsurancePolicyScalarWhereWithAggregatesInput.schema"; //
-// import { InsurancePolicyUpdateManyMutationInputObjectSchema } from "@schemas/objects/InsurancePolicyUpdateManyMutationInput.schema"; //
+import { InsurancePolicyUpdateManyMutationInputObjectSchema } from "@schemas/objects/InsurancePolicyUpdateManyMutationInput.schema"; //
 // import { InsurancePolicyCountAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyCountAggregateInput.schema"; //
 // import { InsurancePolicyMinAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyMinAggregateInput.schema"; //
 // import { InsurancePolicyMaxAggregateInputObjectSchema } from "@schemas/objects/InsurancePolicyMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const InsurancePolicyDeleteManySchema = z.object({
 });
 
 export const InsurancePolicyDeleteOneSchema = z.object({
-  where: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
+  where: InsurancePolicyWhereUniqueInputObjectSchema,
 });
 
 // export const InsurancePolicyFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const InsurancePolicyFindUniqueSchema = z.object({
 //   by: z.array(InsurancePolicyScalarFieldEnumSchema),
 // });
 
-// export const InsurancePolicyUpdateManySchema = z.object({
-//   data: InsurancePolicyUpdateManyMutationInputObjectSchema,
-//   where: InsurancePolicyWhereInputObjectSchema.optional(),
-// });
+export const InsurancePolicyUpdateManySchema = z.object({
+  data: InsurancePolicyUpdateManyMutationInputObjectSchema,
+  where: InsurancePolicyWhereInputObjectSchema.optional(),
+});
 
 export const InsurancePolicyUpdateOneSchema = z.object({
   data: InsurancePolicyUncheckedUpdateInputObjectSchema,
