@@ -52,19 +52,19 @@ export const VoiceBiometricDeleteOneSchema = z.object({
   where: VoiceBiometricWhereUniqueInputObjectSchema,
 });
 
-// export const VoiceBiometricFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       VoiceBiometricOrderByWithRelationInputObjectSchema,
-//       VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: VoiceBiometricWhereInputObjectSchema.optional(),
-//   cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(VoiceBiometricScalarFieldEnumSchema).optional(),
-// });
+export const VoiceBiometricFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      VoiceBiometricOrderByWithRelationInputObjectSchema,
+      VoiceBiometricOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: VoiceBiometricWhereInputObjectSchema.optional(),
+  cursor: VoiceBiometricWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(VoiceBiometricScalarFieldEnumSchema).optional(),
+});
 
 export const VoiceBiometricFindManySchema = z
   .object({

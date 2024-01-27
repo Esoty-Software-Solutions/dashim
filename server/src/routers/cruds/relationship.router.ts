@@ -9,7 +9,7 @@ import {
   RelationshipCreateOneSchema,
   RelationshipDeleteManySchema,
   RelationshipDeleteOneSchema,
-  // RelationshipFindFirstSchema,
+  RelationshipFindFirstSchema,
   RelationshipFindManySchema,
   RelationshipFindUniqueSchema,
   // RelationshipGroupBySchema,
@@ -70,15 +70,15 @@ export const relationshipRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(RelationshipFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationship.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(RelationshipFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.relationship.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(RelationshipFindFirstSchema)
@@ -94,15 +94,15 @@ export const relationshipRouter = router({
     .input(RelationshipFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.relationship.findMany(input),
           ctx.prisma.relationship.count({ where: input?.where }),
           ctx.prisma.relationship.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

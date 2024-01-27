@@ -52,19 +52,19 @@ export const CityDeleteOneSchema = z.object({
   where: CityWhereUniqueInputObjectSchema,
 });
 
-// export const CityFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       CityOrderByWithRelationInputObjectSchema,
-//       CityOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: CityWhereInputObjectSchema.optional(),
-//   cursor: CityWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(CityScalarFieldEnumSchema).optional(),
-// });
+export const CityFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      CityOrderByWithRelationInputObjectSchema,
+      CityOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: CityWhereInputObjectSchema.optional(),
+  cursor: CityWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(CityScalarFieldEnumSchema).optional(),
+});
 
 export const CityFindManySchema = z
   .object({

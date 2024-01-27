@@ -9,7 +9,7 @@ import {
   VoiceBiometricCreateOneSchema,
   VoiceBiometricDeleteManySchema,
   VoiceBiometricDeleteOneSchema,
-  // VoiceBiometricFindFirstSchema,
+  VoiceBiometricFindFirstSchema,
   VoiceBiometricFindManySchema,
   VoiceBiometricFindUniqueSchema,
   // VoiceBiometricGroupBySchema,
@@ -70,15 +70,15 @@ export const voiceBiometricRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(VoiceBiometricFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(VoiceBiometricFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.voiceBiometric.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(VoiceBiometricFindFirstSchema)
@@ -94,15 +94,15 @@ export const voiceBiometricRouter = router({
     .input(VoiceBiometricFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.voiceBiometric.findMany(input),
           ctx.prisma.voiceBiometric.count({ where: input?.where }),
           ctx.prisma.voiceBiometric.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

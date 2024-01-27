@@ -9,7 +9,7 @@ import {
   ReviewStatusCreateOneSchema,
   ReviewStatusDeleteManySchema,
   ReviewStatusDeleteOneSchema,
-  // ReviewStatusFindFirstSchema,
+  ReviewStatusFindFirstSchema,
   ReviewStatusFindManySchema,
   ReviewStatusFindUniqueSchema,
   // ReviewStatusGroupBySchema,
@@ -70,15 +70,15 @@ export const reviewStatusRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(ReviewStatusFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(ReviewStatusFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.reviewStatus.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(ReviewStatusFindFirstSchema)
@@ -94,15 +94,15 @@ export const reviewStatusRouter = router({
     .input(ReviewStatusFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.reviewStatus.findMany(input),
           ctx.prisma.reviewStatus.count({ where: input?.where }),
           ctx.prisma.reviewStatus.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

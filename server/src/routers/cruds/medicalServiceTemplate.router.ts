@@ -9,7 +9,7 @@ import {
   MedicalServiceTemplateCreateOneSchema,
   MedicalServiceTemplateDeleteManySchema,
   MedicalServiceTemplateDeleteOneSchema,
-  // MedicalServiceTemplateFindFirstSchema,
+  MedicalServiceTemplateFindFirstSchema,
   MedicalServiceTemplateFindManySchema,
   MedicalServiceTemplateFindUniqueSchema,
   // MedicalServiceTemplateGroupBySchema,
@@ -70,15 +70,15 @@ export const medicalServiceTemplateRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(MedicalServiceTemplateFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceTemplate.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(MedicalServiceTemplateFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.medicalServiceTemplate.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(MedicalServiceTemplateFindFirstSchema)
@@ -94,15 +94,15 @@ export const medicalServiceTemplateRouter = router({
     .input(MedicalServiceTemplateFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.medicalServiceTemplate.findMany(input),
           ctx.prisma.medicalServiceTemplate.count({ where: input?.where }),
           ctx.prisma.medicalServiceTemplate.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

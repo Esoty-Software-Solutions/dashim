@@ -9,7 +9,7 @@ import {
   DeviceTokenCreateOneSchema,
   DeviceTokenDeleteManySchema,
   DeviceTokenDeleteOneSchema,
-  // DeviceTokenFindFirstSchema,
+  DeviceTokenFindFirstSchema,
   DeviceTokenFindManySchema,
   DeviceTokenFindUniqueSchema,
   // DeviceTokenGroupBySchema,
@@ -70,15 +70,15 @@ export const deviceTokenRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(DeviceTokenFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.deviceToken.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(DeviceTokenFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.deviceToken.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(DeviceTokenFindFirstSchema)
@@ -94,15 +94,15 @@ export const deviceTokenRouter = router({
     .input(DeviceTokenFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.deviceToken.findMany(input),
           ctx.prisma.deviceToken.count({ where: input?.where }),
           ctx.prisma.deviceToken.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

@@ -52,19 +52,19 @@ export const PrescriptionAttachmentDeleteOneSchema = z.object({
   where: PrescriptionAttachmentWhereUniqueInputObjectSchema,
 });
 
-// export const PrescriptionAttachmentFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
-//       PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
-//   cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
-// });
+export const PrescriptionAttachmentFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      PrescriptionAttachmentOrderByWithRelationInputObjectSchema,
+      PrescriptionAttachmentOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: PrescriptionAttachmentWhereInputObjectSchema.optional(),
+  cursor: PrescriptionAttachmentWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(PrescriptionAttachmentScalarFieldEnumSchema).optional(),
+});
 
 export const PrescriptionAttachmentFindManySchema = z
   .object({

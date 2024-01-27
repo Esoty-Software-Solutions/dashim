@@ -52,19 +52,19 @@ export const CurrencyDeleteOneSchema = z.object({
   where: CurrencyWhereUniqueInputObjectSchema,
 });
 
-// export const CurrencyFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       CurrencyOrderByWithRelationInputObjectSchema,
-//       CurrencyOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: CurrencyWhereInputObjectSchema.optional(),
-//   cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(CurrencyScalarFieldEnumSchema).optional(),
-// });
+export const CurrencyFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      CurrencyOrderByWithRelationInputObjectSchema,
+      CurrencyOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: CurrencyWhereInputObjectSchema.optional(),
+  cursor: CurrencyWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(CurrencyScalarFieldEnumSchema).optional(),
+});
 
 export const CurrencyFindManySchema = z
   .object({

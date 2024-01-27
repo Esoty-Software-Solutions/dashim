@@ -9,7 +9,7 @@ import {
   BenefitPackageMedicalServiceTemplateCreateOneSchema,
   BenefitPackageMedicalServiceTemplateDeleteManySchema,
   BenefitPackageMedicalServiceTemplateDeleteOneSchema,
-  // BenefitPackageMedicalServiceTemplateFindFirstSchema,
+  BenefitPackageMedicalServiceTemplateFindFirstSchema,
   BenefitPackageMedicalServiceTemplateFindManySchema,
   BenefitPackageMedicalServiceTemplateFindUniqueSchema,
   // BenefitPackageMedicalServiceTemplateGroupBySchema,
@@ -70,15 +70,15 @@ export const benefitPackageMedicalServiceTemplateRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(BenefitPackageMedicalServiceTemplateFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceTemplate.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(BenefitPackageMedicalServiceTemplateFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.benefitPackageMedicalServiceTemplate.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(BenefitPackageMedicalServiceTemplateFindFirstSchema)
@@ -94,15 +94,15 @@ export const benefitPackageMedicalServiceTemplateRouter = router({
     .input(BenefitPackageMedicalServiceTemplateFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.benefitPackageMedicalServiceTemplate.findMany(input),
           ctx.prisma.benefitPackageMedicalServiceTemplate.count({ where: input?.where }),
           ctx.prisma.benefitPackageMedicalServiceTemplate.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

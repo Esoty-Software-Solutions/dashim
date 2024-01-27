@@ -9,7 +9,7 @@ import {
   BeneficiaryBalanceCreateOneSchema,
   BeneficiaryBalanceDeleteManySchema,
   BeneficiaryBalanceDeleteOneSchema,
-  // BeneficiaryBalanceFindFirstSchema,
+  BeneficiaryBalanceFindFirstSchema,
   BeneficiaryBalanceFindManySchema,
   BeneficiaryBalanceFindUniqueSchema,
   // BeneficiaryBalanceGroupBySchema,
@@ -70,15 +70,15 @@ export const beneficiaryBalanceRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(BeneficiaryBalanceFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryBalance.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(BeneficiaryBalanceFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.beneficiaryBalance.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(BeneficiaryBalanceFindFirstSchema)
@@ -94,15 +94,15 @@ export const beneficiaryBalanceRouter = router({
     .input(BeneficiaryBalanceFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.beneficiaryBalance.findMany(input),
           ctx.prisma.beneficiaryBalance.count({ where: input?.where }),
           ctx.prisma.beneficiaryBalance.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

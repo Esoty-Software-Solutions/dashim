@@ -52,19 +52,19 @@ export const IDCardDeleteOneSchema = z.object({
   where: IDCardWhereUniqueInputObjectSchema,
 });
 
-// export const IDCardFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       IDCardOrderByWithRelationInputObjectSchema,
-//       IDCardOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: IDCardWhereInputObjectSchema.optional(),
-//   cursor: IDCardWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(IDCardScalarFieldEnumSchema).optional(),
-// });
+export const IDCardFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      IDCardOrderByWithRelationInputObjectSchema,
+      IDCardOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: IDCardWhereInputObjectSchema.optional(),
+  cursor: IDCardWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(IDCardScalarFieldEnumSchema).optional(),
+});
 
 export const IDCardFindManySchema = z
   .object({

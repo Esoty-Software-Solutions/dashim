@@ -52,19 +52,19 @@ export const BeneficiaryFutureStatusChangeDeleteOneSchema = z.object({
   where: BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema,
 });
 
-// export const BeneficiaryFutureStatusChangeFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       BeneficiaryFutureStatusChangeOrderByWithRelationInputObjectSchema,
-//       BeneficiaryFutureStatusChangeOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: BeneficiaryFutureStatusChangeWhereInputObjectSchema.optional(),
-//   cursor: BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(BeneficiaryFutureStatusChangeScalarFieldEnumSchema).optional(),
-// });
+export const BeneficiaryFutureStatusChangeFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      BeneficiaryFutureStatusChangeOrderByWithRelationInputObjectSchema,
+      BeneficiaryFutureStatusChangeOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: BeneficiaryFutureStatusChangeWhereInputObjectSchema.optional(),
+  cursor: BeneficiaryFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(BeneficiaryFutureStatusChangeScalarFieldEnumSchema).optional(),
+});
 
 export const BeneficiaryFutureStatusChangeFindManySchema = z
   .object({

@@ -52,19 +52,19 @@ export const EntryRecordDeleteOneSchema = z.object({
   where: EntryRecordWhereUniqueInputObjectSchema,
 });
 
-// export const EntryRecordFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       EntryRecordOrderByWithRelationInputObjectSchema,
-//       EntryRecordOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: EntryRecordWhereInputObjectSchema.optional(),
-//   cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(EntryRecordScalarFieldEnumSchema).optional(),
-// });
+export const EntryRecordFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      EntryRecordOrderByWithRelationInputObjectSchema,
+      EntryRecordOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: EntryRecordWhereInputObjectSchema.optional(),
+  cursor: EntryRecordWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(EntryRecordScalarFieldEnumSchema).optional(),
+});
 
 export const EntryRecordFindManySchema = z
   .object({

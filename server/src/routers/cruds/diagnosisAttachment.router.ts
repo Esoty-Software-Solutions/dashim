@@ -9,7 +9,7 @@ import {
   DiagnosisAttachmentCreateOneSchema,
   DiagnosisAttachmentDeleteManySchema,
   DiagnosisAttachmentDeleteOneSchema,
-  // DiagnosisAttachmentFindFirstSchema,
+  DiagnosisAttachmentFindFirstSchema,
   DiagnosisAttachmentFindManySchema,
   DiagnosisAttachmentFindUniqueSchema,
   // DiagnosisAttachmentGroupBySchema,
@@ -70,15 +70,15 @@ export const diagnosisAttachmentRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(DiagnosisAttachmentFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(DiagnosisAttachmentFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.diagnosisAttachment.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(DiagnosisAttachmentFindFirstSchema)
@@ -94,15 +94,15 @@ export const diagnosisAttachmentRouter = router({
     .input(DiagnosisAttachmentFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.diagnosisAttachment.findMany(input),
           ctx.prisma.diagnosisAttachment.count({ where: input?.where }),
           ctx.prisma.diagnosisAttachment.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

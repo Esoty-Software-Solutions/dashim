@@ -52,19 +52,19 @@ export const FingerprintBiometricDeleteOneSchema = z.object({
   where: FingerprintBiometricWhereUniqueInputObjectSchema,
 });
 
-// export const FingerprintBiometricFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       FingerprintBiometricOrderByWithRelationInputObjectSchema,
-//       FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: FingerprintBiometricWhereInputObjectSchema.optional(),
-//   cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(FingerprintBiometricScalarFieldEnumSchema).optional(),
-// });
+export const FingerprintBiometricFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      FingerprintBiometricOrderByWithRelationInputObjectSchema,
+      FingerprintBiometricOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: FingerprintBiometricWhereInputObjectSchema.optional(),
+  cursor: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(FingerprintBiometricScalarFieldEnumSchema).optional(),
+});
 
 export const FingerprintBiometricFindManySchema = z
   .object({

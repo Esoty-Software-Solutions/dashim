@@ -9,7 +9,7 @@ import {
   PrescriptionAttachmentCreateOneSchema,
   PrescriptionAttachmentDeleteManySchema,
   PrescriptionAttachmentDeleteOneSchema,
-  // PrescriptionAttachmentFindFirstSchema,
+  PrescriptionAttachmentFindFirstSchema,
   PrescriptionAttachmentFindManySchema,
   PrescriptionAttachmentFindUniqueSchema,
   // PrescriptionAttachmentGroupBySchema,
@@ -70,15 +70,15 @@ export const prescriptionAttachmentRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(PrescriptionAttachmentFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.prescriptionAttachment.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(PrescriptionAttachmentFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.prescriptionAttachment.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(PrescriptionAttachmentFindFirstSchema)
@@ -94,15 +94,15 @@ export const prescriptionAttachmentRouter = router({
     .input(PrescriptionAttachmentFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.prescriptionAttachment.findMany(input),
           ctx.prisma.prescriptionAttachment.count({ where: input?.where }),
           ctx.prisma.prescriptionAttachment.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

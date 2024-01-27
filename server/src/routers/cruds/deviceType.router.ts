@@ -9,7 +9,7 @@ import {
   DeviceTypeCreateOneSchema,
   DeviceTypeDeleteManySchema,
   DeviceTypeDeleteOneSchema,
-  // DeviceTypeFindFirstSchema,
+  DeviceTypeFindFirstSchema,
   DeviceTypeFindManySchema,
   DeviceTypeFindUniqueSchema,
   // DeviceTypeGroupBySchema,
@@ -70,15 +70,15 @@ export const deviceTypeRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(DeviceTypeFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.deviceType.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(DeviceTypeFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.deviceType.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(DeviceTypeFindFirstSchema)
@@ -94,15 +94,15 @@ export const deviceTypeRouter = router({
     .input(DeviceTypeFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.deviceType.findMany(input),
           ctx.prisma.deviceType.count({ where: input?.where }),
           ctx.prisma.deviceType.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

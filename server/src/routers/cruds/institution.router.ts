@@ -9,7 +9,7 @@ import {
   InstitutionCreateOneSchema,
   InstitutionDeleteManySchema,
   InstitutionDeleteOneSchema,
-  // InstitutionFindFirstSchema,
+  InstitutionFindFirstSchema,
   InstitutionFindManySchema,
   InstitutionFindUniqueSchema,
   // InstitutionGroupBySchema,
@@ -70,15 +70,15 @@ export const institutionRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(InstitutionFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.institution.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(InstitutionFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.institution.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(InstitutionFindFirstSchema)
@@ -94,15 +94,15 @@ export const institutionRouter = router({
     .input(InstitutionFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.institution.findMany(input),
           ctx.prisma.institution.count({ where: input?.where }),
           ctx.prisma.institution.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

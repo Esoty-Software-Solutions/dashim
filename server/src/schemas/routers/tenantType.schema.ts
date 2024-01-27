@@ -52,19 +52,19 @@ export const TenantTypeDeleteOneSchema = z.object({
   where: TenantTypeWhereUniqueInputObjectSchema,
 });
 
-// export const TenantTypeFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       TenantTypeOrderByWithRelationInputObjectSchema,
-//       TenantTypeOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: TenantTypeWhereInputObjectSchema.optional(),
-//   cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(TenantTypeScalarFieldEnumSchema).optional(),
-// });
+export const TenantTypeFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      TenantTypeOrderByWithRelationInputObjectSchema,
+      TenantTypeOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: TenantTypeWhereInputObjectSchema.optional(),
+  cursor: TenantTypeWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(TenantTypeScalarFieldEnumSchema).optional(),
+});
 
 export const TenantTypeFindManySchema = z
   .object({

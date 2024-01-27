@@ -52,19 +52,19 @@ export const FaceBiometricDeleteOneSchema = z.object({
   where: FaceBiometricWhereUniqueInputObjectSchema,
 });
 
-// export const FaceBiometricFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       FaceBiometricOrderByWithRelationInputObjectSchema,
-//       FaceBiometricOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: FaceBiometricWhereInputObjectSchema.optional(),
-//   cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(FaceBiometricScalarFieldEnumSchema).optional(),
-// });
+export const FaceBiometricFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      FaceBiometricOrderByWithRelationInputObjectSchema,
+      FaceBiometricOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: FaceBiometricWhereInputObjectSchema.optional(),
+  cursor: FaceBiometricWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(FaceBiometricScalarFieldEnumSchema).optional(),
+});
 
 export const FaceBiometricFindManySchema = z
   .object({

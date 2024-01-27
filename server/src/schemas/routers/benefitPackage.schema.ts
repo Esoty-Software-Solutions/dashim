@@ -52,19 +52,19 @@ export const BenefitPackageDeleteOneSchema = z.object({
   where: BenefitPackageWhereUniqueInputObjectSchema,
 });
 
-// export const BenefitPackageFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       BenefitPackageOrderByWithRelationInputObjectSchema,
-//       BenefitPackageOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: BenefitPackageWhereInputObjectSchema.optional(),
-//   cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(BenefitPackageScalarFieldEnumSchema).optional(),
-// });
+export const BenefitPackageFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      BenefitPackageOrderByWithRelationInputObjectSchema,
+      BenefitPackageOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: BenefitPackageWhereInputObjectSchema.optional(),
+  cursor: BenefitPackageWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(BenefitPackageScalarFieldEnumSchema).optional(),
+});
 
 export const BenefitPackageFindManySchema = z
   .object({
