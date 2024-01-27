@@ -8,6 +8,10 @@ import {
 } from "./_config.controller";
 import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
 
+const StatusSetByFields = {
+  //* Using Prisma operation "include" includes all fields in the return type
+  select: { id: true, firstName: true, lastName: true },
+};
 type _ListBeneficiariesInputType = z.infer<typeof SubscriberFindManySchema>;
 export async function _ListBeneficiaries(
   userId: string,
@@ -19,6 +23,8 @@ export async function _ListBeneficiaries(
   input = input || {};
   input.take = input.take || DEFAULT_PAGE_SIZE;
   input.skip = input.skip || DEFAULT_PAGE_NUMBER * DEFAULT_PAGE_SIZE;
+
+  // TODO: parse to validate input or do it at TRPC level?
 
   /*
   Return the following
@@ -35,31 +41,72 @@ export async function _ListBeneficiaries(
       return await enhancedPrisma(userId).$transaction(
         async (tx) => {
           // Code running in a transaction...
-          const subscribers = await tx.subscriber.findMany(input);
-          const filteredCount = await tx.subscriber.count({
-            where: input?.where,
-          });
-          const unFilteredCount = await tx.subscriber.count();
-          const activeCount = await tx.subscriber.count({
-            where: { ...input?.where, isActive: true },
-          });
-          const inActiveCount = filteredCount - activeCount;
+          const [subscribers, fCount, uFCount, activeCount] = await Promise.all(
+            [
+              tx.subscriber.findMany({
+                where: input?.where,
+                skip: input?.skip,
+                take: input?.take,
+                // include: { //* This blows up the return type
+                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+                //   StatusSetBy: selectStatusSetBy,
+                // },
+                select: {
+                  id: true,
+                  createdAt: true,
+                  updatedAt: true,
+                  isActive: true,
+                  // TODO: add city
+                  insurancePolicyId: true,
+                  beneficiaries: {
+                    select: {
+                      id: true,
+                      createdAt: true,
+                      updatedAt: true,
+                      isActive: true,
+                      firstName: true,
+                      secondName: true,
+                      thirdName: true,
+                      fourthName: true,
+                      lastName: true,
+                      birthDate: true,
+                      residence: true, //TODO: rename into city and move to subscriber
+                      genderId: true,
+                      relationshipId: true,
+                      StatusSetBy: StatusSetByFields,
+                      beneficiaryBalances: {
+                        select: { id: true, balance: true, updatedAt: true },
+                      },
+                    },
+                  },
+                  StatusSetBy: StatusSetByFields,
+                },
+              }),
+              tx.subscriber.count({
+                where: input?.where,
+              }),
+              tx.subscriber.count(),
+              tx.subscriber.count({
+                where: { ...input?.where, isActive: true },
+              }),
+            ],
+          );
+          const inActiveCount = fCount - activeCount;
           // const maxAge = await tx.subscriber.aggregate({where: input.where, select: {age: true}})
-
           const statistics = [
             { key: "activeCount", value: activeCount },
             { key: "inActiveCount", value: inActiveCount },
-            { key: "unFilteredCount", value: unFilteredCount },
+            { key: "unFilteredCount", value: uFCount },
           ];
 
-          const metaData = {
-            unFilteredCount,
-            priceFilter: { min: 0, max: 1000 },
-            countryFilter: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
-            cityFilter: ["Cairo", "Alexandria", "Giza"],
-          };
+          // const metaData = {
+          //   uFCount,
+          //   priceFilter: { min: 0, max: 1000 },
+          //   countryFilter: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
+          //   cityFilter: ["Cairo", "Alexandria", "Giza"],
+          // };
 
-          return { data: subscribers, filteredCount, metaData, statistics };
+          return { data: subscribers, fCount, statistics };
         },
         {
           //   maxWait: 5000, // default: 2000
