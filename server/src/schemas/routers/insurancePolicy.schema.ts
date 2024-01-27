@@ -52,19 +52,19 @@ export const InsurancePolicyDeleteOneSchema = z.object({
   where: InsurancePolicyWhereUniqueInputObjectSchema,
 });
 
-// export const InsurancePolicyFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       InsurancePolicyOrderByWithRelationInputObjectSchema,
-//       InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: InsurancePolicyWhereInputObjectSchema.optional(),
-//   cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(InsurancePolicyScalarFieldEnumSchema).optional(),
-// });
+export const InsurancePolicyFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      InsurancePolicyOrderByWithRelationInputObjectSchema,
+      InsurancePolicyOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: InsurancePolicyWhereInputObjectSchema.optional(),
+  cursor: InsurancePolicyWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(InsurancePolicyScalarFieldEnumSchema).optional(),
+});
 
 export const InsurancePolicyFindManySchema = z
   .object({

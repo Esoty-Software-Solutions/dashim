@@ -9,7 +9,7 @@ import {
   GenderCreateOneSchema,
   GenderDeleteManySchema,
   GenderDeleteOneSchema,
-  // GenderFindFirstSchema,
+  GenderFindFirstSchema,
   GenderFindManySchema,
   GenderFindUniqueSchema,
   // GenderGroupBySchema,
@@ -70,15 +70,15 @@ export const genderRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(GenderFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.gender.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(GenderFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.gender.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(GenderFindFirstSchema)
@@ -94,15 +94,15 @@ export const genderRouter = router({
     .input(GenderFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.gender.findMany(input),
           ctx.prisma.gender.count({ where: input?.where }),
           ctx.prisma.gender.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

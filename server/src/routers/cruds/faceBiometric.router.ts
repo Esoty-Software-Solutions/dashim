@@ -9,7 +9,7 @@ import {
   FaceBiometricCreateOneSchema,
   FaceBiometricDeleteManySchema,
   FaceBiometricDeleteOneSchema,
-  // FaceBiometricFindFirstSchema,
+  FaceBiometricFindFirstSchema,
   FaceBiometricFindManySchema,
   FaceBiometricFindUniqueSchema,
   // FaceBiometricGroupBySchema,
@@ -70,15 +70,15 @@ export const faceBiometricRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(FaceBiometricFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.faceBiometric.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(FaceBiometricFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.faceBiometric.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(FaceBiometricFindFirstSchema)
@@ -94,15 +94,15 @@ export const faceBiometricRouter = router({
     .input(FaceBiometricFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.faceBiometric.findMany(input),
           ctx.prisma.faceBiometric.count({ where: input?.where }),
           ctx.prisma.faceBiometric.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

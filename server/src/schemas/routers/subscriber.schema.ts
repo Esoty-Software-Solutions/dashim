@@ -52,19 +52,19 @@ export const SubscriberDeleteOneSchema = z.object({
   where: SubscriberWhereUniqueInputObjectSchema,
 });
 
-// export const SubscriberFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       SubscriberOrderByWithRelationInputObjectSchema,
-//       SubscriberOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: SubscriberWhereInputObjectSchema.optional(),
-//   cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(SubscriberScalarFieldEnumSchema).optional(),
-// });
+export const SubscriberFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      SubscriberOrderByWithRelationInputObjectSchema,
+      SubscriberOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: SubscriberWhereInputObjectSchema.optional(),
+  cursor: SubscriberWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(SubscriberScalarFieldEnumSchema).optional(),
+});
 
 export const SubscriberFindManySchema = z
   .object({

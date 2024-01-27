@@ -52,19 +52,19 @@ export const FingerTypeDeleteOneSchema = z.object({
   where: FingerTypeWhereUniqueInputObjectSchema,
 });
 
-// export const FingerTypeFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       FingerTypeOrderByWithRelationInputObjectSchema,
-//       FingerTypeOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: FingerTypeWhereInputObjectSchema.optional(),
-//   cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(FingerTypeScalarFieldEnumSchema).optional(),
-// });
+export const FingerTypeFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      FingerTypeOrderByWithRelationInputObjectSchema,
+      FingerTypeOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: FingerTypeWhereInputObjectSchema.optional(),
+  cursor: FingerTypeWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(FingerTypeScalarFieldEnumSchema).optional(),
+});
 
 export const FingerTypeFindManySchema = z
   .object({

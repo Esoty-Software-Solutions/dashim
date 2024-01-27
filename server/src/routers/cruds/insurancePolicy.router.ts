@@ -9,7 +9,7 @@ import {
   InsurancePolicyCreateOneSchema,
   InsurancePolicyDeleteManySchema,
   InsurancePolicyDeleteOneSchema,
-  // InsurancePolicyFindFirstSchema,
+  InsurancePolicyFindFirstSchema,
   InsurancePolicyFindManySchema,
   InsurancePolicyFindUniqueSchema,
   // InsurancePolicyGroupBySchema,
@@ -70,15 +70,15 @@ export const insurancePolicyRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(InsurancePolicyFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.insurancePolicy.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(InsurancePolicyFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.insurancePolicy.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(InsurancePolicyFindFirstSchema)
@@ -94,15 +94,15 @@ export const insurancePolicyRouter = router({
     .input(InsurancePolicyFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.insurancePolicy.findMany(input),
           ctx.prisma.insurancePolicy.count({ where: input?.where }),
           ctx.prisma.insurancePolicy.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

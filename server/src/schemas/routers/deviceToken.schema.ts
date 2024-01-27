@@ -52,19 +52,19 @@ export const DeviceTokenDeleteOneSchema = z.object({
   where: DeviceTokenWhereUniqueInputObjectSchema,
 });
 
-// export const DeviceTokenFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       DeviceTokenOrderByWithRelationInputObjectSchema,
-//       DeviceTokenOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: DeviceTokenWhereInputObjectSchema.optional(),
-//   cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(DeviceTokenScalarFieldEnumSchema).optional(),
-// });
+export const DeviceTokenFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      DeviceTokenOrderByWithRelationInputObjectSchema,
+      DeviceTokenOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: DeviceTokenWhereInputObjectSchema.optional(),
+  cursor: DeviceTokenWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(DeviceTokenScalarFieldEnumSchema).optional(),
+});
 
 export const DeviceTokenFindManySchema = z
   .object({

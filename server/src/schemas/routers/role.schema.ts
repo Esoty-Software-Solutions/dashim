@@ -52,19 +52,19 @@ export const RoleDeleteOneSchema = z.object({
   where: RoleWhereUniqueInputObjectSchema,
 });
 
-// export const RoleFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       RoleOrderByWithRelationInputObjectSchema,
-//       RoleOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: RoleWhereInputObjectSchema.optional(),
-//   cursor: RoleWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(RoleScalarFieldEnumSchema).optional(),
-// });
+export const RoleFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      RoleOrderByWithRelationInputObjectSchema,
+      RoleOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: RoleWhereInputObjectSchema.optional(),
+  cursor: RoleWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(RoleScalarFieldEnumSchema).optional(),
+});
 
 export const RoleFindManySchema = z
   .object({

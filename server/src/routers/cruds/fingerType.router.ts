@@ -9,7 +9,7 @@ import {
   FingerTypeCreateOneSchema,
   FingerTypeDeleteManySchema,
   FingerTypeDeleteOneSchema,
-  // FingerTypeFindFirstSchema,
+  FingerTypeFindFirstSchema,
   FingerTypeFindManySchema,
   FingerTypeFindUniqueSchema,
   // FingerTypeGroupBySchema,
@@ -70,15 +70,15 @@ export const fingerTypeRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(FingerTypeFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerType.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(FingerTypeFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.fingerType.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(FingerTypeFindFirstSchema)
@@ -94,15 +94,15 @@ export const fingerTypeRouter = router({
     .input(FingerTypeFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.fingerType.findMany(input),
           ctx.prisma.fingerType.count({ where: input?.where }),
           ctx.prisma.fingerType.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

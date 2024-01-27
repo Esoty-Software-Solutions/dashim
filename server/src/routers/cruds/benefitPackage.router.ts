@@ -9,7 +9,7 @@ import {
   BenefitPackageCreateOneSchema,
   BenefitPackageDeleteManySchema,
   BenefitPackageDeleteOneSchema,
-  // BenefitPackageFindFirstSchema,
+  BenefitPackageFindFirstSchema,
   BenefitPackageFindManySchema,
   BenefitPackageFindUniqueSchema,
   // BenefitPackageGroupBySchema,
@@ -70,15 +70,15 @@ export const benefitPackageRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(BenefitPackageFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackage.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(BenefitPackageFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.benefitPackage.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(BenefitPackageFindFirstSchema)
@@ -94,15 +94,15 @@ export const benefitPackageRouter = router({
     .input(BenefitPackageFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.benefitPackage.findMany(input),
           ctx.prisma.benefitPackage.count({ where: input?.where }),
           ctx.prisma.benefitPackage.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

@@ -52,19 +52,19 @@ export const DiagnosisAttachmentDeleteOneSchema = z.object({
   where: DiagnosisAttachmentWhereUniqueInputObjectSchema,
 });
 
-// export const DiagnosisAttachmentFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       DiagnosisAttachmentOrderByWithRelationInputObjectSchema,
-//       DiagnosisAttachmentOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: DiagnosisAttachmentWhereInputObjectSchema.optional(),
-//   cursor: DiagnosisAttachmentWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(DiagnosisAttachmentScalarFieldEnumSchema).optional(),
-// });
+export const DiagnosisAttachmentFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      DiagnosisAttachmentOrderByWithRelationInputObjectSchema,
+      DiagnosisAttachmentOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: DiagnosisAttachmentWhereInputObjectSchema.optional(),
+  cursor: DiagnosisAttachmentWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(DiagnosisAttachmentScalarFieldEnumSchema).optional(),
+});
 
 export const DiagnosisAttachmentFindManySchema = z
   .object({

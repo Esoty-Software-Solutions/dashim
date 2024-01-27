@@ -52,19 +52,19 @@ export const InstitutionDeleteOneSchema = z.object({
   where: InstitutionWhereUniqueInputObjectSchema,
 });
 
-// export const InstitutionFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       InstitutionOrderByWithRelationInputObjectSchema,
-//       InstitutionOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: InstitutionWhereInputObjectSchema.optional(),
-//   cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(InstitutionScalarFieldEnumSchema).optional(),
-// });
+export const InstitutionFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      InstitutionOrderByWithRelationInputObjectSchema,
+      InstitutionOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: InstitutionWhereInputObjectSchema.optional(),
+  cursor: InstitutionWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(InstitutionScalarFieldEnumSchema).optional(),
+});
 
 export const InstitutionFindManySchema = z
   .object({

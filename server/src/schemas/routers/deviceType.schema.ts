@@ -52,19 +52,19 @@ export const DeviceTypeDeleteOneSchema = z.object({
   where: DeviceTypeWhereUniqueInputObjectSchema,
 });
 
-// export const DeviceTypeFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       DeviceTypeOrderByWithRelationInputObjectSchema,
-//       DeviceTypeOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: DeviceTypeWhereInputObjectSchema.optional(),
-//   cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(DeviceTypeScalarFieldEnumSchema).optional(),
-// });
+export const DeviceTypeFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      DeviceTypeOrderByWithRelationInputObjectSchema,
+      DeviceTypeOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: DeviceTypeWhereInputObjectSchema.optional(),
+  cursor: DeviceTypeWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(DeviceTypeScalarFieldEnumSchema).optional(),
+});
 
 export const DeviceTypeFindManySchema = z
   .object({

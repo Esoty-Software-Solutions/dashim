@@ -52,19 +52,19 @@ export const SubscriberFutureStatusChangeDeleteOneSchema = z.object({
   where: SubscriberFutureStatusChangeWhereUniqueInputObjectSchema,
 });
 
-// export const SubscriberFutureStatusChangeFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       SubscriberFutureStatusChangeOrderByWithRelationInputObjectSchema,
-//       SubscriberFutureStatusChangeOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: SubscriberFutureStatusChangeWhereInputObjectSchema.optional(),
-//   cursor: SubscriberFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(SubscriberFutureStatusChangeScalarFieldEnumSchema).optional(),
-// });
+export const SubscriberFutureStatusChangeFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      SubscriberFutureStatusChangeOrderByWithRelationInputObjectSchema,
+      SubscriberFutureStatusChangeOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: SubscriberFutureStatusChangeWhereInputObjectSchema.optional(),
+  cursor: SubscriberFutureStatusChangeWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(SubscriberFutureStatusChangeScalarFieldEnumSchema).optional(),
+});
 
 export const SubscriberFutureStatusChangeFindManySchema = z
   .object({

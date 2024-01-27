@@ -52,19 +52,19 @@ export const InsurancePolicyMedicalCenterDeleteOneSchema = z.object({
   where: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema,
 });
 
-// export const InsurancePolicyMedicalCenterFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
-//       InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
-//   cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema).optional(),
-// });
+export const InsurancePolicyMedicalCenterFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema,
+      InsurancePolicyMedicalCenterOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: InsurancePolicyMedicalCenterWhereInputObjectSchema.optional(),
+  cursor: InsurancePolicyMedicalCenterWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(InsurancePolicyMedicalCenterScalarFieldEnumSchema).optional(),
+});
 
 export const InsurancePolicyMedicalCenterFindManySchema = z
   .object({

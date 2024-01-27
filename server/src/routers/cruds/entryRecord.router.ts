@@ -9,7 +9,7 @@ import {
   EntryRecordCreateOneSchema,
   EntryRecordDeleteManySchema,
   EntryRecordDeleteOneSchema,
-  // EntryRecordFindFirstSchema,
+  EntryRecordFindFirstSchema,
   EntryRecordFindManySchema,
   EntryRecordFindUniqueSchema,
   // EntryRecordGroupBySchema,
@@ -70,15 +70,15 @@ export const entryRecordRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(EntryRecordFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.entryRecord.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(EntryRecordFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.entryRecord.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(EntryRecordFindFirstSchema)
@@ -94,15 +94,15 @@ export const entryRecordRouter = router({
     .input(EntryRecordFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.entryRecord.findMany(input),
           ctx.prisma.entryRecord.count({ where: input?.where }),
           ctx.prisma.entryRecord.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

@@ -9,7 +9,7 @@ import {
   SubscriberCreateOneSchema,
   SubscriberDeleteManySchema,
   SubscriberDeleteOneSchema,
-  // SubscriberFindFirstSchema,
+  SubscriberFindFirstSchema,
   SubscriberFindManySchema,
   SubscriberFindUniqueSchema,
   // SubscriberGroupBySchema,
@@ -70,15 +70,15 @@ export const subscriberRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(SubscriberFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.subscriber.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(SubscriberFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.subscriber.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(SubscriberFindFirstSchema)
@@ -94,15 +94,15 @@ export const subscriberRouter = router({
     .input(SubscriberFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.subscriber.findMany(input),
           ctx.prisma.subscriber.count({ where: input?.where }),
           ctx.prisma.subscriber.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

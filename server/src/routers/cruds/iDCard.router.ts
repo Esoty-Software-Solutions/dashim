@@ -9,7 +9,7 @@ import {
   IDCardCreateOneSchema,
   IDCardDeleteManySchema,
   IDCardDeleteOneSchema,
-  // IDCardFindFirstSchema,
+  IDCardFindFirstSchema,
   IDCardFindManySchema,
   IDCardFindUniqueSchema,
   // IDCardGroupBySchema,
@@ -70,15 +70,15 @@ export const iDCardRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(IDCardFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.iDCard.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(IDCardFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.iDCard.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(IDCardFindFirstSchema)
@@ -94,15 +94,15 @@ export const iDCardRouter = router({
     .input(IDCardFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.iDCard.findMany(input),
           ctx.prisma.iDCard.count({ where: input?.where }),
           ctx.prisma.iDCard.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

@@ -52,19 +52,19 @@ export const GenderDeleteOneSchema = z.object({
   where: GenderWhereUniqueInputObjectSchema,
 });
 
-// export const GenderFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       GenderOrderByWithRelationInputObjectSchema,
-//       GenderOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: GenderWhereInputObjectSchema.optional(),
-//   cursor: GenderWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(GenderScalarFieldEnumSchema).optional(),
-// });
+export const GenderFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      GenderOrderByWithRelationInputObjectSchema,
+      GenderOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: GenderWhereInputObjectSchema.optional(),
+  cursor: GenderWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(GenderScalarFieldEnumSchema).optional(),
+});
 
 export const GenderFindManySchema = z
   .object({

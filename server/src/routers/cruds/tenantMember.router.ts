@@ -9,7 +9,7 @@ import {
   TenantMemberCreateOneSchema,
   TenantMemberDeleteManySchema,
   TenantMemberDeleteOneSchema,
-  // TenantMemberFindFirstSchema,
+  TenantMemberFindFirstSchema,
   TenantMemberFindManySchema,
   TenantMemberFindUniqueSchema,
   // TenantMemberGroupBySchema,
@@ -70,15 +70,15 @@ export const tenantMemberRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(TenantMemberFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(TenantMemberFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.tenantMember.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(TenantMemberFindFirstSchema)
@@ -94,15 +94,15 @@ export const tenantMemberRouter = router({
     .input(TenantMemberFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.tenantMember.findMany(input),
           ctx.prisma.tenantMember.count({ where: input?.where }),
           ctx.prisma.tenantMember.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

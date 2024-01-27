@@ -9,7 +9,7 @@ import {
   RoleCreateOneSchema,
   RoleDeleteManySchema,
   RoleDeleteOneSchema,
-  // RoleFindFirstSchema,
+  RoleFindFirstSchema,
   RoleFindManySchema,
   RoleFindUniqueSchema,
   // RoleGroupBySchema,
@@ -70,15 +70,15 @@ export const roleRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(RoleFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.role.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(RoleFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.role.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(RoleFindFirstSchema)
@@ -94,15 +94,15 @@ export const roleRouter = router({
     .input(RoleFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.role.findMany(input),
           ctx.prisma.role.count({ where: input?.where }),
           ctx.prisma.role.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

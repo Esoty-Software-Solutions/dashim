@@ -52,19 +52,19 @@ export const RelationshipDeleteOneSchema = z.object({
   where: RelationshipWhereUniqueInputObjectSchema,
 });
 
-// export const RelationshipFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       RelationshipOrderByWithRelationInputObjectSchema,
-//       RelationshipOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: RelationshipWhereInputObjectSchema.optional(),
-//   cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(RelationshipScalarFieldEnumSchema).optional(),
-// });
+export const RelationshipFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      RelationshipOrderByWithRelationInputObjectSchema,
+      RelationshipOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: RelationshipWhereInputObjectSchema.optional(),
+  cursor: RelationshipWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(RelationshipScalarFieldEnumSchema).optional(),
+});
 
 export const RelationshipFindManySchema = z
   .object({

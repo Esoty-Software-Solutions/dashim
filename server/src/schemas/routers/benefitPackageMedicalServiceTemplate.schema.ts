@@ -52,19 +52,19 @@ export const BenefitPackageMedicalServiceTemplateDeleteOneSchema = z.object({
   where: BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema,
 });
 
-// export const BenefitPackageMedicalServiceTemplateFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       BenefitPackageMedicalServiceTemplateOrderByWithRelationInputObjectSchema,
-//       BenefitPackageMedicalServiceTemplateOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: BenefitPackageMedicalServiceTemplateWhereInputObjectSchema.optional(),
-//   cursor: BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(BenefitPackageMedicalServiceTemplateScalarFieldEnumSchema).optional(),
-// });
+export const BenefitPackageMedicalServiceTemplateFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      BenefitPackageMedicalServiceTemplateOrderByWithRelationInputObjectSchema,
+      BenefitPackageMedicalServiceTemplateOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: BenefitPackageMedicalServiceTemplateWhereInputObjectSchema.optional(),
+  cursor: BenefitPackageMedicalServiceTemplateWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(BenefitPackageMedicalServiceTemplateScalarFieldEnumSchema).optional(),
+});
 
 export const BenefitPackageMedicalServiceTemplateFindManySchema = z
   .object({

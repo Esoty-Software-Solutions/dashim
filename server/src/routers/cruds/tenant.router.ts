@@ -9,7 +9,7 @@ import {
   TenantCreateOneSchema,
   TenantDeleteManySchema,
   TenantDeleteOneSchema,
-  // TenantFindFirstSchema,
+  TenantFindFirstSchema,
   TenantFindManySchema,
   TenantFindUniqueSchema,
   // TenantGroupBySchema,
@@ -70,15 +70,15 @@ export const tenantRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(TenantFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(TenantFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.tenant.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(TenantFindFirstSchema)
@@ -94,15 +94,15 @@ export const tenantRouter = router({
     .input(TenantFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.tenant.findMany(input),
           ctx.prisma.tenant.count({ where: input?.where }),
           ctx.prisma.tenant.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

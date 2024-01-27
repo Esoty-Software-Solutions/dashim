@@ -52,19 +52,19 @@ export const MedicalServiceDeleteOneSchema = z.object({
   where: MedicalServiceWhereUniqueInputObjectSchema,
 });
 
-// export const MedicalServiceFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       MedicalServiceOrderByWithRelationInputObjectSchema,
-//       MedicalServiceOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: MedicalServiceWhereInputObjectSchema.optional(),
-//   cursor: MedicalServiceWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(MedicalServiceScalarFieldEnumSchema).optional(),
-// });
+export const MedicalServiceFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      MedicalServiceOrderByWithRelationInputObjectSchema,
+      MedicalServiceOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: MedicalServiceWhereInputObjectSchema.optional(),
+  cursor: MedicalServiceWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(MedicalServiceScalarFieldEnumSchema).optional(),
+});
 
 export const MedicalServiceFindManySchema = z
   .object({

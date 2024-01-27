@@ -9,7 +9,7 @@ import {
   SubscriberFutureStatusChangeCreateOneSchema,
   SubscriberFutureStatusChangeDeleteManySchema,
   SubscriberFutureStatusChangeDeleteOneSchema,
-  // SubscriberFutureStatusChangeFindFirstSchema,
+  SubscriberFutureStatusChangeFindFirstSchema,
   SubscriberFutureStatusChangeFindManySchema,
   SubscriberFutureStatusChangeFindUniqueSchema,
   // SubscriberFutureStatusChangeGroupBySchema,
@@ -70,15 +70,15 @@ export const subscriberFutureStatusChangeRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(SubscriberFutureStatusChangeFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.subscriberFutureStatusChange.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(SubscriberFutureStatusChangeFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.subscriberFutureStatusChange.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(SubscriberFutureStatusChangeFindFirstSchema)
@@ -94,15 +94,15 @@ export const subscriberFutureStatusChangeRouter = router({
     .input(SubscriberFutureStatusChangeFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.subscriberFutureStatusChange.findMany(input),
           ctx.prisma.subscriberFutureStatusChange.count({ where: input?.where }),
           ctx.prisma.subscriberFutureStatusChange.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

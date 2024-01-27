@@ -9,7 +9,7 @@ import {
   CurrencyCreateOneSchema,
   CurrencyDeleteManySchema,
   CurrencyDeleteOneSchema,
-  // CurrencyFindFirstSchema,
+  CurrencyFindFirstSchema,
   CurrencyFindManySchema,
   CurrencyFindUniqueSchema,
   // CurrencyGroupBySchema,
@@ -70,15 +70,15 @@ export const currencyRouter = router({
       }
     }),
 
-  // findFirst: publicProcedure
-  //   .input(CurrencyFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currency.findFirst(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+  findFirst: publicProcedure
+    .input(CurrencyFindFirstSchema)
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.prisma.currency.findFirst(input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
 
   // findFirstOrThrow: publicProcedure
   //   .input(CurrencyFindFirstSchema)
@@ -94,15 +94,15 @@ export const currencyRouter = router({
     .input(CurrencyFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [fData, fCount, uFCount] = await Promise.all([
+        const [data, fCount, uFCount] = await Promise.all([
           ctx.prisma.currency.findMany(input),
           ctx.prisma.currency.count({ where: input?.where }),
           ctx.prisma.currency.count(),
         ]);
         return {
-          fData,
+          data,
           fCount,
-          statistics: [{ key: "unFilteredCount", value: uFCount }],
+          uFCount,
         };
       } catch (error) {
         throwCustomError(error);

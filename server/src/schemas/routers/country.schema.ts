@@ -52,19 +52,19 @@ export const CountryDeleteOneSchema = z.object({
   where: CountryWhereUniqueInputObjectSchema,
 });
 
-// export const CountryFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       CountryOrderByWithRelationInputObjectSchema,
-//       CountryOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: CountryWhereInputObjectSchema.optional(),
-//   cursor: CountryWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(CountryScalarFieldEnumSchema).optional(),
-// });
+export const CountryFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      CountryOrderByWithRelationInputObjectSchema,
+      CountryOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: CountryWhereInputObjectSchema.optional(),
+  cursor: CountryWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(CountryScalarFieldEnumSchema).optional(),
+});
 
 export const CountryFindManySchema = z
   .object({
