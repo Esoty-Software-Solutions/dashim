@@ -9,7 +9,7 @@ import { LabReportAttachmentWhereUniqueInputObjectSchema } from "@schemas/object
 import { LabReportAttachmentUncheckedUpdateInputObjectSchema } from "@schemas/objects/LabReportAttachmentUncheckedUpdateInput.schema";
 // import { LabReportAttachmentOrderByWithAggregationInputObjectSchema } from "@schemas/objects/LabReportAttachmentOrderByWithAggregationInput.schema"; //
 // import { LabReportAttachmentScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/LabReportAttachmentScalarWhereWithAggregatesInput.schema"; //
-// import { LabReportAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/LabReportAttachmentUpdateManyMutationInput.schema"; //
+import { LabReportAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/LabReportAttachmentUpdateManyMutationInput.schema"; //
 // import { LabReportAttachmentCountAggregateInputObjectSchema } from "@schemas/objects/LabReportAttachmentCountAggregateInput.schema"; //
 // import { LabReportAttachmentMinAggregateInputObjectSchema } from "@schemas/objects/LabReportAttachmentMinAggregateInput.schema"; //
 // import { LabReportAttachmentMaxAggregateInputObjectSchema } from "@schemas/objects/LabReportAttachmentMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const LabReportAttachmentDeleteManySchema = z.object({
 });
 
 export const LabReportAttachmentDeleteOneSchema = z.object({
-  where: LabReportAttachmentWhereUniqueInputObjectSchema.optional(),
+  where: LabReportAttachmentWhereUniqueInputObjectSchema,
 });
 
 // export const LabReportAttachmentFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const LabReportAttachmentFindUniqueSchema = z.object({
 //   by: z.array(LabReportAttachmentScalarFieldEnumSchema),
 // });
 
-// export const LabReportAttachmentUpdateManySchema = z.object({
-//   data: LabReportAttachmentUpdateManyMutationInputObjectSchema,
-//   where: LabReportAttachmentWhereInputObjectSchema.optional(),
-// });
+export const LabReportAttachmentUpdateManySchema = z.object({
+  data: LabReportAttachmentUpdateManyMutationInputObjectSchema,
+  where: LabReportAttachmentWhereInputObjectSchema.optional(),
+});
 
 export const LabReportAttachmentUpdateOneSchema = z.object({
   data: LabReportAttachmentUncheckedUpdateInputObjectSchema,

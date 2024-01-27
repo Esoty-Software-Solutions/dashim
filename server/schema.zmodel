@@ -14,13 +14,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-  theme = "forest"
-  includeRelationFromFields = true
-  output = "./ERD.svg"
-}
-
 generator fakeData {
   provider = "prisma-generator-fake-data"
   output   = "./fakeData/functions.ts"
@@ -46,3 +39,11 @@ generator trpc {
 // generator zod {
 //   provider = "prisma-zod-generator"
 // }
+
+generator erd {
+  provider = "prisma-erd-generator"
+  theme = "forest"
+  // tableOnly = true
+  includeRelationFromFields = true
+  output = "./ERD.pdf"
+}

@@ -14,6 +14,8 @@ import { UserCountAggregateInputObjectSchema } from "@schemas/objects/UserCountA
 import { UserMinAggregateInputObjectSchema } from "@schemas/objects/UserMinAggregateInput.schema";
 import { UserMaxAggregateInputObjectSchema } from "@schemas/objects/UserMaxAggregateInput.schema";
 
+import { User } from "@models/user.model";
+
 export const UserAggregateSchema = z.object({
   orderBy: z
     .union([
@@ -49,7 +51,7 @@ export const UserDeleteManySchema = z.object({
 });
 
 export const UserDeleteOneSchema = z.object({
-  where: UserWhereUniqueInputObjectSchema.optional(),
+  where: UserWhereUniqueInputObjectSchema,
 });
 
 export const UserFindFirstSchema = z.object({

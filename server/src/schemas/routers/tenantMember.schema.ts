@@ -9,7 +9,7 @@ import { TenantMemberWhereUniqueInputObjectSchema } from "@schemas/objects/Tenan
 import { TenantMemberUncheckedUpdateInputObjectSchema } from "@schemas/objects/TenantMemberUncheckedUpdateInput.schema";
 // import { TenantMemberOrderByWithAggregationInputObjectSchema } from "@schemas/objects/TenantMemberOrderByWithAggregationInput.schema"; //
 // import { TenantMemberScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/TenantMemberScalarWhereWithAggregatesInput.schema"; //
-// import { TenantMemberUpdateManyMutationInputObjectSchema } from "@schemas/objects/TenantMemberUpdateManyMutationInput.schema"; //
+import { TenantMemberUpdateManyMutationInputObjectSchema } from "@schemas/objects/TenantMemberUpdateManyMutationInput.schema"; //
 // import { TenantMemberCountAggregateInputObjectSchema } from "@schemas/objects/TenantMemberCountAggregateInput.schema"; //
 // import { TenantMemberMinAggregateInputObjectSchema } from "@schemas/objects/TenantMemberMinAggregateInput.schema"; //
 // import { TenantMemberMaxAggregateInputObjectSchema } from "@schemas/objects/TenantMemberMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const TenantMemberDeleteManySchema = z.object({
 });
 
 export const TenantMemberDeleteOneSchema = z.object({
-  where: TenantMemberWhereUniqueInputObjectSchema.optional(),
+  where: TenantMemberWhereUniqueInputObjectSchema,
 });
 
 // export const TenantMemberFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const TenantMemberFindUniqueSchema = z.object({
 //   by: z.array(TenantMemberScalarFieldEnumSchema),
 // });
 
-// export const TenantMemberUpdateManySchema = z.object({
-//   data: TenantMemberUpdateManyMutationInputObjectSchema,
-//   where: TenantMemberWhereInputObjectSchema.optional(),
-// });
+export const TenantMemberUpdateManySchema = z.object({
+  data: TenantMemberUpdateManyMutationInputObjectSchema,
+  where: TenantMemberWhereInputObjectSchema.optional(),
+});
 
 export const TenantMemberUpdateOneSchema = z.object({
   data: TenantMemberUncheckedUpdateInputObjectSchema,

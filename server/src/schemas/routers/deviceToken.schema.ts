@@ -9,7 +9,7 @@ import { DeviceTokenWhereUniqueInputObjectSchema } from "@schemas/objects/Device
 import { DeviceTokenUncheckedUpdateInputObjectSchema } from "@schemas/objects/DeviceTokenUncheckedUpdateInput.schema";
 // import { DeviceTokenOrderByWithAggregationInputObjectSchema } from "@schemas/objects/DeviceTokenOrderByWithAggregationInput.schema"; //
 // import { DeviceTokenScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/DeviceTokenScalarWhereWithAggregatesInput.schema"; //
-// import { DeviceTokenUpdateManyMutationInputObjectSchema } from "@schemas/objects/DeviceTokenUpdateManyMutationInput.schema"; //
+import { DeviceTokenUpdateManyMutationInputObjectSchema } from "@schemas/objects/DeviceTokenUpdateManyMutationInput.schema"; //
 // import { DeviceTokenCountAggregateInputObjectSchema } from "@schemas/objects/DeviceTokenCountAggregateInput.schema"; //
 // import { DeviceTokenMinAggregateInputObjectSchema } from "@schemas/objects/DeviceTokenMinAggregateInput.schema"; //
 // import { DeviceTokenMaxAggregateInputObjectSchema } from "@schemas/objects/DeviceTokenMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const DeviceTokenDeleteManySchema = z.object({
 });
 
 export const DeviceTokenDeleteOneSchema = z.object({
-  where: DeviceTokenWhereUniqueInputObjectSchema.optional(),
+  where: DeviceTokenWhereUniqueInputObjectSchema,
 });
 
 // export const DeviceTokenFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const DeviceTokenFindUniqueSchema = z.object({
 //   by: z.array(DeviceTokenScalarFieldEnumSchema),
 // });
 
-// export const DeviceTokenUpdateManySchema = z.object({
-//   data: DeviceTokenUpdateManyMutationInputObjectSchema,
-//   where: DeviceTokenWhereInputObjectSchema.optional(),
-// });
+export const DeviceTokenUpdateManySchema = z.object({
+  data: DeviceTokenUpdateManyMutationInputObjectSchema,
+  where: DeviceTokenWhereInputObjectSchema.optional(),
+});
 
 export const DeviceTokenUpdateOneSchema = z.object({
   data: DeviceTokenUncheckedUpdateInputObjectSchema,

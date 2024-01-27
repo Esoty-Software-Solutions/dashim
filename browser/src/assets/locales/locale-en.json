@@ -1,6 +1,7 @@
 {
   "common": {
-    "darkMode": "Dark mode"
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
   },
   "locale": {
     "en": {

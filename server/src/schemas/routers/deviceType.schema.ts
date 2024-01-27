@@ -9,7 +9,7 @@ import { DeviceTypeWhereUniqueInputObjectSchema } from "@schemas/objects/DeviceT
 import { DeviceTypeUncheckedUpdateInputObjectSchema } from "@schemas/objects/DeviceTypeUncheckedUpdateInput.schema";
 // import { DeviceTypeOrderByWithAggregationInputObjectSchema } from "@schemas/objects/DeviceTypeOrderByWithAggregationInput.schema"; //
 // import { DeviceTypeScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/DeviceTypeScalarWhereWithAggregatesInput.schema"; //
-// import { DeviceTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/DeviceTypeUpdateManyMutationInput.schema"; //
+import { DeviceTypeUpdateManyMutationInputObjectSchema } from "@schemas/objects/DeviceTypeUpdateManyMutationInput.schema"; //
 // import { DeviceTypeCountAggregateInputObjectSchema } from "@schemas/objects/DeviceTypeCountAggregateInput.schema"; //
 // import { DeviceTypeMinAggregateInputObjectSchema } from "@schemas/objects/DeviceTypeMinAggregateInput.schema"; //
 // import { DeviceTypeMaxAggregateInputObjectSchema } from "@schemas/objects/DeviceTypeMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const DeviceTypeDeleteManySchema = z.object({
 });
 
 export const DeviceTypeDeleteOneSchema = z.object({
-  where: DeviceTypeWhereUniqueInputObjectSchema.optional(),
+  where: DeviceTypeWhereUniqueInputObjectSchema,
 });
 
 // export const DeviceTypeFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const DeviceTypeFindUniqueSchema = z.object({
 //   by: z.array(DeviceTypeScalarFieldEnumSchema),
 // });
 
-// export const DeviceTypeUpdateManySchema = z.object({
-//   data: DeviceTypeUpdateManyMutationInputObjectSchema,
-//   where: DeviceTypeWhereInputObjectSchema.optional(),
-// });
+export const DeviceTypeUpdateManySchema = z.object({
+  data: DeviceTypeUpdateManyMutationInputObjectSchema,
+  where: DeviceTypeWhereInputObjectSchema.optional(),
+});
 
 export const DeviceTypeUpdateOneSchema = z.object({
   data: DeviceTypeUncheckedUpdateInputObjectSchema,

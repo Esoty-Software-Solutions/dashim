@@ -13,13 +13,6 @@ generator client {
     provider = "prisma-client-js"
 }
 
-generator erd {
-    provider = "prisma-erd-generator"
-    theme = "forest"
-    includeRelationFromFields = true
-    output = "./ERD.svg"
-}
-
 generator fakeData {
     provider = "prisma-generator-fake-data"
     output = "./fakeData/functions.ts"
@@ -36,6 +29,13 @@ generator trpc {
     withShield = false
     contextPath = "../src/routers/_context.router"
     trpcOptionsPath = "trpcOptions"
+}
+
+generator erd {
+    provider = "prisma-erd-generator"
+    theme = "forest"
+    includeRelationFromFields = true
+    output = "./ERD.pdf"
 }
 
 /// @@allow('all', true && isPublished)

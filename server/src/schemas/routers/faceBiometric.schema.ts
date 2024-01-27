@@ -9,7 +9,7 @@ import { FaceBiometricWhereUniqueInputObjectSchema } from "@schemas/objects/Face
 import { FaceBiometricUncheckedUpdateInputObjectSchema } from "@schemas/objects/FaceBiometricUncheckedUpdateInput.schema";
 // import { FaceBiometricOrderByWithAggregationInputObjectSchema } from "@schemas/objects/FaceBiometricOrderByWithAggregationInput.schema"; //
 // import { FaceBiometricScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/FaceBiometricScalarWhereWithAggregatesInput.schema"; //
-// import { FaceBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/FaceBiometricUpdateManyMutationInput.schema"; //
+import { FaceBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/FaceBiometricUpdateManyMutationInput.schema"; //
 // import { FaceBiometricCountAggregateInputObjectSchema } from "@schemas/objects/FaceBiometricCountAggregateInput.schema"; //
 // import { FaceBiometricMinAggregateInputObjectSchema } from "@schemas/objects/FaceBiometricMinAggregateInput.schema"; //
 // import { FaceBiometricMaxAggregateInputObjectSchema } from "@schemas/objects/FaceBiometricMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const FaceBiometricDeleteManySchema = z.object({
 });
 
 export const FaceBiometricDeleteOneSchema = z.object({
-  where: FaceBiometricWhereUniqueInputObjectSchema.optional(),
+  where: FaceBiometricWhereUniqueInputObjectSchema,
 });
 
 // export const FaceBiometricFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const FaceBiometricFindUniqueSchema = z.object({
 //   by: z.array(FaceBiometricScalarFieldEnumSchema),
 // });
 
-// export const FaceBiometricUpdateManySchema = z.object({
-//   data: FaceBiometricUpdateManyMutationInputObjectSchema,
-//   where: FaceBiometricWhereInputObjectSchema.optional(),
-// });
+export const FaceBiometricUpdateManySchema = z.object({
+  data: FaceBiometricUpdateManyMutationInputObjectSchema,
+  where: FaceBiometricWhereInputObjectSchema.optional(),
+});
 
 export const FaceBiometricUpdateOneSchema = z.object({
   data: FaceBiometricUncheckedUpdateInputObjectSchema,

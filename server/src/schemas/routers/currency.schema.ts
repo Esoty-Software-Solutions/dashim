@@ -9,7 +9,7 @@ import { CurrencyWhereUniqueInputObjectSchema } from "@schemas/objects/CurrencyW
 import { CurrencyUncheckedUpdateInputObjectSchema } from "@schemas/objects/CurrencyUncheckedUpdateInput.schema";
 // import { CurrencyOrderByWithAggregationInputObjectSchema } from "@schemas/objects/CurrencyOrderByWithAggregationInput.schema"; //
 // import { CurrencyScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/CurrencyScalarWhereWithAggregatesInput.schema"; //
-// import { CurrencyUpdateManyMutationInputObjectSchema } from "@schemas/objects/CurrencyUpdateManyMutationInput.schema"; //
+import { CurrencyUpdateManyMutationInputObjectSchema } from "@schemas/objects/CurrencyUpdateManyMutationInput.schema"; //
 // import { CurrencyCountAggregateInputObjectSchema } from "@schemas/objects/CurrencyCountAggregateInput.schema"; //
 // import { CurrencyMinAggregateInputObjectSchema } from "@schemas/objects/CurrencyMinAggregateInput.schema"; //
 // import { CurrencyMaxAggregateInputObjectSchema } from "@schemas/objects/CurrencyMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const CurrencyDeleteManySchema = z.object({
 });
 
 export const CurrencyDeleteOneSchema = z.object({
-  where: CurrencyWhereUniqueInputObjectSchema.optional(),
+  where: CurrencyWhereUniqueInputObjectSchema,
 });
 
 // export const CurrencyFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const CurrencyFindUniqueSchema = z.object({
 //   by: z.array(CurrencyScalarFieldEnumSchema),
 // });
 
-// export const CurrencyUpdateManySchema = z.object({
-//   data: CurrencyUpdateManyMutationInputObjectSchema,
-//   where: CurrencyWhereInputObjectSchema.optional(),
-// });
+export const CurrencyUpdateManySchema = z.object({
+  data: CurrencyUpdateManyMutationInputObjectSchema,
+  where: CurrencyWhereInputObjectSchema.optional(),
+});
 
 export const CurrencyUpdateOneSchema = z.object({
   data: CurrencyUncheckedUpdateInputObjectSchema,

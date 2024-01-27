@@ -9,7 +9,7 @@ import { CountryWhereUniqueInputObjectSchema } from "@schemas/objects/CountryWhe
 import { CountryUncheckedUpdateInputObjectSchema } from "@schemas/objects/CountryUncheckedUpdateInput.schema";
 // import { CountryOrderByWithAggregationInputObjectSchema } from "@schemas/objects/CountryOrderByWithAggregationInput.schema"; //
 // import { CountryScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/CountryScalarWhereWithAggregatesInput.schema"; //
-// import { CountryUpdateManyMutationInputObjectSchema } from "@schemas/objects/CountryUpdateManyMutationInput.schema"; //
+import { CountryUpdateManyMutationInputObjectSchema } from "@schemas/objects/CountryUpdateManyMutationInput.schema"; //
 // import { CountryCountAggregateInputObjectSchema } from "@schemas/objects/CountryCountAggregateInput.schema"; //
 // import { CountryMinAggregateInputObjectSchema } from "@schemas/objects/CountryMinAggregateInput.schema"; //
 // import { CountryMaxAggregateInputObjectSchema } from "@schemas/objects/CountryMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const CountryDeleteManySchema = z.object({
 });
 
 export const CountryDeleteOneSchema = z.object({
-  where: CountryWhereUniqueInputObjectSchema.optional(),
+  where: CountryWhereUniqueInputObjectSchema,
 });
 
 // export const CountryFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const CountryFindUniqueSchema = z.object({
 //   by: z.array(CountryScalarFieldEnumSchema),
 // });
 
-// export const CountryUpdateManySchema = z.object({
-//   data: CountryUpdateManyMutationInputObjectSchema,
-//   where: CountryWhereInputObjectSchema.optional(),
-// });
+export const CountryUpdateManySchema = z.object({
+  data: CountryUpdateManyMutationInputObjectSchema,
+  where: CountryWhereInputObjectSchema.optional(),
+});
 
 export const CountryUpdateOneSchema = z.object({
   data: CountryUncheckedUpdateInputObjectSchema,

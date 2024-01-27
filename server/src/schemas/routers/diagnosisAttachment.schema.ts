@@ -9,7 +9,7 @@ import { DiagnosisAttachmentWhereUniqueInputObjectSchema } from "@schemas/object
 import { DiagnosisAttachmentUncheckedUpdateInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentUncheckedUpdateInput.schema";
 // import { DiagnosisAttachmentOrderByWithAggregationInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentOrderByWithAggregationInput.schema"; //
 // import { DiagnosisAttachmentScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentScalarWhereWithAggregatesInput.schema"; //
-// import { DiagnosisAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentUpdateManyMutationInput.schema"; //
+import { DiagnosisAttachmentUpdateManyMutationInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentUpdateManyMutationInput.schema"; //
 // import { DiagnosisAttachmentCountAggregateInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentCountAggregateInput.schema"; //
 // import { DiagnosisAttachmentMinAggregateInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentMinAggregateInput.schema"; //
 // import { DiagnosisAttachmentMaxAggregateInputObjectSchema } from "@schemas/objects/DiagnosisAttachmentMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const DiagnosisAttachmentDeleteManySchema = z.object({
 });
 
 export const DiagnosisAttachmentDeleteOneSchema = z.object({
-  where: DiagnosisAttachmentWhereUniqueInputObjectSchema.optional(),
+  where: DiagnosisAttachmentWhereUniqueInputObjectSchema,
 });
 
 // export const DiagnosisAttachmentFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const DiagnosisAttachmentFindUniqueSchema = z.object({
 //   by: z.array(DiagnosisAttachmentScalarFieldEnumSchema),
 // });
 
-// export const DiagnosisAttachmentUpdateManySchema = z.object({
-//   data: DiagnosisAttachmentUpdateManyMutationInputObjectSchema,
-//   where: DiagnosisAttachmentWhereInputObjectSchema.optional(),
-// });
+export const DiagnosisAttachmentUpdateManySchema = z.object({
+  data: DiagnosisAttachmentUpdateManyMutationInputObjectSchema,
+  where: DiagnosisAttachmentWhereInputObjectSchema.optional(),
+});
 
 export const DiagnosisAttachmentUpdateOneSchema = z.object({
   data: DiagnosisAttachmentUncheckedUpdateInputObjectSchema,

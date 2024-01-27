@@ -9,7 +9,7 @@ import { MedicalServiceTemplateWhereUniqueInputObjectSchema } from "@schemas/obj
 import { MedicalServiceTemplateUncheckedUpdateInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateUncheckedUpdateInput.schema";
 // import { MedicalServiceTemplateOrderByWithAggregationInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateOrderByWithAggregationInput.schema"; //
 // import { MedicalServiceTemplateScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateScalarWhereWithAggregatesInput.schema"; //
-// import { MedicalServiceTemplateUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateUpdateManyMutationInput.schema"; //
+import { MedicalServiceTemplateUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateUpdateManyMutationInput.schema"; //
 // import { MedicalServiceTemplateCountAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateCountAggregateInput.schema"; //
 // import { MedicalServiceTemplateMinAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateMinAggregateInput.schema"; //
 // import { MedicalServiceTemplateMaxAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceTemplateMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const MedicalServiceTemplateDeleteManySchema = z.object({
 });
 
 export const MedicalServiceTemplateDeleteOneSchema = z.object({
-  where: MedicalServiceTemplateWhereUniqueInputObjectSchema.optional(),
+  where: MedicalServiceTemplateWhereUniqueInputObjectSchema,
 });
 
 // export const MedicalServiceTemplateFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const MedicalServiceTemplateFindUniqueSchema = z.object({
 //   by: z.array(MedicalServiceTemplateScalarFieldEnumSchema),
 // });
 
-// export const MedicalServiceTemplateUpdateManySchema = z.object({
-//   data: MedicalServiceTemplateUpdateManyMutationInputObjectSchema,
-//   where: MedicalServiceTemplateWhereInputObjectSchema.optional(),
-// });
+export const MedicalServiceTemplateUpdateManySchema = z.object({
+  data: MedicalServiceTemplateUpdateManyMutationInputObjectSchema,
+  where: MedicalServiceTemplateWhereInputObjectSchema.optional(),
+});
 
 export const MedicalServiceTemplateUpdateOneSchema = z.object({
   data: MedicalServiceTemplateUncheckedUpdateInputObjectSchema,

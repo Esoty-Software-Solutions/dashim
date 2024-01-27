@@ -9,7 +9,7 @@ import { InstitutionWhereUniqueInputObjectSchema } from "@schemas/objects/Instit
 import { InstitutionUncheckedUpdateInputObjectSchema } from "@schemas/objects/InstitutionUncheckedUpdateInput.schema";
 // import { InstitutionOrderByWithAggregationInputObjectSchema } from "@schemas/objects/InstitutionOrderByWithAggregationInput.schema"; //
 // import { InstitutionScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/InstitutionScalarWhereWithAggregatesInput.schema"; //
-// import { InstitutionUpdateManyMutationInputObjectSchema } from "@schemas/objects/InstitutionUpdateManyMutationInput.schema"; //
+import { InstitutionUpdateManyMutationInputObjectSchema } from "@schemas/objects/InstitutionUpdateManyMutationInput.schema"; //
 // import { InstitutionCountAggregateInputObjectSchema } from "@schemas/objects/InstitutionCountAggregateInput.schema"; //
 // import { InstitutionMinAggregateInputObjectSchema } from "@schemas/objects/InstitutionMinAggregateInput.schema"; //
 // import { InstitutionMaxAggregateInputObjectSchema } from "@schemas/objects/InstitutionMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const InstitutionDeleteManySchema = z.object({
 });
 
 export const InstitutionDeleteOneSchema = z.object({
-  where: InstitutionWhereUniqueInputObjectSchema.optional(),
+  where: InstitutionWhereUniqueInputObjectSchema,
 });
 
 // export const InstitutionFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const InstitutionFindUniqueSchema = z.object({
 //   by: z.array(InstitutionScalarFieldEnumSchema),
 // });
 
-// export const InstitutionUpdateManySchema = z.object({
-//   data: InstitutionUpdateManyMutationInputObjectSchema,
-//   where: InstitutionWhereInputObjectSchema.optional(),
-// });
+export const InstitutionUpdateManySchema = z.object({
+  data: InstitutionUpdateManyMutationInputObjectSchema,
+  where: InstitutionWhereInputObjectSchema.optional(),
+});
 
 export const InstitutionUpdateOneSchema = z.object({
   data: InstitutionUncheckedUpdateInputObjectSchema,

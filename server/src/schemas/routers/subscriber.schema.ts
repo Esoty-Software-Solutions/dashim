@@ -9,7 +9,7 @@ import { SubscriberWhereUniqueInputObjectSchema } from "@schemas/objects/Subscri
 import { SubscriberUncheckedUpdateInputObjectSchema } from "@schemas/objects/SubscriberUncheckedUpdateInput.schema";
 // import { SubscriberOrderByWithAggregationInputObjectSchema } from "@schemas/objects/SubscriberOrderByWithAggregationInput.schema"; //
 // import { SubscriberScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/SubscriberScalarWhereWithAggregatesInput.schema"; //
-// import { SubscriberUpdateManyMutationInputObjectSchema } from "@schemas/objects/SubscriberUpdateManyMutationInput.schema"; //
+import { SubscriberUpdateManyMutationInputObjectSchema } from "@schemas/objects/SubscriberUpdateManyMutationInput.schema"; //
 // import { SubscriberCountAggregateInputObjectSchema } from "@schemas/objects/SubscriberCountAggregateInput.schema"; //
 // import { SubscriberMinAggregateInputObjectSchema } from "@schemas/objects/SubscriberMinAggregateInput.schema"; //
 // import { SubscriberMaxAggregateInputObjectSchema } from "@schemas/objects/SubscriberMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const SubscriberDeleteManySchema = z.object({
 });
 
 export const SubscriberDeleteOneSchema = z.object({
-  where: SubscriberWhereUniqueInputObjectSchema.optional(),
+  where: SubscriberWhereUniqueInputObjectSchema,
 });
 
 // export const SubscriberFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const SubscriberFindUniqueSchema = z.object({
 //   by: z.array(SubscriberScalarFieldEnumSchema),
 // });
 
-// export const SubscriberUpdateManySchema = z.object({
-//   data: SubscriberUpdateManyMutationInputObjectSchema,
-//   where: SubscriberWhereInputObjectSchema.optional(),
-// });
+export const SubscriberUpdateManySchema = z.object({
+  data: SubscriberUpdateManyMutationInputObjectSchema,
+  where: SubscriberWhereInputObjectSchema.optional(),
+});
 
 export const SubscriberUpdateOneSchema = z.object({
   data: SubscriberUncheckedUpdateInputObjectSchema,

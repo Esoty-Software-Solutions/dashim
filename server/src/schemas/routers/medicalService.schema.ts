@@ -9,7 +9,7 @@ import { MedicalServiceWhereUniqueInputObjectSchema } from "@schemas/objects/Med
 import { MedicalServiceUncheckedUpdateInputObjectSchema } from "@schemas/objects/MedicalServiceUncheckedUpdateInput.schema";
 // import { MedicalServiceOrderByWithAggregationInputObjectSchema } from "@schemas/objects/MedicalServiceOrderByWithAggregationInput.schema"; //
 // import { MedicalServiceScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/MedicalServiceScalarWhereWithAggregatesInput.schema"; //
-// import { MedicalServiceUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalServiceUpdateManyMutationInput.schema"; //
+import { MedicalServiceUpdateManyMutationInputObjectSchema } from "@schemas/objects/MedicalServiceUpdateManyMutationInput.schema"; //
 // import { MedicalServiceCountAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceCountAggregateInput.schema"; //
 // import { MedicalServiceMinAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceMinAggregateInput.schema"; //
 // import { MedicalServiceMaxAggregateInputObjectSchema } from "@schemas/objects/MedicalServiceMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const MedicalServiceDeleteManySchema = z.object({
 });
 
 export const MedicalServiceDeleteOneSchema = z.object({
-  where: MedicalServiceWhereUniqueInputObjectSchema.optional(),
+  where: MedicalServiceWhereUniqueInputObjectSchema,
 });
 
 // export const MedicalServiceFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const MedicalServiceFindUniqueSchema = z.object({
 //   by: z.array(MedicalServiceScalarFieldEnumSchema),
 // });
 
-// export const MedicalServiceUpdateManySchema = z.object({
-//   data: MedicalServiceUpdateManyMutationInputObjectSchema,
-//   where: MedicalServiceWhereInputObjectSchema.optional(),
-// });
+export const MedicalServiceUpdateManySchema = z.object({
+  data: MedicalServiceUpdateManyMutationInputObjectSchema,
+  where: MedicalServiceWhereInputObjectSchema.optional(),
+});
 
 export const MedicalServiceUpdateOneSchema = z.object({
   data: MedicalServiceUncheckedUpdateInputObjectSchema,

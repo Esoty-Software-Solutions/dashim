@@ -9,7 +9,7 @@ import { FingerprintBiometricWhereUniqueInputObjectSchema } from "@schemas/objec
 import { FingerprintBiometricUncheckedUpdateInputObjectSchema } from "@schemas/objects/FingerprintBiometricUncheckedUpdateInput.schema";
 // import { FingerprintBiometricOrderByWithAggregationInputObjectSchema } from "@schemas/objects/FingerprintBiometricOrderByWithAggregationInput.schema"; //
 // import { FingerprintBiometricScalarWhereWithAggregatesInputObjectSchema } from "@schemas/objects/FingerprintBiometricScalarWhereWithAggregatesInput.schema"; //
-// import { FingerprintBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/FingerprintBiometricUpdateManyMutationInput.schema"; //
+import { FingerprintBiometricUpdateManyMutationInputObjectSchema } from "@schemas/objects/FingerprintBiometricUpdateManyMutationInput.schema"; //
 // import { FingerprintBiometricCountAggregateInputObjectSchema } from "@schemas/objects/FingerprintBiometricCountAggregateInput.schema"; //
 // import { FingerprintBiometricMinAggregateInputObjectSchema } from "@schemas/objects/FingerprintBiometricMinAggregateInput.schema"; //
 // import { FingerprintBiometricMaxAggregateInputObjectSchema } from "@schemas/objects/FingerprintBiometricMaxAggregateInput.schema"; //
@@ -49,7 +49,7 @@ export const FingerprintBiometricDeleteManySchema = z.object({
 });
 
 export const FingerprintBiometricDeleteOneSchema = z.object({
-  where: FingerprintBiometricWhereUniqueInputObjectSchema.optional(),
+  where: FingerprintBiometricWhereUniqueInputObjectSchema,
 });
 
 // export const FingerprintBiometricFindFirstSchema = z.object({
@@ -100,10 +100,10 @@ export const FingerprintBiometricFindUniqueSchema = z.object({
 //   by: z.array(FingerprintBiometricScalarFieldEnumSchema),
 // });
 
-// export const FingerprintBiometricUpdateManySchema = z.object({
-//   data: FingerprintBiometricUpdateManyMutationInputObjectSchema,
-//   where: FingerprintBiometricWhereInputObjectSchema.optional(),
-// });
+export const FingerprintBiometricUpdateManySchema = z.object({
+  data: FingerprintBiometricUpdateManyMutationInputObjectSchema,
+  where: FingerprintBiometricWhereInputObjectSchema.optional(),
+});
 
 export const FingerprintBiometricUpdateOneSchema = z.object({
   data: FingerprintBiometricUncheckedUpdateInputObjectSchema,
