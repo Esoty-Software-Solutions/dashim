@@ -52,19 +52,19 @@ export const UserDeleteOneSchema = z.object({
   where: UserWhereUniqueInputObjectSchema,
 });
 
-// export const UserFindFirstSchema = z.object({
-//   orderBy: z
-//     .union([
-//       UserOrderByWithRelationInputObjectSchema,
-//       UserOrderByWithRelationInputObjectSchema.array(),
-//     ])
-//     .optional(),
-//   where: UserWhereInputObjectSchema.optional(),
-//   cursor: UserWhereUniqueInputObjectSchema.optional(),
-//   take: z.number().optional(),
-//   skip: z.number().optional(),
-//   distinct: z.array(UserScalarFieldEnumSchema).optional(),
-// });
+export const UserFindFirstSchema = z.object({
+  orderBy: z
+    .union([
+      UserOrderByWithRelationInputObjectSchema,
+      UserOrderByWithRelationInputObjectSchema.array(),
+    ])
+    .optional(),
+  where: UserWhereInputObjectSchema.optional(),
+  cursor: UserWhereUniqueInputObjectSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.array(UserScalarFieldEnumSchema).optional(),
+});
 
 export const UserFindManySchema = z
   .object({
