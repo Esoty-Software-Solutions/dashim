@@ -19,16 +19,11 @@ type IInputBase = {
   [x: string]: any;
 };
 
-interface MetadataBase {
-  unFilteredCount: number;
-  [key: string]: any;
-}
-
 interface IOutputBase {
   data: Record<string, any>[];
   filteredCount: number;
-  metaData: MetadataBase;
-  statistics: { key: string; value: any }[];
+  unFilteredCount: number;
+  statistics: { key: string; value: string | number | boolean }[];
 }
 
 type FindCallback<TInput extends IInputBase, TOutput extends IOutputBase> = (
