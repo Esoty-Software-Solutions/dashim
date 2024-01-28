@@ -14,6 +14,8 @@ import router from "@/router";
 
 import "@/queries";
 
+import "@/modules/filter/styles/main.css";
+
 /** Register Vue */
 const vue = createApp(App);
 const pinia = createPinia();

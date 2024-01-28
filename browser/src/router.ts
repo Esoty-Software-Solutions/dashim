@@ -88,6 +88,10 @@ if (import.meta.env.DEV) {
     name: "Playground",
     component: () => import("@/playground/Playground.vue"),
   });
+
+  import("@/modules/example/routes").then((module) => {
+    module.default.forEach(router.addRoute);
+  });
 }
 
 /***

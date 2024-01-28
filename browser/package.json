@@ -85,7 +85,7 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "browser/src/**/*.{js,ts,json,yaml,yml,vue,htm,html,md}": "eslint  --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint"
+    "browser/src/**/*.{js,ts,json,yaml,yml,vue,htm,html}": "eslint  --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint"
   },
   "publishConfig": {
     "access": "restricted"
