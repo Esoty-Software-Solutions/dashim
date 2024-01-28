@@ -88,15 +88,22 @@ export const userRouter = router({
     .input(UserFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.user.findMany(input),
-          ctx.prisma.user.count({ where: input?.where }),
-          ctx.prisma.user.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.user.findMany(input),
+            ctx.prisma.user.count({ where: input?.where }),
+            ctx.prisma.user.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);

@@ -94,15 +94,22 @@ export const tenantRouter = router({
     .input(TenantFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.tenant.findMany(input),
-          ctx.prisma.tenant.count({ where: input?.where }),
-          ctx.prisma.tenant.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.tenant.findMany(input),
+            ctx.prisma.tenant.count({ where: input?.where }),
+            ctx.prisma.tenant.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);

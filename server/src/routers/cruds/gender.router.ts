@@ -94,15 +94,22 @@ export const genderRouter = router({
     .input(GenderFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.gender.findMany(input),
-          ctx.prisma.gender.count({ where: input?.where }),
-          ctx.prisma.gender.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.gender.findMany(input),
+            ctx.prisma.gender.count({ where: input?.where }),
+            ctx.prisma.gender.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);

@@ -94,15 +94,22 @@ export const beneficiaryRouter = router({
     .input(BeneficiaryFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.beneficiary.findMany(input),
-          ctx.prisma.beneficiary.count({ where: input?.where }),
-          ctx.prisma.beneficiary.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.beneficiary.findMany(input),
+            ctx.prisma.beneficiary.count({ where: input?.where }),
+            ctx.prisma.beneficiary.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);

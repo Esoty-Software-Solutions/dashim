@@ -94,15 +94,22 @@ export const insurancePolicyRouter = router({
     .input(InsurancePolicyFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.insurancePolicy.findMany(input),
-          ctx.prisma.insurancePolicy.count({ where: input?.where }),
-          ctx.prisma.insurancePolicy.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.insurancePolicy.findMany(input),
+            ctx.prisma.insurancePolicy.count({ where: input?.where }),
+            ctx.prisma.insurancePolicy.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);

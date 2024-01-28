@@ -94,15 +94,22 @@ export const deviceTokenRouter = router({
     .input(DeviceTokenFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [data, fCount, uFCount] = await Promise.all([
-          ctx.prisma.deviceToken.findMany(input),
-          ctx.prisma.deviceToken.count({ where: input?.where }),
-          ctx.prisma.deviceToken.count(),
-        ]);
+        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
+          [
+            ctx.prisma.deviceToken.findMany(input),
+            ctx.prisma.deviceToken.count({ where: input?.where }),
+            ctx.prisma.deviceToken.count(),
+          ],
+        );
+        const statistics: {
+          key: string;
+          value: string | number | boolean;
+        }[] = [];
         return {
-          data,
-          fCount,
-          uFCount,
+          data: subscribers,
+          filteredCount,
+          unFilteredCount,
+          statistics,
         };
       } catch (error) {
         throwCustomError(error);
