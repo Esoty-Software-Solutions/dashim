@@ -27,6 +27,7 @@ const hovered = useElementHover(hoverEl);
   >
     <VSheet
       width="12"
+      elevation="0"
       class="d-data-base-filter__toggle h-100 rounded-s"
       :color="enabled ? 'primary' : undefined"
       style="cursor: pointer"
