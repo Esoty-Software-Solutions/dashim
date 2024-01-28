@@ -13,7 +13,7 @@ defineSlots<{
     ref="container"
     v-bind="$attrs"
     fluid
-    class="d-flex px-1 py-0 ga-1 flex-column h-100"
+    class="d-flex px-1 py-1 ga-1 flex-column h-100"
   >
     <VDefaultsProvider
       :defaults="{

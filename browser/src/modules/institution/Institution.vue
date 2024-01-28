@@ -1,45 +1,47 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-import InstitutionPage from "../institution/pags/InstitutionPage.vue";
-import NetworkPage from "../institution/pags/NetworkPage.vue";
-import SubscribersPage from "../institution/pags/SubscribersPage.vue";
+import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 defineOptions({
-  name: "HomePage",
-  components: {
-    InstitutionPage,
-    NetworkPage,
-    SubscribersPage,
-  },
+  name: "InstitutionsLayout",
 });
 
-let tab = ref("");
+const { t } = useI18n();
 
-const tapName: { name: string; key: string }[] = [
-  { name: "Institutions", key: "InstitutionPage" },
-  { name: "Network", key: "NetworkPage" },
-  { name: "Subscribers", key: "SubscribersPage" },
-];
+const tabs = ref([
+  {
+    text: t("institution.tabs.list"),
+    to: {
+      name: "InstitutionsList",
+    },
+  },
+  {
+    text: t("institution.tabs.beneficiaries"),
+    to: {
+      name: "InstitutionsBeneficiaries",
+    },
+  },
+  {
+    text: t("institution.tabs.network"),
+  },
+  {
+    text: t("institution.tabs.insurancePolicy"),
+  },
+  {
+    text: t("institution.tabs.benefitPackage"),
+  },
+  {
+    text: t("institution.tabs.claims"),
+  },
+]);
 </script>
 
 <template>
-  <VCard>
-    <v-tabs v-model="tab" height="60">
-      <v-tab
-        v-for="tap in tapName"
-        :key="tap.key"
-        color="primary"
-        :value="tap.key"
-        >{{ tap.name }}</v-tab
-      >
-    </v-tabs>
-    <v-card-text>
-      <v-window v-model="tab">
-        <v-window-item v-for="tap in tapName" :key="tap.key" :value="tap.key">
-          <component :is="tap.key" />
-        </v-window-item>
-      </v-window>
-    </v-card-text>
-  </VCard>
+  <VAppBar>
+    <VTabs :items="tabs" />
+  </VAppBar>
+
+  <RouterView v-slot="{ Component, route }">
+    <component :is="Component" :key="route.name" />
+  </RouterView>
 </template>

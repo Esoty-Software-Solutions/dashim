@@ -1,5 +1,7 @@
 import type { RouteLocationRaw } from "vue-router";
 
+import { VDataTableServer } from "vuetify/components/VDataTable";
+
 /** Drawer Menu Item Interface */
 export interface DrawerMenuItem {
   /** Item Name */
@@ -15,3 +17,7 @@ export interface DrawerMenuItem {
 
   exact?: boolean;
 }
+
+type VDataTableHeaders = VDataTableServer["$props"]["headers"];
+
+export type TableHeader = VDataTableHeaders[number];

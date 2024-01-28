@@ -53,10 +53,10 @@ const items: DrawerMenuItem[] = [
     exact: true,
   },
   {
-    title: "Institution",
+    title: "Institutions",
     icon: mdiAccountGroup,
-    to: { name: "Institution" },
-    exact: true,
+    to: { name: "Institutions" },
+    exact: false,
   },
   // {
   //   title: "Subscribers",
@@ -130,7 +130,7 @@ function changeLocale() {
             :prepend-icon="item.icon"
             :title="item.title"
             :to="item.to"
-            :exact="true"
+            :exact="item.exact"
           />
           <!-- Sub menu -->
           <VListGroup v-else-if="item.items" v-model="item.active">

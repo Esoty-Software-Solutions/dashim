@@ -55,6 +55,13 @@ let vuetifyConfig: VuetifyOptions = {
     VTextField: {
       color: "primary",
     },
+    VTabs: {
+      sliderColor: "primary",
+      density: "comfortable",
+    },
+    VTab: {
+      density: "comfortable",
+    },
   },
 
   icons: {
