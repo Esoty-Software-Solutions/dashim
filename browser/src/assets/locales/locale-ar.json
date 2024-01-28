@@ -1,7 +1,12 @@
 {
   "common": {
     "darkMode": "الوضع الداكن",
-    "lightMode": "الوضع الموضي"
+    "lightMode": "الوضع الموضي",
+    "name": "الاسم",
+    "status": "الحالة",
+    "creationDate": "تاريخ الإنشاء",
+    "actions": "إجراء",
+    "add": "إضافة"
   },
   "locale": {
     "ar": {
@@ -12,5 +17,22 @@
       "name": "الإنجليزية",
       "nativeName": "English"
     }
+  },
+  "institution": {
+    "list": {
+      "pageTitle": "قائمة المؤسسات",
+      "newInstitution": "إضافة مؤسسة"
+    },
+    "tabs": {
+      "list": "القائمة",
+      "beneficiaries": "المستفيدين",
+      "benefitPackage": "باقات المستفيدين",
+      "insurancePolicy": "سياسة التأمين",
+      "network": "الشبكة",
+      "claims": "@.define:accounting.claims"
+    }
+  },
+  "accounting": {
+    "claims": "مطالبات"
   }
 }

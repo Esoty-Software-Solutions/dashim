@@ -8,6 +8,7 @@ import {
 } from "vue-router";
 
 import useSession from "@/modules/auth/stores/session";
+import institutionRoutes from "@/modules/institution/routes";
 import useGlobal from "@/modules/shared/stores/globalStore";
 
 import useConfig from "./modules/shared/stores/configStore";
@@ -24,16 +25,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/modules/home/Home.vue"),
       },
 
-      {
-        path: "/institution",
-        name: "Institution",
-        component: () => import("@/modules/institution/Institution.vue"),
-      },
-      {
-        path: "/setting",
-        name: "Setting",
-        component: () => import("@/modules/setting/SettingPage.vue"),
-      },
+      ...institutionRoutes,
     ],
     meta: {
       requiresAuth: true,

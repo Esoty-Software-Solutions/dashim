@@ -1,7 +1,32 @@
 {
   "common": {
     "darkMode": "Dark mode",
-    "lightMode": "Light mode"
+    "lightMode": "Light mode",
+    "name": "Name",
+    "status": "Status",
+    "creationDate": "Creation Date",
+    "actions": "Actions",
+    "add": "Add"
+  },
+  "accounting": {
+    "claims": "Claims"
+  },
+  "institution": {
+    "tabs": {
+      "list": "List",
+      "beneficiaries": "Beneficiaries",
+      "network": "Network",
+      "insurancePolicy": "Insurance Policy",
+      "benefitPackage": "Benefit Package",
+      "claims": "@.capitalize:accounting.claims"
+    },
+    "list": {
+      "pageTitle": "Institutions List",
+      "newInstitution": "New Institution"
+    },
+    "beneficiaries": {
+      "pageTitle": "Beneficiaries List"
+    }
   },
   "locale": {
     "en": {
