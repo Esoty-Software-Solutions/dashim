@@ -299,7 +299,7 @@ export default function useDataFilters<
         }
 
         return h(VCardItem, { class: ["flex-row pa-1"] }, () =>
-          h(VRow, { dense: true, class: ["mx-2 py-1 "] }, () => nodes),
+          h(VRow, { dense: true, class: ["mx-2 my-0 py-1 "] }, () => nodes),
         );
       }
 
@@ -329,7 +329,7 @@ export default function useDataFilters<
                 VRow,
                 {
                   dense: true,
-                  class: ["mx-2 py-2", collapsableRowClasses.value],
+                  class: ["mx-2 my-0 py-2", collapsableRowClasses.value],
                 },
                 () => nodes,
               ),
