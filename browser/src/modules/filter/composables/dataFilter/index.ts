@@ -405,6 +405,8 @@ export default function useDataFilters<
             {
               color: "surface",
               density: "compact",
+              // override default elevation of data page
+              elevation: 0,
               class: ["d-data-filter"],
               tag: "section",
             },
