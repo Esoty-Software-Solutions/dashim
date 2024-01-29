@@ -29,14 +29,16 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   // the first fetch is when the filters/page change
   const { binding, items } = useQuerierTable({
     storageKey: "beneficiariesList",
-    input: (input) => {
+    input: () => {
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
-      const where: any = {};
+      // const where: any = {};
 
       if (nameFilterEnabled.value && nameFilter.value.trim()) {
-        where.searchName = { contains: nameFilter.value.trim() };
+        // searchName : { contains: nameFilter.value.trim() }
+        return {
+          where: { searchName: { contains: nameFilter.value.trim() } },
+        };
       }
-
       return {
         where: {},
       };
