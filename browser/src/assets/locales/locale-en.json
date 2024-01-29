@@ -29,7 +29,8 @@
       "newInstitution": "New Institution"
     },
     "beneficiaries": {
-      "pageTitle": "Beneficiaries List"
+      "pageTitle": "Beneficiaries List",
+      "newbeneficiary": "New Beneficiary"
     }
   },
   "locale": {

@@ -17,6 +17,9 @@ defineOptions({
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.binding.value.items);
+let selected = ref([]);
+let selectedCount = ref(0);
+const benefeciaryTableList = ref(null);
 const { FilterComponent } = useDataFilters({
   sheetProps: {
     elevation: 0,
@@ -35,6 +38,32 @@ const { FilterComponent } = useDataFilters({
     }),
   },
 });
+
+// actions
+function onSelected() {
+  // benefeciaryTableList
+  // selected.value = store.binding.value.items
+  // selected.value
+  console.log(selected.value);
+  selectedCount.value = selected.value.length;
+}
+function refresh() {
+  // store = store.triggerFetch()
+}
+function selectAll() {
+  // benefeciaryTableList
+  selected.value = store.binding.value.items.map((item) => item.id);
+  selectedCount.value = store.binding.value.itemsLength;
+
+  console.log(selected.value);
+}
+function paginated() {
+  console.log("paginated");
+
+  // benefeciaryTableList
+  selected.value = [];
+  selectedCount.value = 0;
+}
 
 // table headers
 const headers = ref<TableHeader[]>([
@@ -99,11 +128,29 @@ const headers = ref<TableHeader[]>([
     </template>
     <template #actions>
       <VCardActions>
-        <VBtn>Action 1</VBtn>
+        {{ selectedCount }}
+        <!-- {{ selected.length }} {{ store.binding.value.itemsLength }} -->
+        <VBtn @click="selectAll">Select All</VBtn>
+        <VBtn @click="refresh">refresh</VBtn>
+        <VSpacer />
+        <VBtn color="primary" variant="plain">
+          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
+          <VIcon end :icon="mdiPlus" />
+        </VBtn>
       </VCardActions>
     </template>
     <template #table>
-      <VDataTableServer :headers="headers" v-bind="store.binding.value">
+      <VDataTableServer
+        ref="benefeciaryTableList"
+        v-model="selected"
+        :item-value="(item) => item.id"
+        show-select
+        :headers="headers"
+        v-bind="store.binding.value"
+        @input="onSelected($event)"
+        @update:page="paginated"
+        @update:items-per-page="paginated"
+      >
         <template #item.name="{ item }">
           {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
           {{ item.lastName }}
