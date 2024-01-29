@@ -16,3 +16,7 @@ export function pageToSkipTake(
 export type Merge<A, B> = {
   [K in keyof A]: K extends keyof B ? B[K] : A[K];
 } & B;
+
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
