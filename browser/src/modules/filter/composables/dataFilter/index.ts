@@ -32,8 +32,8 @@ import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGett
 import {
   render as renderAutocomplete,
   type AutocompleteDataFilter,
-} from "./autocomplete";
-export { autocomplete } from "./autocomplete";
+} from "./autocompleteFilter";
+export { autocomplete } from "./autocompleteFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
