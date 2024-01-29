@@ -23,7 +23,7 @@ import DrawerComponent from "@/modules/shared/layouts/main/DrawerComponent.vue";
 
 <style>
 .v-table thead tr th {
-  background: rgba(var(--v-theme-primary), 0.8) !important;
+  background: rgba(var(--v-theme-primary)) !important;
   color: rgb(var(--v-theme-on-primary)) !important;
   padding-top: 4px;
   padding-bottom: 40px;
