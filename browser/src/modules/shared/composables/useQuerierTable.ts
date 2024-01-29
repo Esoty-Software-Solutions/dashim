@@ -11,13 +11,15 @@ import type { ProcedureOptions } from "@trpc/server";
 
 export type UseQuerierTableReturn = ReturnType<typeof useQuerierTable>;
 
-type IInputBase = {
+interface IInputBase {
   skip?: number;
   take?: number;
   orderBy?: any;
   where?: any;
   [x: string]: any;
-};
+}
+
+type TInputBase = IInputBase | undefined | void;
 
 interface IOutputBase {
   data: Record<string, any>[];
@@ -26,20 +28,20 @@ interface IOutputBase {
   statistics: { key: string; value: string | number | boolean }[];
 }
 
-type FindCallback<TInput extends IInputBase, TOutput extends IOutputBase> = (
+type FindCallback<TInput extends TInputBase, TOutput extends IOutputBase> = (
   input: TInput,
   opts?: ProcedureOptions,
 ) => Promise<TOutput | null | undefined>;
 
 export interface UseQuerierOptions<
-  TInput extends IInputBase,
+  TInput extends TInputBase,
   TOutputRaw extends IOutputBase = IOutputBase,
 > {
   storageKey: string;
   /**
    * Filtering options except pagination related
    */
-  input: MaybeRefOrGetter<Omit<TInput, "take" | "skip">>;
+  input: MaybeRefOrGetter<Omit<Exclude<TInput, void>, "take" | "skip">>;
   /**
    * Whether to trigger fetch upon initialization
    * @default false
@@ -62,7 +64,7 @@ export interface UseQuerierOptions<
 }
 
 function useQuerierTable<
-  TInput extends IInputBase,
+  TInput extends TInputBase,
   TOutputRaw extends IOutputBase = IOutputBase,
 >(options: UseQuerierOptions<TInput, TOutputRaw>) {
   const items = ref([]) as Ref<TOutputRaw["data"]>;
