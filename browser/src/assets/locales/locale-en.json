@@ -5,6 +5,10 @@
     "name": "Name",
     "status": "Status",
     "creationDate": "Creation Date",
+    "updatedAt": "Updated at",
+    "birthDate": "Birthdate",
+    "genderId": "Gender",
+    "relationshipId": "Relationship",
     "actions": "Actions",
     "add": "Add"
   },
