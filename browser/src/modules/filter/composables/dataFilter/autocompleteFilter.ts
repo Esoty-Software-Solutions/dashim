@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   h,
+  isRef,
   mergeProps,
-  type VNode,
-  type Ref,
-  type MaybeRefOrGetter,
   toValue,
+  type MaybeRefOrGetter,
+  type VNode,
 } from "vue";
-import { isRef } from "vue";
 
 import { VAutocomplete } from "vuetify/components";
 
 import type { DataFilterBase, DataFilterInjection } from "./types";
 import type { Prettify } from "@/utils";
 
+/*
+ * Types borrowed from Vuetify
+ */
 type ItemType<T> = T extends readonly (infer U)[] ? U : never;
 type Primitive = string | number | boolean | symbol;
 type Val<T, ReturnObject extends boolean> = [T] extends [Primitive]
@@ -28,36 +30,54 @@ type Value<
 > = Multiple extends true
   ? readonly Val<T, ReturnObject>[]
   : Val<T, ReturnObject> | null;
+/***********/
 
-export interface AutocompleteDataFilter<TValue = any> extends DataFilterBase {
+type VAutocompleteGenericProps = keyof InstanceType<
+  typeof VAutocomplete<any>
+>["$props"];
+
+type InternalAutocompleteProps<
+  T extends readonly any[],
+  ReturnObject extends boolean = false,
+  Multiple extends boolean = false,
+> =
+  // prettier-ignore
+  InstanceType< typeof VAutocomplete<T, ItemType<T>, ReturnObject, Multiple> >["$props"] 
+  & Omit<InstanceType<typeof VAutocomplete>["$props"], VAutocompleteGenericProps>;
+
+export interface AutocompleteDataFilter<
+  T extends readonly any[] = any[],
+  ReturnObject extends boolean = false,
+  Multiple extends boolean = false,
+> extends DataFilterBase {
   type: "autocomplete";
 
-  props: InstanceType<typeof VAutocomplete>["$props"];
+  props: MaybeRefOrGetter<InternalAutocompleteProps<T, ReturnObject, Multiple>>;
 
-  value?: MaybeRefOrGetter<TValue>;
+  value?: MaybeRefOrGetter<Value<ItemType<T>, ReturnObject, Multiple>>;
 }
 
-type VSelectGenericProps = InstanceType<typeof VAutocomplete<any>>["$props"];
+type MakeAutocompleteConfig<
+  T extends readonly any[],
+  ReturnObject extends boolean = false,
+  Multiple extends boolean = false,
+> =
+  // omit these keys to be replaced with generic-tied ones
+  Omit<AutocompleteDataFilter, "type" | "value" | "props"> & {
+    props?: MaybeRefOrGetter<
+      InternalAutocompleteProps<T, ReturnObject, Multiple>
+    >;
+  } & {
+    value?: MaybeRefOrGetter<Value<ItemType<T>, ReturnObject, Multiple>>;
+  };
 
 export function autocomplete<
   T extends readonly any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
 >(
-  config: Omit<AutocompleteDataFilter, "type" | "value" | "props"> & {
-    props?: Prettify<
-      InstanceType<
-        typeof VAutocomplete<T, ItemType<T>, ReturnObject, Multiple>
-      >["$props"] &
-        Omit<
-          InstanceType<typeof VAutocomplete>["$props"],
-          keyof VSelectGenericProps
-        >
-    >;
-  } & {
-    value?: MaybeRefOrGetter<Value<ItemType<T>, ReturnObject, Multiple>>;
-  },
-): AutocompleteDataFilter<Value<ItemType<T>, ReturnObject, Multiple>> {
+  config: Prettify<MakeAutocompleteConfig<T, ReturnObject, Multiple>>,
+): AutocompleteDataFilter {
   // @ts-expect-error
   return {
     type: "autocomplete",
@@ -85,7 +105,7 @@ export function render(
   };
 
   const nodeProps = mergeProps(
-    definition.props ?? {},
+    toValue(definition.props) ?? {},
     modelProps,
     additionalProps ?? {},
   );
