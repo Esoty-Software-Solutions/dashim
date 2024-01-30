@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, mergeProps } from "vue";
 import { useI18n } from "vue-i18n";
 import type { RouteLocationRaw } from "vue-router";
 
@@ -94,10 +94,13 @@ function changeLocale() {
 </script>
 
 <template>
+  <!-- :expand-on-hover="!layoutStore.drawer" -->
+  <!-- :rail="!layoutStore.drawer && $vuetify.display.lgAndUp" -->
+
   <VNavigationDrawer
-    :model-value="showDrawer"
-    :rail="!layoutStore.drawer && $vuetify.display.lgAndUp"
-    :expand-on-hover="!layoutStore.drawer"
+    :permanent="true"
+    :model-value="true"
+    :rail="true"
     @update:rail="onRailChange"
     @update:model-value="layoutStore.drawer = $event"
   >
@@ -124,22 +127,32 @@ function changeLocale() {
         <VDivider v-if="item.title === '-'" />
         <template v-else>
           <!-- Menu Item -->
-          <VListItem
-            v-if="!item.items"
-            :disabled="!item.to"
-            :prepend-icon="item.icon"
-            :title="item.title"
-            :to="item.to"
-            :exact="item.exact"
-          />
-          <!-- Sub menu -->
-          <VListGroup v-else-if="item.items" v-model="item.active">
+          <v-tooltip v-if="!item.items" :text="item.title">
             <template #activator="{ props }">
               <VListItem
                 v-bind="props"
+                :disabled="!item.to"
                 :prepend-icon="item.icon"
                 :title="item.title"
+                :to="item.to"
+                :exact="item.exact"
               />
+            </template>
+          </v-tooltip>
+
+          <!-- Sub menu -->
+
+          <VListGroup v-else-if="item.items" v-model="item.active">
+            <template #activator="listBinding">
+              <v-tooltip text="Tooltip">
+                <template #activator="tooltipBinding">
+                  <VListItem
+                    v-bind="mergeProps(tooltipBinding.props, listBinding.props)"
+                    :prepend-icon="item.icon"
+                    :title="item.title"
+                  />
+                </template>
+              </v-tooltip>
             </template>
             <!-- Sub menu item -->
             <template v-for="subItem in item.items" :key="subItem.title">
@@ -206,3 +219,10 @@ function changeLocale() {
     </template>
   </VNavigationDrawer>
 </template>
+
+<style>
+.v-navigation-drawer__content {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+</style>
