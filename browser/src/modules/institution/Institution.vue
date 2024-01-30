@@ -22,6 +22,12 @@ const tabs = ref([
     },
   },
   {
+    text: `${t("institution.tabs.beneficiaries")} 2`,
+    to: {
+      name: "InstitutionsBeneficiaries2",
+    },
+  },
+  {
     text: t("institution.tabs.network"),
   },
   {
