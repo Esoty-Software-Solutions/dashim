@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
+  ref,
   h,
   isRef,
   mergeProps,
   toValue,
+  type UnwrapRef,
   type MaybeRefOrGetter,
   type VNode,
 } from "vue";
 
 import { VAutocomplete } from "vuetify/components";
+
+import {
+  makeAsyncFilter,
+  type MakeAsyncFilterOptions,
+} from "./helpers/makeAsyncFilter";
 
 import type { DataFilterBase, DataFilterInjection } from "./types";
 import type { Prettify } from "@/utils";
@@ -83,6 +90,52 @@ export function autocomplete<
     type: "autocomplete",
     ...config,
   };
+}
+
+/**************
+ ** async variant
+ **********************/
+
+interface AsyncAutocompleteOptions<TInput, TOutput extends readonly any[]>
+  extends Omit<MakeAsyncFilterOptions<TInput, TOutput>, "input"> {
+  input: (search: any) => TInput;
+}
+
+export function asyncAutocomplete<
+  T extends readonly any[],
+  ReturnObject extends boolean = false,
+  Multiple extends boolean = false,
+  TFetchInput = any,
+>(
+  config: Prettify<MakeAutocompleteConfig<T, ReturnObject, Multiple>>,
+  asyncOptions: AsyncAutocompleteOptions<TFetchInput, T>,
+): AutocompleteDataFilter {
+  const items = ref<T>([] as unknown as T);
+
+  const search = ref<any>(null);
+  function autocompleteInput() {
+    return asyncOptions.input(search.value);
+  }
+
+  const { isLoading } = makeAsyncFilter({
+    ...asyncOptions,
+    input: () => autocompleteInput(),
+    onResult(output) {
+      items.value = output as UnwrapRef<T>;
+    },
+  });
+
+  return autocomplete({
+    ...config,
+    props: () =>
+      mergeProps(toValue(config.props) ?? {}, {
+        items: items.value,
+        loading: isLoading.value,
+
+        search: search.value,
+        "onUpdate:search": (val: any) => (search.value = val),
+      }),
+  });
 }
 
 export function render(

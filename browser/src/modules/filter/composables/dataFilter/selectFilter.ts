@@ -1,15 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
+  ref,
   defineAsyncComponent,
   h,
   mergeProps,
   type VNode,
   type MaybeRefOrGetter,
   toValue,
+  type UnwrapRef,
 } from "vue";
 import { isRef } from "vue";
 
 import type { VSelect as VSelectType } from "vuetify/components";
+
+import {
+  makeAsyncFilter,
+  type MakeAsyncFilterOptions,
+} from "./helpers/makeAsyncFilter";
 
 import type { DataFilterBase, DataFilterInjection } from "./types";
 import type { Prettify } from "@/utils";
@@ -94,6 +101,41 @@ export function select<
     ...config,
     type: "select",
   };
+}
+
+/**************
+ ** async variant
+ **********************/
+
+interface AsyncSelectOptions<TInput, TOutput extends readonly any[]>
+  extends MakeAsyncFilterOptions<TInput, TOutput> {}
+
+export function asyncSelect<
+  T extends readonly any[],
+  ReturnObject extends boolean = false,
+  Multiple extends boolean = false,
+  TFetchInput = any,
+>(
+  config: Prettify<MakeSelectConfig<T, ReturnObject, Multiple>>,
+  asyncOptions: AsyncSelectOptions<TFetchInput, T>,
+): SelectDataFilter {
+  const items = ref<T>([] as unknown as T);
+
+  const { isLoading } = makeAsyncFilter({
+    ...asyncOptions,
+    onResult(output) {
+      items.value = output as UnwrapRef<T>;
+    },
+  });
+
+  return select({
+    ...config,
+    props: () =>
+      mergeProps(toValue(config.props) ?? {}, {
+        items: items.value,
+        loading: isLoading.value,
+      }),
+  });
 }
 
 export function render(

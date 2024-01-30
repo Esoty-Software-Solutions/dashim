@@ -33,9 +33,9 @@ import {
   render as renderAutocomplete,
   type AutocompleteDataFilter,
 } from "./autocompleteFilter";
-export { autocomplete } from "./autocompleteFilter";
+export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
-export { select } from "./selectFilter";
+export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
