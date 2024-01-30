@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, computed } from "vue";
+import { ref, toRefs, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -39,6 +39,14 @@ const { FilterComponent } = useDataFilters({
   },
 });
 
+watch(
+  () => ({ ...store.binding.value }),
+  () => {
+    console.log("items updated");
+    selected.value = [];
+    selectedCount.value = 0;
+  },
+);
 // actions
 function onSelected() {
   // benefeciaryTableList
@@ -48,7 +56,7 @@ function onSelected() {
   selectedCount.value = selected.value.length;
 }
 function refresh() {
-  // store = store.triggerFetch()
+  // store.triggerFetch.value()
 }
 function selectAll() {
   // benefeciaryTableList
