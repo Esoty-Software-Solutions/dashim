@@ -41,8 +41,8 @@ export async function _ListBeneficiaries(
       return await enhancedPrisma(userId).$transaction(
         async (tx) => {
           // Code running in a transaction...
-          const [subscribers, fCount, uFCount, activeCount] = await Promise.all(
-            [
+          const [data, filteredCount, unFilteredCount, activeCount] =
+            await Promise.all([
               tx.subscriber.findMany({
                 where: input?.where,
                 skip: input?.skip,
@@ -89,14 +89,12 @@ export async function _ListBeneficiaries(
               tx.subscriber.count({
                 where: { ...input?.where, isActive: true },
               }),
-            ],
-          );
-          const inActiveCount = fCount - activeCount;
+            ]);
+          const inActiveCount = filteredCount - activeCount;
           // const maxAge = await tx.subscriber.aggregate({where: input.where, select: {age: true}})
           const statistics = [
             { key: "activeCount", value: activeCount },
             { key: "inActiveCount", value: inActiveCount },
-            { key: "unFilteredCount", value: uFCount },
           ];
 
           // const metaData = {
@@ -106,7 +104,12 @@ export async function _ListBeneficiaries(
           //   cityFilter: ["Cairo", "Alexandria", "Giza"],
           // };
 
-          return { data: subscribers, fCount, statistics };
+          return {
+            data,
+            filteredCount,
+            unFilteredCount,
+            statistics,
+          };
         },
         {
           //   maxWait: 5000, // default: 2000
