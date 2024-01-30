@@ -56,7 +56,7 @@ function onSelected() {
   selectedCount.value = selected.value.length;
 }
 function refresh() {
-  // store.triggerFetch.value()
+  store.triggerFetch.value();
 }
 function selectAll() {
   // benefeciaryTableList
