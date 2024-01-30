@@ -5,6 +5,10 @@
     "name": "الاسم",
     "status": "الحالة",
     "creationDate": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التعديل",
+    "birthDate": "ترايخ الميلاد",
+    "genderId": "الجنس",
+    "relationshipId": "العلافة",
     "actions": "إجراء",
     "add": "إضافة"
   },

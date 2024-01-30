@@ -27,7 +27,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
-  const { binding, items } = useQuerierTable({
+  const { binding, items, triggerFetch } = useQuerierTable({
     storageKey: "beneficiariesList",
     input: () => {
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
@@ -61,6 +61,8 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     nameFilter,
     nameFilterEnabled,
     binding,
+    items,
+    triggerFetch,
   };
 });
 
