@@ -42,6 +42,8 @@ const { FilterComponent, handles: handles1 } = useDataFilters({
     firstName: text({
       value: firstName,
       enabled: firstNameEnabled,
+      // **IMPORTANT__ props is not reactive
+      // must use a getter or a ref for reactive props
       props: {
         label: "First name",
         placeholder: "(e.g. John Dou)",
@@ -76,10 +78,11 @@ const { FilterComponent, handles: handles1 } = useDataFilters({
 
       // notice this filter does not have an enabled ref passed
 
-      props: {
+      // notice the getter so that props are reactive
+      props: () => ({
         label: "Single City (enableOnFocus = false)",
         items: cityItems,
-      },
+      }),
       display: {
         md: 0,
       },

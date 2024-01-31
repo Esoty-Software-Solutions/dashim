@@ -29,8 +29,13 @@ import DataFilterBase from "../../components/DataFilterBase.vue";
 
 import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGetter";
 
+import {
+  render as renderAutocomplete,
+  type AutocompleteDataFilter,
+} from "./autocompleteFilter";
+export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
-export { select } from "./selectFilter";
+export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
@@ -40,19 +45,18 @@ import type { Merge } from "@/utils";
 /*
  * Filter Types
  *
- * text filter
- * date
- * date range
- * number range
- * select (single/multiple)
- * auto complete (single)
- * auto complete (multiple)
- * toggle buttons
- * toggle switch
- * chip group (single/many)
+ * [x] text filter
+ * [x] date
+ * [x] date range
+ * [x] number range
+ * [x] select (single/multiple)
+ * [x] auto complete (single/multiple)
+ * [ ] toggle buttons
+ * [ ] toggle switch
+ * [ ] chip group (single/many)
  */
 
-type DataFilter = TextDataFilter | SelectDataFilter;
+type DataFilter = TextDataFilter | SelectDataFilter | AutocompleteDataFilter;
 
 type Icon = (typeof VIcon)["$props"]["icon"];
 
@@ -185,6 +189,7 @@ export default function useDataFilters<
         return true;
       },
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       "update:enabled"(filter: FilterName, value: boolean) {
         return true;
       },
@@ -251,7 +256,10 @@ export default function useDataFilters<
           filterNode = renderText(definition, injection, nodeProps);
         } else if (definition.type === "select") {
           filterNode = renderSelect(definition, injection, nodeProps);
-        } // TODO: render other types of filters
+        } else if (definition.type === "autocomplete") {
+          filterNode = renderAutocomplete(definition, injection, nodeProps);
+        }
+        // TODO: render other types of filters
 
         const baseProps = {
           enabled: toValue(injection.enabled),

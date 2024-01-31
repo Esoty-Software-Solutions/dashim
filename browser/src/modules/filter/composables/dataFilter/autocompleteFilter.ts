@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ref,
-  defineAsyncComponent,
   h,
+  isRef,
   mergeProps,
-  type VNode,
-  type MaybeRefOrGetter,
   toValue,
   type UnwrapRef,
+  type MaybeRefOrGetter,
+  type VNode,
 } from "vue";
-import { isRef } from "vue";
 
-import type { VSelect as VSelectType } from "vuetify/components";
+import { VAutocomplete } from "vuetify/components";
 
 import {
   makeAsyncFilter,
@@ -21,12 +20,8 @@ import {
 import type { DataFilterBase, DataFilterInjection } from "./types";
 import type { Prettify } from "@/utils";
 
-const VSelect = defineAsyncComponent(
-  async () => (await import("vuetify/components/VSelect")).VSelect,
-);
-
 /*
- * Types from borrowed from Vuetify
+ * Types borrowed from Vuetify
  */
 type ItemType<T> = T extends readonly (infer U)[] ? U : never;
 type Primitive = string | number | boolean | symbol;
@@ -42,64 +37,58 @@ type Value<
 > = Multiple extends true
   ? readonly Val<T, ReturnObject>[]
   : Val<T, ReturnObject> | null;
-/* ***** */
+/***********/
 
-type VSelectGenericProps = keyof InstanceType<
-  typeof VSelectType<any>
+type VAutocompleteGenericProps = keyof InstanceType<
+  typeof VAutocomplete<any>
 >["$props"];
 
-// props with proper generic tied to the generics of the invoked
-// maker function "make"
-type InternalSelectProps<
+type InternalAutocompleteProps<
   T extends readonly any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
 > =
-  // Overwrite generic-less props with generic-tied ones
   // prettier-ignore
-  InstanceType< typeof VSelectType<T, ItemType<T>, ReturnObject, Multiple> >["$props"] 
-  & Omit<InstanceType<typeof VSelectType>["$props"], VSelectGenericProps>;
+  InstanceType< typeof VAutocomplete<T, ItemType<T>, ReturnObject, Multiple> >["$props"] 
+  & Omit<InstanceType<typeof VAutocomplete>["$props"], VAutocompleteGenericProps>;
 
-export interface SelectDataFilter<
+export interface AutocompleteDataFilter<
   T extends readonly any[] = any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
 > extends DataFilterBase {
-  type: "select";
+  type: "autocomplete";
 
-  props?: MaybeRefOrGetter<InternalSelectProps<T, ReturnObject, Multiple>>;
+  props: MaybeRefOrGetter<InternalAutocompleteProps<T, ReturnObject, Multiple>>;
 
   value?: MaybeRefOrGetter<Value<ItemType<T>, ReturnObject, Multiple>>;
 }
 
-type MakeSelectConfig<
+type MakeAutocompleteConfig<
   T extends readonly any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
 > =
   // omit these keys to be replaced with generic-tied ones
-  Omit<
-    SelectDataFilter<T, ReturnObject, Multiple>,
-    "type" | "value" | "props"
-  > & {
-    props?: MaybeRefOrGetter<InternalSelectProps<T, ReturnObject, Multiple>>;
+  Omit<AutocompleteDataFilter, "type" | "value" | "props"> & {
+    props?: MaybeRefOrGetter<
+      InternalAutocompleteProps<T, ReturnObject, Multiple>
+    >;
   } & {
     value?: MaybeRefOrGetter<Value<ItemType<T>, ReturnObject, Multiple>>;
   };
 
-export function select<
+export function autocomplete<
   T extends readonly any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
 >(
-  config: Prettify<MakeSelectConfig<T, ReturnObject, Multiple>>,
-): SelectDataFilter {
-  // **NOTICE** This error is negligible, it allows us to avoid
-  // Generic Parameters bubbling up
+  config: Prettify<MakeAutocompleteConfig<T, ReturnObject, Multiple>>,
+): AutocompleteDataFilter {
   // @ts-expect-error
   return {
+    type: "autocomplete",
     ...config,
-    type: "select",
   };
 }
 
@@ -107,39 +96,50 @@ export function select<
  ** async variant
  **********************/
 
-interface AsyncSelectOptions<TInput, TOutput extends readonly any[]>
-  extends MakeAsyncFilterOptions<TInput, TOutput> {}
+interface AsyncAutocompleteOptions<TInput, TOutput extends readonly any[]>
+  extends Omit<MakeAsyncFilterOptions<TInput, TOutput>, "input"> {
+  input: (search: any) => TInput;
+}
 
-export function asyncSelect<
+export function asyncAutocomplete<
   T extends readonly any[],
   ReturnObject extends boolean = false,
   Multiple extends boolean = false,
   TFetchInput = any,
 >(
-  config: Prettify<MakeSelectConfig<T, ReturnObject, Multiple>>,
-  asyncOptions: AsyncSelectOptions<TFetchInput, T>,
-): SelectDataFilter {
+  config: Prettify<MakeAutocompleteConfig<T, ReturnObject, Multiple>>,
+  asyncOptions: AsyncAutocompleteOptions<TFetchInput, T>,
+): AutocompleteDataFilter {
   const items = ref<T>([] as unknown as T);
+
+  const search = ref<any>(null);
+  function autocompleteInput() {
+    return asyncOptions.input(search.value);
+  }
 
   const { isLoading } = makeAsyncFilter({
     ...asyncOptions,
+    input: () => autocompleteInput(),
     onResult(output) {
       items.value = output as UnwrapRef<T>;
     },
   });
 
-  return select({
+  return autocomplete({
     ...config,
     props: () =>
       mergeProps(toValue(config.props) ?? {}, {
         items: items.value,
         loading: isLoading.value,
+
+        search: search.value,
+        "onUpdate:search": (val: any) => (search.value = val),
       }),
   });
 }
 
 export function render(
-  definition: SelectDataFilter,
+  definition: AutocompleteDataFilter,
   injection: DataFilterInjection,
   additionalProps?: Record<string, any>,
 ): VNode {
@@ -162,5 +162,5 @@ export function render(
     modelProps,
     additionalProps ?? {},
   );
-  return h(VSelect, nodeProps);
+  return h(VAutocomplete, nodeProps);
 }

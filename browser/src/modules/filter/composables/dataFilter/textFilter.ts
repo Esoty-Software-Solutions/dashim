@@ -4,6 +4,7 @@ import { defineAsyncComponent, h, mergeProps, toValue, isRef } from "vue";
 import type { VTextField as VTextFieldType } from "vuetify/components";
 
 import type { DataFilterBase, DataFilterInjection } from "./types";
+import type { Prettify } from "@/utils";
 
 const VTextField = defineAsyncComponent(
   async () => (await import("vuetify/components/VTextField")).VTextField,
@@ -14,10 +15,12 @@ export interface TextDataFilter extends DataFilterBase {
 
   value?: MaybeRefOrGetter<string>;
 
-  props?: InstanceType<typeof VTextFieldType>["$props"];
+  props?: MaybeRefOrGetter<InstanceType<typeof VTextFieldType>["$props"]>;
 }
 
-export function text(config: Omit<TextDataFilter, "type">): TextDataFilter {
+export function text(
+  config: Prettify<Omit<TextDataFilter, "type">>,
+): TextDataFilter {
   return {
     type: "text",
     ...config,
@@ -43,6 +46,10 @@ export function render(
     },
   };
 
-  const nodeProps = mergeProps(definition.props ?? {}, modelProps, props ?? {});
+  const nodeProps = mergeProps(
+    toValue(definition.props) ?? {},
+    modelProps,
+    props ?? {},
+  );
   return h(VTextField, nodeProps);
 }
