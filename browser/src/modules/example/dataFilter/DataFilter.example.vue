@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useElementHover } from "@vueuse/core";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 import DataFilterBase from "@/modules/filter/components/DataFilterBase.vue";
 import useDataFilters, {
   select,
   text,
+  chips,
+  type ChipsDataFilterItem,
 } from "@/modules/filter/composables/dataFilter";
 
 /* ***
@@ -101,7 +102,7 @@ const { FilterComponent, handles: handles1 } = useDataFilters({
       collapsable: true,
 
       display: {
-        md: 12,
+        md: 6,
       },
     }),
   },
@@ -111,66 +112,48 @@ const { FilterComponent, handles: handles1 } = useDataFilters({
  * Filter Group 2
  * ********* */
 
-const myTable = ref<HTMLTableElement | null>(null);
-const customFilterValue = ref<string>("");
-const tableHovered = useElementHover(myTable);
+const chipValue = ref<string | null>(null);
 
-const { FilterComponent: FilterComponent2, handles } = useDataFilters({
-  // default display spec
-  // overridable on field-level
-  display: {
-    sm: 6,
-    md: 3,
-  },
+const chipOptions: ChipsDataFilterItem<string>[] = [];
 
-  // update style to be borderd
-  sheetProps: {
-    border: true,
-  },
+for (let i = 0; i < 20; i++) {
+  chipOptions.push({
+    value: `id-${i}`,
+    title: "Item NO." + i,
 
+    // per-single chip props
+    chipProps: {
+      color: i === 2 ? "blue" : undefined,
+    },
+  });
+}
+
+const { FilterComponent: FilterComponent2 } = useDataFilters({
   filter: {
-    exx: text({
-      props: {
-        label: "Width percentage example",
-        placeholder: "First name filter example",
-      },
+    chips: chips({
+      value: chipValue,
+      items: chipOptions,
 
-      // override display at filter-level
-      display: {
-        sm: 4,
-        md: 8,
-      },
+      label: "Chips Filter label",
 
-      value: lastName,
+      props: () => ({
+        color: "primary",
+        variant: "tonal",
+      }),
+
+      // generic props passed down to every chip
+      chipProps: () => ({
+        label: true,
+      }),
     }),
 
-    table: text({
-      value: customFilterValue,
-      display: {
-        md: 12,
-      },
-      props: {
-        label: "Advanced search",
-        placeholder: "This is a search placeholder",
-      },
+    texty: text({
+      props: () => ({
+        label: "Vuetify label",
+      }),
     }),
   },
 });
-
-watch(tableHovered, (value) =>
-  value ? handles.value?.table.hoverIn() : handles.value?.table.hoverOut(),
-);
-
-function onTableClicked(event: PointerEvent) {
-  if (event.target instanceof HTMLTableCellElement) {
-    customFilterValue.value = event.target.textContent ?? "";
-    // calling this update function is mandatory
-    // this is considered as if the user interaction
-    // updating the value ref is considered programmtic update and does not
-    // trigger enable state changes
-    handles.value?.table.update(event.target.textContent);
-  }
-}
 </script>
 
 <template>
@@ -206,55 +189,9 @@ function onTableClicked(event: PointerEvent) {
 
     <VDivider class="my-4" />
 
-    <FilterComponent2>
-      <template #filter.table="{ focused, hovered, baseProps, wrapperClass }">
-        <DataFilterBase v-bind="baseProps">
-          <VTable
-            ref="myTable"
-            hover
-            :class="[wrapperClass]"
-            style="border: rgba(var(--v-theme-primary), 0.38) 0.8px solid"
-            :style="{
-              borderWidth: focused.value ? '2px' : '1px',
-              borderColor: hovered.value
-                ? 'rgba(var(--v-theme-primary), 1)'
-                : 'rgba(var(--v-theme-primary), 0.38)',
-            }"
-            @click="onTableClicked"
-          >
-            <thead>
-              <tr>
-                <th>Col1</th>
-                <th>Col2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>First</td>
-                <td>First</td>
-              </tr>
-              <tr>
-                <td>Second</td>
-                <td>Second</td>
-              </tr>
-            </tbody>
-          </VTable>
-        </DataFilterBase>
-      </template>
-
-      <template #append>
-        Click on any cell of the table to set the filter value to its content
-        <VSpacer />
-
-        <VBtn>Optional append slot used</VBtn>
-      </template>
-    </FilterComponent2>
-
+    <FilterComponent2 />
     <VCardText>
-      <VCardItem>
-        Table Text Filter: {{ customFilterValue }}. Enabled?:
-        {{ handles?.table.enabled }}
-      </VCardItem>
+      <VCardItem> Selected Chip Value: {{ chipValue }}. </VCardItem>
     </VCardText>
   </VContainer>
 </template>
