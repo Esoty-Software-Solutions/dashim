@@ -34,6 +34,8 @@ import {
   type AutocompleteDataFilter,
 } from "./autocompleteFilter";
 export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
+import { render as renderChips, type ChipsDataFilter } from "./chipsFilter";
+export { chips, type ChipsDataFilterItem } from "./chipsFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
@@ -56,7 +58,11 @@ import type { Merge } from "@/utils";
  * [ ] chip group (single/many)
  */
 
-type DataFilter = TextDataFilter | SelectDataFilter | AutocompleteDataFilter;
+type DataFilter =
+  | TextDataFilter
+  | SelectDataFilter
+  | AutocompleteDataFilter
+  | ChipsDataFilter;
 
 type Icon = (typeof VIcon)["$props"]["icon"];
 
@@ -258,6 +264,8 @@ export default function useDataFilters<
           filterNode = renderSelect(definition, injection, nodeProps);
         } else if (definition.type === "autocomplete") {
           filterNode = renderAutocomplete(definition, injection, nodeProps);
+        } else if (definition.type === "chips") {
+          filterNode = renderChips(definition, injection, nodeProps);
         }
         // TODO: render other types of filters
 
