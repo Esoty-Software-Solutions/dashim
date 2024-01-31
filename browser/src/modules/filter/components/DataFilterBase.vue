@@ -3,6 +3,7 @@ import { useElementHover } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 const props = defineProps<{
+  label?: string;
   enabled?: boolean;
 
   focused?: boolean;
@@ -32,23 +33,39 @@ const classBinding = computed(() => {
 </script>
 
 <template>
-  <div class="d-flex d-data-filter-base" :class="classBinding">
-    <VSheet
-      width="12"
-      elevation="0"
-      class="d-data-filter-base__toggle h-100 flex-shrink-0 rounded-s"
-      :color="enabled ? 'primary' : undefined"
-      style="cursor: pointer"
-      @click="emit('update:enabled', !enabled)"
-    />
-
-    <div
-      ref="hoverEl"
-      style="max-width: 100%"
-      class="d-data-filter-base__content flex-grow-1"
-      :class="contentBorder ? 'rounded-e' : undefined"
+  <div class="d-flex flex-column d-data-filter-base" :class="classBinding">
+    <slot
+      name="label"
+      :enabled="props.enabled"
+      :focused="focused"
+      :hovered="hovered"
     >
-      <slot />
+      <div
+        v-if="label"
+        class="text-caption mt-1 ms-1 flex-shrink-0 flex-grow-1"
+      >
+        {{ label }}
+      </div>
+    </slot>
+
+    <div class="d-flex">
+      <VSheet
+        width="12"
+        elevation="0"
+        class="d-data-filter-base__toggle flex-shrink-0 rounded-s"
+        :color="enabled ? 'primary' : undefined"
+        style="cursor: pointer"
+        @click="emit('update:enabled', !enabled)"
+      />
+
+      <div
+        ref="hoverEl"
+        style="min-width: 0"
+        class="d-data-filter-base__content flex-grow-1"
+        :class="contentBorder ? 'rounded-e' : undefined"
+      >
+        <slot />
+      </div>
     </div>
   </div>
 </template>

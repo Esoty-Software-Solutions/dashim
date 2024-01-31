@@ -269,6 +269,8 @@ export default function useDataFilters<
           focused: toValue(injection.focused),
           contentBorder: definition.contentBorder,
 
+          label: toValue(definition.label),
+
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
         };
@@ -308,7 +310,11 @@ export default function useDataFilters<
         }
 
         return h(VCardItem, { class: ["flex-row pa-1"] }, () =>
-          h(VRow, { dense: true, class: ["mx-2 my-0 py-1 "] }, () => nodes),
+          h(
+            VRow,
+            { dense: true, class: ["align-end mx-2 my-0 py-1 "] },
+            () => nodes,
+          ),
         );
       }
 
@@ -338,7 +344,10 @@ export default function useDataFilters<
                 VRow,
                 {
                   dense: true,
-                  class: ["mx-2 my-0 py-2", collapsableRowClasses.value],
+                  class: [
+                    "align-end mx-2 my-0 py-2",
+                    collapsableRowClasses.value,
+                  ],
                 },
                 () => nodes,
               ),
