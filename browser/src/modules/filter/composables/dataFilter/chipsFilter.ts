@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
-  ref,
   defineAsyncComponent,
   h,
   mergeProps,
@@ -99,10 +98,6 @@ export function render(
         definition.value.value = newValue;
       }
       injection.update(newValue);
-    },
-
-    "onUpdate:focused": (value: boolean) => {
-      injection.setFocus(value);
     },
   };
 
