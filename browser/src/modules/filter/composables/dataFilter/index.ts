@@ -267,6 +267,7 @@ export default function useDataFilters<
             injection.setEnabled(newValue);
           },
           focused: toValue(injection.focused),
+          contentBorder: definition.contentBorder,
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,

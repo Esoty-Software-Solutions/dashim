@@ -12,14 +12,13 @@ export interface DataFilterBase {
    */
   display?: DataFiltersDisplay;
 
-  /**
-   *
-   */
   collapsable?: MaybeRefOrGetter<boolean>;
 
   /**
-   *
+   * Enable if the border around the filter "content" other than the toggle area should be handled internally
    */
+  contentBorder?: boolean;
+
   enabled?: MaybeRefOrGetter<boolean>;
 
   /**
