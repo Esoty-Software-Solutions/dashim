@@ -1,4 +1,4 @@
-import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
+import { SubscriberFindManySchema, SubscriberCreateOneSchema } from "@schemas/routers/subscriber.schema";
 import { _procedure } from "@controllers/_procedure.controller";
 import {
   router,
@@ -7,11 +7,22 @@ import {
 } from "@routers/_trpc.router";
 
 export const procedureRouter = router({
+
   listSubscribers: publicProcedure
     .input(SubscriberFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
         return _procedure.listBeneficiaries(ctx.req, input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+
+  CreateSubscriber: publicProcedure
+    .input(SubscriberCreateOneSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return _procedure.CreateBeneficiaries(ctx.req, input);
       } catch (error) {
         throwCustomError(error);
       }
