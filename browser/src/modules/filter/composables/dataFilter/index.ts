@@ -34,6 +34,8 @@ import {
   type AutocompleteDataFilter,
 } from "./autocompleteFilter";
 export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
+import { render as renderChips, type ChipsDataFilter } from "./chipsFilter";
+export { chips, type ChipsDataFilterItem } from "./chipsFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
@@ -56,7 +58,11 @@ import type { Merge } from "@/utils";
  * [ ] chip group (single/many)
  */
 
-type DataFilter = TextDataFilter | SelectDataFilter | AutocompleteDataFilter;
+type DataFilter =
+  | TextDataFilter
+  | SelectDataFilter
+  | AutocompleteDataFilter
+  | ChipsDataFilter;
 
 type Icon = (typeof VIcon)["$props"]["icon"];
 
@@ -258,6 +264,8 @@ export default function useDataFilters<
           filterNode = renderSelect(definition, injection, nodeProps);
         } else if (definition.type === "autocomplete") {
           filterNode = renderAutocomplete(definition, injection, nodeProps);
+        } else if (definition.type === "chips") {
+          filterNode = renderChips(definition, injection, nodeProps);
         }
         // TODO: render other types of filters
 
@@ -267,6 +275,9 @@ export default function useDataFilters<
             injection.setEnabled(newValue);
           },
           focused: toValue(injection.focused),
+          contentBorder: definition.contentBorder,
+
+          label: toValue(definition.label),
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
@@ -307,7 +318,11 @@ export default function useDataFilters<
         }
 
         return h(VCardItem, { class: ["flex-row pa-1"] }, () =>
-          h(VRow, { dense: true, class: ["mx-2 my-0 py-1 "] }, () => nodes),
+          h(
+            VRow,
+            { dense: true, class: ["align-end mx-2 my-0 py-1 "] },
+            () => nodes,
+          ),
         );
       }
 
@@ -337,7 +352,10 @@ export default function useDataFilters<
                 VRow,
                 {
                   dense: true,
-                  class: ["mx-2 my-0 py-2", collapsableRowClasses.value],
+                  class: [
+                    "align-end mx-2 my-0 py-2",
+                    collapsableRowClasses.value,
+                  ],
                 },
                 () => nodes,
               ),
