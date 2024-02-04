@@ -13,6 +13,16 @@ export function pageToSkipTake(
   return [skip, pageSize];
 }
 
+export function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export type Merge<A, B> = {
   [K in keyof A]: K extends keyof B ? B[K] : A[K];
 } & B;
+
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
