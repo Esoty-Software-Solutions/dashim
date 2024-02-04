@@ -6,9 +6,9 @@ import {
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
 } from "./_config.controller";
-import { SubscriberFindManySchema ,SubscriberCreateOneSchema} from "@schemas/routers/subscriber.schema";
+import { SubscriberFindManySchema, SubscriberCreateOneSchema } from "@schemas/routers/subscriber.schema";
 import ServerError from "~/utilities/error";
-
+import { CreateBeneficiariesSchema } from "@schemas/procedures/institutionProcedureSchema"
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
@@ -145,7 +145,7 @@ export async function _ListBeneficiaries(
 //       return await enhancedPrisma(userId).$transaction(
 //         async (tx) => {
 //         console.log(input);
-        
+
 //           // Code running in a transaction...
 //           const [data] =
 //             await Promise.all([
@@ -180,10 +180,14 @@ export async function _ListBeneficiaries(
 //   }
 
 // }
+
+
 export async function _CreateBeneficiaries(
   userId: string,
-  input: Prisma.SubscriberCreateArgs
+  input: z.infer<typeof CreateBeneficiariesSchema>
 ) {
+  const validInput = CreateBeneficiariesSchema.parse(input);
+
   const MAX_RETRIES = DEFAULT_MAX_RETRIES
   let retries = 0
 
@@ -203,19 +207,9 @@ export async function _CreateBeneficiaries(
     }
     throw e
   }
-
-  input.data.statusSetById = userId
-
-  if (!input.data.beneficiaries?.createMany) {
-    throw new ServerError({
-      message:
-        'createMany object does not exist. Other methods for adding beneficiaries are not supported at the moment',
-      code: 'UNPROCESSABLE_CONTENT',
-    })
-  }
-  const beneficiariesData = input.data.beneficiaries?.createMany.data
-  if (Array.isArray(beneficiariesData)) {
-    const matchingElements = beneficiariesData.filter(
+  const { beneficiaries, ...ValidInputData } = validInput
+  if (Array.isArray(beneficiaries)) {
+    const matchingElements = beneficiaries.filter(
       (element) => element.relationshipId === selfRelationship.id
     )
     if (matchingElements.length !== 1) {
@@ -225,21 +219,28 @@ export async function _CreateBeneficiaries(
         code: 'UNPROCESSABLE_CONTENT',
       })
     }
-    beneficiariesData.forEach((element) => {
-      // ...
-      element.statusSetById = userId
-    })
-  } else if (typeof beneficiariesData === 'object') {
-    if (beneficiariesData.relationshipId !== selfRelationship.id) {
-      throw new ServerError({
-        message:
-          'the beneficiary attached is not assigned the "self" relationship for the subscriber entity ',
-        code: 'UNPROCESSABLE_CONTENT',
-      })
-    }
-    beneficiariesData.statusSetById = userId
   }
+  // input.statusSetById = userId
+  let beneficiariesInput: Prisma.BeneficiaryCreateManySubscriberInput[] = beneficiaries.map((ben) => {
+    const searchName = ben.firstName + (ben.secondName || '') + (ben.thirdName || '') + (ben.fourthName || '') + (ben.lastName || '')
+    return { searchName: `${ben.firstName} `, statusSetById: userId, ...ben }
+  })
 
+
+
+
+  const ProcessedInput: Prisma.SubscriberUncheckedCreateInput = {
+    id: "placeholder",
+    statusSetById: userId,
+    beneficiaries: { createMany: { data: beneficiariesInput } },
+    ...ValidInputData
+    // StatusSetBy:{ connect:{ id: userId}},
+    // insurancePolicy: {
+    //   connect:{ id: input.insurancePolicyId}
+    // },
+    // ...input,
+
+  }
   /*
   Return the following
   data
@@ -249,7 +250,6 @@ export async function _CreateBeneficiaries(
   */
 
   // const validUser = addSubscribersDataSchema.parse(data);
-
   while (true) {
     try {
       return await enhancedPrisma(userId).$transaction(
@@ -257,7 +257,7 @@ export async function _CreateBeneficiaries(
           // Code running in a transaction...
           const [subscriberAdded] = await Promise.all([
             tx.subscriber.create({
-              data: input.data,
+              data: ProcessedInput,
               include: { beneficiaries: true },
             }),
           ])
