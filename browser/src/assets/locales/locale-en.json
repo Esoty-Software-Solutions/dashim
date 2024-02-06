@@ -10,7 +10,8 @@
     "genderId": "Gender",
     "relationshipId": "Relationship",
     "actions": "Actions",
-    "add": "Add"
+    "add": "Add",
+    "id": "Id"
   },
   "accounting": {
     "claims": "Claims"
