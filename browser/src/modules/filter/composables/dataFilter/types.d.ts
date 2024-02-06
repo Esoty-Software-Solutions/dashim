@@ -12,14 +12,18 @@ export interface DataFilterBase {
    */
   display?: DataFiltersDisplay;
 
-  /**
-   *
-   */
   collapsable?: MaybeRefOrGetter<boolean>;
 
   /**
-   *
+   * Displays a label for filters that do not have a label by design (Chips or toggles)
    */
+  label?: MaybeRefOrGetter<string>;
+
+  /**
+   * Enable if the border around the filter "content" other than the toggle area should be handled internally
+   */
+  contentBorder?: boolean;
+
   enabled?: MaybeRefOrGetter<boolean>;
 
   /**
