@@ -29,8 +29,15 @@ import DataFilterBase from "../../components/DataFilterBase.vue";
 
 import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGetter";
 
+import {
+  render as renderAutocomplete,
+  type AutocompleteDataFilter,
+} from "./autocompleteFilter";
+export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
+import { render as renderChips, type ChipsDataFilter } from "./chipsFilter";
+export { chips, type ChipsDataFilterItem } from "./chipsFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
-export { select } from "./selectFilter";
+export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
@@ -40,19 +47,22 @@ import type { Merge } from "@/utils";
 /*
  * Filter Types
  *
- * text filter
- * date
- * date range
- * number range
- * select (single/multiple)
- * auto complete (single)
- * auto complete (multiple)
- * toggle buttons
- * toggle switch
- * chip group (single/many)
+ * [x] text filter
+ * [x] date
+ * [x] date range
+ * [x] number range
+ * [x] select (single/multiple)
+ * [x] auto complete (single/multiple)
+ * [ ] toggle buttons
+ * [ ] toggle switch
+ * [ ] chip group (single/many)
  */
 
-type DataFilter = TextDataFilter | SelectDataFilter;
+type DataFilter =
+  | TextDataFilter
+  | SelectDataFilter
+  | AutocompleteDataFilter
+  | ChipsDataFilter;
 
 type Icon = (typeof VIcon)["$props"]["icon"];
 
@@ -185,6 +195,7 @@ export default function useDataFilters<
         return true;
       },
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       "update:enabled"(filter: FilterName, value: boolean) {
         return true;
       },
@@ -251,7 +262,12 @@ export default function useDataFilters<
           filterNode = renderText(definition, injection, nodeProps);
         } else if (definition.type === "select") {
           filterNode = renderSelect(definition, injection, nodeProps);
-        } // TODO: render other types of filters
+        } else if (definition.type === "autocomplete") {
+          filterNode = renderAutocomplete(definition, injection, nodeProps);
+        } else if (definition.type === "chips") {
+          filterNode = renderChips(definition, injection, nodeProps);
+        }
+        // TODO: render other types of filters
 
         const baseProps = {
           enabled: toValue(injection.enabled),
@@ -259,6 +275,9 @@ export default function useDataFilters<
             injection.setEnabled(newValue);
           },
           focused: toValue(injection.focused),
+          contentBorder: definition.contentBorder,
+
+          label: toValue(definition.label),
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
@@ -299,7 +318,11 @@ export default function useDataFilters<
         }
 
         return h(VCardItem, { class: ["flex-row pa-1"] }, () =>
-          h(VRow, { dense: true, class: ["mx-2 my-0 py-1 "] }, () => nodes),
+          h(
+            VRow,
+            { dense: true, class: ["align-end mx-2 my-0 py-1 "] },
+            () => nodes,
+          ),
         );
       }
 
@@ -329,7 +352,10 @@ export default function useDataFilters<
                 VRow,
                 {
                   dense: true,
-                  class: ["mx-2 my-0 py-2", collapsableRowClasses.value],
+                  class: [
+                    "align-end mx-2 my-0 py-2",
+                    collapsableRowClasses.value,
+                  ],
                 },
                 () => nodes,
               ),
