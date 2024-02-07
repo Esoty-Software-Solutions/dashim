@@ -6,15 +6,24 @@ import {
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
 } from "./_config.controller";
-import { SubscriberFindManySchema, SubscriberCreateOneSchema } from "@schemas/routers/subscriber.schema";
 import ServerError from "~/utilities/error";
-import { CreateBeneficiariesSchema } from "@schemas/procedures/institutionProcedureSchema"
+import {
+  CreateBeneficiaryEntityInputSchema,
+  ListBeneficiaryEntityInputSchema,
+} from "@schemas/procedures/beneficiary.procedure.schema";
+
+type _ListBeneficiariesInputType = z.infer<
+  typeof ListBeneficiaryEntityInputSchema
+>;
+type _CreateBeneficiariesInputType = z.infer<
+  typeof CreateBeneficiaryEntityInputSchema
+>;
+
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
 };
-type _ListBeneficiariesInputType = z.infer<typeof SubscriberFindManySchema>;
-type _CreateBeneficiariesInputType = z.infer<typeof SubscriberCreateOneSchema>;
+
 export async function _ListBeneficiaries(
   userId: string,
   input: _ListBeneficiariesInputType,
@@ -49,10 +58,6 @@ export async function _ListBeneficiaries(
                 where: input?.where,
                 skip: input?.skip,
                 take: input?.take,
-                // include: { //* This blows up the return type
-                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
-                //   StatusSetBy: selectStatusSetBy,
-                // },
                 select: {
                   id: true,
                   createdAt: true,
@@ -83,6 +88,10 @@ export async function _ListBeneficiaries(
                   },
                   StatusSetBy: StatusSetByFields,
                 },
+                // include: { //* This blows up the return type
+                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+                //   StatusSetBy: selectStatusSetBy,
+                // },
               }),
               tx.subscriber.count({
                 where: input?.where,
@@ -181,66 +190,67 @@ export async function _ListBeneficiaries(
 
 // }
 
-
 export async function _CreateBeneficiaries(
   userId: string,
-  input: z.infer<typeof CreateBeneficiariesSchema>
+  input: z.infer<typeof CreateBeneficiariesSchema>,
 ) {
   const validInput = CreateBeneficiariesSchema.parse(input);
 
-  const MAX_RETRIES = DEFAULT_MAX_RETRIES
-  let retries = 0
+  const MAX_RETRIES = DEFAULT_MAX_RETRIES;
+  let retries = 0;
 
-  let selfRelationship: { id: string }
+  let selfRelationship: { id: string };
   try {
     selfRelationship = await unGuardedPrisma.relationship.findUniqueOrThrow({
-      where: { name: 'self' },
+      where: { name: "self" },
       select: { id: true },
-    })
+    });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       throw new ServerError({
         message: `relationship "self" might not exist: ${e}`,
-        code: 'UNPROCESSABLE_CONTENT',
-      })
+        code: "UNPROCESSABLE_CONTENT",
+      });
     }
-    throw e
+    throw e;
   }
-  const { beneficiaries, ...ValidInputData } = validInput
+  const { beneficiaries, ...ValidInputData } = validInput;
   if (Array.isArray(beneficiaries)) {
     const matchingElements = beneficiaries.filter(
-      (element) => element.relationshipId === selfRelationship.id
-    )
+      (element) => element.relationshipId === selfRelationship.id,
+    );
     if (matchingElements.length !== 1) {
       throw new ServerError({
         message:
           'There should be only one beneficiary with "self" relationship for the same subscriber entity',
-        code: 'UNPROCESSABLE_CONTENT',
-      })
+        code: "UNPROCESSABLE_CONTENT",
+      });
     }
   }
   // input.statusSetById = userId
-  let beneficiariesInput: Prisma.BeneficiaryCreateManySubscriberInput[] = beneficiaries.map((ben) => {
-    const searchName = ben.firstName + (ben.secondName || '') + (ben.thirdName || '') + (ben.fourthName || '') + (ben.lastName || '')
-    return { searchName: `${ben.firstName} `, statusSetById: userId, ...ben }
-  })
-
-
-
+  let beneficiariesInput: Prisma.BeneficiaryCreateManySubscriberInput[] =
+    beneficiaries.map((ben) => {
+      const searchName =
+        ben.firstName +
+        (ben.secondName || "") +
+        (ben.thirdName || "") +
+        (ben.fourthName || "") +
+        (ben.lastName || "");
+      return { searchName: `${ben.firstName} `, statusSetById: userId, ...ben };
+    });
 
   const ProcessedInput: Prisma.SubscriberUncheckedCreateInput = {
     id: "placeholder",
     statusSetById: userId,
     beneficiaries: { createMany: { data: beneficiariesInput } },
-    ...ValidInputData
+    ...ValidInputData,
     // StatusSetBy:{ connect:{ id: userId}},
     // insurancePolicy: {
     //   connect:{ id: input.insurancePolicyId}
     // },
     // ...input,
-
-  }
+  };
   /*
   Return the following
   data
@@ -260,27 +270,27 @@ export async function _CreateBeneficiaries(
               data: ProcessedInput,
               include: { beneficiaries: true },
             }),
-          ])
-          return { data: subscriberAdded }
+          ]);
+          return { data: subscriberAdded };
         },
         {
           //   maxWait: 5000, // default: 2000
           //   timeout: 10000, // default: 5000
           isolationLevel: Prisma.TransactionIsolationLevel.Serializable, // optional, default defined by database configuration
-        }
-      )
+        },
+      );
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner
-        if (error.code === 'P2034') {
-          retries++
+        if (error.code === "P2034") {
+          retries++;
           if (retries >= MAX_RETRIES) {
-            throw error
+            throw error;
           }
-          continue
+          continue;
         }
       }
-      throw error
+      throw error;
     }
   }
 }
