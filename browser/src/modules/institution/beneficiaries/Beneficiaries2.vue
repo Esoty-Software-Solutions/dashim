@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -8,6 +8,7 @@ import useBeneficiariesStore from "../stores/beneficiariesStore2";
 
 import DataPageBase from "@/modules/dataPage/DataPageBase.vue";
 import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
+import CreateBeneficiariesModel from "@/modules/institution/components/CreateBeneficiariesModel.vue";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
@@ -17,7 +18,7 @@ defineOptions({
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.items.value);
-let selected = ref([]);
+let selected = ref([""]);
 let selectedCount = ref(0);
 let expanded = ref([]);
 
@@ -66,12 +67,18 @@ function selectAll() {
 
   console.log(selected.value);
 }
+function openACreateBeneficiaryDialog() {
+  store.dialog.value = !store.dialog.value;
+}
 function paginated() {
   console.log("paginated");
 
   // benefeciaryTableList
   selected.value = [];
   selectedCount.value = 0;
+}
+function closeDialiog() {
+  store.dialog.value = false;
 }
 
 // table headers
@@ -132,6 +139,10 @@ const headers = ref<TableHeader[]>([
 </script>
 
 <template>
+  <CreateBeneficiariesModel
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -143,7 +154,11 @@ const headers = ref<TableHeader[]>([
         <VBtn @click="selectAll">Select All 2</VBtn>
         <VBtn @click="refresh">refresh</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openACreateBeneficiaryDialog"
+        >
           <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
@@ -157,7 +172,7 @@ const headers = ref<TableHeader[]>([
         :item-value="(item) => item.id"
         show-select
         :headers="headers"
-        @input="onSelected($event)"
+        @input="onSelected"
         @update:page="paginated"
         @update:items-per-page="paginated"
       >
