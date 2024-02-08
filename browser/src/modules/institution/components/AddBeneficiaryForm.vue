@@ -6,16 +6,34 @@ import { useI18n } from "vue-i18n";
 import { mdiDelete } from "@mdi/js";
 
 import usecreateBeneficiariesStore from "../stores/createBeneficiariesStore";
+
+import { client } from "@/queries";
+const dateMenu = ref(false);
+const dateFormatted = ref("");
+
+// type BeneficiaryCrudResponse = Parameters<
+//   typeof client.crud.beneficiary.createOne.mutate
+// >[0];
+type BeneficiaryInput = Parameters<
+  typeof client.procedure.CreateSubscriber.mutate
+>[0]["beneficiaries"][0];
+
 const { t } = useI18n();
 const store = usecreateBeneficiariesStore();
 store.getInstitutions();
 function removeBeneficiary() {
   store.subscriber.beneficiaries = store.subscriber.beneficiaries.filter(
-    (ben) => ben.name != props.beneficiary.name,
+    (ben) => ben.id != props.beneficiary.id,
   );
 }
-const beneficiaryModel = defineModel<object>("beneficiary", {
-  default: { name: "" },
+const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
+  default: {
+    id: "",
+    birthDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
+    // birthDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    //   .toISOString()
+    //   .substr(0, 10),
+  },
 });
 </script>
 
@@ -23,7 +41,7 @@ const beneficiaryModel = defineModel<object>("beneficiary", {
   <VCard>
     <VCard-actions>
       <VSpacer />
-      {{ props.beneficiary }}
+      <!-- {{ props.beneficiary }} -->
 
       <VBtn icon color="red" @click="removeBeneficiary">
         x
@@ -65,10 +83,87 @@ const beneficiaryModel = defineModel<object>("beneficiary", {
           <VCol cols="12" sm="6" md="4">
             <VText-field
               v-model="beneficiaryModel.lastName"
-              :label="$t('common.LastName')"
               variant="outlined"
+              :label="$t('common.LastName')"
               required
             />
+          </VCol>
+          <VCol cols="12" sm="6" md="4">
+            <VSelect
+              v-model="beneficiaryModel.relationshipId"
+              :label="$t('common.relationship')"
+              variant="outlined"
+              :items="store.relations"
+              item-title="name"
+              item-value="id"
+              required
+            >
+              <!-- :title="$t('common.insurancePolicyId')" -->
+              <!-- <template #prepend-item>
+                  <v-list-item isActive title="policy" />
+                </template> -->
+            </VSelect>
+          </VCol>
+          <VCol cols="12" sm="6" md="4">
+            <VSelect
+              v-model="beneficiaryModel.genderId"
+              :label="$t('common.genders')"
+              variant="outlined"
+              :items="store.genders"
+              item-title="name"
+              item-value="id"
+              required
+            >
+              <!-- :title="$t('common.insurancePolicyId')" -->
+              <!-- <template #prepend-item>
+                  <v-list-item isActive title="policy" />
+                </template> -->
+            </VSelect>
+          </VCol>
+          <VCol cols="12" sm="6" md="4">
+            <vTextField
+              :model-value="beneficiaryModel.birthDate"
+              variant="outlined"
+              color="primary"
+            >
+              <VMenu activator="parent">
+                <VList>
+                  <VListItem>
+                    <vDatePicker
+                      v-model="beneficiaryModel.birthDate"
+                      :title="$t('common.birthDate')"
+                      hide-header
+                      hide-weekdays
+                    />
+                  </VListItem>
+                </VList>
+              </VMenu>
+            </vTextField>
+            <!-- <VMenu
+              v-model="dateMenu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              max-width="290px"
+              min-width="auto"
+            >
+              <template #activator="{ dateMenu, props }">
+                <vTextField
+                  v-model="dateFormatted"
+                  label="Date"
+                  hint="MM/DD/YYYY format"
+                  persistent-hint
+                  prepend-icon=""
+                  v-bind="props"
+                  @blur="dateFormatted"
+                  v-on="dateMenu"
+                  @keydown.tab="dateMenu = false"
+                />
+              </template>
+            </VMenu>
+            <vDatePicker
+              :title="$t('common.birthDate')"
+              v-model="beneficiaryModel.birthDate"
+            /> -->
           </VCol>
           <!-- <VCol cols="12" sm="6">
               <VSelect

@@ -6,9 +6,31 @@ import { client } from "@/queries";
 type createSubscriberProcedureInput = Parameters<
   typeof client.procedure.CreateSubscriber.mutate
 >[0];
-type institutionCrudResponse = Awaited<
+type InstitutionCrudResponse = Awaited<
   ReturnType<typeof client.crud.institution.findMany.query>
 >;
+type InstitutionCrudResponseData = NonNullable<InstitutionCrudResponse>["data"];
+type InsurancePoliciesCrudResponse = Awaited<
+  ReturnType<typeof client.crud.insurancePolicy.findMany.query>
+>;
+
+type InsurancePoliciesCrudResponseData =
+  NonNullable<InsurancePoliciesCrudResponse>["data"];
+
+type RelationshipCrudResponse = Awaited<
+  ReturnType<typeof client.crud.relationship.findMany.query>
+>;
+type RelationshipCrudResponseData =
+  NonNullable<RelationshipCrudResponse>["data"];
+
+type GenderCrudResponse = Awaited<
+  ReturnType<typeof client.crud.gender.findMany.query>
+>;
+type GenderCrudResponseData = NonNullable<GenderCrudResponse>["data"];
+
+type BeneficiaryInput = Parameters<
+  typeof client.procedure.CreateSubscriber.mutate
+>[0]["beneficiaries"][0];
 // declare const properlyTyped: { prop: { a: string } };
 
 const useCreateBeneficiariesStore = defineStore(
@@ -21,31 +43,68 @@ const useCreateBeneficiariesStore = defineStore(
     const subscriberRef = ref<createSubscriberProcedureInput>({
       id: "",
       insurancePolicyId: "",
-      beneficiaries: [],
+      beneficiaries: [] as BeneficiaryInput[],
     });
     const subscriber = useLocalStorage<createSubscriberProcedureInput>(
       "createBeneficiaries.subscriber",
       subscriberRef,
     );
-    const institutions = ref<institutionCrudResponse>([]);
-    const selectedInstitution = ref(undefined);
+    const institutions = ref<InstitutionCrudResponseData>([]);
+    const selectedInstitutionId = ref<string>("");
+    const insurancePolicies = ref<InsurancePoliciesCrudResponseData>([]);
+    const relations = ref<RelationshipCrudResponseData>([]);
+    const genders = ref<GenderCrudResponseData>([]);
 
     const getInstitutions = async () => {
-      const response: institutionCrudResponse =
+      const response: InstitutionCrudResponse =
         await client.crud.institution.findMany.query({
           take: 5,
         });
       institutions.value = response && response.data ? response.data : [];
     };
+    const getInsurancePolicies = async () => {
+      console.log("selected");
+      const response = await client.crud.insurancePolicy.findMany.query({
+        where: {
+          institutionId: selectedInstitutionId.value,
+        },
+      });
+      if (response) {
+        insurancePolicies.value = response.data;
+      }
+      console.log(response);
+    };
+    const getRelations = async () => {
+      try {
+        const response = await client.crud.relationship.findMany.query({
+          take: 10,
+        });
+        console.log(response);
+
+        relations.value = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getGenders = async () => {
+      try {
+        const response = await client.crud.gender.findMany.query({
+          take: 10,
+        });
+        console.log(response);
+
+        genders.value = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const createSubscriber = async () => {
       try {
         console.log("sub");
         // console.log(subscriber.value);
-        const sub = await client.procedure.CreateSubscriber.mutate({
-          id: "5445q",
-          insurancePolicyId: "564",
-          beneficiaries: [],
-        });
+        const sub = await client.procedure.CreateSubscriber.mutate(
+          subscriber.value,
+        );
         // console.log("sub 2222");
         // console.log(sub);
       } catch (error) {
@@ -60,7 +119,13 @@ const useCreateBeneficiariesStore = defineStore(
       subscriberRef,
       institutions,
       getInstitutions,
-      selectedInstitution,
+      selectedInstitutionId,
+      getInsurancePolicies,
+      insurancePolicies,
+      getRelations,
+      relations,
+      genders,
+      getGenders,
       // properlyTyped
     };
   },
