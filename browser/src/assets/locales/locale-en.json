@@ -31,7 +31,8 @@
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
-      "newbeneficiary": "New Beneficiary"
+      "newbeneficiary": "New Beneficiary",
+      "addbeneficiary": "Add Beneficiary"
     }
   },
   "locale": {
