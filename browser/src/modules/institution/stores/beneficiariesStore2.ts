@@ -13,6 +13,8 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     "beneficiariesList.nameFilterEnabled",
     true,
   );
+  const isActiveFilter = ref<string | null>("true");
+
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -52,6 +54,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
       }
       return {
         where: {
+          isActive: isActiveFilter.value ? true : false,
           NOT: {
             beneficiaries: {
               none: {},
@@ -79,6 +82,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     binding,
     items,
     triggerFetch,
+    isActiveFilter,
   };
 });
 

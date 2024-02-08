@@ -7,7 +7,11 @@ import { mdiPlus } from "@mdi/js";
 import useBeneficiariesStore from "../stores/beneficiariesStore2";
 
 import DataPageBase from "@/modules/dataPage/DataPageBase.vue";
-import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
+import useDataFilters, {
+  text,
+  chips,
+  type ChipsDataFilterItem,
+} from "@/modules/filter/composables/dataFilter";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
@@ -20,6 +24,20 @@ const store = toRefs(useBeneficiariesStore());
 let selected = ref([]);
 let selectedCount = ref(0);
 let expanded = ref([]);
+
+const chipOptions: ChipsDataFilterItem<string>[] = [
+  {
+    value: "true",
+    title: "Active",
+    // contentBorder: false,
+    chipProps: {
+      class: "pt5",
+      // size: "25px",
+      // margin: 0,
+      // variant: "outlined",
+    },
+  },
+];
 
 const { FilterComponent } = useDataFilters({
   sheetProps: {
@@ -36,6 +54,29 @@ const { FilterComponent } = useDataFilters({
       display: {
         md: 8,
       },
+    }),
+    chips: chips({
+      value: store.isActiveFilter,
+      items: chipOptions,
+      display: {
+        lg: 1,
+        md: 2,
+      },
+      // label: "Chips Filter label",
+
+      props: () => ({
+        color: "primary",
+        variant: "tonal",
+        filter: true,
+      }),
+
+      // generic props passed down to every chip
+      chipProps: () => ({
+        density: "comfortable",
+        margin: 0,
+        // size: "lg",
+        // label: true,
+      }),
     }),
   },
 });
