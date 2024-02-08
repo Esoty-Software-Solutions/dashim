@@ -18,6 +18,11 @@ const routes: RouteRecordRaw[] = [
         name: "InstitutionsBeneficiaries",
         component: () => import("./beneficiaries/Beneficiaries.vue"),
       },
+      {
+        path: "beneficiaries2",
+        name: "InstitutionsBeneficiaries2",
+        component: () => import("./beneficiaries/Beneficiaries2.vue"),
+      },
     ],
   },
 ];
