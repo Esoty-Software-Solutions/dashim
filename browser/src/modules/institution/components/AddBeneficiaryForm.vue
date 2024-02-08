@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const props = defineProps(["beneficiary"]);
-import { defineModel, ref } from "vue";
+import { computed, defineModel, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiDelete } from "@mdi/js";
+import { useDate } from "vuetify";
 
 import usecreateBeneficiariesStore from "../stores/createBeneficiariesStore";
 
 import { client } from "@/queries";
 const dateMenu = ref(false);
-const dateFormatted = ref("");
 
 // type BeneficiaryCrudResponse = Parameters<
 //   typeof client.crud.beneficiary.createOne.mutate
@@ -34,6 +34,21 @@ const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
     //   .toISOString()
     //   .substr(0, 10),
   },
+});
+const date = useDate();
+const dateFormatted = computed(() =>
+  date.format(beneficiaryModel.value.birthDate, "shortDate"),
+);
+
+// const dateFormatted = date.format(
+//   beneficiaryModel.value.birthDate,
+//   "shortDate",
+// );
+
+watch(beneficiaryModel.birthDate, (value) => {
+  console.log(value);
+
+  // dateFormatted.value = date.format(value, "shortDate");
 });
 </script>
 
@@ -121,10 +136,14 @@ const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
             </VSelect>
           </VCol>
           <VCol cols="12" sm="6" md="4">
+            {{ beneficiaryModel.birthDate }}
+            {{ dateFormatted }}
             <vTextField
-              :model-value="beneficiaryModel.birthDate"
+              v-mask="'##/##/####'"
+              :model-value="dateFormatted"
               variant="outlined"
               color="primary"
+              maxlength="10"
             >
               <VMenu activator="parent">
                 <VList>
