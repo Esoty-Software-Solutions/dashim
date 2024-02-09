@@ -11,7 +11,10 @@ import useDataFilters, {
   text,
   chips,
   type ChipsDataFilterItem,
+  asyncSelect,
+  asyncAutocomplete,
 } from "@/modules/filter/composables/dataFilter";
+import { client, type RouterInput } from "@/queries";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
@@ -39,6 +42,77 @@ const chipOptions: ChipsDataFilterItem<string>[] = [
   },
 ];
 
+// async filter
+type InstitutionInput = Exclude<
+  RouterInput["crud"]["institution"]["findMany"],
+  void
+>;
+const institutionSelect = asyncSelect(
+  {
+    value: store.selectedInstitution,
+    enabled: store.selectedInstitutionEnabled,
+    props: () => ({
+      label: t("common.institution"),
+      itemValue: "id",
+      itemTitle: "name",
+      clearable: true,
+      // multiple: true,
+      // returnObject: true,
+    }),
+  },
+  {
+    immediate: true,
+    input: () => ({}),
+    async onFetch(input: InstitutionInput) {
+      const res = await client.crud.institution.findMany.query(input);
+      return res?.data ?? [];
+    },
+  },
+);
+const citySelect = asyncAutocomplete(
+  {
+    value: store.selectedCity,
+    props: () => ({
+      label: t("common.city"),
+      itemValue: "id",
+      itemTitle: "name",
+      autoSelectFirst: true,
+      multiple: true,
+      // usage of returnObject is mandatory
+      returnObject: true,
+    }),
+  },
+  {
+    debounceInterval: 220,
+    input(search: string | null) {
+      // dependencies of this getter are tracked and if required will cause a fetch
+      return {
+        search,
+        // the `useSecondSet` is an example of how dependency tracking is useful to
+        // force updates
+
+        // this can be the use case of combined filter (select an institution -> select health center -> select claim/invoice)
+        // secondSet: useSecondSet.value,
+      };
+    },
+    async onFetch(input: { search: string | null; secondSet: boolean }) {
+      // assume this is the server side
+      // no dependency tracking is done on this callback
+      console.log(
+        "[AutocompleteExample#fetch new items]",
+        `search value: "${input.search}"`,
+      );
+      const res = await client.crud.city.findMany.query({
+        take: 50,
+        where: {
+          name: { contains: input.search },
+        },
+      });
+      console.log(res);
+      return res?.data ?? [];
+    },
+  },
+);
 const { FilterComponent } = useDataFilters({
   sheetProps: {
     elevation: 0,
@@ -55,8 +129,11 @@ const { FilterComponent } = useDataFilters({
         md: 8,
       },
     }),
+    institution: institutionSelect,
+    citySelect: citySelect,
     chips: chips({
       value: store.isActiveFilter,
+      enabled: store.isActiveFilterEnabled,
       items: chipOptions,
       display: {
         lg: 1,
@@ -209,7 +286,7 @@ const headers = ref<TableHeader[]>([
             //   )
             //   .map((b) => b.firstName)[0] -->
         <template #item.name="{ item }">
-          {{ item.beneficiaries[0].firstName }}
+          {{ item.beneficiaries[0]?.firstName }}
 
           {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
           {{ item.lastName }}
