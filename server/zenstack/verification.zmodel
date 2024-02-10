@@ -6,7 +6,7 @@ model FingerprintBiometric extends Base, ActivationStatus {
   fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
   fingerTypeId String
 
-  hash String @unique
+  record String @unique
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String
 
@@ -20,7 +20,7 @@ model FingerprintBiometric extends Base, ActivationStatus {
 }
 
 model IDCard extends Base, ActivationStatus {
-  hash String @unique
+  record String @unique
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String
 
@@ -31,7 +31,7 @@ model IDCard extends Base, ActivationStatus {
 }
 
 model FaceBiometric extends Base, ActivationStatus {
-  hash String @unique
+  record String @unique
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String
 
@@ -42,7 +42,7 @@ model FaceBiometric extends Base, ActivationStatus {
 }
 
 model VoiceBiometric extends Base, ActivationStatus {
-  hash String @unique
+  record String @unique
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String
 
