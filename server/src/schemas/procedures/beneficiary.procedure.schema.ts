@@ -1,4 +1,12 @@
 import { z } from "zod";
+import {
+  StringFilterObjectSchema,
+  StringNullableFilterObjectSchema,
+  DateTimeFilterObjectSchema,
+  DateTimeNullableFilterObjectSchema,
+  NumberFilterObjectSchema,
+  NumberNullableFilterObjectSchema,
+} from "./_procedures.schema";
 
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
@@ -7,27 +15,7 @@ const StatusSetByFields = {
 
 const SortOrderSchema = z.enum(["asc", "desc"]);
 
-const BeneficiaryWhereInput = z.object({
-  id: z.string().optional(),
-  createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional(),
-  searchName: z.string().optional(),
-  birthDate: z.coerce.date().optional(),
-  genderId: z.string().optional(),
-  residence: z.string().optional().nullable(),
-  isActive: z.boolean().optional(),
-  deactivationDate: z.coerce.date().optional().nullable(),
-  statusSetById: z.string().optional(),
-  subscriberId: z.string().optional(),
-  legacyCode: z.string().optional().nullable(),
-  relationshipId: z.string().optional(),
-  isFingerprintVerificationActive: z.boolean().optional(),
-  isIdCardVerificationActive: z.boolean().optional(),
-  isFaceVerificationActive: z.boolean().optional(),
-  isVoiceVerificationActive: z.boolean().optional(),
-});
-
-const SubscriberOrderByWithRelationInput = z
+const BeneficiaryEntityOrderByInput = z
   .object({
     id: SortOrderSchema.optional(),
     createdAt: SortOrderSchema.optional(),
@@ -36,59 +24,128 @@ const SubscriberOrderByWithRelationInput = z
     isActive: SortOrderSchema.optional(),
     deactivationDate: SortOrderSchema.optional(),
     statusSetById: SortOrderSchema.optional(),
+    StatusSetBy: z.object({}).optional(),
     insurancePolicyId: SortOrderSchema.optional(),
-    // StatusSetBy: z.object({}).optional(),
-    // insurancePolicy: z.object({}).optional(),
-    // beneficiaries: z.object({}).optional(),
-    // futureStatus: z.object({}).optional(),
+    insurancePolicy: z
+      .object({
+        id: SortOrderSchema.optional(),
+        name: SortOrderSchema.optional(),
+        institutionId: SortOrderSchema.optional(),
+        institution: z
+          .object({
+            id: SortOrderSchema.optional(),
+            name: SortOrderSchema.optional(),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .optional(),
+    beneficiaries: z
+      .object({
+        id: SortOrderSchema.optional(),
+        firstName: SortOrderSchema.optional(),
+        secondName: SortOrderSchema.optional(),
+        thirdName: SortOrderSchema.optional(),
+        fourthName: SortOrderSchema.optional(),
+        lastName: SortOrderSchema.optional(),
+        searchName: SortOrderSchema.optional(),
+        birthDate: SortOrderSchema.optional(),
+        genderId: SortOrderSchema.optional(),
+        isActive: SortOrderSchema.optional(),
+        deactivationDate: SortOrderSchema.optional(),
+        statusSetById: SortOrderSchema.optional(),
+        relationshipId: SortOrderSchema.optional(),
+      })
+      .optional(),
+    futureStatus: z
+      .object({
+        changeDate: SortOrderSchema.optional(),
+        futureStatus: SortOrderSchema.optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
-const SubscriberWhereInput = z
+const BeneficiaryWhereInput = z
   .object({
-    id: z.string().optional(),
-    createdAt: z.coerce.date().optional(),
-    updatedAt: z.coerce.date().optional(),
-    isSoftDeleted: z.boolean().optional(),
+    id: StringFilterObjectSchema.optional(),
+    createdAt: DateTimeFilterObjectSchema.optional(),
+    updatedAt: DateTimeFilterObjectSchema.optional(),
+    searchName: StringFilterObjectSchema.optional(),
+    birthDate: DateTimeFilterObjectSchema.optional(),
+    genderId: StringFilterObjectSchema.optional(),
+    residence: StringFilterObjectSchema.optional().nullable(),
     isActive: z.boolean().optional(),
-    deactivationReason: z.string().optional().nullable(),
-    deactivationDate: z.coerce.date().optional().nullable(),
-    statusSetById: z.string().optional(),
-    insurancePolicyId: z.string().optional(),
+    deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
+    statusSetById: StringFilterObjectSchema.optional(),
+    subscriberId: StringFilterObjectSchema.optional(),
+    legacyCode: StringNullableFilterObjectSchema.optional(),
+    relationshipId: StringFilterObjectSchema.optional(),
+    isFingerprintVerificationActive: z.boolean().optional(),
+    isIdCardVerificationActive: z.boolean().optional(),
+    isFaceVerificationActive: z.boolean().optional(),
+    isVoiceVerificationActive: z.boolean().optional(),
+  })
+  .strict();
+
+const BeneficiaryEntityWhereInput = z
+  .object({
+    id: StringFilterObjectSchema.optional(),
+    createdAt: DateTimeFilterObjectSchema.optional(),
+    updatedAt: DateTimeFilterObjectSchema.optional(),
+    isActive: z.boolean().optional(),
+    deactivationReason: StringNullableFilterObjectSchema.optional(),
+    deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
+    statusSetById: StringFilterObjectSchema.optional(),
     StatusSetBy: z
       .object({
-        is: z
+        id: StringFilterObjectSchema.optional(),
+        firstName: StringFilterObjectSchema.optional(),
+        lastName: StringFilterObjectSchema.optional(),
+      })
+      .strict()
+      .optional(),
+    insurancePolicyId: StringFilterObjectSchema.optional(),
+    insurancePolicy: z
+      .object({
+        id: StringFilterObjectSchema.optional(),
+        name: StringFilterObjectSchema.optional(),
+        institutionId: StringFilterObjectSchema.optional(),
+        institution: z
           .object({
-            id: z.string().optional(),
-            firstName: z.string().optional(),
-            lastName: z.string().optional(),
+            id: StringFilterObjectSchema.optional(),
+            name: StringFilterObjectSchema.optional(),
           })
-          .optional(),
-        isNot: z
-          .object({
-            id: z.string().optional(),
-            firstName: z.string().optional(),
-            lastName: z.string().optional(),
-          })
+          .strict()
           .optional(),
       })
+      .strict()
       .optional(),
-    // beneficiaries: z
-    //   .object({
-    //     every: z.object({}).optional(),
-    //     some: z.object({}).optional(),
-    //     none: z.object({}).optional(),
-    //   })
-    //   .optional(),
-    // futureStatus: z.object({}).optional(),
+    beneficiaries: z
+      .object({
+        every: BeneficiaryWhereInput.optional(),
+        some: BeneficiaryWhereInput.optional(),
+        none: BeneficiaryWhereInput.optional(),
+      })
+      .strict()
+      .optional(),
+    futureStatus: z
+      .object({
+        changeDate: DateTimeFilterObjectSchema.optional(),
+        futureStatus: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
 const ListBeneficiaryEntityInputSchema = z.object({
-  where: SubscriberWhereInput,
-  orderBy: SubscriberOrderByWithRelationInput,
-  take: z.number(),
-  skip: z.number(),
+  where: BeneficiaryEntityWhereInput.optional(),
+  orderBy: BeneficiaryEntityOrderByInput.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
   // cursor: z.string().optional(),
 });
 
@@ -104,23 +161,58 @@ const beneficiarySchema = z
     genderId: z.string(),
     nationality: z.string().optional(),
     nationalID: z.string().optional(),
-    residence: z.string().optional(),
-    address: z.string().optional(),
     relationshipId: z.string(),
   })
   .strict();
 
 const CreateBeneficiaryEntityInputSchema = z
   .object({
-    data: z.object({
-      id: z.string().optional(),
-      createdAt: z.coerce.date().optional(),
-      updatedAt: z.coerce.date().optional(),
-      isActive: z.boolean().optional(),
-      insurancePolicyId: z.string(),
-      beneficiaries: z.array(beneficiarySchema),
-    }),
+    data: z
+      .object({
+        id: z.string(),
+        insurancePolicyId: z.string(),
+        beneficiaries: z.array(beneficiarySchema),
+      })
+      .strict(),
   })
   .strict();
 
-export { ListBeneficiaryEntityInputSchema, CreateBeneficiaryEntityInputSchema };
+const UpdateBeneficiaryEntityInputSchema = z
+  .object({
+    where: BeneficiaryEntityWhereInput.optional(),
+    data: z
+      .object({
+        insurancePolicyId: z.string().optional(),
+        isActive: z.boolean().optional(),
+        deactivationReason: z.string().optional(),
+      })
+      .strict(),
+  })
+  .strict();
+
+const UpdateBeneficiaryInputSchema = z
+  .object({
+    where: BeneficiaryWhereInput.optional(),
+    data: z
+      .object({
+        firstName: z.string(),
+        secondName: z.string().optional(),
+        thirdName: z.string().optional(),
+        fourthName: z.string().optional(),
+        lastName: z.string(),
+        birthDate: z.coerce.date(),
+        genderId: z.string(),
+        nationality: z.string().optional(),
+        nationalID: z.string().optional(),
+        relationshipId: z.string(),
+      })
+      .strict(),
+  })
+  .strict();
+
+export {
+  ListBeneficiaryEntityInputSchema,
+  CreateBeneficiaryEntityInputSchema,
+  UpdateBeneficiaryEntityInputSchema,
+  UpdateBeneficiaryInputSchema,
+};
