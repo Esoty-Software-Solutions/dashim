@@ -136,7 +136,7 @@ const { FilterComponent } = useDataFilters({
       enabled: store.isActiveFilterEnabled,
       items: chipOptions,
       display: {
-        lg: 1,
+        lg: 2,
         md: 2,
       },
       // label: "Chips Filter label",
