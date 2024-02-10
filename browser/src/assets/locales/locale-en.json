@@ -8,10 +8,17 @@
     "updatedAt": "Updated at",
     "birthDate": "Birthdate",
     "genderId": "Gender",
-    "relationshipId": "Relationship",
+    "relationship": "Relationship",
     "actions": "Actions",
     "add": "Add",
-    "id": "Id"
+    "id": "Id",
+    "institution": "Institution",
+    "insurancePolicy": "Insurance Policy",
+    "firstName": "First Name",
+    "secondName": "Second Name",
+    "thirdName": "Third Name",
+    "lastName": "Last Name",
+    "gender": "Gender"
   },
   "accounting": {
     "claims": "Claims"
