@@ -35,7 +35,7 @@ const unGuardedPrisma = new PrismaClient({
         // check if id exists and is valid cuid
         // TODO: Test this with createMany
         if (args.data.id != null && isCuid(args.data.id)) {
-          console.log("CUID2: Adding cuid2 to data");
+          // console.log("CUID2: Adding cuid2 to data");
           args.data.id = createId();
         }
 
@@ -43,18 +43,53 @@ const unGuardedPrisma = new PrismaClient({
       },
       async createMany({ model, operation, args, query }) {
         if (Array.isArray(args.data)) {
-          args.data.map((entry) => {
+          args.data.forEach((entry) => {
             if (entry.id == null && !isCuid(entry.id)) {
-              console.log("CUID2: Adding cuid2 to array data");
+              // console.log("CUID2: Adding cuid2 to array data");
               entry.id = createId();
             }
-            return entry;
           });
         } else {
           if (args.data.id == null && !isCuid(args.data.id)) {
-            console.log("CUID2: Adding cuid2 to data");
+            // console.log("CUID2: Adding cuid2 to data");
             args.data.id = createId();
           }
+        }
+
+        return query(args);
+      },
+    },
+    beneficiary: {
+      async create({ model, operation, args, query }) {
+        // check if id exists and is valid cuid
+        // TODO: Test this with createMany
+
+        args.data.searchName =
+          (args.data.firstName || "") +
+          (args.data.secondName || "") +
+          (args.data.thirdName || "") +
+          (args.data.fourthName || "") +
+          (args.data.lastName || "");
+
+        return query(args);
+      },
+      async createMany({ model, operation, args, query }) {
+        if (Array.isArray(args.data)) {
+          args.data.forEach((entry) => {
+            entry.searchName =
+              (entry.firstName || "") +
+              (entry.secondName || "") +
+              (entry.thirdName || "") +
+              (entry.fourthName || "") +
+              (entry.lastName || "");
+          });
+        } else {
+          args.data.searchName =
+            (args.data.firstName || "") +
+            (args.data.secondName || "") +
+            (args.data.thirdName || "") +
+            (args.data.fourthName || "") +
+            (args.data.lastName || "");
         }
 
         return query(args);
