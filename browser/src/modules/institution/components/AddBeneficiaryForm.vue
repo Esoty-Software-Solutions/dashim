@@ -3,12 +3,15 @@ const props = defineProps(["beneficiary"]);
 import { computed, defineModel, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { vMaska } from "maska";
+
 import { mdiDelete } from "@mdi/js";
 import { useDate } from "vuetify";
 
 import usecreateBeneficiariesStore from "../stores/createBeneficiariesStore";
 
 import { client } from "@/queries";
+
 const dateMenu = ref(false);
 
 // type BeneficiaryCrudResponse = Parameters<
@@ -37,7 +40,7 @@ const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
 });
 const date = useDate();
 const dateFormatted = computed(() =>
-  date.format(beneficiaryModel.value.birthDate, "shortDate"),
+  date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
 );
 
 // const dateFormatted = date.format(
@@ -50,6 +53,15 @@ watch(beneficiaryModel.birthDate, (value) => {
 
   // dateFormatted.value = date.format(value, "shortDate");
 });
+const DateMask = { mask: "##/##/####" };
+const rules = [
+  (value) => !!value || "Required.",
+  (value) => (value && value.length >= 3) || "Min 3 characters",
+];
+const DateRules = [
+  (value) => !!value || "Required.",
+  (value) => (value && value.length >= 3) || "Min 3 characters",
+];
 </script>
 
 <template>
@@ -82,6 +94,7 @@ watch(beneficiaryModel.birthDate, (value) => {
           <VCol cols="12" sm="6" md="4">
             <VText-field
               v-model="beneficiaryModel.firstName"
+              :rules="rules"
               :label="$t('common.firstName')"
               variant="outlined"
               required
@@ -99,7 +112,7 @@ watch(beneficiaryModel.birthDate, (value) => {
             <VText-field
               v-model="beneficiaryModel.lastName"
               variant="outlined"
-              :label="$t('common.LastName')"
+              :label="$t('common.lastName')"
               required
             />
           </VCol>
@@ -122,7 +135,7 @@ watch(beneficiaryModel.birthDate, (value) => {
           <VCol cols="12" sm="6" md="4">
             <VSelect
               v-model="beneficiaryModel.genderId"
-              :label="$t('common.genders')"
+              :label="$t('common.gender')"
               variant="outlined"
               :items="store.genders"
               item-title="name"
@@ -139,8 +152,8 @@ watch(beneficiaryModel.birthDate, (value) => {
             {{ beneficiaryModel.birthDate }}
             {{ dateFormatted }}
             <vTextField
-              v-mask="'##/##/####'"
-              :model-value="dateFormatted"
+              v-model="dateFormatted"
+              v-maska:[DateMask]
               variant="outlined"
               color="primary"
               maxlength="10"

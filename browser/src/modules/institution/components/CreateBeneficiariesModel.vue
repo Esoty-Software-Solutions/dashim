@@ -95,7 +95,7 @@ function getInsurancePolicies() {
             <VCol cols="12" sm="6" md="4">
               <VSelect
                 v-model="store.selectedInstitutionId"
-                :label="$t('common.institute')"
+                :label="$t('common.institution')"
                 variant="outlined"
                 :items="store.institutions"
                 item-title="name"
@@ -107,7 +107,7 @@ function getInsurancePolicies() {
             <VCol v-if="store.selectedInstitutionId" cols="12" sm="6" md="4">
               <VSelect
                 v-model="store.subscriber.insurancePolicyId"
-                :label="$t('common.insurancePolicyId')"
+                :label="$t('common.insurancePolicy')"
                 variant="outlined"
                 :items="store.insurancePolicies"
                 item-title="name"
