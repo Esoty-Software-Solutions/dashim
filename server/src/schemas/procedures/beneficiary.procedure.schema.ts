@@ -8,11 +8,6 @@ import {
   NumberNullableFilterObjectSchema,
 } from "./_procedures.schema";
 
-const StatusSetByFields = {
-  //* Using Prisma operation "include" includes all fields in the return type
-  select: { id: true, firstName: true, lastName: true },
-};
-
 const SortOrderSchema = z.enum(["asc", "desc"]);
 
 const BeneficiaryEntityOrderByInput = z
@@ -24,7 +19,14 @@ const BeneficiaryEntityOrderByInput = z
     isActive: SortOrderSchema.optional(),
     deactivationDate: SortOrderSchema.optional(),
     statusSetById: SortOrderSchema.optional(),
-    StatusSetBy: z.object({}).optional(),
+    StatusSetBy: z
+      .object({
+        id: SortOrderSchema.optional(),
+        firstName: SortOrderSchema.optional(),
+        lastName: SortOrderSchema.optional(),
+      })
+      .strict()
+      .optional(),
     insurancePolicyId: SortOrderSchema.optional(),
     insurancePolicy: z
       .object({
@@ -57,6 +59,7 @@ const BeneficiaryEntityOrderByInput = z
         statusSetById: SortOrderSchema.optional(),
         relationshipId: SortOrderSchema.optional(),
       })
+      .strict()
       .optional(),
     futureStatus: z
       .object({
@@ -141,13 +144,15 @@ const BeneficiaryEntityWhereInput = z
   })
   .strict();
 
-const ListBeneficiaryEntityInputSchema = z.object({
-  where: BeneficiaryEntityWhereInput.optional(),
-  orderBy: BeneficiaryEntityOrderByInput.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  // cursor: z.string().optional(),
-});
+const ListBeneficiaryEntityInputSchema = z
+  .object({
+    where: BeneficiaryEntityWhereInput.optional(),
+    orderBy: BeneficiaryEntityOrderByInput.optional(),
+    take: z.number().optional(),
+    skip: z.number().optional(),
+    // cursor: z.string().optional(),
+  })
+  .strict();
 
 const beneficiarySchema = z
   .object({
