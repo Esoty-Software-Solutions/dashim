@@ -28,11 +28,11 @@ model Institution extends Base, ActivationStatus {
   // managingTenantId String @unique
 
   policies InsurancePolicy[]
-  // members Subscriber[]
+  // members BeneficiaryEntity[]
   MedicalCenterPricing InstitutionMedicalService[]
 }
 
-model Subscriber extends Base, ActivationStatusWithUser {
+model BeneficiaryEntity extends Base, ActivationStatusWithUser {
   // institution Institution @relation(fields: [institutionId], references: [id])
   // institutionId String
 
@@ -41,29 +41,29 @@ model Subscriber extends Base, ActivationStatusWithUser {
 
   beneficiaries Beneficiary[]
 
-  futureStatus SubscriberFutureStatusChange[]
+  futureStatus BeneficiaryEntityFutureStatusChange[]
 
   @@index([insurancePolicyId, id])
   // @@unique([insurancePolicyId, id]) // Unnecessary because id is unique
 }
 
-model SubscriberFutureStatusChange extends BaseWithUser {
+model BeneficiaryEntityFutureStatusChange extends BaseWithUser {
   changeDate DateTime
   futureStatus Boolean
   description String?
 
   // document link to document that triggered the change
 
-  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
-  subscriberId String @unique
+  beneficiaryEntity BeneficiaryEntity @relation(fields: [beneficiaryEntityId], references: [id])
+  beneficiaryEntityId String @unique
 
-  @@index([subscriberId, id])
-  @@unique([subscriberId, changeDate])
+  @@index([beneficiaryEntityId, id])
+  @@unique([beneficiaryEntityId, changeDate])
 }
 
 model Beneficiary extends Base, HumanProfile, ActivationStatusWithUser {
-  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
-  subscriberId String
+  beneficiaryEntity BeneficiaryEntity @relation(fields: [beneficiaryEntityId], references: [id])
+  beneficiaryEntityId String
   legacyCode String?
 
   relationship Relationship @relation(fields: [relationshipId], references: [id])
@@ -83,8 +83,8 @@ model Beneficiary extends Base, HumanProfile, ActivationStatusWithUser {
 
   futureStatus BeneficiaryFutureStatusChange[]
 
-  @@index([subscriberId, id])
-  @@unique([subscriberId, id])
+  @@index([beneficiaryEntityId, id])
+  @@unique([beneficiaryEntityId, id])
 }
 
 model BeneficiaryFutureStatusChange extends BaseWithUser {

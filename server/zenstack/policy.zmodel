@@ -14,7 +14,7 @@ model InsurancePolicy extends Base, ActivationStatus {
   institution Institution @relation(fields: [institutionId], references: [id])
   institutionId String
 
-  subscribers Subscriber[]
+  beneficiaryEntities BeneficiaryEntity[]
   benefitPackages BenefitPackage[]
   medicalCenters InsurancePolicyMedicalCenter[]
 
