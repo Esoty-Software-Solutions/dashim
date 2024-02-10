@@ -12,11 +12,7 @@ model FingerprintBiometric extends Base, ActivationStatus {
 
   entryRecords EntryRecord[]
 
-  @@index([beneficiaryId, id])
-  @@unique([beneficiaryId, id])
-
-  @@index([id,fingerTypeId])
-  @@unique([id,fingerTypeId])
+  @@index([beneficiaryId, fingerTypeId])
 }
 
 model IDCard extends Base, ActivationStatus {
@@ -27,7 +23,6 @@ model IDCard extends Base, ActivationStatus {
   entryRecords EntryRecord[]
 
   @@index([beneficiaryId, id])
-  @@unique([beneficiaryId, id])
 }
 
 model FaceBiometric extends Base, ActivationStatus {
@@ -38,7 +33,6 @@ model FaceBiometric extends Base, ActivationStatus {
   entryRecords EntryRecord[]
 
   @@index([beneficiaryId, id])
-  @@unique([beneficiaryId, id])
 }
 
 model VoiceBiometric extends Base, ActivationStatus {
@@ -49,7 +43,6 @@ model VoiceBiometric extends Base, ActivationStatus {
   entryRecords EntryRecord[]
 
   @@index([beneficiaryId, id])
-  @@unique([beneficiaryId, id])
 }
 
 model FingerType extends Base, LangLocale {
