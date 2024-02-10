@@ -4,12 +4,10 @@ import 'policy'
 import 'patientService'
 
 
-model MedicalCenter extends Base, ActivationStatus {
+model MedicalCenter extends Base, ActivationStatus,location {
   name String
   code String
   description String
-  cityHQ String
-  address String?
   phone String[] @unique
   email String[] @unique
   website String @url
@@ -31,30 +29,30 @@ model MedicalCenter extends Base, ActivationStatus {
   entryRecords EntryRecord[]
 }
 
-model BenefitPackageMedicalServiceTemplate extends Base, ActivationStatus {
+model BenefitPackageMedicalServiceCategory extends Base, ActivationStatus {
 
   benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
   benefitPackageId String
 
-  medicalServiceTemplate MedicalServiceTemplate @relation(fields: [medicalServiceTemplateId], references: [id])
-  medicalServiceTemplateId String
+  medicalServiceCategory MedicalServiceCategory @relation(fields: [medicalServiceCategoryId], references: [id])
+  medicalServiceCategoryId String
 
-  @@index([benefitPackageId, medicalServiceTemplateId])
-  @@unique([benefitPackageId, medicalServiceTemplateId])
+  @@index([benefitPackageId, medicalServiceCategoryId])
+  @@unique([benefitPackageId, medicalServiceCategoryId])
 
-  // * Service Template can be connected to many Benefit Packages
+  // * Service Category can be connected to many Benefit Packages
   // * However this can cause issues where a single service can
   // * belong to multiple benefit packages with copayments & limits
 }
 
-model MedicalServiceTemplate extends Base, ActivationStatus {
+model MedicalServiceCategory extends Base, ActivationStatus {
   name String
   dalilCode String
   basePrice String
   IsPriceVaried Boolean @default(false)
   description String
 
-  beneftiPackages BenefitPackageMedicalServiceTemplate[]
+  beneftiPackages BenefitPackageMedicalServiceCategory[]
   services MedicalService[]
 }
 
@@ -69,11 +67,11 @@ model MedicalService extends Base, ActivationStatus {
   patientServices PatientService[]
   institutionPricing InstitutionMedicalService[]
 
-  template MedicalServiceTemplate @relation(fields: [templateId], references: [id])
-  templateId String
+  category MedicalServiceCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
 
   @@index([medicalCenterId, medicalCenterCode])
   @@unique([medicalCenterId, medicalCenterCode])
-  @@index([templateId,medicalCenterId,  medicalCenterCode])
-  @@unique([templateId,medicalCenterId,  medicalCenterCode])
+  @@index([categoryId,medicalCenterId,  medicalCenterCode])
+  @@unique([categoryId,medicalCenterId,  medicalCenterCode])
 }

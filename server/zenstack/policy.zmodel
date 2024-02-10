@@ -28,7 +28,7 @@ model BenefitPackage extends Base, ActivationStatus {
   copayDistrubtion Int[]
   threashold Int[]
 
-  medicalServiceTemplates BenefitPackageMedicalServiceTemplate[]
+  medicalServiceCategories BenefitPackageMedicalServiceCategory[]
 
   insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
   insurancePolicyId String

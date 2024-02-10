@@ -80,6 +80,9 @@ model City {
     name String
     country Country @relation(fields: [countryId], references: [id])
     countryId String
+    institutions Institution[]
+    medicalcenters MedicalCenter[]
+    beneficiaryEntities BeneficiaryEntity[]
 
     @@index([name, countryId])
     @@unique([name, countryId])
@@ -120,8 +123,6 @@ model User {
     genderId String
     nationality String?
     nationalID String?
-    residence String?
-    address String?
     username String @unique()
     /// @email
     email String @unique()
@@ -134,10 +135,10 @@ model User {
     deviceToken DeviceToken[]
     ownerOf Tenant[]
     memberOf TenantMember[]
-    subscriberStatusChanges Subscriber[] @relation("StatusSetBy")
+    beneficiaryEntityStatusChanges BeneficiaryEntity[] @relation("StatusSetBy")
     beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
-    subscriberFutureStatusCreations SubscriberFutureStatusChange[] @relation("CreatedBy")
-    subscriberFutureStatusChanges SubscriberFutureStatusChange[] @relation("UpdatedBy")
+    beneficiaryEntityFutureStatusCreations BeneficiaryEntityFutureStatusChange[] @relation("CreatedBy")
+    beneficiaryEntityFutureStatusChanges BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
     beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
     beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
 }
@@ -258,12 +259,13 @@ model Institution {
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
+    city City @relation(fields: [cityId], references: [id])
+    cityId String
+    address String?
     name String
     code String @unique()
     legacyCode String?
     description String?
-    cityHQ String?
-    address String?
     phoneArray String[] @unique()
     emailArray String[] @unique()
     /// @url
@@ -283,7 +285,7 @@ model Institution {
 }
 
 /// @@allow('all', true && isPublished)
-model Subscriber {
+model BeneficiaryEntity {
     id String @id()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
@@ -294,16 +296,19 @@ model Subscriber {
     deactivationDate DateTime?
     StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
     statusSetById String
+    city City @relation(fields: [cityId], references: [id])
+    cityId String
+    address String?
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
     beneficiaries Beneficiary[]
-    futureStatus SubscriberFutureStatusChange[]
+    futureStatus BeneficiaryEntityFutureStatusChange[]
 
     @@index([insurancePolicyId, id])
 }
 
 /// @@allow('all', true && isPublished)
-model SubscriberFutureStatusChange {
+model BeneficiaryEntityFutureStatusChange {
     id String @id()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
@@ -316,11 +321,11 @@ model SubscriberFutureStatusChange {
     changeDate DateTime
     futureStatus Boolean
     description String?
-    subscriber Subscriber @relation(fields: [subscriberId], references: [id])
-    subscriberId String @unique()
+    beneficiaryEntity BeneficiaryEntity @relation(fields: [beneficiaryEntityId], references: [id])
+    beneficiaryEntityId String @unique()
 
-    @@index([subscriberId, id])
-    @@unique([subscriberId, changeDate])
+    @@index([beneficiaryEntityId, id])
+    @@unique([beneficiaryEntityId, changeDate])
 }
 
 /// @@allow('all', true && isPublished)
@@ -341,15 +346,13 @@ model Beneficiary {
     genderId String
     nationality String?
     nationalID String?
-    residence String?
-    address String?
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
     StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
     statusSetById String
-    subscriber Subscriber @relation(fields: [subscriberId], references: [id])
-    subscriberId String
+    beneficiaryEntity BeneficiaryEntity @relation(fields: [beneficiaryEntityId], references: [id])
+    beneficiaryEntityId String
     legacyCode String?
     relationship Relationship @relation(fields: [relationshipId], references: [id])
     relationshipId String
@@ -365,8 +368,8 @@ model Beneficiary {
     beneficiaryBalances BeneficiaryBalance[]
     futureStatus BeneficiaryFutureStatusChange[]
 
-    @@index([subscriberId, id])
-    @@unique([subscriberId, id])
+    @@index([beneficiaryEntityId, id])
+    @@unique([beneficiaryEntityId, id])
 }
 
 /// @@allow('all', true && isPublished)
@@ -534,7 +537,7 @@ model InsurancePolicy {
     serviceEntryTimeWindow Int @default(24)
     institution Institution @relation(fields: [institutionId], references: [id])
     institutionId String
-    subscribers Subscriber[]
+    beneficiaryEntities BeneficiaryEntity[]
     benefitPackages BenefitPackage[]
     medicalCenters InsurancePolicyMedicalCenter[]
 
@@ -555,7 +558,7 @@ model BenefitPackage {
     name String
     copayDistrubtion Int[]
     threashold Int[]
-    medicalServiceTemplates BenefitPackageMedicalServiceTemplate[]
+    medicalServiceCategories BenefitPackageMedicalServiceCategory[]
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
     insurancePolicyId String
     beneficiaryBalances BeneficiaryBalance[]
@@ -593,11 +596,12 @@ model MedicalCenter {
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
+    city City @relation(fields: [cityId], references: [id])
+    cityId String
+    address String?
     name String
     code String
     description String
-    cityHQ String
-    address String?
     phone String[] @unique()
     email String[] @unique()
     /// @url
@@ -620,7 +624,7 @@ model MedicalCenter {
 }
 
 /// @@allow('all', true && isPublished)
-model BenefitPackageMedicalServiceTemplate {
+model BenefitPackageMedicalServiceCategory {
     id String @id()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
@@ -631,15 +635,15 @@ model BenefitPackageMedicalServiceTemplate {
     deactivationDate DateTime?
     benefitPackage BenefitPackage @relation(fields: [benefitPackageId], references: [id])
     benefitPackageId String
-    medicalServiceTemplate MedicalServiceTemplate @relation(fields: [medicalServiceTemplateId], references: [id])
-    medicalServiceTemplateId String
+    medicalServiceCategory MedicalServiceCategory @relation(fields: [medicalServiceCategoryId], references: [id])
+    medicalServiceCategoryId String
 
-    @@index([benefitPackageId, medicalServiceTemplateId])
-    @@unique([benefitPackageId, medicalServiceTemplateId])
+    @@index([benefitPackageId, medicalServiceCategoryId])
+    @@unique([benefitPackageId, medicalServiceCategoryId])
 }
 
 /// @@allow('all', true && isPublished)
-model MedicalServiceTemplate {
+model MedicalServiceCategory {
     id String @id()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
@@ -653,7 +657,7 @@ model MedicalServiceTemplate {
     basePrice String
     IsPriceVaried Boolean @default(false)
     description String
-    beneftiPackages BenefitPackageMedicalServiceTemplate[]
+    beneftiPackages BenefitPackageMedicalServiceCategory[]
     services MedicalService[]
 }
 
@@ -674,13 +678,13 @@ model MedicalService {
     medicalCenterId String
     patientServices PatientService[]
     institutionPricing InstitutionMedicalService[]
-    template MedicalServiceTemplate @relation(fields: [templateId], references: [id])
-    templateId String
+    category MedicalServiceCategory @relation(fields: [categoryId], references: [id])
+    categoryId String
 
     @@index([medicalCenterId, medicalCenterCode])
     @@unique([medicalCenterId, medicalCenterCode])
-    @@index([templateId, medicalCenterId, medicalCenterCode])
-    @@unique([templateId, medicalCenterId, medicalCenterCode])
+    @@index([categoryId, medicalCenterId, medicalCenterCode])
+    @@unique([categoryId, medicalCenterId, medicalCenterCode])
 }
 
 /// @@allow('all', true && isPublished)

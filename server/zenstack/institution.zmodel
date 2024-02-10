@@ -4,13 +4,12 @@ import 'policy'
 import 'patientService'
 
 
-model Institution extends Base, ActivationStatus {
+model Institution extends Base, ActivationStatus, location {
   name String
   code String @unique
   legacyCode String?
   description String?
-  cityHQ String?
-  address String?
+
   phoneArray String[] @unique
   emailArray String[] @unique
   // TODO: Normalize the phone and email array
@@ -24,6 +23,7 @@ model Institution extends Base, ActivationStatus {
   latitude Float?
   longitude Float?
 
+
   // managingTenant Tenant @relation(fields: [managingTenantId], references: [id])
   // managingTenantId String @unique
 
@@ -32,7 +32,7 @@ model Institution extends Base, ActivationStatus {
   MedicalCenterPricing InstitutionMedicalService[]
 }
 
-model BeneficiaryEntity extends Base, ActivationStatusWithUser {
+model BeneficiaryEntity extends Base, ActivationStatusWithUser, location {
   // institution Institution @relation(fields: [institutionId], references: [id])
   // institutionId String
 
@@ -40,7 +40,6 @@ model BeneficiaryEntity extends Base, ActivationStatusWithUser {
   insurancePolicyId String
 
   beneficiaries Beneficiary[]
-
   futureStatus BeneficiaryEntityFutureStatusChange[]
 
   @@index([insurancePolicyId, id])
