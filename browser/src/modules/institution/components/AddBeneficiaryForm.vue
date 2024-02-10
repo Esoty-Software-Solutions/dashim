@@ -5,7 +5,7 @@ import { useI18n } from "vue-i18n";
 
 import { vMaska } from "maska";
 
-import { mdiDelete } from "@mdi/js";
+import { mdiCalendar } from "@mdi/js";
 import { useDate } from "vuetify";
 
 import usecreateBeneficiariesStore from "../stores/createBeneficiariesStore";
@@ -42,18 +42,35 @@ const date = useDate();
 const dateFormatted = computed(() =>
   date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
 );
+const inputDate = ref("");
+const datePickerDate = ref(
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
+);
 
+// const dateFormatted = computed({
+//   get: () => date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
+// });
 // const dateFormatted = date.format(
 //   beneficiaryModel.value.birthDate,
 //   "shortDate",
 // );
 
-watch(beneficiaryModel.birthDate, (value) => {
-  console.log(value);
+watch(datePickerDate, (value) => {
+  inputDate.value = date.format(value, "keyboardDate");
+  console.log(date.format(inputDate.value, "fullDateTime"));
+  console.log(
+    new Date(
+      new Date(date.format(inputDate.value, "fullDateTime")) -
+        new Date().getTimezoneOffset() * 60000,
+    ),
+  );
 
+  console.log("watch", value);
+  // beneficiaryModel.value.birthDate = date.format(value, "keyboardDate");
   // dateFormatted.value = date.format(value, "shortDate");
 });
 const DateMask = { mask: "##/##/####" };
+const required = [(value) => !!value || "Required."];
 const rules = [
   (value) => !!value || "Required.",
   (value) => (value && value.length >= 3) || "Min 3 characters",
@@ -81,20 +98,21 @@ const DateRules = [
       }}</span>
     </VCard-title>
     <VCard-text>
+      <!-- <v-form ref="beneficiaryform" v-model="valid"> -->
       <VContainer>
         <VRow>
-          <VCol cols="12" sm="6" md="4">
-            <VText-field
-              v-model="beneficiaryModel.id"
-              :label="$t('common.id')"
-              variant="outlined"
-              required
-            />
-          </VCol>
+          <!-- <VCol cols="12" sm="6" md="4">
+              <VText-field
+                v-model="beneficiaryModel.id"
+                :label="$t('common.id')"
+                variant="outlined"
+                required
+              />
+            </VCol> -->
           <VCol cols="12" sm="6" md="4">
             <VText-field
               v-model="beneficiaryModel.firstName"
-              :rules="rules"
+              :rules="required"
               :label="$t('common.firstName')"
               variant="outlined"
               required
@@ -103,6 +121,7 @@ const DateRules = [
           <VCol cols="12" sm="6" md="4">
             <VText-field
               v-model="beneficiaryModel.secondName"
+              :rules="required"
               :label="$t('common.secondName')"
               variant="outlined"
               required
@@ -110,7 +129,17 @@ const DateRules = [
           </VCol>
           <VCol cols="12" sm="6" md="4">
             <VText-field
+              v-model="beneficiaryModel.thirdName"
+              :rules="required"
+              :label="$t('common.thirdName')"
+              variant="outlined"
+              required
+            />
+          </VCol>
+          <VCol cols="12" sm="6" md="4">
+            <VText-field
               v-model="beneficiaryModel.lastName"
+              :rules="required"
               variant="outlined"
               :label="$t('common.lastName')"
               required
@@ -119,6 +148,7 @@ const DateRules = [
           <VCol cols="12" sm="6" md="4">
             <VSelect
               v-model="beneficiaryModel.relationshipId"
+              :rules="required"
               :label="$t('common.relationship')"
               variant="outlined"
               :items="store.relations"
@@ -135,6 +165,7 @@ const DateRules = [
           <VCol cols="12" sm="6" md="4">
             <VSelect
               v-model="beneficiaryModel.genderId"
+              :rules="required"
               :label="$t('common.gender')"
               variant="outlined"
               :items="store.genders"
@@ -150,26 +181,31 @@ const DateRules = [
           </VCol>
           <VCol cols="12" sm="6" md="4">
             {{ beneficiaryModel.birthDate }}
-            {{ dateFormatted }}
+            {{ inputDate }}
+            <!-- {{ dateFormatted }} -->
             <vTextField
-              v-model="dateFormatted"
+              v-model="inputDate"
               v-maska:[DateMask]
+              :rules="required"
               variant="outlined"
               color="primary"
               maxlength="10"
             >
-              <VMenu activator="parent">
-                <VList>
-                  <VListItem>
-                    <vDatePicker
-                      v-model="beneficiaryModel.birthDate"
-                      :title="$t('common.birthDate')"
-                      hide-header
-                      hide-weekdays
-                    />
-                  </VListItem>
-                </VList>
-              </VMenu>
+              <template #append>
+                <VIcon start :icon="mdiCalendar" />
+                <VMenu :close-on-content-click="false" activator="parent">
+                  <VList>
+                    <VListItem>
+                      <vDatePicker
+                        v-model="datePickerDate"
+                        :title="$t('common.birthDate')"
+                        hide-header
+                        hide-weekdays
+                      />
+                    </VListItem>
+                  </VList>
+                </VMenu>
+              </template>
             </vTextField>
             <!-- <VMenu
               v-model="dateMenu"
@@ -206,6 +242,7 @@ const DateRules = [
             </VCol> -->
         </VRow>
       </VContainer>
+      <!-- </v-form> -->
       <small>*indicates required field</small>
     </VCard-text>
   </VCard>

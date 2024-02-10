@@ -54,6 +54,7 @@ const useCreateBeneficiariesStore = defineStore(
     const insurancePolicies = ref<InsurancePoliciesCrudResponseData>([]);
     const relations = ref<RelationshipCrudResponseData>([]);
     const genders = ref<GenderCrudResponseData>([]);
+    const valid = ref(false);
 
     const getInstitutions = async () => {
       const response: InstitutionCrudResponse =
@@ -100,12 +101,15 @@ const useCreateBeneficiariesStore = defineStore(
     };
     const createSubscriber = async () => {
       try {
-        console.log("sub");
-        // console.log(subscriber.value);
-        const sub = await client.procedure.CreateSubscriber.mutate(
-          subscriber.value,
-        );
-        // console.log("sub 2222");
+        if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
+          console.log("sub");
+          // console.log(subscriber.value);
+          const sub = await client.procedure.CreateSubscriber.mutate({
+            data: subscriber.value,
+          });
+        }
+
+        console.log("unvalid form");
         // console.log(sub);
       } catch (error) {
         console.log(error);
@@ -126,6 +130,7 @@ const useCreateBeneficiariesStore = defineStore(
       relations,
       genders,
       getGenders,
+      valid,
       // properlyTyped
     };
   },
