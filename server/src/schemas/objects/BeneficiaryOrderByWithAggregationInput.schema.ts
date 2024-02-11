@@ -49,18 +49,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    residence: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
-    address: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
       .union([
@@ -75,7 +63,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithAggregationInput> = z
       ])
       .optional(),
     statusSetById: z.lazy(() => SortOrderSchema).optional(),
-    subscriberId: z.lazy(() => SortOrderSchema).optional(),
+    beneficiaryEntityId: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z
       .union([
         z.lazy(() => SortOrderSchema),

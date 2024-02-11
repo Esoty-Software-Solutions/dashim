@@ -65,6 +65,19 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateWithoutServicesInput>
         ])
         .optional()
         .nullable(),
+      cityId: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
+      address: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
       name: z
         .union([
           z.string(),
@@ -83,19 +96,6 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedUpdateWithoutServicesInput>
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
-      cityHQ: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      address: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
       phone: z
         .union([
           z.lazy(() => MedicalCenterUpdatephoneInputObjectSchema),

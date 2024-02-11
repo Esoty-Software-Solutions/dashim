@@ -94,19 +94,17 @@ export const iDCardRouter = router({
     .input(IDCardFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.iDCard.findMany(input),
-            ctx.prisma.iDCard.count({ where: input?.where }),
-            ctx.prisma.iDCard.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.iDCard.findMany(input),
+          ctx.prisma.iDCard.count({ where: input?.where }),
+          ctx.prisma.iDCard.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

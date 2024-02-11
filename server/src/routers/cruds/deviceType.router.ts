@@ -94,19 +94,17 @@ export const deviceTypeRouter = router({
     .input(DeviceTypeFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.deviceType.findMany(input),
-            ctx.prisma.deviceType.count({ where: input?.where }),
-            ctx.prisma.deviceType.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.deviceType.findMany(input),
+          ctx.prisma.deviceType.count({ where: input?.where }),
+          ctx.prisma.deviceType.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

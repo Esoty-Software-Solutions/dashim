@@ -69,16 +69,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    name: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
-    code: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
-    description: z
-      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
-      .optional(),
-    cityHQ: z
+    cityId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     address: z
@@ -88,6 +79,15 @@ const Schema: z.ZodType<Prisma.MedicalCenterScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
+    name: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
+    code: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
+    description: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
     phone: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     email: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     website: z

@@ -1,5 +1,8 @@
 import { z } from 'zod';
 import { CountryCreateNestedOneWithoutCitiesInputObjectSchema } from './CountryCreateNestedOneWithoutCitiesInput.schema';
+import { InstitutionCreateNestedManyWithoutCityInputObjectSchema } from './InstitutionCreateNestedManyWithoutCityInput.schema';
+import { MedicalCenterCreateNestedManyWithoutCityInputObjectSchema } from './MedicalCenterCreateNestedManyWithoutCityInput.schema';
+import { BeneficiaryEntityCreateNestedManyWithoutCityInputObjectSchema } from './BeneficiaryEntityCreateNestedManyWithoutCityInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -14,6 +17,15 @@ const Schema: z.ZodType<Prisma.CityCreateInput> = z
     english: z.string().optional().nullable(),
     name: z.string(),
     country: z.lazy(() => CountryCreateNestedOneWithoutCitiesInputObjectSchema),
+    institutions: z
+      .lazy(() => InstitutionCreateNestedManyWithoutCityInputObjectSchema)
+      .optional(),
+    medicalcenters: z
+      .lazy(() => MedicalCenterCreateNestedManyWithoutCityInputObjectSchema)
+      .optional(),
+    beneficiaryEntities: z
+      .lazy(() => BeneficiaryEntityCreateNestedManyWithoutCityInputObjectSchema)
+      .optional(),
   })
   .strict();
 

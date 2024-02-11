@@ -17,11 +17,11 @@ const Schema: z.ZodType<Prisma.MedicalCenterUncheckedCreateWithoutEntryRecordsIn
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       deactivationDate: z.coerce.date().optional().nullable(),
+      cityId: z.string(),
+      address: z.string().optional().nullable(),
       name: z.string(),
       code: z.string(),
       description: z.string(),
-      cityHQ: z.string(),
-      address: z.string().optional().nullable(),
       phone: z
         .union([
           z.lazy(() => MedicalCenterCreatephoneInputObjectSchema),

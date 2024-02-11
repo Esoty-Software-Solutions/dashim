@@ -29,16 +29,16 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
-    code: z.lazy(() => SortOrderSchema).optional(),
-    description: z.lazy(() => SortOrderSchema).optional(),
-    cityHQ: z.lazy(() => SortOrderSchema).optional(),
+    cityId: z.lazy(() => SortOrderSchema).optional(),
     address: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
+    code: z.lazy(() => SortOrderSchema).optional(),
+    description: z.lazy(() => SortOrderSchema).optional(),
     phone: z.lazy(() => SortOrderSchema).optional(),
     email: z.lazy(() => SortOrderSchema).optional(),
     website: z.lazy(() => SortOrderSchema).optional(),

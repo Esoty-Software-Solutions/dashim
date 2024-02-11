@@ -21,8 +21,6 @@ const Schema: z.ZodType<Prisma.UserCreateManyGenderInput> = z
     birthDate: z.coerce.date(),
     nationality: z.string().optional().nullable(),
     nationalID: z.string().optional().nullable(),
-    residence: z.string().optional().nullable(),
-    address: z.string().optional().nullable(),
     username: z.string(),
     email: z.string(),
     isEmailVerificationActive: z.boolean().optional(),

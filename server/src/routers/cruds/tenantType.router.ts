@@ -94,19 +94,17 @@ export const tenantTypeRouter = router({
     .input(TenantTypeFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.tenantType.findMany(input),
-            ctx.prisma.tenantType.count({ where: input?.where }),
-            ctx.prisma.tenantType.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.tenantType.findMany(input),
+          ctx.prisma.tenantType.count({ where: input?.where }),
+          ctx.prisma.tenantType.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

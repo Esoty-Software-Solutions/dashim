@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SubscriberUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './SubscriberUncheckedCreateNestedManyWithoutInsurancePolicyInput.schema';
+import { BeneficiaryEntityUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './BeneficiaryEntityUncheckedCreateNestedManyWithoutInsurancePolicyInput.schema';
 import { BenefitPackageUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './BenefitPackageUncheckedCreateNestedManyWithoutInsurancePolicyInput.schema';
 import { InsurancePolicyMedicalCenterUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './InsurancePolicyMedicalCenterUncheckedCreateNestedManyWithoutInsurancePolicyInput.schema';
 
@@ -22,10 +22,10 @@ const Schema: z.ZodType<Prisma.InsurancePolicyUncheckedCreateWithoutInstitutionI
       issueDate: z.coerce.date(),
       renewalDate: z.coerce.date(),
       serviceEntryTimeWindow: z.number().optional(),
-      subscribers: z
+      beneficiaryEntities: z
         .lazy(
           () =>
-            SubscriberUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
+            BeneficiaryEntityUncheckedCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
         )
         .optional(),
       benefitPackages: z

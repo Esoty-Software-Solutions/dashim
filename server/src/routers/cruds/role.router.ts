@@ -94,19 +94,17 @@ export const roleRouter = router({
     .input(RoleFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.role.findMany(input),
-            ctx.prisma.role.count({ where: input?.where }),
-            ctx.prisma.role.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.role.findMany(input),
+          ctx.prisma.role.count({ where: input?.where }),
+          ctx.prisma.role.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

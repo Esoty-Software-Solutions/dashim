@@ -7,6 +7,7 @@ import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './Nullab
 import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
 import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
+import { CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema } from './CityUpdateOneRequiredWithoutInstitutionsNestedInput.schema';
 import { InsurancePolicyUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InsurancePolicyUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -64,6 +65,13 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutMedicalCenterPricingInput
         ])
         .optional()
         .nullable(),
+      address: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional()
+        .nullable(),
       name: z
         .union([
           z.string(),
@@ -84,20 +92,6 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutMedicalCenterPricingInput
         .optional()
         .nullable(),
       description: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      cityHQ: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      address: z
         .union([
           z.string(),
           z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
@@ -160,6 +154,11 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutMedicalCenterPricingInput
         ])
         .optional()
         .nullable(),
+      city: z
+        .lazy(
+          () => CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema,
+        )
+        .optional(),
       policies: z
         .lazy(
           () =>
