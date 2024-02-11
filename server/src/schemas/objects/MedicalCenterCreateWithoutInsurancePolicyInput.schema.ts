@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { MedicalCenterCreatephoneInputObjectSchema } from './MedicalCenterCreatephoneInput.schema';
 import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreateemailInput.schema';
+import { CityCreateNestedOneWithoutMedicalcentersInputObjectSchema } from './CityCreateNestedOneWithoutMedicalcentersInput.schema';
 import { TenantCreateNestedOneWithoutAssignedToMedicalCenterInputObjectSchema } from './TenantCreateNestedOneWithoutAssignedToMedicalCenterInput.schema';
 import { MedicalServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalServiceCreateNestedManyWithoutMedicalCenterInput.schema';
 import { EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './EntryRecordCreateNestedManyWithoutMedicalCenterInput.schema';
@@ -18,11 +19,10 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutInsurancePolicyInput> =
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       deactivationDate: z.coerce.date().optional().nullable(),
+      address: z.string().optional().nullable(),
       name: z.string(),
       code: z.string(),
       description: z.string(),
-      cityHQ: z.string(),
-      address: z.string().optional().nullable(),
       phone: z
         .union([
           z.lazy(() => MedicalCenterCreatephoneInputObjectSchema),
@@ -42,6 +42,9 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutInsurancePolicyInput> =
       instagramLink: z.string(),
       latitude: z.number().optional().nullable(),
       longitude: z.number().optional().nullable(),
+      city: z.lazy(
+        () => CityCreateNestedOneWithoutMedicalcentersInputObjectSchema,
+      ),
       managingTenant: z.lazy(
         () =>
           TenantCreateNestedOneWithoutAssignedToMedicalCenterInputObjectSchema,

@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
-import { SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
+import { BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
 import { RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { IDCardUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './IDCardUpdateManyWithoutBeneficiaryNestedInput.schema';
@@ -108,20 +108,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutStatusSetByInput> = z
       ])
       .optional()
       .nullable(),
-    residence: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    address: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     isActive: z
       .union([
         z.boolean(),
@@ -178,10 +164,10 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutStatusSetByInput> = z
         () => GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
       )
       .optional(),
-    subscriber: z
+    beneficiaryEntity: z
       .lazy(
         () =>
-          SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema,
+          BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema,
       )
       .optional(),
     relationship: z

@@ -1,4 +1,7 @@
 import { z } from 'zod';
+import { InstitutionUncheckedCreateNestedManyWithoutCityInputObjectSchema } from './InstitutionUncheckedCreateNestedManyWithoutCityInput.schema';
+import { MedicalCenterUncheckedCreateNestedManyWithoutCityInputObjectSchema } from './MedicalCenterUncheckedCreateNestedManyWithoutCityInput.schema';
+import { BeneficiaryEntityUncheckedCreateNestedManyWithoutCityInputObjectSchema } from './BeneficiaryEntityUncheckedCreateNestedManyWithoutCityInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,6 +16,23 @@ const Schema: z.ZodType<Prisma.CityUncheckedCreateInput> = z
     english: z.string().optional().nullable(),
     name: z.string(),
     countryId: z.string(),
+    institutions: z
+      .lazy(
+        () => InstitutionUncheckedCreateNestedManyWithoutCityInputObjectSchema,
+      )
+      .optional(),
+    medicalcenters: z
+      .lazy(
+        () =>
+          MedicalCenterUncheckedCreateNestedManyWithoutCityInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryEntities: z
+      .lazy(
+        () =>
+          BeneficiaryEntityUncheckedCreateNestedManyWithoutCityInputObjectSchema,
+      )
+      .optional(),
   })
   .strict();
 

@@ -7,9 +7,9 @@ import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './Nullab
 import { DeviceTokenUncheckedUpdateManyWithoutUserNestedInputObjectSchema } from './DeviceTokenUncheckedUpdateManyWithoutUserNestedInput.schema';
 import { TenantUncheckedUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUncheckedUpdateManyWithoutOwnerNestedInput.schema';
 import { TenantMemberUncheckedUpdateManyWithoutMemberNestedInputObjectSchema } from './TenantMemberUncheckedUpdateManyWithoutMemberNestedInput.schema';
-import { SubscriberUncheckedUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './SubscriberUncheckedUpdateManyWithoutStatusSetByNestedInput.schema';
-import { SubscriberFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
-import { SubscriberFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryEntityUncheckedUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryEntityUncheckedUpdateManyWithoutStatusSetByNestedInput.schema';
+import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 
@@ -133,20 +133,6 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateWithoutBeneficiaryStatusChange
         ])
         .optional()
         .nullable(),
-      residence: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      address: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
       username: z
         .union([
           z.string(),
@@ -208,22 +194,22 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateWithoutBeneficiaryStatusChange
             TenantMemberUncheckedUpdateManyWithoutMemberNestedInputObjectSchema,
         )
         .optional(),
-      subscriberStatusChanges: z
+      beneficiaryEntityStatusChanges: z
         .lazy(
           () =>
-            SubscriberUncheckedUpdateManyWithoutStatusSetByNestedInputObjectSchema,
+            BeneficiaryEntityUncheckedUpdateManyWithoutStatusSetByNestedInputObjectSchema,
         )
         .optional(),
-      subscriberFutureStatusCreations: z
+      beneficiaryEntityFutureStatusCreations: z
         .lazy(
           () =>
-            SubscriberFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
+            BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
         )
         .optional(),
-      subscriberFutureStatusChanges: z
+      beneficiaryEntityFutureStatusChanges: z
         .lazy(
           () =>
-            SubscriberFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+            BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
         )
         .optional(),
       beneficiaryFutureStatusCreations: z

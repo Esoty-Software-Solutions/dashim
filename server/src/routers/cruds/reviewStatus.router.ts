@@ -94,19 +94,17 @@ export const reviewStatusRouter = router({
     .input(ReviewStatusFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.reviewStatus.findMany(input),
-            ctx.prisma.reviewStatus.count({ where: input?.where }),
-            ctx.prisma.reviewStatus.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.reviewStatus.findMany(input),
+          ctx.prisma.reviewStatus.count({ where: input?.where }),
+          ctx.prisma.reviewStatus.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryStatusChangesInput.schema';
-import { SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './SubscriberCreateNestedOneWithoutBeneficiariesInput.schema';
+import { BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInput.schema';
 import { RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipCreateNestedOneWithoutBeneficiaryInput.schema';
 import { FingerprintBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
 import { IDCardCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './IDCardCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -28,8 +28,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutGenderInput> = z
     birthDate: z.coerce.date(),
     nationality: z.string().optional().nullable(),
     nationalID: z.string().optional().nullable(),
-    residence: z.string().optional().nullable(),
-    address: z.string().optional().nullable(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     deactivationDate: z.coerce.date().optional().nullable(),
@@ -41,8 +39,9 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutGenderInput> = z
     StatusSetBy: z.lazy(
       () => UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema,
     ),
-    subscriber: z.lazy(
-      () => SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema,
+    beneficiaryEntity: z.lazy(
+      () =>
+        BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema,
     ),
     relationship: z.lazy(
       () => RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema,

@@ -110,20 +110,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateWithoutFaceInput> = z
       ])
       .optional()
       .nullable(),
-    residence: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    address: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     isActive: z
       .union([
         z.boolean(),
@@ -150,7 +136,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateWithoutFaceInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    subscriberId: z
+    beneficiaryEntityId: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

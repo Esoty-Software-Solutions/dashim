@@ -22,8 +22,6 @@ const Schema: z.ZodType<Prisma.UserCountAggregateInputType> = z
     genderId: z.literal(true).optional(),
     nationality: z.literal(true).optional(),
     nationalID: z.literal(true).optional(),
-    residence: z.literal(true).optional(),
-    address: z.literal(true).optional(),
     username: z.literal(true).optional(),
     email: z.literal(true).optional(),
     isEmailVerificationActive: z.literal(true).optional(),

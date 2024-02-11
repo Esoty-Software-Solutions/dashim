@@ -13,5 +13,5 @@ export const MedicalServiceScalarFieldEnumSchema = z.enum([
   'medicalCenterCode',
   'basePrice',
   'medicalCenterId',
-  'templateId',
+  'categoryId',
 ]);

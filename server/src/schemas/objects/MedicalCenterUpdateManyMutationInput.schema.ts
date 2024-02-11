@@ -62,6 +62,13 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateManyMutationInput> = z
       ])
       .optional()
       .nullable(),
+    address: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     name: z
       .union([
         z.string(),
@@ -80,19 +87,6 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateManyMutationInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    cityHQ: z
-      .union([
-        z.string(),
-        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    address: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     phone: z
       .union([
         z.lazy(() => MedicalCenterUpdatephoneInputObjectSchema),

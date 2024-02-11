@@ -69,6 +69,16 @@ const Schema: z.ZodType<Prisma.InstitutionScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
+    cityId: z
+      .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
+      .optional(),
+    address: z
+      .union([
+        z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
+        z.string(),
+      ])
+      .optional()
+      .nullable(),
     name: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
@@ -83,20 +93,6 @@ const Schema: z.ZodType<Prisma.InstitutionScalarWhereWithAggregatesInput> = z
       .optional()
       .nullable(),
     description: z
-      .union([
-        z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
-        z.string(),
-      ])
-      .optional()
-      .nullable(),
-    cityHQ: z
-      .union([
-        z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
-        z.string(),
-      ])
-      .optional()
-      .nullable(),
-    address: z
       .union([
         z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
         z.string(),

@@ -103,20 +103,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereWithAggregatesInput> = z
       ])
       .optional()
       .nullable(),
-    residence: z
-      .union([
-        z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
-        z.string(),
-      ])
-      .optional()
-      .nullable(),
-    address: z
-      .union([
-        z.lazy(() => StringNullableWithAggregatesFilterObjectSchema),
-        z.string(),
-      ])
-      .optional()
-      .nullable(),
     isActive: z
       .union([z.lazy(() => BoolWithAggregatesFilterObjectSchema), z.boolean()])
       .optional(),
@@ -137,7 +123,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereWithAggregatesInput> = z
     statusSetById: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
-    subscriberId: z
+    beneficiaryEntityId: z
       .union([z.lazy(() => StringWithAggregatesFilterObjectSchema), z.string()])
       .optional(),
     legacyCode: z

@@ -16,11 +16,11 @@ model User extends Base, ActivationStatus, HumanProfile {
   ownerOf Tenant[]
   memberOf TenantMember[]
 
-  subscriberStatusChanges Subscriber[] @relation("StatusSetBy")
+  beneficiaryEntityStatusChanges BeneficiaryEntity[] @relation("StatusSetBy")
   beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
 
-  subscriberFutureStatusCreations SubscriberFutureStatusChange[] @relation("CreatedBy")
-  subscriberFutureStatusChanges SubscriberFutureStatusChange[] @relation("UpdatedBy")
+  beneficiaryEntityFutureStatusCreations BeneficiaryEntityFutureStatusChange[] @relation("CreatedBy")
+  beneficiaryEntityFutureStatusChanges BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
   beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
   beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
 }

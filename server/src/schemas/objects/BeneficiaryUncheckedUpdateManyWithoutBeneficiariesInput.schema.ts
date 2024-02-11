@@ -105,20 +105,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateManyWithoutBeneficiarie
         ])
         .optional()
         .nullable(),
-      residence: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      address: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
       isActive: z
         .union([
           z.boolean(),

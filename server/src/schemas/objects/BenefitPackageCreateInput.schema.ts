@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { BenefitPackageCreatecopayDistrubtionInputObjectSchema } from './BenefitPackageCreatecopayDistrubtionInput.schema';
 import { BenefitPackageCreatethreasholdInputObjectSchema } from './BenefitPackageCreatethreasholdInput.schema';
-import { BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema } from './BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInput.schema';
+import { BenefitPackageMedicalServiceCategoryCreateNestedManyWithoutBenefitPackageInputObjectSchema } from './BenefitPackageMedicalServiceCategoryCreateNestedManyWithoutBenefitPackageInput.schema';
 import { InsurancePolicyCreateNestedOneWithoutBenefitPackagesInputObjectSchema } from './InsurancePolicyCreateNestedOneWithoutBenefitPackagesInput.schema';
 import { BeneficiaryBalanceCreateNestedManyWithoutBeneftiPackageInputObjectSchema } from './BeneficiaryBalanceCreateNestedManyWithoutBeneftiPackageInput.schema';
 
@@ -30,10 +30,10 @@ const Schema: z.ZodType<Prisma.BenefitPackageCreateInput> = z
         z.number().array(),
       ])
       .optional(),
-    medicalServiceTemplates: z
+    medicalServiceCategories: z
       .lazy(
         () =>
-          BenefitPackageMedicalServiceTemplateCreateNestedManyWithoutBenefitPackageInputObjectSchema,
+          BenefitPackageMedicalServiceCategoryCreateNestedManyWithoutBenefitPackageInputObjectSchema,
       )
       .optional(),
     insurancePolicy: z.lazy(

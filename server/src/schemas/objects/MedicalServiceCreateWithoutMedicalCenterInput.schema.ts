@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { PatientServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './PatientServiceCreateNestedManyWithoutMedicalServiceInput.schema';
 import { InstitutionMedicalServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './InstitutionMedicalServiceCreateNestedManyWithoutMedicalServiceInput.schema';
-import { MedicalServiceTemplateCreateNestedOneWithoutServicesInputObjectSchema } from './MedicalServiceTemplateCreateNestedOneWithoutServicesInput.schema';
+import { MedicalServiceCategoryCreateNestedOneWithoutServicesInputObjectSchema } from './MedicalServiceCategoryCreateNestedOneWithoutServicesInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -31,9 +31,9 @@ const Schema: z.ZodType<Prisma.MedicalServiceCreateWithoutMedicalCenterInput> =
             InstitutionMedicalServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema,
         )
         .optional(),
-      template: z.lazy(
+      category: z.lazy(
         () =>
-          MedicalServiceTemplateCreateNestedOneWithoutServicesInputObjectSchema,
+          MedicalServiceCategoryCreateNestedOneWithoutServicesInputObjectSchema,
       ),
     })
     .strict();

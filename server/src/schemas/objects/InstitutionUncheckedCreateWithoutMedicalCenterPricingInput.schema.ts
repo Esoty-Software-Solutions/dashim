@@ -16,12 +16,12 @@ const Schema: z.ZodType<Prisma.InstitutionUncheckedCreateWithoutMedicalCenterPri
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       deactivationDate: z.coerce.date().optional().nullable(),
+      cityId: z.string(),
+      address: z.string().optional().nullable(),
       name: z.string(),
       code: z.string(),
       legacyCode: z.string().optional().nullable(),
       description: z.string().optional().nullable(),
-      cityHQ: z.string().optional().nullable(),
-      address: z.string().optional().nullable(),
       phoneArray: z
         .union([
           z.lazy(() => InstitutionCreatephoneArrayInputObjectSchema),

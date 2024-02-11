@@ -7,6 +7,7 @@ import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './Nullab
 import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
 import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
+import { CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema } from './CityUpdateOneRequiredWithoutInstitutionsNestedInput.schema';
 import { InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -63,6 +64,13 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       ])
       .optional()
       .nullable(),
+    address: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     name: z
       .union([
         z.string(),
@@ -83,20 +91,6 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       .optional()
       .nullable(),
     description: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    cityHQ: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    address: z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
@@ -159,6 +153,11 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       ])
       .optional()
       .nullable(),
+    city: z
+      .lazy(
+        () => CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema,
+      )
+      .optional(),
     MedicalCenterPricing: z
       .lazy(
         () =>

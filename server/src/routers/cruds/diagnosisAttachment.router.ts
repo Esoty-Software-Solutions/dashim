@@ -94,19 +94,17 @@ export const diagnosisAttachmentRouter = router({
     .input(DiagnosisAttachmentFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.diagnosisAttachment.findMany(input),
-            ctx.prisma.diagnosisAttachment.count({ where: input?.where }),
-            ctx.prisma.diagnosisAttachment.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.diagnosisAttachment.findMany(input),
+          ctx.prisma.diagnosisAttachment.count({ where: input?.where }),
+          ctx.prisma.diagnosisAttachment.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

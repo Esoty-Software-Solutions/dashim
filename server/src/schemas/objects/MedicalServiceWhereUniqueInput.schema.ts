@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { MedicalServiceMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema } from './MedicalServiceMedicalCenterIdMedicalCenterCodeCompoundUniqueInput.schema';
-import { MedicalServiceTemplateIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema } from './MedicalServiceTemplateIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInput.schema';
+import { MedicalServiceCategoryIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema } from './MedicalServiceCategoryIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -13,10 +13,10 @@ const Schema: z.ZodType<Prisma.MedicalServiceWhereUniqueInput> = z
           MedicalServiceMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema,
       )
       .optional(),
-    templateId_medicalCenterId_medicalCenterCode: z
+    categoryId_medicalCenterId_medicalCenterCode: z
       .lazy(
         () =>
-          MedicalServiceTemplateIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema,
+          MedicalServiceCategoryIdMedicalCenterIdMedicalCenterCodeCompoundUniqueInputObjectSchema,
       )
       .optional(),
   })

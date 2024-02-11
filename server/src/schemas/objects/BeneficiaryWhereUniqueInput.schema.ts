@@ -1,13 +1,15 @@
 import { z } from 'zod';
-import { BeneficiarySubscriberIdIdCompoundUniqueInputObjectSchema } from './BeneficiarySubscriberIdIdCompoundUniqueInput.schema';
+import { BeneficiaryBeneficiaryEntityIdIdCompoundUniqueInputObjectSchema } from './BeneficiaryBeneficiaryEntityIdIdCompoundUniqueInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
 const Schema: z.ZodType<Prisma.BeneficiaryWhereUniqueInput> = z
   .object({
     id: z.string().optional(),
-    subscriberId_id: z
-      .lazy(() => BeneficiarySubscriberIdIdCompoundUniqueInputObjectSchema)
+    beneficiaryEntityId_id: z
+      .lazy(
+        () => BeneficiaryBeneficiaryEntityIdIdCompoundUniqueInputObjectSchema,
+      )
       .optional(),
   })
   .strict();

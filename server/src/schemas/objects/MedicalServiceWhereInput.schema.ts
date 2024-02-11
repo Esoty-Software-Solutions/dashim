@@ -9,8 +9,8 @@ import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelation
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
 import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
 import { InstitutionMedicalServiceListRelationFilterObjectSchema } from './InstitutionMedicalServiceListRelationFilter.schema';
-import { MedicalServiceTemplateRelationFilterObjectSchema } from './MedicalServiceTemplateRelationFilter.schema';
-import { MedicalServiceTemplateWhereInputObjectSchema } from './MedicalServiceTemplateWhereInput.schema';
+import { MedicalServiceCategoryRelationFilterObjectSchema } from './MedicalServiceCategoryRelationFilter.schema';
+import { MedicalServiceCategoryWhereInputObjectSchema } from './MedicalServiceCategoryWhereInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -73,7 +73,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceWhereInput> = z
     medicalCenterId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    templateId: z
+    categoryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     medicalCenter: z
@@ -88,10 +88,10 @@ const Schema: z.ZodType<Prisma.MedicalServiceWhereInput> = z
     institutionPricing: z
       .lazy(() => InstitutionMedicalServiceListRelationFilterObjectSchema)
       .optional(),
-    template: z
+    category: z
       .union([
-        z.lazy(() => MedicalServiceTemplateRelationFilterObjectSchema),
-        z.lazy(() => MedicalServiceTemplateWhereInputObjectSchema),
+        z.lazy(() => MedicalServiceCategoryRelationFilterObjectSchema),
+        z.lazy(() => MedicalServiceCategoryWhereInputObjectSchema),
       ])
       .optional(),
   })

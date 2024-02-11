@@ -5,9 +5,9 @@ import { GenderOrderByWithRelationInputObjectSchema } from './GenderOrderByWithR
 import { DeviceTokenOrderByRelationAggregateInputObjectSchema } from './DeviceTokenOrderByRelationAggregateInput.schema';
 import { TenantOrderByRelationAggregateInputObjectSchema } from './TenantOrderByRelationAggregateInput.schema';
 import { TenantMemberOrderByRelationAggregateInputObjectSchema } from './TenantMemberOrderByRelationAggregateInput.schema';
-import { SubscriberOrderByRelationAggregateInputObjectSchema } from './SubscriberOrderByRelationAggregateInput.schema';
+import { BeneficiaryEntityOrderByRelationAggregateInputObjectSchema } from './BeneficiaryEntityOrderByRelationAggregateInput.schema';
 import { BeneficiaryOrderByRelationAggregateInputObjectSchema } from './BeneficiaryOrderByRelationAggregateInput.schema';
-import { SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './SubscriberFutureStatusChangeOrderByRelationAggregateInput.schema';
+import { BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInput.schema';
 import { BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryFutureStatusChangeOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -67,18 +67,6 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    residence: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
-    address: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
     username: z.lazy(() => SortOrderSchema).optional(),
     email: z.lazy(() => SortOrderSchema).optional(),
     isEmailVerificationActive: z.lazy(() => SortOrderSchema).optional(),
@@ -106,22 +94,22 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
     memberOf: z
       .lazy(() => TenantMemberOrderByRelationAggregateInputObjectSchema)
       .optional(),
-    subscriberStatusChanges: z
-      .lazy(() => SubscriberOrderByRelationAggregateInputObjectSchema)
+    beneficiaryEntityStatusChanges: z
+      .lazy(() => BeneficiaryEntityOrderByRelationAggregateInputObjectSchema)
       .optional(),
     beneficiaryStatusChanges: z
       .lazy(() => BeneficiaryOrderByRelationAggregateInputObjectSchema)
       .optional(),
-    subscriberFutureStatusCreations: z
+    beneficiaryEntityFutureStatusCreations: z
       .lazy(
         () =>
-          SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+          BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
       )
       .optional(),
-    subscriberFutureStatusChanges: z
+    beneficiaryEntityFutureStatusChanges: z
       .lazy(
         () =>
-          SubscriberFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
+          BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
       )
       .optional(),
     beneficiaryFutureStatusCreations: z

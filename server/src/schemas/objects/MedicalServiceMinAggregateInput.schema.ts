@@ -16,7 +16,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceMinAggregateInputType> = z
     medicalCenterCode: z.literal(true).optional(),
     basePrice: z.literal(true).optional(),
     medicalCenterId: z.literal(true).optional(),
-    templateId: z.literal(true).optional(),
+    categoryId: z.literal(true).optional(),
   })
   .strict();
 
