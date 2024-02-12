@@ -7,7 +7,7 @@ export const actions = {
     userId: string,
     beneficiaryEntity: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
   ) {
-    const formattedData: Prisma.SubscriberUncheckedCreateInput = {
+    const formattedData: Prisma.BeneficiaryEntityUncheckedCreateInput = {
       ...beneficiaryEntity.data,
       statusSetById: userId,
       beneficiaries: {
