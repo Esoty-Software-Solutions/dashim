@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
 
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
@@ -7,12 +8,8 @@ export const StringFilterObjectSchema = z.union([
   z
     .object({
       equals: z.string().optional(),
-      in: z.union([z.string().array(), z.string()]).optional(),
-      notIn: z.union([z.string().array(), z.string()]).optional(),
-      lt: z.string().optional(),
-      lte: z.string().optional(),
-      gt: z.string().optional(),
-      gte: z.string().optional(),
+      in: z.string().array().optional(),
+      notIn: z.string().array().optional(),
       contains: z.string().optional(),
       startsWith: z.string().optional(),
       endsWith: z.string().optional(),
@@ -24,18 +21,13 @@ export const StringFilterObjectSchema = z.union([
     })
     .strict(),
 ]);
-
 export const StringNullableFilterObjectSchema = z.union([
   z.string().nullable(),
   z
     .object({
       equals: z.string().optional().nullable(),
-      in: z.union([z.string().array(), z.string()]).optional().nullable(),
-      notIn: z.union([z.string().array(), z.string()]).optional().nullable(),
-      lt: z.string().optional(),
-      lte: z.string().optional(),
-      gt: z.string().optional(),
-      gte: z.string().optional(),
+      in: z.string().array().optional().nullable(),
+      notIn: z.string().array().optional().nullable(),
       contains: z.string().optional(),
       startsWith: z.string().optional(),
       endsWith: z.string().optional(),
@@ -57,8 +49,8 @@ export const DateTimeFilterObjectSchema = z.union([
   z
     .object({
       equals: z.coerce.date().optional(),
-      in: z.union([z.coerce.date().array(), z.coerce.date()]).optional(),
-      notIn: z.union([z.coerce.date().array(), z.coerce.date()]).optional(),
+      in: z.coerce.date().array().optional(),
+      notIn: z.coerce.date().array().optional(),
       lt: z.coerce.date().optional(),
       lte: z.coerce.date().optional(),
       gt: z.coerce.date().optional(),
@@ -76,14 +68,8 @@ export const DateTimeNullableFilterObjectSchema = z.union([
   z
     .object({
       equals: z.coerce.date().nullable().optional(),
-      in: z
-        .union([z.coerce.date().array(), z.coerce.date()])
-        .optional()
-        .nullable(),
-      notIn: z
-        .union([z.coerce.date().array(), z.coerce.date()])
-        .optional()
-        .nullable(),
+      in: z.coerce.date().array().optional().nullable(),
+      notIn: z.coerce.date().array().optional().nullable(),
       lt: z.coerce.date().optional(),
       lte: z.coerce.date().optional(),
       gt: z.coerce.date().optional(),
@@ -105,8 +91,8 @@ export const NumberFilterObjectSchema = z.union([
   z
     .object({
       equals: z.number().optional(),
-      in: z.union([z.number().array(), z.number()]).optional(),
-      notIn: z.union([z.number().array(), z.number()]).optional(),
+      in: z.number().array().optional(),
+      notIn: z.number().array().optional(),
       lt: z.number().optional(),
       lte: z.number().optional(),
       gt: z.number().optional(),
@@ -124,8 +110,8 @@ export const NumberNullableFilterObjectSchema = z.union([
   z
     .object({
       equals: z.number().nullable().optional(),
-      in: z.union([z.number().array(), z.number()]).nullable().optional(),
-      notIn: z.union([z.number().array(), z.number()]).nullable().optional(),
+      in: z.number().array().nullable().optional(),
+      notIn: z.number().array().nullable().optional(),
       lt: z.number().optional(),
       lte: z.number().optional(),
       gt: z.number().optional(),

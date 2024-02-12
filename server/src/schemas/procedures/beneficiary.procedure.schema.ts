@@ -19,6 +19,7 @@ const BeneficiaryEntityOrderByInput = z
     isActive: SortOrderSchema.optional(),
     deactivationDate: SortOrderSchema.optional(),
     statusSetById: SortOrderSchema.optional(),
+    insurancePolicyId: SortOrderSchema.optional(),
     StatusSetBy: z
       .object({
         id: SortOrderSchema.optional(),
@@ -27,7 +28,6 @@ const BeneficiaryEntityOrderByInput = z
       })
       .strict()
       .optional(),
-    insurancePolicyId: SortOrderSchema.optional(),
     insurancePolicy: z
       .object({
         id: SortOrderSchema.optional(),
@@ -43,31 +43,31 @@ const BeneficiaryEntityOrderByInput = z
       })
       .strict()
       .optional(),
-    beneficiaries: z
-      .object({
-        id: SortOrderSchema.optional(),
-        firstName: SortOrderSchema.optional(),
-        secondName: SortOrderSchema.optional(),
-        thirdName: SortOrderSchema.optional(),
-        fourthName: SortOrderSchema.optional(),
-        lastName: SortOrderSchema.optional(),
-        searchName: SortOrderSchema.optional(),
-        birthDate: SortOrderSchema.optional(),
-        genderId: SortOrderSchema.optional(),
-        isActive: SortOrderSchema.optional(),
-        deactivationDate: SortOrderSchema.optional(),
-        statusSetById: SortOrderSchema.optional(),
-        relationshipId: SortOrderSchema.optional(),
-      })
-      .strict()
-      .optional(),
-    futureStatus: z
-      .object({
-        changeDate: SortOrderSchema.optional(),
-        futureStatus: SortOrderSchema.optional(),
-      })
-      .strict()
-      .optional(),
+    // beneficiaries: z
+    //   .object({
+    //     id: SortOrderSchema.optional(),
+    //     firstName: SortOrderSchema.optional(),
+    //     secondName: SortOrderSchema.optional(),
+    //     thirdName: SortOrderSchema.optional(),
+    //     fourthName: SortOrderSchema.optional(),
+    //     lastName: SortOrderSchema.optional(),
+    //     searchName: SortOrderSchema.optional(),
+    //     birthDate: SortOrderSchema.optional(),
+    //     genderId: SortOrderSchema.optional(),
+    //     isActive: SortOrderSchema.optional(),
+    //     deactivationDate: SortOrderSchema.optional(),
+    //     statusSetById: SortOrderSchema.optional(),
+    //     relationshipId: SortOrderSchema.optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
+    // futureStatus: z
+    //   .object({
+    //     changeDate: SortOrderSchema.optional(),
+    //     futureStatus: SortOrderSchema.optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
   })
   .strict();
 
@@ -95,47 +95,46 @@ const BeneficiaryWhereInput = z
 
 const BeneficiaryEntityWhereInput = z
   .object({
-    id: z.object({}),
-    // id: StringFilterObjectSchema.optional(),
-    // createdAt: DateTimeFilterObjectSchema.optional(),
-    // updatedAt: DateTimeFilterObjectSchema.optional(),
-    // isActive: z.boolean().optional(),
-    // deactivationReason: StringNullableFilterObjectSchema.optional(),
-    // deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
-    // cityId: StringFilterObjectSchema.optional(),
-    // statusSetById: StringFilterObjectSchema.optional(),
-    // insurancePolicyId: StringFilterObjectSchema.optional(),
-    // StatusSetBy: z
-    //   .object({
-    //     id: StringFilterObjectSchema.optional(),
-    //     firstName: StringFilterObjectSchema.optional(),
-    //     lastName: StringFilterObjectSchema.optional(),
-    //   })
-    //   .strict()
-    //   .optional(),
-    // insurancePolicy: z
-    //   .object({
-    //     id: StringFilterObjectSchema.optional(),
-    //     name: StringFilterObjectSchema.optional(),
-    //     institutionId: StringFilterObjectSchema.optional(),
-    //     institution: z
-    //       .object({
-    //         id: StringFilterObjectSchema.optional(),
-    //         name: StringFilterObjectSchema.optional(),
-    //       })
-    //       .strict()
-    //       .optional(),
-    //   })
-    //   .strict()
-    //   .optional(),
-    // beneficiaries: z
-    //   .object({
-    //     every: BeneficiaryWhereInput.optional(),
-    //     some: BeneficiaryWhereInput.optional(),
-    //     none: BeneficiaryWhereInput.optional(),
-    //   })
-    //   .strict()
-    //   .optional(),
+    id: StringFilterObjectSchema.optional(),
+    createdAt: DateTimeFilterObjectSchema.optional(),
+    updatedAt: DateTimeFilterObjectSchema.optional(),
+    isActive: z.boolean().optional(),
+    deactivationReason: StringNullableFilterObjectSchema.optional(),
+    deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
+    cityId: StringFilterObjectSchema.optional(),
+    statusSetById: StringFilterObjectSchema.optional(),
+    insurancePolicyId: StringFilterObjectSchema.optional(),
+    StatusSetBy: z
+      .object({
+        id: StringFilterObjectSchema.optional(),
+        firstName: StringFilterObjectSchema.optional(),
+        lastName: StringFilterObjectSchema.optional(),
+      })
+      .strict()
+      .optional(),
+    insurancePolicy: z
+      .object({
+        id: StringFilterObjectSchema.optional(),
+        name: StringFilterObjectSchema.optional(),
+        institutionId: StringFilterObjectSchema.optional(),
+        institution: z
+          .object({
+            id: StringFilterObjectSchema.optional(),
+            name: StringFilterObjectSchema.optional(),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .optional(),
+    beneficiaries: z
+      .object({
+        every: BeneficiaryWhereInput.optional(),
+        some: BeneficiaryWhereInput.optional(),
+        none: BeneficiaryWhereInput.optional(),
+      })
+      .strict()
+      .optional(),
     // futureStatus: z
     //   .object({
     //     changeDate: DateTimeFilterObjectSchema.optional(),
@@ -178,6 +177,7 @@ const CreateBeneficiaryEntityInputSchema = z
       .object({
         id: z.string(),
         insurancePolicyId: z.string(),
+        cityId: z.string(),
         beneficiaries: z.array(beneficiarySchema),
       })
       .strict(),
