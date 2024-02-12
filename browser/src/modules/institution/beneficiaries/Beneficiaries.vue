@@ -17,7 +17,7 @@ defineOptions({
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.binding.value.items);
-let selected = ref([]);
+let selected = ref([""]);
 let selectedCount = ref(0);
 const benefeciaryTableList = ref(null);
 const { FilterComponent } = useDataFilters({
@@ -48,7 +48,7 @@ watch(
   },
 );
 // actions
-function onSelected() {
+function onSelected($event) {
   // benefeciaryTableList
   // selected.value = store.binding.value.items
   // selected.value
