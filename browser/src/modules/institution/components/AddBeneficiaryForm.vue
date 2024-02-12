@@ -61,7 +61,7 @@ watch(datePickerDate, (value) => {
   // dateFormatted.value = date.format(value, "shortDate");
 });
 const dateFormatted = computed(() =>
-  date.format(inputDate.value, "fullDateTime"),
+  date.addDays(date.format(inputDate.value, "fullDateTime"), 1),
 );
 watch(dateFormatted, (value) => {
   beneficiaryModel.value.birthDate = value;
@@ -177,8 +177,9 @@ const DateRules = [
             </VSelect>
           </VCol>
           <VCol cols="12" sm="6" md="4">
-            {{ beneficiaryModel.birthDate }}
-            {{ inputDate }}
+            beneficiaryModel.birthDate {{ beneficiaryModel.birthDate }} ***
+            inputDate {{ inputDate }} *** dateFormatted
+            {{ dateFormatted }} datePickerDate {{ datePickerDate }}
             <!-- {{ dateFormatted }} -->
             <vTextField
               v-model="inputDate"
