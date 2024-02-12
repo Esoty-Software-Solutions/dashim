@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
 import {
   StringFilterObjectSchema,
   StringNullableFilterObjectSchema,
@@ -6,9 +7,8 @@ import {
   DateTimeNullableFilterObjectSchema,
   NumberFilterObjectSchema,
   NumberNullableFilterObjectSchema,
+  SortOrderSchema,
 } from "./_procedures.schema";
-
-const SortOrderSchema = z.enum(["asc", "desc"]);
 
 const BeneficiaryEntityOrderByInput = z
   .object({
@@ -95,52 +95,54 @@ const BeneficiaryWhereInput = z
 
 const BeneficiaryEntityWhereInput = z
   .object({
-    id: StringFilterObjectSchema.optional(),
-    createdAt: DateTimeFilterObjectSchema.optional(),
-    updatedAt: DateTimeFilterObjectSchema.optional(),
-    isActive: z.boolean().optional(),
-    deactivationReason: StringNullableFilterObjectSchema.optional(),
-    deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
-    statusSetById: StringFilterObjectSchema.optional(),
-    StatusSetBy: z
-      .object({
-        id: StringFilterObjectSchema.optional(),
-        firstName: StringFilterObjectSchema.optional(),
-        lastName: StringFilterObjectSchema.optional(),
-      })
-      .strict()
-      .optional(),
-    insurancePolicyId: StringFilterObjectSchema.optional(),
-    insurancePolicy: z
-      .object({
-        id: StringFilterObjectSchema.optional(),
-        name: StringFilterObjectSchema.optional(),
-        institutionId: StringFilterObjectSchema.optional(),
-        institution: z
-          .object({
-            id: StringFilterObjectSchema.optional(),
-            name: StringFilterObjectSchema.optional(),
-          })
-          .strict()
-          .optional(),
-      })
-      .strict()
-      .optional(),
-    beneficiaries: z
-      .object({
-        every: BeneficiaryWhereInput.optional(),
-        some: BeneficiaryWhereInput.optional(),
-        none: BeneficiaryWhereInput.optional(),
-      })
-      .strict()
-      .optional(),
-    futureStatus: z
-      .object({
-        changeDate: DateTimeFilterObjectSchema.optional(),
-        futureStatus: z.boolean().optional(),
-      })
-      .strict()
-      .optional(),
+    id: z.object({}),
+    // id: StringFilterObjectSchema.optional(),
+    // createdAt: DateTimeFilterObjectSchema.optional(),
+    // updatedAt: DateTimeFilterObjectSchema.optional(),
+    // isActive: z.boolean().optional(),
+    // deactivationReason: StringNullableFilterObjectSchema.optional(),
+    // deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
+    // cityId: StringFilterObjectSchema.optional(),
+    // statusSetById: StringFilterObjectSchema.optional(),
+    // insurancePolicyId: StringFilterObjectSchema.optional(),
+    // StatusSetBy: z
+    //   .object({
+    //     id: StringFilterObjectSchema.optional(),
+    //     firstName: StringFilterObjectSchema.optional(),
+    //     lastName: StringFilterObjectSchema.optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
+    // insurancePolicy: z
+    //   .object({
+    //     id: StringFilterObjectSchema.optional(),
+    //     name: StringFilterObjectSchema.optional(),
+    //     institutionId: StringFilterObjectSchema.optional(),
+    //     institution: z
+    //       .object({
+    //         id: StringFilterObjectSchema.optional(),
+    //         name: StringFilterObjectSchema.optional(),
+    //       })
+    //       .strict()
+    //       .optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
+    // beneficiaries: z
+    //   .object({
+    //     every: BeneficiaryWhereInput.optional(),
+    //     some: BeneficiaryWhereInput.optional(),
+    //     none: BeneficiaryWhereInput.optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
+    // futureStatus: z
+    //   .object({
+    //     changeDate: DateTimeFilterObjectSchema.optional(),
+    //     futureStatus: z.boolean().optional(),
+    //   })
+    //   .strict()
+    //   .optional(),
   })
   .strict();
 

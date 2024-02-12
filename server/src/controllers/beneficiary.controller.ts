@@ -7,8 +7,9 @@ import {
   DEFAULT_PAGE_NUMBER,
 } from "./_config.controller";
 import {
-  CreateBeneficiaryEntityInputSchema,
   ListBeneficiaryEntityInputSchema,
+  CreateBeneficiaryEntityInputSchema,
+  UpdateBeneficiaryEntityInputSchema,
 } from "@schemas/procedures/beneficiary.procedure.schema";
 import { rules } from "./beneficiary.rule";
 import { actions } from "./beneficiary.action";
@@ -18,7 +19,7 @@ const StatusSetByFields = {
   select: { id: true, firstName: true, lastName: true },
 };
 
-export async function _listBeneficiaries(
+export async function listBeneficiaryEntities(
   userId: string,
   input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
 ) {
@@ -48,7 +49,7 @@ export async function _listBeneficiaries(
           // Code running in a transaction...
           const [data, filteredCount, unFilteredCount, activeCount] =
             await Promise.all([
-              tx.subscriber.findMany({
+              tx.beneficiaryEntity.findMany({
                 where: validInput?.where,
                 skip: validInput?.skip,
                 take: validInput?.take,
@@ -57,7 +58,13 @@ export async function _listBeneficiaries(
                   createdAt: true,
                   updatedAt: true,
                   isActive: true,
-                  // TODO: add city
+                  city: {
+                    select: {
+                      arabic: true,
+                      english: true,
+                      name: true,
+                    },
+                  },
                   insurancePolicyId: true,
                   beneficiaries: {
                     select: {
@@ -71,7 +78,6 @@ export async function _listBeneficiaries(
                       fourthName: true,
                       lastName: true,
                       birthDate: true,
-                      residence: true, //TODO: rename into city and move to subscriber
                       genderId: true,
                       relationshipId: true,
                       StatusSetBy: StatusSetByFields,
@@ -87,11 +93,11 @@ export async function _listBeneficiaries(
                 //   StatusSetBy: selectStatusSetBy,
                 // },
               }),
-              tx.subscriber.count({
+              tx.beneficiaryEntity.count({
                 where: input?.where,
               }),
-              tx.subscriber.count(),
-              tx.subscriber.count({
+              tx.beneficiaryEntity.count(),
+              tx.beneficiaryEntity.count({
                 where: { ...input?.where, isActive: true },
               }),
             ]);
@@ -139,7 +145,7 @@ export async function _listBeneficiaries(
 }
 // }
 
-export async function _createBeneficiaryEntity(
+export async function createBeneficiaryEntity(
   userId: string,
   input: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
 ) {
@@ -153,18 +159,18 @@ export async function _createBeneficiaryEntity(
     validInput,
   );
 
-  return await enhancedPrisma(userId).subscriber.create({
+  return await enhancedPrisma(userId).beneficiaryEntity.create({
     data: processedInput,
     include: { beneficiaries: true },
   });
 }
 
-export async function _updateBeneficiaryEntityStatus(
+export async function updateBeneficiaryEntity(
   userId: string,
-  input: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
+  input: z.infer<typeof UpdateBeneficiaryEntityInputSchema>,
 ) {
   // input data validation
-  const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
+  const validInput = UpdateBeneficiaryEntityInputSchema.parse(input);
   // input data business rules
   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
   // business logic
@@ -173,7 +179,7 @@ export async function _updateBeneficiaryEntityStatus(
     validInput,
   );
 
-  return await enhancedPrisma(userId).subscriber.create({
+  return await enhancedPrisma(userId).beneficiaryEntity.create({
     data: processedInput,
     include: { beneficiaries: true },
   });

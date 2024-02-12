@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const SortOrderSchema = z.enum(["asc", "desc"]);
+
 export const StringFilterObjectSchema = z.union([
   z.string(),
   z
