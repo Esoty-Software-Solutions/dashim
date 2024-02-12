@@ -51,6 +51,7 @@ export async function listBeneficiaryEntities(
             await Promise.all([
               tx.beneficiaryEntity.findMany({
                 where: validInput?.where,
+                orderBy: validInput?.orderBy,
                 skip: validInput?.skip,
                 take: validInput?.take,
                 select: {
@@ -165,22 +166,22 @@ export async function createBeneficiaryEntity(
   });
 }
 
-export async function updateBeneficiaryEntity(
-  userId: string,
-  input: z.infer<typeof UpdateBeneficiaryEntityInputSchema>,
-) {
-  // input data validation
-  const validInput = UpdateBeneficiaryEntityInputSchema.parse(input);
-  // input data business rules
-  rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
-  // business logic
-  const processedInput = await actions.formatToPrismaCreateShape(
-    userId,
-    validInput,
-  );
+// export async function updateBeneficiaryEntity(
+//   userId: string,
+//   input: z.infer<typeof UpdateBeneficiaryEntityInputSchema>,
+// ) {
+//   // input data validation
+//   const validInput = UpdateBeneficiaryEntityInputSchema.parse(input);
+//   // input data business rules
+//   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
+//   // business logic
+//   const processedInput = await actions.formatToPrismaCreateShape(
+//     userId,
+//     validInput,
+//   );
 
-  return await enhancedPrisma(userId).beneficiaryEntity.create({
-    data: processedInput,
-    include: { beneficiaries: true },
-  });
-}
+//   return await enhancedPrisma(userId).beneficiaryEntity.create({
+//     data: processedInput,
+//     include: { beneficiaries: true },
+//   });
+// }
