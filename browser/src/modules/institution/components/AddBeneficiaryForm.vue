@@ -39,9 +39,9 @@ const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
   },
 });
 const date = useDate();
-const dateFormatted = computed(() =>
-  date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
-);
+// const dateFormatted = computed(() =>
+//   date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
+// );
 const inputDate = ref("");
 const datePickerDate = ref(
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
@@ -68,6 +68,12 @@ watch(datePickerDate, (value) => {
   console.log("watch", value);
   // beneficiaryModel.value.birthDate = date.format(value, "keyboardDate");
   // dateFormatted.value = date.format(value, "shortDate");
+});
+const dateFormatted = computed(() =>
+  date.format(inputDate.value, "fullDateTime"),
+);
+watch(dateFormatted, (value) => {
+  beneficiaryModel.value.birthDate = value;
 });
 const DateMask = { mask: "##/##/####" };
 const required = [(value) => !!value || "Required."];
