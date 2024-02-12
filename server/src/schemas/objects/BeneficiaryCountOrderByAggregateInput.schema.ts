@@ -27,10 +27,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryCountOrderByAggregateInput> = z
     beneficiaryEntityId: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z.lazy(() => SortOrderSchema).optional(),
     relationshipId: z.lazy(() => SortOrderSchema).optional(),
-    isFingerprintVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isIdCardVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isFaceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isVoiceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

@@ -100,7 +100,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricScalarWhereWithAggregatesInpu
           z.string(),
         ])
         .optional(),
-      hash: z
+      record: z
         .union([
           z.lazy(() => StringWithAggregatesFilterObjectSchema),
           z.string(),

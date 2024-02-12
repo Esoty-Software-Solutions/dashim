@@ -33,10 +33,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedCreateWithoutFingerprintInput
       beneficiaryEntityId: z.string(),
       legacyCode: z.string().optional().nullable(),
       relationshipId: z.string(),
-      isFingerprintVerificationActive: z.boolean().optional(),
-      isIdCardVerificationActive: z.boolean().optional(),
-      isFaceVerificationActive: z.boolean().optional(),
-      isVoiceVerificationActive: z.boolean().optional(),
       idCard: z
         .lazy(
           () =>

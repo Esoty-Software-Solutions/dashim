@@ -79,10 +79,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
       ])
       .optional(),
     relationshipId: z.lazy(() => SortOrderSchema).optional(),
-    isFingerprintVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isIdCardVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isFaceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isVoiceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
     gender: z.lazy(() => GenderOrderByWithRelationInputObjectSchema).optional(),
     StatusSetBy: z
       .lazy(() => UserOrderByWithRelationInputObjectSchema)

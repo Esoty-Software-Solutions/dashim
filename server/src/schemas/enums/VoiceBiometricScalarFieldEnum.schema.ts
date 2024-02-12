@@ -9,6 +9,6 @@ export const VoiceBiometricScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'deactivationDate',
-  'hash',
+  'record',
   'beneficiaryId',
 ]);

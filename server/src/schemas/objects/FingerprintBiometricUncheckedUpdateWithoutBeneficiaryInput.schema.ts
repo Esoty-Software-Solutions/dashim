@@ -67,7 +67,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricUncheckedUpdateWithoutBenefic
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
-      hash: z
+      record: z
         .union([
           z.string(),
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

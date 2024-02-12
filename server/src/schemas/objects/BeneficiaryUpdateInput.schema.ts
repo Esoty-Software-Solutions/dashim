@@ -136,30 +136,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateInput> = z
       ])
       .optional()
       .nullable(),
-    isFingerprintVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isIdCardVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isFaceVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isVoiceVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
     gender: z
       .lazy(
         () => GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,

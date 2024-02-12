@@ -23,8 +23,4 @@ export const BeneficiaryScalarFieldEnumSchema = z.enum([
   'beneficiaryEntityId',
   'legacyCode',
   'relationshipId',
-  'isFingerprintVerificationActive',
-  'isIdCardVerificationActive',
-  'isFaceVerificationActive',
-  'isVoiceVerificationActive',
 ]);

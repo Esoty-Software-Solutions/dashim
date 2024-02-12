@@ -61,7 +61,7 @@ const Schema: z.ZodType<Prisma.FaceBiometricUpdateInput> = z
       ])
       .optional()
       .nullable(),
-    hash: z
+    record: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

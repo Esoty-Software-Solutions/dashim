@@ -10,6 +10,6 @@ export const FingerprintBiometricScalarFieldEnumSchema = z.enum([
   'deactivationReason',
   'deactivationDate',
   'fingerTypeId',
-  'hash',
+  'record',
   'beneficiaryId',
 ]);
