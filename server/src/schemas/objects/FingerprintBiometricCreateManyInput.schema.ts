@@ -13,7 +13,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricCreateManyInput> = z
     deactivationReason: z.string().optional().nullable(),
     deactivationDate: z.coerce.date().optional().nullable(),
     fingerTypeId: z.string(),
-    hash: z.string(),
+    record: z.string(),
     beneficiaryId: z.string(),
   })
   .strict();

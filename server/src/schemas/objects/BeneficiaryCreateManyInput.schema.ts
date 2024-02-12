@@ -26,10 +26,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateManyInput> = z
     beneficiaryEntityId: z.string(),
     legacyCode: z.string().optional().nullable(),
     relationshipId: z.string(),
-    isFingerprintVerificationActive: z.boolean().optional(),
-    isIdCardVerificationActive: z.boolean().optional(),
-    isFaceVerificationActive: z.boolean().optional(),
-    isVoiceVerificationActive: z.boolean().optional(),
   })
   .strict();
 

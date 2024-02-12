@@ -33,10 +33,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateInput> = z
     deactivationReason: z.string().optional().nullable(),
     deactivationDate: z.coerce.date().optional().nullable(),
     legacyCode: z.string().optional().nullable(),
-    isFingerprintVerificationActive: z.boolean().optional(),
-    isIdCardVerificationActive: z.boolean().optional(),
-    isFaceVerificationActive: z.boolean().optional(),
-    isVoiceVerificationActive: z.boolean().optional(),
     gender: z.lazy(
       () => GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),

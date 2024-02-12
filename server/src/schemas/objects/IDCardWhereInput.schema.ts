@@ -57,7 +57,7 @@ const Schema: z.ZodType<Prisma.IDCardWhereInput> = z
       ])
       .optional()
       .nullable(),
-    hash: z
+    record: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     beneficiaryId: z

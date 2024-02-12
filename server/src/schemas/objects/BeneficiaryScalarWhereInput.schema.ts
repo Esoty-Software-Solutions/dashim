@@ -102,18 +102,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereInput> = z
     relationshipId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    isFingerprintVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isIdCardVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isFaceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isVoiceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
   })
   .strict();
 

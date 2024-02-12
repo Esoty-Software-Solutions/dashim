@@ -57,7 +57,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricScalarWhereInput> = z
     fingerTypeId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    hash: z
+    record: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     beneficiaryId: z

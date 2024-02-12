@@ -26,10 +26,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryMinAggregateInputType> = z
     beneficiaryEntityId: z.literal(true).optional(),
     legacyCode: z.literal(true).optional(),
     relationshipId: z.literal(true).optional(),
-    isFingerprintVerificationActive: z.literal(true).optional(),
-    isIdCardVerificationActive: z.literal(true).optional(),
-    isFaceVerificationActive: z.literal(true).optional(),
-    isVoiceVerificationActive: z.literal(true).optional(),
   })
   .strict();
 

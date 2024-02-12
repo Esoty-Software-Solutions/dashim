@@ -60,7 +60,7 @@ const Schema: z.ZodType<Prisma.VoiceBiometricUpdateWithoutBeneficiaryInput> = z
       ])
       .optional()
       .nullable(),
-    hash: z
+    record: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
