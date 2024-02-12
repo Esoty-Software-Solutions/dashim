@@ -104,9 +104,9 @@ const useCreateBeneficiariesStore = defineStore(
         if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
           console.log("sub");
           // console.log(subscriber.value);
-          const sub = await client.procedure.CreateSubscriber.mutate(
-            subscriber.value,
-          );
+          const sub = await client.procedure.createBeneficiaryEntity.mutate({
+            data: subscriber.value,
+          });
         }
 
         console.log("unvalid form");
