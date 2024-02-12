@@ -20,19 +20,13 @@ const Schema: z.ZodType<Prisma.BeneficiaryMaxOrderByAggregateInput> = z
     genderId: z.lazy(() => SortOrderSchema).optional(),
     nationality: z.lazy(() => SortOrderSchema).optional(),
     nationalID: z.lazy(() => SortOrderSchema).optional(),
-    residence: z.lazy(() => SortOrderSchema).optional(),
-    address: z.lazy(() => SortOrderSchema).optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
     deactivationDate: z.lazy(() => SortOrderSchema).optional(),
     statusSetById: z.lazy(() => SortOrderSchema).optional(),
-    subscriberId: z.lazy(() => SortOrderSchema).optional(),
+    beneficiaryEntityId: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z.lazy(() => SortOrderSchema).optional(),
     relationshipId: z.lazy(() => SortOrderSchema).optional(),
-    isFingerprintVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isIdCardVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isFaceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
-    isVoiceVerificationActive: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

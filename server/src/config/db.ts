@@ -34,7 +34,8 @@ const unGuardedPrisma = new PrismaClient({
       async create({ model, operation, args, query }) {
         // check if id exists and is valid cuid
         // TODO: Test this with createMany
-        if (args.data.id != null && isCuid(args.data.id)) {
+        // console.log("CUID2 check: ", args.data.id);
+        if (!args.data.id || isCuid(args.data.id)) {
           // console.log("CUID2: Adding cuid2 to data");
           args.data.id = createId();
         }
@@ -43,14 +44,15 @@ const unGuardedPrisma = new PrismaClient({
       },
       async createMany({ model, operation, args, query }) {
         if (Array.isArray(args.data)) {
-          args.data.forEach((entry) => {
-            if (entry.id == null && !isCuid(entry.id)) {
+          args.data.map((entry) => {
+            // console.log("CUID2 check: ", entry.id);
+            if (!entry.id || !isCuid(entry.id)) {
               // console.log("CUID2: Adding cuid2 to array data");
               entry.id = createId();
             }
           });
         } else {
-          if (args.data.id == null && !isCuid(args.data.id)) {
+          if (!args.data.id || !isCuid(args.data.id)) {
             // console.log("CUID2: Adding cuid2 to data");
             args.data.id = createId();
           }

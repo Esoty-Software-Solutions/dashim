@@ -13,7 +13,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricCountAggregateInputType> = z
     deactivationReason: z.literal(true).optional(),
     deactivationDate: z.literal(true).optional(),
     fingerTypeId: z.literal(true).optional(),
-    hash: z.literal(true).optional(),
+    record: z.literal(true).optional(),
     beneficiaryId: z.literal(true).optional(),
     _all: z.literal(true).optional(),
   })

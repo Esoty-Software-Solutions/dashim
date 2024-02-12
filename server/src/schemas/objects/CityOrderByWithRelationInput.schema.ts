@@ -2,6 +2,9 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { CountryOrderByWithRelationInputObjectSchema } from './CountryOrderByWithRelationInput.schema';
+import { InstitutionOrderByRelationAggregateInputObjectSchema } from './InstitutionOrderByRelationAggregateInput.schema';
+import { MedicalCenterOrderByRelationAggregateInputObjectSchema } from './MedicalCenterOrderByRelationAggregateInput.schema';
+import { BeneficiaryEntityOrderByRelationAggregateInputObjectSchema } from './BeneficiaryEntityOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -28,6 +31,15 @@ const Schema: z.ZodType<Prisma.CityOrderByWithRelationInput> = z
     countryId: z.lazy(() => SortOrderSchema).optional(),
     country: z
       .lazy(() => CountryOrderByWithRelationInputObjectSchema)
+      .optional(),
+    institutions: z
+      .lazy(() => InstitutionOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    medicalcenters: z
+      .lazy(() => MedicalCenterOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    beneficiaryEntities: z
+      .lazy(() => BeneficiaryEntityOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

@@ -105,20 +105,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateManyWithoutBeneficiaryS
         ])
         .optional()
         .nullable(),
-      residence: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      address: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
       isActive: z
         .union([
           z.boolean(),
@@ -139,7 +125,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateManyWithoutBeneficiaryS
         ])
         .optional()
         .nullable(),
-      subscriberId: z
+      beneficiaryEntityId: z
         .union([
           z.string(),
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
@@ -156,30 +142,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUncheckedUpdateManyWithoutBeneficiaryS
         .union([
           z.string(),
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      isFingerprintVerificationActive: z
-        .union([
-          z.boolean(),
-          z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      isIdCardVerificationActive: z
-        .union([
-          z.boolean(),
-          z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      isFaceVerificationActive: z
-        .union([
-          z.boolean(),
-          z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
-      isVoiceVerificationActive: z
-        .union([
-          z.boolean(),
-          z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
     })

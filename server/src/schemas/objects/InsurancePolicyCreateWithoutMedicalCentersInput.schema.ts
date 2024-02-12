@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { InstitutionCreateNestedOneWithoutPoliciesInputObjectSchema } from './InstitutionCreateNestedOneWithoutPoliciesInput.schema';
-import { SubscriberCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './SubscriberCreateNestedManyWithoutInsurancePolicyInput.schema';
+import { BeneficiaryEntityCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './BeneficiaryEntityCreateNestedManyWithoutInsurancePolicyInput.schema';
 import { BenefitPackageCreateNestedManyWithoutInsurancePolicyInputObjectSchema } from './BenefitPackageCreateNestedManyWithoutInsurancePolicyInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -25,10 +25,10 @@ const Schema: z.ZodType<Prisma.InsurancePolicyCreateWithoutMedicalCentersInput> 
       institution: z.lazy(
         () => InstitutionCreateNestedOneWithoutPoliciesInputObjectSchema,
       ),
-      subscribers: z
+      beneficiaryEntities: z
         .lazy(
           () =>
-            SubscriberCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
+            BeneficiaryEntityCreateNestedManyWithoutInsurancePolicyInputObjectSchema,
         )
         .optional(),
       benefitPackages: z

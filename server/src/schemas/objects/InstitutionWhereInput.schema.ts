@@ -6,6 +6,8 @@ import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema'
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { StringNullableListFilterObjectSchema } from './StringNullableListFilter.schema';
 import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
+import { CityRelationFilterObjectSchema } from './CityRelationFilter.schema';
+import { CityWhereInputObjectSchema } from './CityWhereInput.schema';
 import { InsurancePolicyListRelationFilterObjectSchema } from './InsurancePolicyListRelationFilter.schema';
 import { InstitutionMedicalServiceListRelationFilterObjectSchema } from './InstitutionMedicalServiceListRelationFilter.schema';
 
@@ -58,6 +60,13 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       ])
       .optional()
       .nullable(),
+    cityId: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    address: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -69,14 +78,6 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       .optional()
       .nullable(),
     description: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
-    cityHQ: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
-    address: z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
@@ -105,6 +106,12 @@ const Schema: z.ZodType<Prisma.InstitutionWhereInput> = z
       .union([z.lazy(() => FloatNullableFilterObjectSchema), z.number()])
       .optional()
       .nullable(),
+    city: z
+      .union([
+        z.lazy(() => CityRelationFilterObjectSchema),
+        z.lazy(() => CityWhereInputObjectSchema),
+      ])
+      .optional(),
     policies: z
       .lazy(() => InsurancePolicyListRelationFilterObjectSchema)
       .optional(),

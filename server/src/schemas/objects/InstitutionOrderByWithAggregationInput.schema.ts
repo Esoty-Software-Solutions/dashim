@@ -29,6 +29,13 @@ const Schema: z.ZodType<Prisma.InstitutionOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    cityId: z.lazy(() => SortOrderSchema).optional(),
+    address: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     name: z.lazy(() => SortOrderSchema).optional(),
     code: z.lazy(() => SortOrderSchema).optional(),
     legacyCode: z
@@ -38,18 +45,6 @@ const Schema: z.ZodType<Prisma.InstitutionOrderByWithAggregationInput> = z
       ])
       .optional(),
     description: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
-    cityHQ: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
-      .optional(),
-    address: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),

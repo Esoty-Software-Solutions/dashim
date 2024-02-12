@@ -75,14 +75,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    residence: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
-    address: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
     isActive: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
@@ -100,7 +92,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereInput> = z
     statusSetById: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberId: z
+    beneficiaryEntityId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     legacyCode: z
@@ -109,18 +101,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryScalarWhereInput> = z
       .nullable(),
     relationshipId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
-    isFingerprintVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isIdCardVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isFaceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isVoiceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
   })
   .strict();

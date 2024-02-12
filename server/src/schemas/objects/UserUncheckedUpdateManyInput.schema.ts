@@ -124,20 +124,6 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateManyInput> = z
       ])
       .optional()
       .nullable(),
-    residence: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    address: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     username: z
       .union([
         z.string(),

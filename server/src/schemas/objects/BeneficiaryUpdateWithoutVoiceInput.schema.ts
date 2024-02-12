@@ -6,7 +6,7 @@ import { NullableStringFieldUpdateOperationsInputObjectSchema } from './Nullable
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInput.schema';
-import { SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
+import { BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
 import { RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { IDCardUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './IDCardUpdateManyWithoutBeneficiaryNestedInput.schema';
@@ -108,20 +108,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutVoiceInput> = z
       ])
       .optional()
       .nullable(),
-    residence: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    address: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
     isActive: z
       .union([
         z.boolean(),
@@ -149,30 +135,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutVoiceInput> = z
       ])
       .optional()
       .nullable(),
-    isFingerprintVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isIdCardVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isFaceVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    isVoiceVerificationActive: z
-      .union([
-        z.boolean(),
-        z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
     gender: z
       .lazy(
         () => GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
@@ -184,10 +146,10 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutVoiceInput> = z
           UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema,
       )
       .optional(),
-    subscriber: z
+    beneficiaryEntity: z
       .lazy(
         () =>
-          SubscriberUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema,
+          BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema,
       )
       .optional(),
     relationship: z

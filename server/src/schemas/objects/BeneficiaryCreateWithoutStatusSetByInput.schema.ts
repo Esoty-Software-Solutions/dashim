@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderCreateNestedOneWithoutBeneficiaryInput.schema';
-import { SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './SubscriberCreateNestedOneWithoutBeneficiariesInput.schema';
+import { BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInput.schema';
 import { RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipCreateNestedOneWithoutBeneficiaryInput.schema';
 import { FingerprintBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
 import { IDCardCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './IDCardCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -28,21 +28,16 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutStatusSetByInput> = z
     birthDate: z.coerce.date(),
     nationality: z.string().optional().nullable(),
     nationalID: z.string().optional().nullable(),
-    residence: z.string().optional().nullable(),
-    address: z.string().optional().nullable(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     deactivationDate: z.coerce.date().optional().nullable(),
     legacyCode: z.string().optional().nullable(),
-    isFingerprintVerificationActive: z.boolean().optional(),
-    isIdCardVerificationActive: z.boolean().optional(),
-    isFaceVerificationActive: z.boolean().optional(),
-    isVoiceVerificationActive: z.boolean().optional(),
     gender: z.lazy(
       () => GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),
-    subscriber: z.lazy(
-      () => SubscriberCreateNestedOneWithoutBeneficiariesInputObjectSchema,
+    beneficiaryEntity: z.lazy(
+      () =>
+        BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema,
     ),
     relationship: z.lazy(
       () => RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema,

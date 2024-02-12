@@ -18,7 +18,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceUncheckedCreateInput> = z
     medicalCenterCode: z.string(),
     basePrice: z.number(),
     medicalCenterId: z.string(),
-    templateId: z.string(),
+    categoryId: z.string(),
     patientServices: z
       .lazy(
         () =>

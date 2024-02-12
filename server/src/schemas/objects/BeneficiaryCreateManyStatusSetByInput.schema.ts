@@ -19,18 +19,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateManyStatusSetByInput> = z
     genderId: z.string(),
     nationality: z.string().optional().nullable(),
     nationalID: z.string().optional().nullable(),
-    residence: z.string().optional().nullable(),
-    address: z.string().optional().nullable(),
     isActive: z.boolean().optional(),
     deactivationReason: z.string().optional().nullable(),
     deactivationDate: z.coerce.date().optional().nullable(),
-    subscriberId: z.string(),
+    beneficiaryEntityId: z.string(),
     legacyCode: z.string().optional().nullable(),
     relationshipId: z.string(),
-    isFingerprintVerificationActive: z.boolean().optional(),
-    isIdCardVerificationActive: z.boolean().optional(),
-    isFaceVerificationActive: z.boolean().optional(),
-    isVoiceVerificationActive: z.boolean().optional(),
   })
   .strict();
 

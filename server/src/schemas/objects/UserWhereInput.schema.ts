@@ -9,9 +9,9 @@ import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
 import { DeviceTokenListRelationFilterObjectSchema } from './DeviceTokenListRelationFilter.schema';
 import { TenantListRelationFilterObjectSchema } from './TenantListRelationFilter.schema';
 import { TenantMemberListRelationFilterObjectSchema } from './TenantMemberListRelationFilter.schema';
-import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
+import { BeneficiaryEntityListRelationFilterObjectSchema } from './BeneficiaryEntityListRelationFilter.schema';
 import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
-import { SubscriberFutureStatusChangeListRelationFilterObjectSchema } from './SubscriberFutureStatusChangeListRelationFilter.schema';
+import { BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryEntityFutureStatusChangeListRelationFilter.schema';
 import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -98,14 +98,6 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    residence: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
-    address: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
     username: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -142,17 +134,21 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
     memberOf: z
       .lazy(() => TenantMemberListRelationFilterObjectSchema)
       .optional(),
-    subscriberStatusChanges: z
-      .lazy(() => SubscriberListRelationFilterObjectSchema)
+    beneficiaryEntityStatusChanges: z
+      .lazy(() => BeneficiaryEntityListRelationFilterObjectSchema)
       .optional(),
     beneficiaryStatusChanges: z
       .lazy(() => BeneficiaryListRelationFilterObjectSchema)
       .optional(),
-    subscriberFutureStatusCreations: z
-      .lazy(() => SubscriberFutureStatusChangeListRelationFilterObjectSchema)
+    beneficiaryEntityFutureStatusCreations: z
+      .lazy(
+        () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
+      )
       .optional(),
-    subscriberFutureStatusChanges: z
-      .lazy(() => SubscriberFutureStatusChangeListRelationFilterObjectSchema)
+    beneficiaryEntityFutureStatusChanges: z
+      .lazy(
+        () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
+      )
       .optional(),
     beneficiaryFutureStatusCreations: z
       .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { BenefitPackageMedicalServiceTemplateOrderByRelationAggregateInputObjectSchema } from './BenefitPackageMedicalServiceTemplateOrderByRelationAggregateInput.schema';
+import { BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInputObjectSchema } from './BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInput.schema';
 import { InsurancePolicyOrderByWithRelationInputObjectSchema } from './InsurancePolicyOrderByWithRelationInput.schema';
 import { BeneficiaryBalanceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryBalanceOrderByRelationAggregateInput.schema';
 
@@ -31,10 +31,10 @@ const Schema: z.ZodType<Prisma.BenefitPackageOrderByWithRelationInput> = z
     copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
     threashold: z.lazy(() => SortOrderSchema).optional(),
     insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
-    medicalServiceTemplates: z
+    medicalServiceCategories: z
       .lazy(
         () =>
-          BenefitPackageMedicalServiceTemplateOrderByRelationAggregateInputObjectSchema,
+          BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInputObjectSchema,
       )
       .optional(),
     insurancePolicy: z

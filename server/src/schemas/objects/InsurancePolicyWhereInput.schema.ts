@@ -7,7 +7,7 @@ import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.sch
 import { IntFilterObjectSchema } from './IntFilter.schema';
 import { InstitutionRelationFilterObjectSchema } from './InstitutionRelationFilter.schema';
 import { InstitutionWhereInputObjectSchema } from './InstitutionWhereInput.schema';
-import { SubscriberListRelationFilterObjectSchema } from './SubscriberListRelationFilter.schema';
+import { BeneficiaryEntityListRelationFilterObjectSchema } from './BeneficiaryEntityListRelationFilter.schema';
 import { BenefitPackageListRelationFilterObjectSchema } from './BenefitPackageListRelationFilter.schema';
 import { InsurancePolicyMedicalCenterListRelationFilterObjectSchema } from './InsurancePolicyMedicalCenterListRelationFilter.schema';
 
@@ -87,8 +87,8 @@ const Schema: z.ZodType<Prisma.InsurancePolicyWhereInput> = z
         z.lazy(() => InstitutionWhereInputObjectSchema),
       ])
       .optional(),
-    subscribers: z
-      .lazy(() => SubscriberListRelationFilterObjectSchema)
+    beneficiaryEntities: z
+      .lazy(() => BeneficiaryEntityListRelationFilterObjectSchema)
       .optional(),
     benefitPackages: z
       .lazy(() => BenefitPackageListRelationFilterObjectSchema)

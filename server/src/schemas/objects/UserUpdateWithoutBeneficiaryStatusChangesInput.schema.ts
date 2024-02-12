@@ -8,9 +8,9 @@ import { GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './Gen
 import { DeviceTokenUpdateManyWithoutUserNestedInputObjectSchema } from './DeviceTokenUpdateManyWithoutUserNestedInput.schema';
 import { TenantUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUpdateManyWithoutOwnerNestedInput.schema';
 import { TenantMemberUpdateManyWithoutMemberNestedInputObjectSchema } from './TenantMemberUpdateManyWithoutMemberNestedInput.schema';
-import { SubscriberUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './SubscriberUpdateManyWithoutStatusSetByNestedInput.schema';
-import { SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
-import { SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInput.schema';
+import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
 
@@ -128,20 +128,6 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutBeneficiaryStatusChangesInput> =
         ])
         .optional()
         .nullable(),
-      residence: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
-      address: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional()
-        .nullable(),
       username: z
         .union([
           z.string(),
@@ -198,21 +184,22 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutBeneficiaryStatusChangesInput> =
       memberOf: z
         .lazy(() => TenantMemberUpdateManyWithoutMemberNestedInputObjectSchema)
         .optional(),
-      subscriberStatusChanges: z
-        .lazy(
-          () => SubscriberUpdateManyWithoutStatusSetByNestedInputObjectSchema,
-        )
-        .optional(),
-      subscriberFutureStatusCreations: z
+      beneficiaryEntityStatusChanges: z
         .lazy(
           () =>
-            SubscriberFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
+            BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInputObjectSchema,
         )
         .optional(),
-      subscriberFutureStatusChanges: z
+      beneficiaryEntityFutureStatusCreations: z
         .lazy(
           () =>
-            SubscriberFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+            BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      beneficiaryEntityFutureStatusChanges: z
+        .lazy(
+          () =>
+            BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
         )
         .optional(),
       beneficiaryFutureStatusCreations: z

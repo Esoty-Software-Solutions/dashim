@@ -15,7 +15,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceCreateManyMedicalCenterInput> = z
     name: z.string(),
     medicalCenterCode: z.string(),
     basePrice: z.number(),
-    templateId: z.string(),
+    categoryId: z.string(),
   })
   .strict();
 
