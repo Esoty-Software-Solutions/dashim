@@ -18,8 +18,8 @@ const dateMenu = ref(false);
 //   typeof client.crud.beneficiary.createOne.mutate
 // >[0];
 type BeneficiaryInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
->[0]["beneficiaries"][0];
+  typeof client.procedure.createBeneficiaryEntity.mutate
+>[0]["data"]["beneficiaries"][0];
 
 const { t } = useI18n();
 const store = usecreateBeneficiariesStore();
@@ -57,15 +57,6 @@ const datePickerDate = ref(
 
 watch(datePickerDate, (value) => {
   inputDate.value = date.format(value, "keyboardDate");
-  console.log(date.format(inputDate.value, "fullDateTime"));
-  console.log(
-    new Date(
-      new Date(date.format(inputDate.value, "fullDateTime")) -
-        new Date().getTimezoneOffset() * 60000,
-    ),
-  );
-
-  console.log("watch", value);
   // beneficiaryModel.value.birthDate = date.format(value, "keyboardDate");
   // dateFormatted.value = date.format(value, "shortDate");
 });

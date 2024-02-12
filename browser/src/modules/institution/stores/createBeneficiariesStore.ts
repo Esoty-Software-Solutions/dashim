@@ -4,7 +4,7 @@ import { ref } from "vue";
 
 import { client } from "@/queries";
 type createSubscriberProcedureInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
+  typeof client.procedure.createBeneficiaryEntity.mutate
 >[0];
 type InstitutionCrudResponse = Awaited<
   ReturnType<typeof client.crud.institution.findMany.query>
@@ -29,8 +29,8 @@ type GenderCrudResponse = Awaited<
 type GenderCrudResponseData = NonNullable<GenderCrudResponse>["data"];
 
 type BeneficiaryInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
->[0]["beneficiaries"][0];
+  typeof client.procedure.createBeneficiaryEntity.mutate
+>[0]["data"]["beneficiaries"][0];
 // declare const properlyTyped: { prop: { a: string } };
 
 const useCreateBeneficiariesStore = defineStore(
