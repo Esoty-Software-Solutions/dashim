@@ -1,4 +1,8 @@
-import { SubscriberFindManySchema, SubscriberCreateOneSchema } from "@schemas/routers/subscriber.schema";
+import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
+import {
+  CreateBeneficiaryEntityInputSchema,
+  ListBeneficiaryEntityInputSchema,
+} from "@schemas/procedures/beneficiary.procedure.schema";
 import { _procedure } from "@controllers/_procedure.controller";
 import {
   router,
@@ -7,22 +11,21 @@ import {
 } from "@routers/_trpc.router";
 
 export const procedureRouter = router({
-
-  listSubscribers: publicProcedure
-    .input(SubscriberFindManySchema)
+  listBeneficiaryEntities: publicProcedure
+    .input(ListBeneficiaryEntityInputSchema)
     .query(async ({ ctx, input }) => {
       try {
-        return _procedure.listBeneficiaries(ctx.req, input);
+        return _procedure.listBeneficiaryEntities(ctx.req, input);
       } catch (error) {
         throwCustomError(error);
       }
     }),
 
-  CreateSubscriber: publicProcedure
-    .input(SubscriberCreateOneSchema)
+  createBeneficiaryEntity: publicProcedure
+    .input(CreateBeneficiaryEntityInputSchema)
     .mutation(async ({ ctx, input }) => {
       try {
-        return _procedure.CreateBeneficiaries(ctx.req, input);
+        return _procedure.createBeneficiaryEntity(ctx.req, input);
       } catch (error) {
         throwCustomError(error);
       }
