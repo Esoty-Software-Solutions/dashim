@@ -14,22 +14,26 @@ const props = defineProps(["dialog"]);
 // type createSubscriberProcedureInput = Parameters<
 //   typeof client.procedure.CreateSubscriber.mutate
 // >[0];
-onMounted(async () => {
-  try {
-    await store.getInstitutions();
-    await store.getRelations();
-    await store.getGenders();
-  } catch (error) {
-    console.log(error);
-  }
-});
+
 const { t } = useI18n();
 let store = usecreateBeneficiariesStore();
-function addBeneficiary() {
-  console.log(store.subscriber.beneficiaries.length);
-  store.subscriber.beneficiaries.push({
-    id: `${store.subscriber.beneficiaries.length + 1}`,
-  });
+function addBeneficiary(beneficiary: object | undefined) {
+  if (beneficiary) {
+    let relationshipId = store.relations.find(
+      (relation) => relation.name == "self",
+    );
+    if (store.subscriber.beneficiaries.length < 1) {
+      store.subscriber.beneficiaries.push({
+        id: `${store.subscriber.beneficiaries.length + 1}`,
+        relationshipId: relationshipId ? relationshipId.id : undefined,
+      });
+    }
+  } else {
+    console.log(store.subscriber.beneficiaries.length);
+    store.subscriber.beneficiaries.push({
+      id: `${store.subscriber.beneficiaries.length + 1}`,
+    });
+  }
 }
 const emit = defineEmits(["update-dialog"]);
 function getInsurancePolicies() {
@@ -37,6 +41,17 @@ function getInsurancePolicies() {
   store.getInsurancePolicies();
 }
 const required = [(value) => !!value || "Required."];
+onMounted(async () => {
+  try {
+    await store.getInstitutions();
+    await store.getRelations();
+    await store.getGenders();
+    await store.getCities();
+    addBeneficiary({});
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
 
 <template>
@@ -131,6 +146,18 @@ const required = [(value) => !!value || "Required."];
                   <v-list-item isActive title="policy" />
                 </template> -->
                 </VSelect>
+              </VCol>
+              <VCol cols="12" sm="6" md="4">
+                <VSelect
+                  v-model="store.subscriber.cityId"
+                  :label="$t('common.city')"
+                  variant="outlined"
+                  :items="store.cities"
+                  item-title="name"
+                  item-value="id"
+                  required
+                  :rules="required"
+                />
               </VCol>
               <VCol sm="12 pt-0">
                 <VBtn color="primary" variant="plain" @click="addBeneficiary">

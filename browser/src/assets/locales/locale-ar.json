@@ -18,7 +18,8 @@
     "secondName": "اسم الأب",
     "thirdName": "اسم الجد",
     "lastName": "اللقب",
-    "gender": "الجنس"
+    "gender": "الجنس",
+    "city": "المدينة"
   },
   "locale": {
     "ar": {

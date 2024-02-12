@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { client } from "@/queries";
 type createSubscriberProcedureInput = Parameters<
   typeof client.procedure.createBeneficiaryEntity.mutate
->[0];
+>[0]["data"];
 type InstitutionCrudResponse = Awaited<
   ReturnType<typeof client.crud.institution.findMany.query>
 >;
@@ -27,6 +27,11 @@ type GenderCrudResponse = Awaited<
   ReturnType<typeof client.crud.gender.findMany.query>
 >;
 type GenderCrudResponseData = NonNullable<GenderCrudResponse>["data"];
+
+type CityCrudResponse = Awaited<
+  ReturnType<typeof client.crud.city.findMany.query>
+>;
+type CityCrudResponseData = NonNullable<CityCrudResponse>["data"];
 
 type BeneficiaryInput = Parameters<
   typeof client.procedure.createBeneficiaryEntity.mutate
@@ -54,6 +59,7 @@ const useCreateBeneficiariesStore = defineStore(
     const insurancePolicies = ref<InsurancePoliciesCrudResponseData>([]);
     const relations = ref<RelationshipCrudResponseData>([]);
     const genders = ref<GenderCrudResponseData>([]);
+    const cities = ref<CityCrudResponseData>([]);
     const valid = ref(false);
 
     const getInstitutions = async () => {
@@ -99,10 +105,22 @@ const useCreateBeneficiariesStore = defineStore(
         console.log(error);
       }
     };
+    const getCities = async () => {
+      try {
+        const response: CityCrudResponse =
+          await client.crud.city.findMany.query({
+            take: 10,
+          });
+        console.log(response);
+
+        cities.value = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const createSubscriber = async () => {
       try {
         if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
-          console.log("sub");
           // console.log(subscriber.value);
           const sub = await client.procedure.createBeneficiaryEntity.mutate({
             data: subscriber.value,
@@ -131,6 +149,8 @@ const useCreateBeneficiariesStore = defineStore(
       genders,
       getGenders,
       valid,
+      getCities,
+      cities,
       // properlyTyped
     };
   },
