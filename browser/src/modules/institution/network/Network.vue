@@ -1,0 +1,137 @@
+<script setup lang="ts">
+import { ref, toRefs, computed, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+import { mdiPlus } from "@mdi/js";
+
+import useBeneficiariesStore from "../stores/networkStore";
+
+import DataPageBase from "@/modules/dataPage/DataPageSplitLayout.vue";
+import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
+
+import type { TableHeader } from "@/modules/shared/interfaces";
+
+defineOptions({
+  name: "InstitutionsBeneficiariesPage",
+});
+const { t } = useI18n();
+const store = toRefs(useBeneficiariesStore());
+// console.log(store.binding.value.items);
+let selected = ref([""]);
+let selectedCount = ref(0);
+const { FilterComponent } = useDataFilters({
+  sheetProps: {
+    elevation: 0,
+  },
+  filter: {
+    firstName: text({
+      value: store.nameFilter,
+      enabled: store.nameFilterEnabled,
+      enableOnFocus: false,
+      props: {
+        label: "Name",
+      },
+      display: {
+        md: 8,
+      },
+    }),
+  },
+});
+
+watch(
+  () => ({ ...store.binding.value }),
+  () => {
+    console.log("items updated");
+    selected.value = [];
+    selectedCount.value = 0;
+  },
+);
+// actions
+function onSelected($event) {
+  // selected.value = store.binding.value.items
+  // selected.value
+  console.log(selected.value);
+  selectedCount.value = selected.value.length;
+}
+function refresh() {
+  store.triggerFetch.value();
+}
+function selectAll() {
+  selected.value = store.binding.value.items.map((item) => item.id);
+  selectedCount.value = store.binding.value.itemsLength;
+
+  console.log(selected.value);
+}
+function paginated() {
+  console.log("paginated");
+  selected.value = [];
+  selectedCount.value = 0;
+}
+
+// table headers
+const headers = ref<TableHeader[]>([
+  {
+    title: t("common.name"),
+    key: "name",
+    cellProps: () => {
+      return { dir: "auto" };
+    },
+  },
+  {
+    title: t("common.actions"),
+    key: "actions",
+    sortable: false,
+    width: "1rem",
+    align: "center",
+  },
+]);
+</script>
+
+<template>
+  <DataPageBase>
+    <template #filters>
+      <FilterComponent />
+    </template>
+    <template #actions>
+      <VCardActions>
+        {{ selectedCount }}
+        <VBtn @click="selectAll">Select All</VBtn>
+        <VBtn @click="refresh">refresh</VBtn>
+        <VSpacer />
+        <VBtn color="primary" variant="plain">
+          <span>{{ t("institution.network.newbeneficiary") }}</span>
+          <VIcon end :icon="mdiPlus" />
+        </VBtn>
+      </VCardActions>
+    </template>
+    <template #table>
+      <VDataTableServer
+        v-model="selected"
+        :item-value="(item) => item.id"
+        :headers="headers"
+        v-bind="store.institutionBinding.value"
+        @input="onSelected($event)"
+      >
+        <!-- <template #item.name="{ item }">
+          {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
+          {{ item.lastName }}
+        </template>
+        <template #item.birthDate="{ item }">
+          {{ new Date(item.birthDate).toLocaleDateString() }}
+        </template>
+        <template #item.createdAt="{ item }">
+          {{ new Date(item.createdAt).toLocaleDateString() }}
+        </template>
+        <template #item.updatedAt="{ item }">
+          {{ new Date(item.updatedAt).toLocaleDateString() }}
+        </template>
+        <template #item.isActive="{ item }">
+          <VChip :color="item.isActive ? 'primary' : 'error'">
+            {{ item.isActive ? "Active" : "Inactive" }}
+          </VChip>
+        </template> -->
+        <template #bottom />
+      </VDataTableServer>
+    </template>
+  </DataPageBase>
+</template>

@@ -23,6 +23,9 @@ const tabs = ref([
   },
   {
     text: t("institution.tabs.network"),
+    to: {
+      name: "InstitutionsNetwork",
+    },
   },
   {
     text: t("institution.tabs.insurancePolicy"),
