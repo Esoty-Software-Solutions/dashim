@@ -63,8 +63,12 @@ watch(datePickerDate, (value) => {
 const dateFormatted = computed(() =>
   date.addDays(date.format(inputDate.value, "fullDateTime"), 1),
 );
+// watch(inputDate, (value) => {
+//   datePickerDate.value = value;
+// });
 watch(dateFormatted, (value) => {
   beneficiaryModel.value.birthDate = value;
+  // datePickerDate.value = value;
 });
 const DateMask = { mask: "##/##/####" };
 const required = [(value) => !!value || "Required."];
@@ -76,6 +80,9 @@ const DateRules = [
   (value) => !!value || "Required.",
   (value) => (value && value.length >= 3) || "Min 3 characters",
 ];
+function updatePickerDate() {
+  datePickerDate.value = dateFormatted.value;
+}
 </script>
 
 <template>
@@ -177,10 +184,10 @@ const DateRules = [
             </VSelect>
           </VCol>
           <VCol cols="12" sm="6" md="4">
-            beneficiaryModel.birthDate {{ beneficiaryModel.birthDate }} ***
+            <!-- beneficiaryModel.birthDate {{ beneficiaryModel.birthDate }} ***
             inputDate {{ inputDate }} *** dateFormatted
             {{ dateFormatted }} datePickerDate {{ datePickerDate }}
-            <!-- {{ dateFormatted }} -->
+            {{ dateFormatted }} -->
             <vTextField
               v-model="inputDate"
               v-maska:[DateMask]
@@ -190,7 +197,7 @@ const DateRules = [
               maxlength="10"
             >
               <template #append>
-                <VIcon start :icon="mdiCalendar" />
+                <VIcon start :icon="mdiCalendar" @click="updatePickerDate" />
                 <VMenu :close-on-content-click="false" activator="parent">
                   <VList>
                     <VListItem>
