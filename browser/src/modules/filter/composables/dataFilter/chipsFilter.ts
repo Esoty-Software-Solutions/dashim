@@ -103,6 +103,9 @@ export function render(
 
   const nodeProps = mergeProps(
     toValue(definition.props) ?? {},
+    {
+      class: "d-data-filter-input__input px-0",
+    },
     modelProps,
     additionalProps ?? {},
   );

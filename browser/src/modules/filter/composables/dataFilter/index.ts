@@ -26,6 +26,7 @@ import {
 } from "vuetify/components";
 
 import DataFilterBase from "../../components/DataFilterBase.vue";
+import DataFilterCustomInput from "../../components/DataFilterCustomInput.vue";
 
 import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGetter";
 
@@ -48,14 +49,14 @@ import type { Merge } from "@/utils";
  * Filter Types
  *
  * [x] text filter
- * [x] date
- * [x] date range
+ * [ ] date
+ * [ ] date range
  * [x] number range
  * [x] select (single/multiple)
  * [x] auto complete (single/multiple)
  * [ ] toggle buttons
  * [ ] toggle switch
- * [ ] chip group (single/many)
+ * [x] chip group (single/many)
  */
 
 type DataFilter =
@@ -63,7 +64,6 @@ type DataFilter =
   | SelectDataFilter
   | AutocompleteDataFilter
   | ChipsDataFilter;
-
 type Icon = (typeof VIcon)["$props"]["icon"];
 
 interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
@@ -296,7 +296,11 @@ export default function useDataFilters<
         } else {
           // Wrap the rendered filter in a DataFilterBase
 
-          return h(DataFilterBase, baseProps, () => filterNode);
+          if (definition.contentBorder) {
+            return h(DataFilterCustomInput, baseProps, () => filterNode);
+          } else {
+            return h(DataFilterBase, baseProps, () => filterNode);
+          }
         }
       }
 
