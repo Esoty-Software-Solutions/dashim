@@ -93,57 +93,74 @@ const BeneficiaryWhereInput = z
   })
   .strict();
 
-const BeneficiaryEntityWhereInput = z
-  .object({
-    id: StringFilterObjectSchema.optional(),
-    createdAt: DateTimeFilterObjectSchema.optional(),
-    updatedAt: DateTimeFilterObjectSchema.optional(),
-    isActive: z.boolean().optional(),
-    deactivationReason: StringNullableFilterObjectSchema.optional(),
-    deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
-    cityId: StringFilterObjectSchema.optional(),
-    statusSetById: StringFilterObjectSchema.optional(),
-    insurancePolicyId: StringFilterObjectSchema.optional(),
-    StatusSetBy: z
-      .object({
-        id: StringFilterObjectSchema.optional(),
-        firstName: StringFilterObjectSchema.optional(),
-        lastName: StringFilterObjectSchema.optional(),
-      })
-      .strict()
-      .optional(),
-    insurancePolicy: z
-      .object({
-        id: StringFilterObjectSchema.optional(),
-        name: StringFilterObjectSchema.optional(),
-        institutionId: StringFilterObjectSchema.optional(),
-        institution: z
-          .object({
-            id: StringFilterObjectSchema.optional(),
-            name: StringFilterObjectSchema.optional(),
-          })
-          .strict()
-          .optional(),
-      })
-      .strict()
-      .optional(),
-    beneficiaries: z
-      .object({
-        every: BeneficiaryWhereInput.optional(),
-        some: BeneficiaryWhereInput.optional(),
-        none: BeneficiaryWhereInput.optional(),
-      })
-      .strict()
-      .optional(),
-    // futureStatus: z
-    //   .object({
-    //     changeDate: DateTimeFilterObjectSchema.optional(),
-    //     futureStatus: z.boolean().optional(),
-    //   })
-    //   .strict()
-    //   .optional(),
-  })
-  .strict();
+const BeneficiaryEntityWhereInput: z.ZodType<Prisma.BeneficiaryEntityWhereInput> =
+  z
+    .object({
+      AND: z
+        .union([
+          z.lazy(() => BeneficiaryEntityWhereInput),
+          z.lazy(() => BeneficiaryEntityWhereInput).array(),
+        ])
+        .optional(),
+      OR: z
+        .lazy(() => BeneficiaryEntityWhereInput)
+        .array()
+        .optional(),
+      NOT: z
+        .union([
+          z.lazy(() => BeneficiaryEntityWhereInput),
+          z.lazy(() => BeneficiaryEntityWhereInput).array(),
+        ])
+        .optional(),
+      id: StringFilterObjectSchema.optional(),
+      createdAt: DateTimeFilterObjectSchema.optional(),
+      updatedAt: DateTimeFilterObjectSchema.optional(),
+      isActive: z.boolean().optional(),
+      deactivationReason: StringNullableFilterObjectSchema.optional(),
+      deactivationDate: DateTimeNullableFilterObjectSchema.optional(),
+      cityId: StringFilterObjectSchema.optional(),
+      statusSetById: StringFilterObjectSchema.optional(),
+      insurancePolicyId: StringFilterObjectSchema.optional(),
+      StatusSetBy: z
+        .object({
+          id: StringFilterObjectSchema.optional(),
+          firstName: StringFilterObjectSchema.optional(),
+          lastName: StringFilterObjectSchema.optional(),
+        })
+        .strict()
+        .optional(),
+      insurancePolicy: z
+        .object({
+          id: StringFilterObjectSchema.optional(),
+          name: StringFilterObjectSchema.optional(),
+          institutionId: StringFilterObjectSchema.optional(),
+          institution: z
+            .object({
+              id: StringFilterObjectSchema.optional(),
+              name: StringFilterObjectSchema.optional(),
+            })
+            .strict()
+            .optional(),
+        })
+        .strict()
+        .optional(),
+      beneficiaries: z
+        .object({
+          every: BeneficiaryWhereInput.optional(),
+          some: BeneficiaryWhereInput.optional(),
+          none: BeneficiaryWhereInput.optional(),
+        })
+        .strict()
+        .optional(),
+      // futureStatus: z
+      //   .object({
+      //     changeDate: DateTimeFilterObjectSchema.optional(),
+      //     futureStatus: z.boolean().optional(),
+      //   })
+      //   .strict()
+      //   .optional(),
+    })
+    .strict();
 
 const ListBeneficiaryEntityInputSchema = z
   .object({
@@ -157,7 +174,7 @@ const ListBeneficiaryEntityInputSchema = z
 
 const beneficiarySchema = z
   .object({
-    id: z.string(),
+    id: z.string().cuid2(),
     firstName: z.string(),
     secondName: z.string().optional(),
     thirdName: z.string().optional(),
@@ -175,7 +192,7 @@ const CreateBeneficiaryEntityInputSchema = z
   .object({
     data: z
       .object({
-        id: z.string(),
+        id: z.string().cuid2(),
         insurancePolicyId: z.string(),
         cityId: z.string(),
         beneficiaries: z.array(beneficiarySchema),
