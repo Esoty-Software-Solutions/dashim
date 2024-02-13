@@ -8,9 +8,18 @@
     "updatedAt": "تاريخ التعديل",
     "birthDate": "ترايخ الميلاد",
     "genderId": "الجنس",
-    "relationshipId": "العلافة",
+    "relationship": "العلافة",
     "actions": "إجراء",
-    "add": "إضافة"
+    "add": "إضافة",
+    "id": "Id",
+    "institution": "المؤسسة",
+    "insurancePolicy": "العفد",
+    "firstName": "الاسم",
+    "secondName": "اسم الأب",
+    "thirdName": "اسم الجد",
+    "lastName": "اللقب",
+    "gender": "الجنس",
+    "city": "المدينة"
   },
   "locale": {
     "ar": {

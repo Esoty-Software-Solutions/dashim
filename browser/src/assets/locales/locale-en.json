@@ -8,9 +8,18 @@
     "updatedAt": "Updated at",
     "birthDate": "Birthdate",
     "genderId": "Gender",
-    "relationshipId": "Relationship",
+    "relationship": "Relationship",
     "actions": "Actions",
-    "add": "Add"
+    "add": "Add",
+    "id": "Id",
+    "institution": "Institution",
+    "insurancePolicy": "Insurance Policy",
+    "firstName": "First Name",
+    "secondName": "Second Name",
+    "thirdName": "Third Name",
+    "lastName": "Last Name",
+    "gender": "Gender",
+    "city": "City"
   },
   "accounting": {
     "claims": "Claims"
@@ -30,7 +39,8 @@
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
-      "newbeneficiary": "New Beneficiary"
+      "newbeneficiary": "New Beneficiary",
+      "addbeneficiary": "Add Beneficiary"
     }
   },
   "locale": {
