@@ -2,7 +2,10 @@ import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import { createId } from "@paralleldrive/cuid2";
+
 import { client } from "@/queries";
+
 type createSubscriberProcedureInput = Parameters<
   typeof client.procedure.createBeneficiaryEntity.mutate
 >[0]["data"];
@@ -46,9 +49,10 @@ const useCreateBeneficiariesStore = defineStore(
       false,
     );
     const subscriberRef = ref<createSubscriberProcedureInput>({
-      id: "",
+      id: createId(),
       insurancePolicyId: "",
       beneficiaries: [] as BeneficiaryInput[],
+      cityId: "",
     });
     const subscriber = useLocalStorage<createSubscriberProcedureInput>(
       "createBeneficiaries.subscriber",
@@ -122,18 +126,28 @@ const useCreateBeneficiariesStore = defineStore(
       try {
         if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
           // console.log(subscriber.value);
-          const sub = await client.procedure.createBeneficiaryEntity.mutate({
-            data: subscriber.value,
-          });
-        }
+          const response =
+            await client.procedure.createBeneficiaryEntity.mutate({
+              data: subscriber.value,
+            });
+          console.log("response", response);
 
-        console.log("unvalid form");
-        // console.log(sub);
+          return response;
+        }
       } catch (error) {
-        console.log(error);
+        console.log("error1 ", error);
+        return error;
       }
     };
-
+    function $reset() {
+      dialog.value = false;
+      subscriber.value = {
+        id: createId(),
+        insurancePolicyId: "",
+        beneficiaries: [] as BeneficiaryInput[],
+        cityId: "",
+      };
+    }
     return {
       dialog,
       createSubscriber,
@@ -151,6 +165,7 @@ const useCreateBeneficiariesStore = defineStore(
       valid,
       getCities,
       cities,
+      $reset,
       // properlyTyped
     };
   },
