@@ -156,9 +156,11 @@ export async function createBeneficiaryEntity(
   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
   // business logic
   const processedInput = await actions.formatToPrismaCreateShape(
-    userId,
+    // userId,
+    "bgwdccqvmyjr0n53iuv62hhs",
     validInput,
   );
+  console.log(processedInput.userId);
 
   return await enhancedPrisma(userId).beneficiaryEntity.create({
     data: processedInput,
