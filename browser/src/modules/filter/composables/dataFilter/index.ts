@@ -26,7 +26,6 @@ import {
 } from "vuetify/components";
 
 import DataFilterBase from "../../components/DataFilterBase.vue";
-import DataFilterCustomInput from "../../components/DataFilterCustomInput.vue";
 
 import useProxiedRefOrGetter from "@/modules/shared/composables/proxiedRefOrGetter";
 
@@ -43,7 +42,7 @@ import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
 import type { DataFiltersDisplay, DataFilterInjection } from "./types";
-import type { Merge } from "@/utils";
+import type { Merge, Prettify } from "@/utils";
 
 /*
  * Filter Types
@@ -177,7 +176,7 @@ export default function useDataFilters<
     append?: {};
   };
 
-  type FilterSlots = SlotsType<Merge<NamedSlots, SingleSlots>>;
+  type FilterSlots = SlotsType<Prettify<Merge<NamedSlots, SingleSlots>>>;
 
   const injections = shallowRef<ReturnType<typeof useFiltersInjections> | null>(
     null,
@@ -275,9 +274,10 @@ export default function useDataFilters<
             injection.setEnabled(newValue);
           },
           focused: toValue(injection.focused),
-          contentBorder: definition.contentBorder,
 
           label: toValue(definition.label),
+
+          contentBorder: definition.contentBorder,
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
@@ -295,12 +295,7 @@ export default function useDataFilters<
           });
         } else {
           // Wrap the rendered filter in a DataFilterBase
-
-          if (definition.contentBorder) {
-            return h(DataFilterCustomInput, baseProps, () => filterNode);
-          } else {
-            return h(DataFilterBase, baseProps, () => filterNode);
-          }
+          return h(DataFilterBase, baseProps, () => filterNode);
         }
       }
 
