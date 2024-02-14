@@ -41,6 +41,10 @@
       "pageTitle": "Beneficiaries List",
       "newbeneficiary": "New Beneficiary",
       "addbeneficiary": "Add Beneficiary"
+    },
+    "network": {
+      "pageTitle": "Network List",
+      "newMedicalCenter": "New Medical Center"
     }
   },
   "locale": {
