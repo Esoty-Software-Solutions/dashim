@@ -19,7 +19,8 @@
     "thirdName": "Third Name",
     "lastName": "Last Name",
     "gender": "Gender",
-    "city": "City"
+    "city": "City",
+    "medicalCenter": "Medical Center"
   },
   "accounting": {
     "claims": "Claims"

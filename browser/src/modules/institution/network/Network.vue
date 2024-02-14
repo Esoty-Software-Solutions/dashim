@@ -97,7 +97,7 @@ function selectAll() {
 // table headers
 const institutionHeaders = ref<TableHeader[]>([
   {
-    title: t("common.name"),
+    title: `${t("common.institution")}  ${t("common.name")}`,
     key: "name",
     cellProps: () => {
       return { dir: "auto" };
@@ -106,7 +106,7 @@ const institutionHeaders = ref<TableHeader[]>([
 ]);
 const insurancePoliciesHeaders = ref<TableHeader[]>([
   {
-    title: t("common.name"),
+    title: `${t("common.insurancePolicy")}  ${t("common.name")}`,
     key: "name",
     cellProps: () => {
       return { dir: "auto" };
@@ -115,7 +115,7 @@ const insurancePoliciesHeaders = ref<TableHeader[]>([
 ]);
 const headers = ref<TableHeader[]>([
   {
-    title: t("common.name"),
+    title: `${t("common.medicalCenter")}  ${t("common.name")}`,
     key: "name",
     cellProps: () => {
       return { dir: "auto" };
