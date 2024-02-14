@@ -47,7 +47,7 @@ const classBinding = computed(() => {
 
       <div
         style="min-width: 0"
-        class="d-data-filter-base__content flex-grow-1"
+        class="d-data-filter-base__content d-data-filter-base__input flex-grow-1"
         :class="contentBorder ? 'rounded-e' : undefined"
       >
         <slot />
