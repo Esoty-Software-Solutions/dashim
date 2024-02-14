@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useElementHover } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 import { useDefaults } from "vuetify";
 
@@ -18,9 +17,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   "update:enabled": [value: boolean];
 }>();
-
-const hoverEl = ref<HTMLDivElement | null>(null);
-const hovered = useElementHover(hoverEl);
 
 const classBinding = computed(() => {
   return [
@@ -50,7 +46,6 @@ const classBinding = computed(() => {
       />
 
       <div
-        ref="hoverEl"
         style="min-width: 0"
         class="d-data-filter-base__content flex-grow-1"
         :class="contentBorder ? 'rounded-e' : undefined"
@@ -62,12 +57,7 @@ const classBinding = computed(() => {
       <div class="d-data-filter-base__outline text-primary">
         <div class="d-data-filter-base__outline__start" />
         <div class="d-data-filter-base__outline__notch">
-          <slot
-            name="label"
-            :enabled="props.enabled"
-            :focused="focused"
-            :hovered="hovered"
-          >
+          <slot name="label" :enabled="props.enabled" :focused="focused">
             <VFieldLabel v-if="label" floating>
               {{ label }}
             </VFieldLabel>

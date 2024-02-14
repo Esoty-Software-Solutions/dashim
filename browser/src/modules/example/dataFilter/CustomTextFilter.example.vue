@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { useElementHover } from "@vueuse/core";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 import DataFilterBase from "@/modules/filter/components/DataFilterBase.vue";
 import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
 
 const myTable = ref<HTMLTableElement | null>(null);
 const customFilterValue = ref<string>("");
-const tableHovered = useElementHover(myTable);
 
 const { FilterComponent, handles } = useDataFilters({
   // default display spec
@@ -24,6 +22,7 @@ const { FilterComponent, handles } = useDataFilters({
 
   filter: {
     table: text({
+      contentBorder: true,
       value: customFilterValue,
       display: {
         md: 12,
@@ -35,10 +34,6 @@ const { FilterComponent, handles } = useDataFilters({
     }),
   },
 });
-
-watch(tableHovered, (value) =>
-  value ? handles.value?.table.hoverIn() : handles.value?.table.hoverOut(),
-);
 
 function onTableClicked(event: PointerEvent) {
   if (event.target instanceof HTMLTableCellElement) {

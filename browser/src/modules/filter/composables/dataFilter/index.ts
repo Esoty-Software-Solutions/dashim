@@ -110,7 +110,6 @@ export default function useDataFilters<
     for (const filterKey in options.filter) {
       const definition = options.filter[filterKey];
       const focusedRef = ref(false);
-      const hoveredRef = ref(false);
 
       const enabled = useProxiedRefOrGetter(definition.enabled, false);
 
@@ -131,20 +130,11 @@ export default function useDataFilters<
         setFocus(value) {
           focusedRef.value = value ?? true;
 
-          // enable filter on hover (if option is set so)
+          // enable filter on focus (if option is set so)
           const enableOnFocus = toValue(definition.enableOnFocus) ?? true;
           if (enableOnFocus && value) {
             enabled.value = true;
           }
-        },
-
-        hovered: hoveredRef,
-        hoverIn() {
-          hoveredRef.value = true;
-        },
-
-        hoverOut() {
-          hoveredRef.value = false;
         },
       };
     }

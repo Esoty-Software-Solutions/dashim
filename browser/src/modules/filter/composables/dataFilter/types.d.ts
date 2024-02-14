@@ -46,12 +46,4 @@ export interface DataFilterInjection {
 
   focused: Ref<boolean>;
   setFocus(value?: boolean): void;
-
-  /**
-   *
-   */
-  hovered: Ref<boolean>;
-  hoverIn(): void;
-
-  hoverOut(): void;
 }
