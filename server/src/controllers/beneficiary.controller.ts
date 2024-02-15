@@ -14,6 +14,8 @@ import {
 import { rules } from "./beneficiary.rule";
 import { actions } from "./beneficiary.action";
 
+const FAKE_USER_ID = "bgwdccqvmyjr0n53iuv62hhs";
+
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
@@ -154,13 +156,17 @@ export async function createBeneficiaryEntity(
   const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
   // input data business rules
   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
+  rules.oneFatherRelationshipMustExist.evaluation(
+    validInput.data.beneficiaries,
+  );
+  rules.oneMotherRelationshipMustExist.evaluation(
+    validInput.data.beneficiaries,
+  );
   // business logic
   const processedInput = await actions.formatToPrismaCreateShape(
-    // userId,
-    "bgwdccqvmyjr0n53iuv62hhs",
+    FAKE_USER_ID,
     validInput,
   );
-  console.log(processedInput.userId);
 
   return await enhancedPrisma(userId).beneficiaryEntity.create({
     data: processedInput,
