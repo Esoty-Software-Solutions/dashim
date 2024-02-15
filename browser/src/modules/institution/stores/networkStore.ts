@@ -14,21 +14,41 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     true,
   );
   const selectedInstitutionId = ref("");
+  const institutions = ref([]);
+  const insurancePolicies = ref([]);
+
   const selectedInsurancePolicyId = ref("");
   const insurancePolicyMedicalCenterIds = ref<string[] | never[]>([]);
 
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
+  // const pageSize = useLocalStorage<number>(
+  //   `networkList.institution.table.pageSize`,
+  //   50,
+  // );
+  const getInstitutions = async () => {
+    const response = await client.crud.institution.findMany.query();
+    institutions.value = response && response.data ? response.data : [];
+  };
+  const getInsurancePolicies = async (institutionId: string) => {
+    const response = await client.crud.insurancePolicy.findMany.query({
+      where: { institutionId: institutionId },
+    });
+    insurancePolicies.value = response && response.data ? response.data : [];
+  };
+
+  getInstitutions();
   const {
     binding: institutionBinding,
     items: institutionItems,
     triggerFetch: institutionTriggerFetch,
   } = useQuerierTable({
-    storageKey: "networkList",
+    storageKey: "networkList.institution",
+    pageSize: -1,
     input: () => {
       return {
-        where: {},
+        // where: {},
       };
     },
     // findCallback: client.procedure.listSubscribers.query,
@@ -45,7 +65,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     items: insurancePoliciesItems,
     triggerFetch: insurancePoliciesTriggerFetch,
   } = useQuerierTable({
-    storageKey: "networkList",
+    storageKey: "networkList.insurancePolicies",
     input: () => {
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
       // const where: any = {};
@@ -53,6 +73,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
       if (selectedInstitutionId.value) {
         // searchName : { contains: nameFilter.value.trim() }
         return {
+          take: 100,
           where: { institutionId: selectedInstitutionId.value },
         };
       }
@@ -76,7 +97,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     items: insurancePolicyMedicalCenterItems,
     triggerFetch: insurancePolicyMedicalCenterTriggerFetch,
   } = useQuerierTable({
-    storageKey: "networkList",
+    storageKey: "networkList.insurancePolicyMedicalCenter",
     input: () => {
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
       // const where: any = {};
@@ -116,7 +137,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     items: medicalCenterItems,
     triggerFetch: medicalCenterTriggerFetch,
   } = useQuerierTable({
-    storageKey: "networkList",
+    storageKey: "networkList.medicalCenter",
     input: () => {
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
       // const where: any = {};
@@ -168,6 +189,10 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     insurancePolicyMedicalCenterItems,
     insurancePolicyMedicalCenterTriggerFetch,
     insurancePolicyMedicalCenterIds,
+    getInstitutions,
+    institutions,
+    getInsurancePolicies,
+    insurancePolicies,
   };
 });
 

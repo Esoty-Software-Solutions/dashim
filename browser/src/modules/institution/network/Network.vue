@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, computed, watch, watchEffect } from "vue";
+import { ref, toRefs, computed, watch, watchEffect, unref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -16,6 +16,7 @@ defineOptions({
 });
 const { t } = useI18n();
 const store = toRefs(useNetworkStore());
+const getInsurancePoliciesUnRef = unref(store.getInsurancePolicies);
 // console.log(store.binding.value.items);
 let selected = ref([""]);
 let selectedCount = ref(0);
@@ -71,8 +72,11 @@ watchEffect(
         (item) => item.medicalCenterId,
       )),
 );
+watchEffect(() => getInsurancePoliciesUnRef(store.selectedInstitutionId.value));
 // actions
 function onSelected($event) {
+  console.log($event);
+
   // selected.value = store.binding.value.items
   // selected.value
   console.log(selected.value);
@@ -148,6 +152,9 @@ const headers = ref<TableHeader[]>([
     width: "0.5rem",
   },
 ]);
+// onMounted(() => {
+//   store.value.getInstitutions();
+// });
 </script>
 
 <template>
@@ -155,7 +162,7 @@ const headers = ref<TableHeader[]>([
     ref="container"
     v-bind="$attrs"
     fluid
-    class="d-flex px-2 py-1 ga-1 flex-column h-100"
+    class="d-flex px-1 py-1 ga-1 flex-column h-100"
   >
     <VDefaultsProvider
       :defaults="{
@@ -170,125 +177,145 @@ const headers = ref<TableHeader[]>([
         },
       }"
     >
-      <VRow>
-        <VCol cols="4">
-          <VDefaultsProvider
-            :defaults="{
-              VDataTableServer: {
-                class: ['mt-1'],
-                style: 'flex: 1 1 0; min-height: 0;',
-                fixedHeader: true,
-                fixedFooter: true,
-                hover: true,
-                color: 'primary',
-              },
-            }"
-          >
+      <VRow class="grow">
+        <VDefaultsProvider
+          :defaults="{
+            VDataTableServer: {
+              class: ['mt-1'],
+              style: 'flex: 1 1 0; min-height: 0;',
+              fixedHeader: true,
+              fixedFooter: true,
+              hover: true,
+              color: 'primary',
+            },
+            VDataTable: {
+              class: ['mt-1'],
+              style: 'flex: 1 1 0; min-height: 0;',
+              fixedHeader: true,
+              fixedFooter: true,
+              hover: true,
+              color: 'primary',
+            },
+          }"
+        >
+          <VCol class="py-0" cols="12" md="6" lg="4">
             <!-- institutions  table -->
-
-            <VDataTableServer
-              :item-value="(item) => item.id"
-              :headers="institutionHeaders"
-              v-bind="store.institutionBinding.value"
-              @click:row="
-                (event, row) => {
-                  store.selectedInstitutionId.value = row.item.id;
-                }
-              "
+            <VContainer
+              ref="container"
+              v-bind="$attrs"
+              fluid
+              class="d-flex py-1 px-0 ga-1 flex-column h-50"
             >
-              <template #item.name="{ item }">
-                <tr
-                  :class="{
-                    'text-primary':
-                      item.id == store.selectedInstitutionId.value,
-                  }"
-                >
-                  <td>{{ item.name }}</td>
-                </tr>
-              </template>
-              <template #bottom />
-            </VDataTableServer>
-            <!-- insurance policies table -->
-            <VDataTableServer
-              v-if="store.selectedInstitutionId.value"
-              :item-value="(item) => item.id"
-              :headers="insurancePoliciesHeaders"
-              v-bind="store.insurancePoliciesBinding.value"
-              @click:row="
-                (event, row) => {
-                  store.selectedInsurancePolicyId.value = row.item.id;
-                }
-              "
+              <VDataTable
+                :items-per-page="store.institutions.value.length"
+                :fixed-footer="true"
+                :fixed-header="true"
+                :headers="institutionHeaders"
+                :items="store.institutions.value"
+                :item-value="(item) => item.id"
+                @click:row="
+                  (event, row) => {
+                    store.selectedInstitutionId.value = row.item.id;
+                    store.insurancePolicyMedicalCenterIds.value = [];
+                  }
+                "
+              >
+                <template #item.name="{ item }">
+                  <tr
+                    :class="{
+                      'text-primary':
+                        item.id == store.selectedInstitutionId.value,
+                    }"
+                  >
+                    <td>{{ item.name }}</td>
+                  </tr>
+                </template>
+                <template #bottom
+              /></VDataTable>
+            </VContainer>
+            <VContainer
+              ref="container"
+              v-bind="$attrs"
+              fluid
+              class="d-flex py-1 px-0 ga-1 flex-column h-50"
             >
-              <template #item.name="{ item }">
-                <tr
-                  :class="{
-                    'text-primary':
-                      item.id == store.selectedInsurancePolicyId.value,
-                  }"
-                >
-                  <td>{{ item.name }}</td>
-                </tr>
-              </template>
-              <template #bottom />
-            </VDataTableServer>
-          </VDefaultsProvider> </VCol
-        ><VCol>
-          <VSheet>
-            <instituteFilter />
-          </VSheet>
-          <VSheet class="my-1">
-            <VCardActions>
-              {{ selectedCount }}
-              <VBtn @click="selectAll">Select All</VBtn>
-              <VBtn @click="refresh">refresh</VBtn>
-              <VSpacer />
-              <VBtn color="primary" variant="plain">
-                <span>{{ t("institution.network.newMedicalCenter") }}</span>
-                <VIcon end :icon="mdiPlus" />
-              </VBtn>
-            </VCardActions>
-          </VSheet>
-          <VDataTableServer
-            v-model="selected"
-            show-select
-            :item-value="(item) => item.id"
-            :headers="headers"
-            v-bind="store.medicalCenterBinding.value"
-            @input="onSelected($event)"
-          >
-            <template #item.createdAt="{ item }">
-              {{ new Date(item.createdAt).toLocaleDateString() }}
-            </template>
-            <template #item.isActive="{ item }">
-              <VChip :color="item.isActive ? 'primary' : 'error'">
-                {{ item.isActive ? "Active" : "Inactive" }}
-              </VChip>
-            </template>
+              <VDataTable
+                v-if="store.selectedInstitutionId.value"
+                :fixed-footer="true"
+                :fixed-header="true"
+                :item-value="(item) => item.id"
+                :headers="insurancePoliciesHeaders"
+                :items="store.insurancePolicies.value"
+                @click:row="
+                  (event, row) => {
+                    store.selectedInsurancePolicyId.value = row.item.id;
+                  }
+                "
+              >
+                <template #item.name="{ item }">
+                  <tr
+                    :class="{
+                      'text-primary':
+                        item.id == store.selectedInsurancePolicyId.value,
+                    }"
+                  >
+                    <td>{{ item.name }}</td>
+                  </tr>
+                </template>
+                <template #bottom
+              /></VDataTable>
+            </VContainer>
+          </VCol>
+          <VCol class="py-0">
+            <VContainer
+              ref="container"
+              v-bind="$attrs"
+              fluid
+              class="d-flex py-1 px-0 ga-1 flex-column h-100"
+            >
+              <VSheet class="mt-1">
+                <instituteFilter />
+              </VSheet>
+              <VSheet class="mb-0">
+                <VCardActions>
+                  {{ selectedCount }}
+                  <VBtn @click="selectAll">Select All</VBtn>
+                  <VBtn @click="refresh">refresh</VBtn>
+                  <VSpacer />
+                  <VBtn color="primary" variant="plain">
+                    <span>{{ t("institution.network.newMedicalCenter") }}</span>
+                    <VIcon end :icon="mdiPlus" />
+                  </VBtn>
+                </VCardActions>
+              </VSheet>
+              <VDataTableServer
+                v-model="selected"
+                class="mt-0"
+                :fixed-footer="true"
+                :fixed-header="true"
+                show-select
+                :item-value="(item) => item.id"
+                :headers="headers"
+                v-bind="store.medicalCenterBinding.value"
+                @input="onSelected($event)"
+              >
+                <template #item.createdAt="{ item }">
+                  {{ new Date(item.createdAt).toLocaleDateString() }}
+                </template>
+                <template #item.isActive="{ item }">
+                  <VChip :color="item.isActive ? 'primary' : 'error'">
+                    {{ item.isActive ? "Active" : "Inactive" }}
+                  </VChip>
+                </template>
 
-            <template #item.actions>
-              <VIcon :icon="mdiPlus" />
-            </template>
-            <!-- <template #item.name="{ item }">
-          {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
-          {{ item.lastName }}
-        </template>
-        <template #item.birthDate="{ item }">
-          {{ new Date(item.birthDate).toLocaleDateString() }}
-        </template>
-        <template #item.createdAt="{ item }">
-          {{ new Date(item.createdAt).toLocaleDateString() }}
-        </template>
-        <template #item.updatedAt="{ item }">
-          {{ new Date(item.updatedAt).toLocaleDateString() }}
-        </template>
-        <template #item.isActive="{ item }">
-          <VChip :color="item.isActive ? 'primary' : 'error'">
-            {{ item.isActive ? "Active" : "Inactive" }}
-          </VChip>
-        </template> -->
-          </VDataTableServer>
-        </VCol>
+                <template #item.actions>
+                  <VIcon :icon="mdiPlus" />
+                </template>
+              </VDataTableServer>
+            </VContainer>
+            <VSheet class="mb-1" />
+          </VCol>
+        </VDefaultsProvider>
       </VRow>
     </VDefaultsProvider>
   </VContainer>
