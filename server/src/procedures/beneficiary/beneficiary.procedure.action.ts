@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { CreateBeneficiaryEntityInputSchema } from "@schemas/procedures/beneficiary.procedure.schema";
+import { CreateBeneficiaryEntityInputSchema } from "./beneficiary.procedure.schema";
 
 export const actions = {
   formatToPrismaCreateShape: async function (
