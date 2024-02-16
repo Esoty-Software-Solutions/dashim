@@ -31,7 +31,7 @@
       "network": "Network",
       "insurancePolicy": "Insurance Policy",
       "benefitPackage": "Benefit Package",
-      "claims": "@.capitalize:accounting.claims"
+      "claims": "claims"
     },
     "list": {
       "pageTitle": "Institutions List",
@@ -39,8 +39,8 @@
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
-      "newbeneficiary": "New Beneficiary",
-      "addbeneficiary": "Add Beneficiary"
+      "newBeneficiary": "New Beneficiary",
+      "addBeneficiary": "Add Beneficiary"
     }
   },
   "locale": {

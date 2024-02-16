@@ -166,7 +166,7 @@ const headers = ref<TableHeader[]>([
           variant="plain"
           @click="openACreateBeneficiaryDialog"
         >
-          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
+          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>
