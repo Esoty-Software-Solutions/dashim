@@ -3,7 +3,7 @@ import {
   listBeneficiaryEntities,
   createBeneficiaryEntity,
   // updateBeneficiaryEntity,
-} from "./beneficiary.controller";
+} from "@procedures/beneficiary/beneficiary.procedure.controller";
 
 export const _procedure = {
   // createUser: middleware(_createUser),

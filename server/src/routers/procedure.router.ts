@@ -1,8 +1,8 @@
 import {
   CreateBeneficiaryEntityInputSchema,
   ListBeneficiaryEntityInputSchema,
-} from "@schemas/procedures/beneficiary.procedure.schema";
-import { _procedure } from "@controllers/_procedure.controller";
+} from "@procedures/beneficiary/beneficiary.procedure.schema";
+import { _procedure } from "@procedures/_procedures";
 import {
   router,
   publicProcedure,
