@@ -14,7 +14,7 @@ import {
 import { rules } from "./beneficiary.rule";
 import { actions } from "./beneficiary.action";
 
-const FAKE_USER_ID = "bgwdccqvmyjr0n53iuv62hhs";
+import { FAKE_USER_ID } from "@utilities/auth";
 
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
@@ -22,10 +22,7 @@ const StatusSetByFields = {
 };
 
 export async function listBeneficiaryEntities(
-
-export async function listBeneficiaryEntities(
   userId: string,
-  input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
   input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
 ) {
   const MAX_RETRIES = DEFAULT_MAX_RETRIES;
@@ -46,7 +43,6 @@ export async function listBeneficiaryEntities(
   */
 
   const validInput = ListBeneficiaryEntityInputSchema.parse(input);
-  const validInput = ListBeneficiaryEntityInputSchema.parse(input);
 
   while (true) {
     try {
@@ -55,11 +51,6 @@ export async function listBeneficiaryEntities(
           // Code running in a transaction...
           const [data, filteredCount, unFilteredCount, activeCount] =
             await Promise.all([
-              tx.beneficiaryEntity.findMany({
-                where: validInput?.where,
-                orderBy: validInput?.orderBy,
-                skip: validInput?.skip,
-                take: validInput?.take,
               tx.beneficiaryEntity.findMany({
                 where: validInput?.where,
                 orderBy: validInput?.orderBy,
@@ -117,11 +108,8 @@ export async function listBeneficiaryEntities(
                 // },
               }),
               tx.beneficiaryEntity.count({
-              tx.beneficiaryEntity.count({
                 where: input?.where,
               }),
-              tx.beneficiaryEntity.count(),
-              tx.beneficiaryEntity.count({
               tx.beneficiaryEntity.count(),
               tx.beneficiaryEntity.count({
                 where: { ...input?.where, isActive: true },
