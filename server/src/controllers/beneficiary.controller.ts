@@ -6,16 +6,22 @@ import {
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
 } from "./_config.controller";
-import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
+import {
+  ListBeneficiaryEntityInputSchema,
+  CreateBeneficiaryEntityInputSchema,
+  UpdateBeneficiaryEntityInputSchema,
+} from "@schemas/procedures/beneficiary.procedure.schema";
+import { rules } from "./beneficiary.rule";
+import { actions } from "./beneficiary.action";
 
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
 };
-type _ListBeneficiariesInputType = z.infer<typeof SubscriberFindManySchema>;
-export async function _ListBeneficiaries(
+
+export async function listBeneficiaryEntities(
   userId: string,
-  input: _ListBeneficiariesInputType,
+  input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
 ) {
   const MAX_RETRIES = DEFAULT_MAX_RETRIES;
   let retries = 0;
@@ -34,7 +40,7 @@ export async function _ListBeneficiaries(
   statistics
   */
 
-  // const validUser = addSubscribersDataSchema.parse(data);
+  const validInput = ListBeneficiaryEntityInputSchema.parse(input);
 
   while (true) {
     try {
@@ -43,20 +49,23 @@ export async function _ListBeneficiaries(
           // Code running in a transaction...
           const [data, filteredCount, unFilteredCount, activeCount] =
             await Promise.all([
-              tx.subscriber.findMany({
-                where: input?.where,
-                skip: input?.skip,
-                take: input?.take,
-                // include: { //* This blows up the return type
-                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
-                //   StatusSetBy: selectStatusSetBy,
-                // },
+              tx.beneficiaryEntity.findMany({
+                where: validInput?.where,
+                orderBy: validInput?.orderBy,
+                skip: validInput?.skip,
+                take: validInput?.take,
                 select: {
                   id: true,
                   createdAt: true,
                   updatedAt: true,
                   isActive: true,
-                  // TODO: add city
+                  city: {
+                    select: {
+                      arabic: true,
+                      english: true,
+                      name: true,
+                    },
+                  },
                   insurancePolicyId: true,
                   beneficiaries: {
                     select: {
@@ -70,7 +79,6 @@ export async function _ListBeneficiaries(
                       fourthName: true,
                       lastName: true,
                       birthDate: true,
-                      residence: true, //TODO: rename into city and move to subscriber
                       genderId: true,
                       relationshipId: true,
                       StatusSetBy: StatusSetByFields,
@@ -81,12 +89,16 @@ export async function _ListBeneficiaries(
                   },
                   StatusSetBy: StatusSetByFields,
                 },
+                // include: { //* This blows up the return type
+                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+                //   StatusSetBy: selectStatusSetBy,
+                // },
               }),
-              tx.subscriber.count({
+              tx.beneficiaryEntity.count({
                 where: input?.where,
               }),
-              tx.subscriber.count(),
-              tx.subscriber.count({
+              tx.beneficiaryEntity.count(),
+              tx.beneficiaryEntity.count({
                 where: { ...input?.where, isActive: true },
               }),
             ]);
@@ -132,3 +144,44 @@ export async function _ListBeneficiaries(
     }
   }
 }
+// }
+
+export async function createBeneficiaryEntity(
+  userId: string,
+  input: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
+) {
+  // input data validation
+  const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
+  // input data business rules
+  rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
+  // business logic
+  const processedInput = await actions.formatToPrismaCreateShape(
+    userId,
+    validInput,
+  );
+
+  return await enhancedPrisma(userId).beneficiaryEntity.create({
+    data: processedInput,
+    include: { beneficiaries: true },
+  });
+}
+
+// export async function updateBeneficiaryEntity(
+//   userId: string,
+//   input: z.infer<typeof UpdateBeneficiaryEntityInputSchema>,
+// ) {
+//   // input data validation
+//   const validInput = UpdateBeneficiaryEntityInputSchema.parse(input);
+//   // input data business rules
+//   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
+//   // business logic
+//   const processedInput = await actions.formatToPrismaCreateShape(
+//     userId,
+//     validInput,
+//   );
+
+//   return await enhancedPrisma(userId).beneficiaryEntity.create({
+//     data: processedInput,
+//     include: { beneficiaries: true },
+//   });
+// }

@@ -1,9 +1,15 @@
 import { middleware } from "@utilities/middleware";
-import { _ListBeneficiaries } from "./institution.controller";
+import {
+  listBeneficiaryEntities,
+  createBeneficiaryEntity,
+  updateBeneficiaryEntity,
+} from "./beneficiary.controller";
 
 export const _procedure = {
   // createUser: middleware(_createUser),
   // verifyLogin: _verifyLogin,
   // addSubscribers: middleware(_addSubscribers),
-  listBeneficiaries: middleware(_ListBeneficiaries),
+  listBeneficiaryEntities: middleware(listBeneficiaryEntities),
+  createBeneficiaryEntity: middleware(createBeneficiaryEntity),
+  updateBeneficiaryEntity: middleware(updateBeneficiaryEntity),
 };
