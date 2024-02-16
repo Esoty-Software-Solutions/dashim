@@ -1,4 +1,4 @@
-import { actions } from "@controllers/_actions";
+import { actions } from "@procedures/_actions";
 import ServerError from "@utilities/error";
 import { Beneficiary } from "@prisma/client";
 type RuleTemplate = {

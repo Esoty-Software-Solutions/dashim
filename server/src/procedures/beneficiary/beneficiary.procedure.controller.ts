@@ -5,14 +5,14 @@ import {
   DEFAULT_MAX_RETRIES,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
-} from "./_config.controller";
+} from "@procedures/_config";
 import {
   ListBeneficiaryEntityInputSchema,
   CreateBeneficiaryEntityInputSchema,
   UpdateBeneficiaryEntityInputSchema,
-} from "@schemas/procedures/beneficiary.procedure.schema";
-import { rules } from "./beneficiary.rule";
-import { actions } from "./beneficiary.action";
+} from "./beneficiary.procedure.schema";
+import { rules } from "./beneficiary.procedure.rule";
+import { actions } from "./beneficiary.procedure.action";
 
 import { FAKE_USER_ID } from "@utilities/auth";
 
@@ -61,13 +61,6 @@ export async function listBeneficiaryEntities(
                   createdAt: true,
                   updatedAt: true,
                   isActive: true,
-                  city: {
-                    select: {
-                      arabic: true,
-                      english: true,
-                      name: true,
-                    },
-                  },
                   city: {
                     select: {
                       arabic: true,

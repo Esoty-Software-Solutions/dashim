@@ -8,7 +8,7 @@ import {
   NumberFilterObjectSchema,
   NumberNullableFilterObjectSchema,
   SortOrderSchema,
-} from "./_procedures.schema";
+} from "@procedures/_schemas";
 
 const BeneficiaryEntityOrderByInput = z
   .object({
