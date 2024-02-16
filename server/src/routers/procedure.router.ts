@@ -1,4 +1,3 @@
-import { SubscriberFindManySchema } from "@schemas/routers/subscriber.schema";
 import {
   CreateBeneficiaryEntityInputSchema,
   ListBeneficiaryEntityInputSchema,

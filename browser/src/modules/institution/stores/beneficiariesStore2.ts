@@ -38,7 +38,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
               {
                 beneficiaries: {
                   some: {
-                    firstName: { contains: nameFilter.value.trim() },
+                    searchName: { contains: nameFilter.value.trim() },
                   },
                 },
               },
@@ -61,7 +61,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
         },
       };
     },
-    findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.procedure.listBeneficiaryEntities.query,
     onError(error) {
       globalStore.setMessage("Error while connection to server.");
       console.error(error);

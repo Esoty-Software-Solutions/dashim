@@ -142,7 +142,7 @@ const headers = ref<TableHeader[]>([
         <VBtn @click="refresh">refresh</VBtn>
         <VSpacer />
         <VBtn color="primary" variant="plain">
-          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
+          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>

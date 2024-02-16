@@ -2,10 +2,13 @@ import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import { createId } from "@paralleldrive/cuid2";
+
 import { client } from "@/queries";
+
 type createSubscriberProcedureInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
->[0];
+  typeof client.procedure.createBeneficiaryEntity.mutate
+>[0]["data"];
 type InstitutionCrudResponse = Awaited<
   ReturnType<typeof client.crud.institution.findMany.query>
 >;
@@ -28,9 +31,14 @@ type GenderCrudResponse = Awaited<
 >;
 type GenderCrudResponseData = NonNullable<GenderCrudResponse>["data"];
 
+type CityCrudResponse = Awaited<
+  ReturnType<typeof client.crud.city.findMany.query>
+>;
+type CityCrudResponseData = NonNullable<CityCrudResponse>["data"];
+
 type BeneficiaryInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
->[0]["beneficiaries"][0];
+  typeof client.procedure.createBeneficiaryEntity.mutate
+>[0]["data"]["beneficiaries"][0];
 // declare const properlyTyped: { prop: { a: string } };
 
 const useCreateBeneficiariesStore = defineStore(
@@ -41,9 +49,10 @@ const useCreateBeneficiariesStore = defineStore(
       false,
     );
     const subscriberRef = ref<createSubscriberProcedureInput>({
-      id: "",
+      id: createId(),
       insurancePolicyId: "",
       beneficiaries: [] as BeneficiaryInput[],
+      cityId: "",
     });
     const subscriber = useLocalStorage<createSubscriberProcedureInput>(
       "createBeneficiaries.subscriber",
@@ -54,6 +63,7 @@ const useCreateBeneficiariesStore = defineStore(
     const insurancePolicies = ref<InsurancePoliciesCrudResponseData>([]);
     const relations = ref<RelationshipCrudResponseData>([]);
     const genders = ref<GenderCrudResponseData>([]);
+    const cities = ref<CityCrudResponseData>([]);
     const valid = ref(false);
 
     const getInstitutions = async () => {
@@ -99,23 +109,45 @@ const useCreateBeneficiariesStore = defineStore(
         console.log(error);
       }
     };
-    const createSubscriber = async () => {
+    const getCities = async () => {
       try {
-        if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
-          console.log("sub");
-          // console.log(subscriber.value);
-          const sub = await client.procedure.CreateSubscriber.mutate({
-            data: subscriber.value,
+        const response: CityCrudResponse =
+          await client.crud.city.findMany.query({
+            take: 10,
           });
-        }
+        console.log(response);
 
-        console.log("unvalid form");
-        // console.log(sub);
+        cities.value = response.data;
       } catch (error) {
         console.log(error);
       }
     };
+    const createSubscriber = async () => {
+      try {
+        if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
+          // console.log(subscriber.value);
+          const response =
+            await client.procedure.createBeneficiaryEntity.mutate({
+              data: subscriber.value,
+            });
+          console.log("response", response);
 
+          return response;
+        }
+      } catch (error) {
+        console.log("error1 ", error);
+        return error;
+      }
+    };
+    function $reset() {
+      dialog.value = false;
+      subscriber.value = {
+        id: createId(),
+        insurancePolicyId: "",
+        beneficiaries: [] as BeneficiaryInput[],
+        cityId: "",
+      };
+    }
     return {
       dialog,
       createSubscriber,
@@ -131,6 +163,9 @@ const useCreateBeneficiariesStore = defineStore(
       genders,
       getGenders,
       valid,
+      getCities,
+      cities,
+      $reset,
       // properlyTyped
     };
   },

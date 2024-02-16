@@ -9,6 +9,7 @@
     "birthDate": "ترايخ الميلاد",
     "genderId": "الجنس",
     "relationship": "العلافة",
+    "relationship": "العلافة",
     "actions": "إجراء",
     "add": "إضافة",
     "id": "Id",
@@ -18,7 +19,8 @@
     "secondName": "اسم الأب",
     "thirdName": "اسم الجد",
     "lastName": "اللقب",
-    "gender": "الجنس"
+    "gender": "الجنس",
+    "city": "المدينة"
   },
   "locale": {
     "ar": {

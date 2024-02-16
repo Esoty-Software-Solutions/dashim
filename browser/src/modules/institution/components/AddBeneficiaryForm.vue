@@ -18,8 +18,8 @@ const dateMenu = ref(false);
 //   typeof client.crud.beneficiary.createOne.mutate
 // >[0];
 type BeneficiaryInput = Parameters<
-  typeof client.procedure.CreateSubscriber.mutate
->[0]["beneficiaries"][0];
+  typeof client.procedure.createBeneficiaryEntity.mutate
+>[0]["data"]["beneficiaries"][0];
 
 const { t } = useI18n();
 const store = usecreateBeneficiariesStore();
@@ -39,9 +39,9 @@ const beneficiaryModel = defineModel<BeneficiaryInput>("beneficiary", {
   },
 });
 const date = useDate();
-const dateFormatted = computed(() =>
-  date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
-);
+// const dateFormatted = computed(() =>
+//   date.format(beneficiaryModel.value.birthDate, "keyboardDate"),
+// );
 const inputDate = ref("");
 const datePickerDate = ref(
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
@@ -57,17 +57,18 @@ const datePickerDate = ref(
 
 watch(datePickerDate, (value) => {
   inputDate.value = date.format(value, "keyboardDate");
-  console.log(date.format(inputDate.value, "fullDateTime"));
-  console.log(
-    new Date(
-      new Date(date.format(inputDate.value, "fullDateTime")) -
-        new Date().getTimezoneOffset() * 60000,
-    ),
-  );
-
-  console.log("watch", value);
   // beneficiaryModel.value.birthDate = date.format(value, "keyboardDate");
   // dateFormatted.value = date.format(value, "shortDate");
+});
+const dateFormatted = computed(() =>
+  date.addDays(date.format(inputDate.value, "fullDateTime"), 1),
+);
+// watch(inputDate, (value) => {
+//   datePickerDate.value = value;
+// });
+watch(dateFormatted, (value) => {
+  beneficiaryModel.value.birthDate = value;
+  // datePickerDate.value = value;
 });
 const DateMask = { mask: "##/##/####" };
 const required = [(value) => !!value || "Required."];
@@ -79,6 +80,9 @@ const DateRules = [
   (value) => !!value || "Required.",
   (value) => (value && value.length >= 3) || "Min 3 characters",
 ];
+function updatePickerDate() {
+  datePickerDate.value = dateFormatted.value;
+}
 </script>
 
 <template>
@@ -94,7 +98,7 @@ const DateRules = [
     </VCard-actions>
     <VCard-title>
       <span class="text-h5">{{
-        t("institution.beneficiaries.newbeneficiary")
+        t("institution.beneficiaries.newBeneficiary")
       }}</span>
     </VCard-title>
     <VCard-text>
@@ -180,9 +184,10 @@ const DateRules = [
             </VSelect>
           </VCol>
           <VCol cols="12" sm="6" md="4">
-            {{ beneficiaryModel.birthDate }}
-            {{ inputDate }}
-            <!-- {{ dateFormatted }} -->
+            <!-- beneficiaryModel.birthDate {{ beneficiaryModel.birthDate }} ***
+            inputDate {{ inputDate }} *** dateFormatted
+            {{ dateFormatted }} datePickerDate {{ datePickerDate }}
+            {{ dateFormatted }} -->
             <vTextField
               v-model="inputDate"
               v-maska:[DateMask]
@@ -192,7 +197,7 @@ const DateRules = [
               maxlength="10"
             >
               <template #append>
-                <VIcon start :icon="mdiCalendar" />
+                <VIcon start :icon="mdiCalendar" @click="updatePickerDate" />
                 <VMenu :close-on-content-click="false" activator="parent">
                   <VList>
                     <VListItem>

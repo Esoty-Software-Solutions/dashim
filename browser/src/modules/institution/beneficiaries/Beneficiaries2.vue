@@ -109,25 +109,32 @@ const headers = ref<TableHeader[]>([
   //   sortable: false,
   //   width: "2.7rem",
   // },
-  // {
-  //   title: t("common.creationDate"),
-  //   key: "createdAt",
-  //   sortable: false,
-  //   width: "2.7rem",
-  // },
-  // {
-  //   title: t("common.updatedAt"),
-  //   key: "updatedAt",
-  //   sortable: false,
-  //   width: "2.7rem",
-  // },
-  // {
-  //   title: t("common.status"),
-  //   key: "isActive",
-  //   sortable: false,
-  //   align: "center",
-  //   width: "0.5rem",
-  // },
+  {
+    title: t("common.creationDate"),
+    key: "createdAt",
+    sortable: false,
+    width: "2.7rem",
+  },
+  {
+    title: t("common.updatedAt"),
+    key: "updatedAt",
+    sortable: false,
+    width: "2.7rem",
+  },
+  {
+    title: t("common.status"),
+    key: "isActive",
+    sortable: false,
+    align: "center",
+    width: "0.5rem",
+  },
+  {
+    title: t("common.city"),
+    key: "city",
+    sortable: false,
+    align: "center",
+    width: "0.5rem",
+  },
   {
     title: t("common.actions"),
     key: "actions",
@@ -159,7 +166,7 @@ const headers = ref<TableHeader[]>([
           variant="plain"
           @click="openACreateBeneficiaryDialog"
         >
-          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
+          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>
@@ -183,10 +190,10 @@ const headers = ref<TableHeader[]>([
             //   )
             //   .map((b) => b.firstName)[0] -->
         <template #item.name="{ item }">
-          {{ item.beneficiaries[0].firstName }}
+          {{ item.beneficiaries[0]?.firstName }}
 
-          {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
-          {{ item.lastName }}
+          <!-- {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
+          {{ item.lastName }} -->
         </template>
         <template #expanded-row="{ columns, item }">
           <td :colspan="columns.length">
@@ -215,7 +222,9 @@ const headers = ref<TableHeader[]>([
                   <td>
                     {{ beneficiary.firstName }} {{ beneficiary.lastName }}
                   </td>
-                  <td>{{ beneficiary.birthDate }}</td>
+                  <td>
+                    {{ new Date(beneficiary.birthDate).toLocaleDateString() }}
+                  </td>
                   <td>{{ beneficiary.relationshipId }}</td>
                   <td>
                     {{ new Date(beneficiary.createdAt).toLocaleDateString() }}
@@ -235,20 +244,20 @@ const headers = ref<TableHeader[]>([
             <VDivider />
           </td>
         </template>
-        <!-- <template #item.birthDate="{ item }">
-          {{ new Date(item.birthDate).toLocaleDateString() }}
-        </template>
         <template #item.createdAt="{ item }">
           {{ new Date(item.createdAt).toLocaleDateString() }}
         </template>
         <template #item.updatedAt="{ item }">
           {{ new Date(item.updatedAt).toLocaleDateString() }}
         </template>
+        <template #item.city="{ item }">
+          {{ item.city?.name }}
+        </template>
         <template #item.isActive="{ item }">
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
-        </template> -->
+        </template>
       </VDataTableServer>
     </template>
   </DataPageBase>

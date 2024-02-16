@@ -14,6 +14,8 @@ import {
 import { rules } from "./beneficiary.rule";
 import { actions } from "./beneficiary.action";
 
+import { FAKE_USER_ID } from "@utilities/auth";
+
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
   select: { id: true, firstName: true, lastName: true },
@@ -66,6 +68,13 @@ export async function listBeneficiaryEntities(
                       name: true,
                     },
                   },
+                  city: {
+                    select: {
+                      arabic: true,
+                      english: true,
+                      name: true,
+                    },
+                  },
                   insurancePolicyId: true,
                   beneficiaries: {
                     select: {
@@ -89,6 +98,10 @@ export async function listBeneficiaryEntities(
                   },
                   StatusSetBy: StatusSetByFields,
                 },
+                // include: { //* This blows up the return type
+                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+                //   StatusSetBy: selectStatusSetBy,
+                // },
                 // include: { //* This blows up the return type
                 //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
                 //   StatusSetBy: selectStatusSetBy,
@@ -154,9 +167,15 @@ export async function createBeneficiaryEntity(
   const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
   // input data business rules
   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
+  rules.oneFatherRelationshipMustExist.evaluation(
+    validInput.data.beneficiaries,
+  );
+  rules.oneMotherRelationshipMustExist.evaluation(
+    validInput.data.beneficiaries,
+  );
   // business logic
   const processedInput = await actions.formatToPrismaCreateShape(
-    userId,
+    FAKE_USER_ID,
     validInput,
   );
 

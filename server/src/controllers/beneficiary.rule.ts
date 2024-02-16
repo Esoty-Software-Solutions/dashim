@@ -40,13 +40,13 @@ export const rules: Record<string, RuleTemplate> = {
     id: "1",
     name: "father Relationship Must Exist",
     description:
-      "Every Beneficiary Entity needs to have one beneficiary with a 'father' relationship declared",
+      "Every Beneficiary Entity needs to have at most one beneficiary with a 'father' relationship declared",
     evaluation: async function (beneficiaries: Beneficiary[]) {
       const selfRelationship = await actions.getSelfRelationshipObject();
       const matchingElements = beneficiaries.filter(
         (element) => element.relationshipId === selfRelationship.id,
       );
-      if (matchingElements.length !== 1) {
+      if (matchingElements.length > 1) {
         throw new ServerError({
           message: this.description,
           code: "UNPROCESSABLE_CONTENT",
@@ -58,13 +58,13 @@ export const rules: Record<string, RuleTemplate> = {
     id: "1",
     name: "mother Relationship Must Exist",
     description:
-      "Every Beneficiary Entity needs to have one beneficiary with a 'mother' relationship declared",
+      "Every Beneficiary Entity needs to have at most one beneficiary with a 'mother' relationship declared",
     evaluation: async function (beneficiaries: Beneficiary[]) {
       const selfRelationship = await actions.getSelfRelationshipObject();
       const matchingElements = beneficiaries.filter(
         (element) => element.relationshipId === selfRelationship.id,
       );
-      if (matchingElements.length !== 1) {
+      if (matchingElements.length > 1) {
         throw new ServerError({
           message: this.description,
           code: "UNPROCESSABLE_CONTENT",

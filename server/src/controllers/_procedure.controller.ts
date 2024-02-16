@@ -2,7 +2,7 @@ import { middleware } from "@utilities/middleware";
 import {
   listBeneficiaryEntities,
   createBeneficiaryEntity,
-  updateBeneficiaryEntity,
+  // updateBeneficiaryEntity,
 } from "./beneficiary.controller";
 
 export const _procedure = {
@@ -11,5 +11,5 @@ export const _procedure = {
   // addSubscribers: middleware(_addSubscribers),
   listBeneficiaryEntities: middleware(listBeneficiaryEntities),
   createBeneficiaryEntity: middleware(createBeneficiaryEntity),
-  updateBeneficiaryEntity: middleware(updateBeneficiaryEntity),
+  // updateBeneficiaryEntity: middleware(updateBeneficiaryEntity),
 };

@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 // import { createId } from "@paralleldrive/cuid2";
+import { createId } from "@paralleldrive/cuid2";
 
 import { mdiPlus } from "@mdi/js";
 
@@ -14,29 +15,66 @@ const props = defineProps(["dialog"]);
 // type createSubscriberProcedureInput = Parameters<
 //   typeof client.procedure.CreateSubscriber.mutate
 // >[0];
-onMounted(async () => {
-  try {
-    await store.getInstitutions();
-    await store.getRelations();
-    await store.getGenders();
-  } catch (error) {
-    console.log(error);
-  }
-});
+
 const { t } = useI18n();
 let store = usecreateBeneficiariesStore();
-function addBeneficiary() {
-  console.log(store.subscriber.beneficiaries.length);
-  store.subscriber.beneficiaries.push({
-    id: `${store.subscriber.beneficiaries.length + 1}`,
-  });
+function addBeneficiary(beneficiary: object | undefined, mounted: boolean) {
+  console.log(beneficiary);
+
+  if (beneficiary && mounted) {
+    let relationshipId = store.relations.find(
+      (relation) => relation.name == "self",
+    );
+    if (store.subscriber.beneficiaries.length < 1) {
+      store.subscriber.beneficiaries.push({
+        id: createId(),
+        relationshipId: relationshipId ? relationshipId.id : undefined,
+      });
+    }
+  } else {
+    store.subscriber.beneficiaries.push({
+      id: createId(),
+    });
+  }
 }
-const emit = defineEmits(["update-dialog"]);
+const emit = defineEmits(["update-dialog", "closeDialiog"]);
 function getInsurancePolicies() {
   store.subscriber.insurancePolicyId = "";
   store.getInsurancePolicies();
 }
 const required = [(value) => !!value || "Required."];
+onMounted(async () => {
+  try {
+    await store.getInstitutions();
+    await store.getRelations();
+    await store.getGenders();
+    await store.getCities();
+    addBeneficiary({}, true);
+  } catch (error) {
+    console.log(error);
+  }
+});
+async function createSubscriber() {
+  try {
+    await store
+      .createSubscriber()
+      .then((res) => {
+        if (res && res.id) {
+          console.log(res);
+          emit("update-dialog");
+
+          store.$reset();
+        }
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("catch error", err);
+      });
+  } catch (error) {
+    // emit("update-dialog");
+    console.log(error);
+  }
+}
 </script>
 
 <template>
@@ -50,11 +88,11 @@ const required = [(value) => !!value || "Required."];
       <v-form
         ref="beneficiaryform"
         v-model="store.valid"
-        @submit.prevent="store.createSubscriber"
+        @submit.prevent="createSubscriber"
       >
         <VCard-title class="pa-5">
           <span class="text-h5">{{
-            t("institution.beneficiaries.newbeneficiary")
+            t("institution.beneficiaries.newBeneficiary")
           }}</span>
         </VCard-title>
         <VCard-text>
@@ -132,10 +170,26 @@ const required = [(value) => !!value || "Required."];
                 </template> -->
                 </VSelect>
               </VCol>
+              <VCol cols="12" sm="6" md="4">
+                <VSelect
+                  v-model="store.subscriber.cityId"
+                  :label="$t('common.city')"
+                  variant="outlined"
+                  :items="store.cities"
+                  item-title="name"
+                  item-value="id"
+                  required
+                  :rules="required"
+                />
+              </VCol>
               <VCol sm="12 pt-0">
-                <VBtn color="primary" variant="plain" @click="addBeneficiary">
+                <VBtn
+                  color="primary"
+                  variant="plain"
+                  @click="addBeneficiary({})"
+                >
                   <span>{{
-                    t("institution.beneficiaries.addbeneficiary")
+                    t("institution.beneficiaries.addBeneficiary")
                   }}</span>
                   <VIcon end :icon="mdiPlus" />
                 </VBtn>
