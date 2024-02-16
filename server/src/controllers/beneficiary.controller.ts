@@ -22,7 +22,10 @@ const StatusSetByFields = {
 };
 
 export async function listBeneficiaryEntities(
+
+export async function listBeneficiaryEntities(
   userId: string,
+  input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
   input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
 ) {
   const MAX_RETRIES = DEFAULT_MAX_RETRIES;
@@ -43,6 +46,7 @@ export async function listBeneficiaryEntities(
   */
 
   const validInput = ListBeneficiaryEntityInputSchema.parse(input);
+  const validInput = ListBeneficiaryEntityInputSchema.parse(input);
 
   while (true) {
     try {
@@ -56,11 +60,23 @@ export async function listBeneficiaryEntities(
                 orderBy: validInput?.orderBy,
                 skip: validInput?.skip,
                 take: validInput?.take,
+              tx.beneficiaryEntity.findMany({
+                where: validInput?.where,
+                orderBy: validInput?.orderBy,
+                skip: validInput?.skip,
+                take: validInput?.take,
                 select: {
                   id: true,
                   createdAt: true,
                   updatedAt: true,
                   isActive: true,
+                  city: {
+                    select: {
+                      arabic: true,
+                      english: true,
+                      name: true,
+                    },
+                  },
                   city: {
                     select: {
                       arabic: true,
@@ -95,10 +111,17 @@ export async function listBeneficiaryEntities(
                 //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
                 //   StatusSetBy: selectStatusSetBy,
                 // },
+                // include: { //* This blows up the return type
+                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+                //   StatusSetBy: selectStatusSetBy,
+                // },
               }),
+              tx.beneficiaryEntity.count({
               tx.beneficiaryEntity.count({
                 where: input?.where,
               }),
+              tx.beneficiaryEntity.count(),
+              tx.beneficiaryEntity.count({
               tx.beneficiaryEntity.count(),
               tx.beneficiaryEntity.count({
                 where: { ...input?.where, isActive: true },
