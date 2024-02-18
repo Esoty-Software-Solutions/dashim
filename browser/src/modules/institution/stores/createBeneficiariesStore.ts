@@ -21,18 +21,18 @@ type InsurancePoliciesCrudResponseData =
   NonNullable<InsurancePoliciesCrudResponse>["data"];
 
 type RelationshipCrudResponse = Awaited<
-  ReturnType<typeof client.crud.relationship.findMany.query>
+  ReturnType<typeof client.crud.relationshipEnum.findMany.query>
 >;
 type RelationshipCrudResponseData =
   NonNullable<RelationshipCrudResponse>["data"];
 
 type GenderCrudResponse = Awaited<
-  ReturnType<typeof client.crud.gender.findMany.query>
+  ReturnType<typeof client.crud.genderEnum.findMany.query>
 >;
 type GenderCrudResponseData = NonNullable<GenderCrudResponse>["data"];
 
 type CityCrudResponse = Awaited<
-  ReturnType<typeof client.crud.city.findMany.query>
+  ReturnType<typeof client.crud.cityEnum.findMany.query>
 >;
 type CityCrudResponseData = NonNullable<CityCrudResponse>["data"];
 
@@ -87,7 +87,7 @@ const useCreateBeneficiariesStore = defineStore(
     };
     const getRelations = async () => {
       try {
-        const response = await client.crud.relationship.findMany.query({
+        const response = await client.crud.relationshipEnum.findMany.query({
           take: 10,
         });
         console.log(response);
@@ -99,7 +99,7 @@ const useCreateBeneficiariesStore = defineStore(
     };
     const getGenders = async () => {
       try {
-        const response = await client.crud.gender.findMany.query({
+        const response = await client.crud.genderEnum.findMany.query({
           take: 10,
         });
         console.log(response);
@@ -112,7 +112,7 @@ const useCreateBeneficiariesStore = defineStore(
     const getCities = async () => {
       try {
         const response: CityCrudResponse =
-          await client.crud.city.findMany.query({
+          await client.crud.cityEnum.findMany.query({
             take: 10,
           });
         console.log(response);
