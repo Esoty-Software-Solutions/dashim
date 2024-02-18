@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -25,7 +25,7 @@ defineOptions({
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.items.value);
-let selected = ref([]);
+let selected = ref<any[]>([]);
 let selectedCount = ref(0);
 let expanded = ref([]);
 
@@ -86,7 +86,7 @@ const citySelect = asyncAutocomplete(
   },
   {
     debounceInterval: 220,
-    input(search: string | null) {
+    input(search: string) {
       // dependencies of this getter are tracked and if required will cause a fetch
       return {
         search,
@@ -97,14 +97,14 @@ const citySelect = asyncAutocomplete(
         // secondSet: useSecondSet.value,
       };
     },
-    async onFetch(input: { search: string | null; secondSet: boolean }) {
+    async onFetch(input: { search: string }) {
       // assume this is the server side
       // no dependency tracking is done on this callback
       console.log(
         "[AutocompleteExample#fetch new items]",
         `search value: "${input.search}"`,
       );
-      const res = await client.crud.city.findMany.query({
+      const res = await client.crud.cityEnum.findMany.query({
         take: 50,
         where: {
           name: { contains: input.search },
@@ -366,7 +366,7 @@ const headers = ref<TableHeader[]>([
                   <td>
                     {{ new Date(beneficiary.birthDate).toLocaleDateString() }}
                   </td>
-                  <td>{{ beneficiary.relationshipId }}</td>
+                  <td>{{ beneficiary.relationship.name }}</td>
                   <td>
                     {{ new Date(beneficiary.createdAt).toLocaleDateString() }}
                   </td>
@@ -385,9 +385,9 @@ const headers = ref<TableHeader[]>([
             <VDivider />
           </td>
         </template>
-        <template #item.birthDate="{ item }">
+        <!-- <template #item.birthDate="{ item }">
           {{ new Date(item.birthDate).toLocaleDateString() }}
-        </template>
+        </template> -->
 
         <template #item.createdAt="{ item }">
           {{ new Date(item.createdAt).toLocaleDateString() }}
