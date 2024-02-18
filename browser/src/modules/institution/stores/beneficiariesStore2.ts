@@ -13,6 +13,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     "beneficiariesList.nameFilterEnabled",
     true,
   );
+
   const isActiveFilter = ref<string | null>("true");
   const isActiveFilterEnabled = useLocalStorage<boolean>(
     "beneficiariesList.isActiveFilterEnabled",
@@ -48,15 +49,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   // }
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
-  // the first fetch is when the filters/page change'
-
-  // TODO set filter type
-  // type WhereFilter = RouterOutput["procedure"]["listSubscribers"]["where"];
-  function buildFilter() {
-    console.log(selectedInstitution.value);
-
-    return { where: {} };
-  }
+  // the first fetch is when the filters/page change
   const { binding, items, triggerFetch } = useQuerierTable({
     storageKey: "beneficiariesList2",
     input: computed(() => ({

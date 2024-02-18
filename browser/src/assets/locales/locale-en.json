@@ -19,7 +19,8 @@
     "thirdName": "Third Name",
     "lastName": "Last Name",
     "gender": "Gender",
-    "city": "City"
+    "city": "City",
+    "medicalCenter": "Medical Center"
   },
   "accounting": {
     "claims": "Claims"
@@ -39,8 +40,12 @@
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
-      "newBeneficiary": "New Beneficiary",
-      "addBeneficiary": "Add Beneficiary"
+      "newbeneficiary": "New Beneficiary",
+      "addbeneficiary": "Add Beneficiary"
+    },
+    "network": {
+      "pageTitle": "Network List",
+      "newMedicalCenter": "New Medical Center"
     }
   },
   "locale": {

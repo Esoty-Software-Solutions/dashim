@@ -98,7 +98,7 @@ function updatePickerDate() {
     </VCard-actions>
     <VCard-title>
       <span class="text-h5">{{
-        t("institution.beneficiaries.newBeneficiary")
+        t("institution.beneficiaries.newbeneficiary")
       }}</span>
     </VCard-title>
     <VCard-text>

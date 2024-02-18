@@ -186,10 +186,10 @@ async function createSubscriber() {
                 <VBtn
                   color="primary"
                   variant="plain"
-                  @click="addBeneficiary({})"
+                  @click="addBeneficiary({}, false)"
                 >
                   <span>{{
-                    t("institution.beneficiaries.addBeneficiary")
+                    t("institution.beneficiaries.addbeneficiary")
                   }}</span>
                   <VIcon end :icon="mdiPlus" />
                 </VBtn>

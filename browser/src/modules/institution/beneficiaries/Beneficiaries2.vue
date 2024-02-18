@@ -25,6 +25,7 @@ defineOptions({
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.items.value);
+
 let selected = ref<any[]>([]);
 let selectedCount = ref(0);
 let expanded = ref([]);
@@ -229,6 +230,7 @@ const headers = ref<TableHeader[]>([
   //   sortable: false,
   //   width: "2.7rem",
   // },
+
   // {
   //   title: t("common.creationDate"),
   //   key: "createdAt",
@@ -305,7 +307,7 @@ const headers = ref<TableHeader[]>([
           variant="plain"
           @click="openACreateBeneficiaryDialog"
         >
-          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
+          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>
@@ -403,7 +405,6 @@ const headers = ref<TableHeader[]>([
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
         </template>
-
         <!-- </template> -->
       </VDataTableServer>
     </template>
