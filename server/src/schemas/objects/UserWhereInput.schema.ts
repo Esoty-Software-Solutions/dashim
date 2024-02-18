@@ -4,8 +4,8 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
-import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema';
-import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
+import { GenderEnumRelationFilterObjectSchema } from './GenderEnumRelationFilter.schema';
+import { GenderEnumWhereInputObjectSchema } from './GenderEnumWhereInput.schema';
 import { DeviceTokenListRelationFilterObjectSchema } from './DeviceTokenListRelationFilter.schema';
 import { TenantListRelationFilterObjectSchema } from './TenantListRelationFilter.schema';
 import { TenantMemberListRelationFilterObjectSchema } from './TenantMemberListRelationFilter.schema';
@@ -125,8 +125,8 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .nullable(),
     gender: z
       .union([
-        z.lazy(() => GenderRelationFilterObjectSchema),
-        z.lazy(() => GenderWhereInputObjectSchema),
+        z.lazy(() => GenderEnumRelationFilterObjectSchema),
+        z.lazy(() => GenderEnumWhereInputObjectSchema),
       ])
       .optional(),
     deviceToken: z

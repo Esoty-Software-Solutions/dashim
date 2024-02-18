@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenderCreateNestedOneWithoutUserInputObjectSchema } from './GenderCreateNestedOneWithoutUserInput.schema';
+import { GenderEnumCreateNestedOneWithoutUserInputObjectSchema } from './GenderEnumCreateNestedOneWithoutUserInput.schema';
 import { TenantCreateNestedManyWithoutOwnerInputObjectSchema } from './TenantCreateNestedManyWithoutOwnerInput.schema';
 import { TenantMemberCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMemberCreateNestedManyWithoutMemberInput.schema';
 import { BeneficiaryEntityCreateNestedManyWithoutStatusSetByInputObjectSchema } from './BeneficiaryEntityCreateNestedManyWithoutStatusSetByInput.schema';
@@ -41,7 +41,7 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutDeviceTokenInput> = z
     isPhoneVerified: z.boolean().optional(),
     passwordHash: z.string(),
     avatar: z.string().optional().nullable(),
-    gender: z.lazy(() => GenderCreateNestedOneWithoutUserInputObjectSchema),
+    gender: z.lazy(() => GenderEnumCreateNestedOneWithoutUserInputObjectSchema),
     ownerOf: z
       .lazy(() => TenantCreateNestedManyWithoutOwnerInputObjectSchema)
       .optional(),

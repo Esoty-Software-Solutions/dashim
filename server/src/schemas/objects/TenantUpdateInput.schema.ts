@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { TenantTypeUpdateOneRequiredWithoutTenantNestedInputObjectSchema } from './TenantTypeUpdateOneRequiredWithoutTenantNestedInput.schema';
+import { TenantTypeEnumUpdateOneRequiredWithoutTenantNestedInputObjectSchema } from './TenantTypeEnumUpdateOneRequiredWithoutTenantNestedInput.schema';
 import { MedicalCenterUpdateOneWithoutManagingTenantNestedInputObjectSchema } from './MedicalCenterUpdateOneWithoutManagingTenantNestedInput.schema';
 import { UserUpdateOneRequiredWithoutOwnerOfNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutOwnerOfNestedInput.schema';
 import { TenantMemberUpdateManyWithoutTenantNestedInputObjectSchema } from './TenantMemberUpdateManyWithoutTenantNestedInput.schema';
@@ -127,7 +127,8 @@ const Schema: z.ZodType<Prisma.TenantUpdateInput> = z
       .nullable(),
     type: z
       .lazy(
-        () => TenantTypeUpdateOneRequiredWithoutTenantNestedInputObjectSchema,
+        () =>
+          TenantTypeEnumUpdateOneRequiredWithoutTenantNestedInputObjectSchema,
       )
       .optional(),
     assignedToMedicalCenter: z

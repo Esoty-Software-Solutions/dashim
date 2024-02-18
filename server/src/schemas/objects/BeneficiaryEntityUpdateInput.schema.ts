@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { UserUpdateOneRequiredWithoutBeneficiaryEntityStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryEntityStatusChangesNestedInput.schema';
-import { CityUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInputObjectSchema } from './CityUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInput.schema';
+import { CityEnumUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInputObjectSchema } from './CityEnumUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInput.schema';
 import { InsurancePolicyUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInputObjectSchema } from './InsurancePolicyUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInput.schema';
 import { BeneficiaryUpdateManyWithoutBeneficiaryEntityNestedInputObjectSchema } from './BeneficiaryUpdateManyWithoutBeneficiaryEntityNestedInput.schema';
 import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutBeneficiaryEntityNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutBeneficiaryEntityNestedInput.schema';
@@ -80,7 +80,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityUpdateInput> = z
     city: z
       .lazy(
         () =>
-          CityUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInputObjectSchema,
+          CityEnumUpdateOneRequiredWithoutBeneficiaryEntitiesNestedInputObjectSchema,
       )
       .optional(),
     insurancePolicy: z

@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutUserNestedInput.schema';
+import { GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderEnumUpdateOneRequiredWithoutUserNestedInput.schema';
 import { TenantUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUpdateManyWithoutOwnerNestedInput.schema';
 import { TenantMemberUpdateManyWithoutMemberNestedInputObjectSchema } from './TenantMemberUpdateManyWithoutMemberNestedInput.schema';
 import { BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInput.schema';
@@ -176,7 +176,7 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutDeviceTokenInput> = z
       .optional()
       .nullable(),
     gender: z
-      .lazy(() => GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema)
+      .lazy(() => GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema)
       .optional(),
     ownerOf: z
       .lazy(() => TenantUpdateManyWithoutOwnerNestedInputObjectSchema)

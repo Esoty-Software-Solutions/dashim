@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { GenderOrderByWithRelationInputObjectSchema } from './GenderOrderByWithRelationInput.schema';
+import { GenderEnumOrderByWithRelationInputObjectSchema } from './GenderEnumOrderByWithRelationInput.schema';
 import { DeviceTokenOrderByRelationAggregateInputObjectSchema } from './DeviceTokenOrderByRelationAggregateInput.schema';
 import { TenantOrderByRelationAggregateInputObjectSchema } from './TenantOrderByRelationAggregateInput.schema';
 import { TenantMemberOrderByRelationAggregateInputObjectSchema } from './TenantMemberOrderByRelationAggregateInput.schema';
@@ -86,7 +86,9 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    gender: z.lazy(() => GenderOrderByWithRelationInputObjectSchema).optional(),
+    gender: z
+      .lazy(() => GenderEnumOrderByWithRelationInputObjectSchema)
+      .optional(),
     deviceToken: z
       .lazy(() => DeviceTokenOrderByRelationAggregateInputObjectSchema)
       .optional(),

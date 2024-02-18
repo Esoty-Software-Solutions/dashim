@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderCreateNestedOneWithoutBeneficiaryInput.schema';
+import { GenderEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderEnumCreateNestedOneWithoutBeneficiaryInput.schema';
 import { UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryStatusChangesInput.schema';
 import { BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInput.schema';
 import { FingerprintBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -33,7 +33,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutRelationshipInput> = z
     deactivationDate: z.coerce.date().optional().nullable(),
     legacyCode: z.string().optional().nullable(),
     gender: z.lazy(
-      () => GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema,
+      () => GenderEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),
     StatusSetBy: z.lazy(
       () => UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema,
