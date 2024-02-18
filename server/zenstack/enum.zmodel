@@ -1,0 +1,125 @@
+import 'base'
+
+
+model ReviewStatusEnum extends Base, LangLocale {
+  name String @unique
+  transactionBeneficiaryServices ReviewStatus[] @relation("transactionReviewStatus")
+  medicalBeneficiaryServices ReviewStatus[] @relation("medicalReviewStatus")
+}
+
+model GenderEnum extends Base, LangLocale {
+  name String @unique
+  user User[]
+  beneficiary Beneficiary[]
+}
+// enum GenderEnum {
+//     MALE
+//     FEMALE
+//     unknown
+// }
+
+model CurrencyEnum extends Base, LangLocale {
+  name String @unique
+  code String @unique
+  symbol String
+  buyExchangeRate Float @default(1)
+  SellExchangeRate Float @default(1)
+}
+
+model RelationshipEnum extends Base, LangLocale {
+  name String @unique
+  beneficiary Beneficiary[]
+}
+
+// enum RelationshipEnum {
+//     SELF
+//     FATHER
+//     MOTHER
+//     SON
+//     DAUGHTER
+//     BROTHER
+//     SISTER
+//     UNCLE
+//     AUNT
+//     GRANDFATHER
+//     GRANDMOTHER
+//     COUSIN
+//     NEPHEW
+//     NIECE
+//     FRIEND
+//     OTHER
+// }
+
+model TenantTypeEnum extends Base, LangLocale {
+  name String @unique
+
+  tenant Tenant[]
+}
+// enum TenantTypeEnum {
+//   INSTITUTION
+//   MEDICAL
+//   GOVERNMENT
+//   PRIVATE
+//   NGO
+//   PERSONAL
+//   OTHER
+// }
+
+model RoleEnum extends Base, LangLocale {
+  name String @unique
+}
+
+// enum RoleEnum {
+//   ADMIN
+//   MEMBER
+//   GUEST
+// }
+
+model DeviceTypeEnum extends Base, LangLocale {
+  name String @unique
+  deviceToken DeviceToken[]
+}
+
+// enum DeviceTypeEnum {
+//   IOS
+//   ANDROID
+//   WEB
+//   OTHER
+// }
+
+model FingerTypeEnum extends Base, LangLocale {
+  name String @unique
+  fingerType FingerprintBiometric[]
+}
+
+// enum FingerTypeEnum {
+// LEFTTHUMB
+// LEFTINDEX
+// LEFTMIDDLE
+// LEFTRING
+// LEFTLITTLE
+// RIGHTTHUMB
+// RIGHTINDEX
+// RIGHTMIDDLE
+// RIGHTRING
+// RIGHTLITTLE
+// }
+
+model CityEnum extends Base, LangLocale {
+  name String
+  country CountryEnum @relation(fields: [countryId], references: [id])
+  countryId String
+
+  institutions Institution[]
+  medicalcenters MedicalCenter[]
+  beneficiaryEntities BeneficiaryEntity[]
+
+  @@index([name, countryId])
+  @@unique([name, countryId])
+}
+
+model CountryEnum extends Base, LangLocale {
+  name String @unique
+  code String @unique
+  cities CityEnum[]
+}

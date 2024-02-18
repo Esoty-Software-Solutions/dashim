@@ -66,6 +66,12 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityUncheckedUpdateManyWithoutBenefi
           z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
+      cityId: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+        ])
+        .optional(),
       address: z
         .union([
           z.string(),
@@ -73,12 +79,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityUncheckedUpdateManyWithoutBenefi
         ])
         .optional()
         .nullable(),
-      insurancePolicyId: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-        ])
-        .optional(),
     })
     .strict();
 

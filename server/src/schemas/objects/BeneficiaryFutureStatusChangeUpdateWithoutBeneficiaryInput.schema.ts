@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { UserUpdateOneRequiredWithoutBeneficiaryFutureStatusCreationsNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryFutureStatusCreationsNestedInput.schema';
-import { UserUpdateOneWithoutBeneficiaryFutureStatusChangesNestedInputObjectSchema } from './UserUpdateOneWithoutBeneficiaryFutureStatusChangesNestedInput.schema';
+import { UserUpdateOneWithoutBeneficiaryFutureStatusUpdatesNestedInputObjectSchema } from './UserUpdateOneWithoutBeneficiaryFutureStatusUpdatesNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -69,7 +69,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryFutureStatusChangeUpdateWithoutBenefic
       UpdatedBy: z
         .lazy(
           () =>
-            UserUpdateOneWithoutBeneficiaryFutureStatusChangesNestedInputObjectSchema,
+            UserUpdateOneWithoutBeneficiaryFutureStatusUpdatesNestedInputObjectSchema,
         )
         .optional(),
     })

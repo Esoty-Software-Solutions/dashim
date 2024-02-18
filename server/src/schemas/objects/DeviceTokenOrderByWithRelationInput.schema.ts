@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { DeviceTypeOrderByWithRelationInputObjectSchema } from './DeviceTypeOrderByWithRelationInput.schema';
+import { DeviceTypeEnumOrderByWithRelationInputObjectSchema } from './DeviceTypeEnumOrderByWithRelationInput.schema';
 import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -31,7 +31,7 @@ const Schema: z.ZodType<Prisma.DeviceTokenOrderByWithRelationInput> = z
     deviceTypeId: z.lazy(() => SortOrderSchema).optional(),
     userId: z.lazy(() => SortOrderSchema).optional(),
     deviceType: z
-      .lazy(() => DeviceTypeOrderByWithRelationInputObjectSchema)
+      .lazy(() => DeviceTypeEnumOrderByWithRelationInputObjectSchema)
       .optional(),
     user: z.lazy(() => UserOrderByWithRelationInputObjectSchema).optional(),
   })

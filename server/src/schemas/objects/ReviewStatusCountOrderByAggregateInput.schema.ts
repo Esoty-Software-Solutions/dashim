@@ -10,9 +10,10 @@ const Schema: z.ZodType<Prisma.ReviewStatusCountOrderByAggregateInput> = z
     updatedAt: z.lazy(() => SortOrderSchema).optional(),
     isPublished: z.lazy(() => SortOrderSchema).optional(),
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
-    arabic: z.lazy(() => SortOrderSchema).optional(),
-    english: z.lazy(() => SortOrderSchema).optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
+    createdById: z.lazy(() => SortOrderSchema).optional(),
+    updatedById: z.lazy(() => SortOrderSchema).optional(),
+    transactionReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
+    medicalReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

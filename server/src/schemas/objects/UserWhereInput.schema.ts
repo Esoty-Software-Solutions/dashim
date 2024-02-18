@@ -4,8 +4,8 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
-import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema';
-import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
+import { GenderEnumRelationFilterObjectSchema } from './GenderEnumRelationFilter.schema';
+import { GenderEnumWhereInputObjectSchema } from './GenderEnumWhereInput.schema';
 import { DeviceTokenListRelationFilterObjectSchema } from './DeviceTokenListRelationFilter.schema';
 import { TenantListRelationFilterObjectSchema } from './TenantListRelationFilter.schema';
 import { TenantMemberListRelationFilterObjectSchema } from './TenantMemberListRelationFilter.schema';
@@ -13,6 +13,9 @@ import { BeneficiaryEntityListRelationFilterObjectSchema } from './BeneficiaryEn
 import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
 import { BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryEntityFutureStatusChangeListRelationFilter.schema';
 import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
+import { ReviewStatusListRelationFilterObjectSchema } from './ReviewStatusListRelationFilter.schema';
+import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -123,8 +126,8 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .nullable(),
     gender: z
       .union([
-        z.lazy(() => GenderRelationFilterObjectSchema),
-        z.lazy(() => GenderWhereInputObjectSchema),
+        z.lazy(() => GenderEnumRelationFilterObjectSchema),
+        z.lazy(() => GenderEnumWhereInputObjectSchema),
       ])
       .optional(),
     deviceToken: z
@@ -145,7 +148,7 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
         () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
       )
       .optional(),
-    beneficiaryEntityFutureStatusChanges: z
+    beneficiaryEntityFutureStatusUpdates: z
       .lazy(
         () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
       )
@@ -153,8 +156,26 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
     beneficiaryFutureStatusCreations: z
       .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
       .optional(),
-    beneficiaryFutureStatusChanges: z
+    beneficiaryFutureStatusUpdates: z
       .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
+      .optional(),
+    ReviewStatusCreations: z
+      .lazy(() => ReviewStatusListRelationFilterObjectSchema)
+      .optional(),
+    ReviewStatusUpdates: z
+      .lazy(() => ReviewStatusListRelationFilterObjectSchema)
+      .optional(),
+    BeneficiaryServiceCreations: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
+      .optional(),
+    BeneficiaryServiceUpdates: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
+      .optional(),
+    EntryRecordServiceCreations: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
+      .optional(),
+    EntryRecordServiceUpdates: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

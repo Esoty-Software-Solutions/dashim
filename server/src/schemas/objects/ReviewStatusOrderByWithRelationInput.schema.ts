@@ -1,7 +1,9 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
+import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
+import { BeneficiaryServiceOrderByWithRelationInputObjectSchema } from './BeneficiaryServiceOrderByWithRelationInput.schema';
+import { ReviewStatusEnumOrderByWithRelationInputObjectSchema } from './ReviewStatusEnumOrderByWithRelationInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -12,24 +14,29 @@ const Schema: z.ZodType<Prisma.ReviewStatusOrderByWithRelationInput> = z
     updatedAt: z.lazy(() => SortOrderSchema).optional(),
     isPublished: z.lazy(() => SortOrderSchema).optional(),
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
-    arabic: z
+    createdById: z.lazy(() => SortOrderSchema).optional(),
+    updatedById: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    english: z
-      .union([
-        z.lazy(() => SortOrderSchema),
-        z.lazy(() => SortOrderInputObjectSchema),
-      ])
+    transactionReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
+    medicalReviewStatusId: z.lazy(() => SortOrderSchema).optional(),
+    CreatedBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
       .optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
-    transactionPatientServices: z
-      .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
+    UpdatedBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
       .optional(),
-    medicalPatientServices: z
-      .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
+    beneficiaryService: z
+      .lazy(() => BeneficiaryServiceOrderByWithRelationInputObjectSchema)
+      .optional(),
+    transactionReviewStatus: z
+      .lazy(() => ReviewStatusEnumOrderByWithRelationInputObjectSchema)
+      .optional(),
+    medicalReviewStatus: z
+      .lazy(() => ReviewStatusEnumOrderByWithRelationInputObjectSchema)
       .optional(),
   })
   .strict();

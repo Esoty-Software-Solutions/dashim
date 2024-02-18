@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { GenderOrderByWithRelationInputObjectSchema } from './GenderOrderByWithRelationInput.schema';
+import { GenderEnumOrderByWithRelationInputObjectSchema } from './GenderEnumOrderByWithRelationInput.schema';
 import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 import { BeneficiaryEntityOrderByWithRelationInputObjectSchema } from './BeneficiaryEntityOrderByWithRelationInput.schema';
-import { RelationshipOrderByWithRelationInputObjectSchema } from './RelationshipOrderByWithRelationInput.schema';
+import { RelationshipEnumOrderByWithRelationInputObjectSchema } from './RelationshipEnumOrderByWithRelationInput.schema';
 import { FingerprintBiometricOrderByRelationAggregateInputObjectSchema } from './FingerprintBiometricOrderByRelationAggregateInput.schema';
 import { IDCardOrderByRelationAggregateInputObjectSchema } from './IDCardOrderByRelationAggregateInput.schema';
 import { FaceBiometricOrderByRelationAggregateInputObjectSchema } from './FaceBiometricOrderByRelationAggregateInput.schema';
@@ -79,7 +79,9 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
       ])
       .optional(),
     relationshipId: z.lazy(() => SortOrderSchema).optional(),
-    gender: z.lazy(() => GenderOrderByWithRelationInputObjectSchema).optional(),
+    gender: z
+      .lazy(() => GenderEnumOrderByWithRelationInputObjectSchema)
+      .optional(),
     StatusSetBy: z
       .lazy(() => UserOrderByWithRelationInputObjectSchema)
       .optional(),
@@ -87,7 +89,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryOrderByWithRelationInput> = z
       .lazy(() => BeneficiaryEntityOrderByWithRelationInputObjectSchema)
       .optional(),
     relationship: z
-      .lazy(() => RelationshipOrderByWithRelationInputObjectSchema)
+      .lazy(() => RelationshipEnumOrderByWithRelationInputObjectSchema)
       .optional(),
     fingerprint: z
       .lazy(() => FingerprintBiometricOrderByRelationAggregateInputObjectSchema)

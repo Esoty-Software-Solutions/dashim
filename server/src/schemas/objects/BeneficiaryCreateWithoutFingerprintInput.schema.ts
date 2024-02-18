@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderCreateNestedOneWithoutBeneficiaryInput.schema';
+import { GenderEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './GenderEnumCreateNestedOneWithoutBeneficiaryInput.schema';
 import { UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryStatusChangesInput.schema';
 import { BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInput.schema';
-import { RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipCreateNestedOneWithoutBeneficiaryInput.schema';
+import { RelationshipEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipEnumCreateNestedOneWithoutBeneficiaryInput.schema';
 import { IDCardCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './IDCardCreateNestedManyWithoutBeneficiaryInput.schema';
 import { FaceBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FaceBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
 import { VoiceBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './VoiceBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -33,7 +33,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutFingerprintInput> = z
     deactivationDate: z.coerce.date().optional().nullable(),
     legacyCode: z.string().optional().nullable(),
     gender: z.lazy(
-      () => GenderCreateNestedOneWithoutBeneficiaryInputObjectSchema,
+      () => GenderEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),
     StatusSetBy: z.lazy(
       () => UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema,
@@ -43,7 +43,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutFingerprintInput> = z
         BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema,
     ),
     relationship: z.lazy(
-      () => RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema,
+      () => RelationshipEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),
     idCard: z
       .lazy(() => IDCardCreateNestedManyWithoutBeneficiaryInputObjectSchema)

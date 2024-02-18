@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { FingerTypeUpdateOneRequiredWithoutFingerTypeNestedInputObjectSchema } from './FingerTypeUpdateOneRequiredWithoutFingerTypeNestedInput.schema';
+import { FingerTypeEnumUpdateOneRequiredWithoutFingerTypeNestedInputObjectSchema } from './FingerTypeEnumUpdateOneRequiredWithoutFingerTypeNestedInput.schema';
 import { BeneficiaryUpdateOneRequiredWithoutFingerprintNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutFingerprintNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -71,7 +71,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricUpdateWithoutEntryRecordsInpu
       fingerType: z
         .lazy(
           () =>
-            FingerTypeUpdateOneRequiredWithoutFingerTypeNestedInputObjectSchema,
+            FingerTypeEnumUpdateOneRequiredWithoutFingerTypeNestedInputObjectSchema,
         )
         .optional(),
       beneficiary: z

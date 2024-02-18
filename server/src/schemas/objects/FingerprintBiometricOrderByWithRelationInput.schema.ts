@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { FingerTypeOrderByWithRelationInputObjectSchema } from './FingerTypeOrderByWithRelationInput.schema';
+import { FingerTypeEnumOrderByWithRelationInputObjectSchema } from './FingerTypeEnumOrderByWithRelationInput.schema';
 import { BeneficiaryOrderByWithRelationInputObjectSchema } from './BeneficiaryOrderByWithRelationInput.schema';
 import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
@@ -31,7 +31,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricOrderByWithRelationInput> = z
     record: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerType: z
-      .lazy(() => FingerTypeOrderByWithRelationInputObjectSchema)
+      .lazy(() => FingerTypeEnumOrderByWithRelationInputObjectSchema)
       .optional(),
     beneficiary: z
       .lazy(() => BeneficiaryOrderByWithRelationInputObjectSchema)

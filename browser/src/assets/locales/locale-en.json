@@ -32,7 +32,7 @@
       "network": "Network",
       "insurancePolicy": "Insurance Policy",
       "benefitPackage": "Benefit Package",
-      "claims": "@.capitalize:accounting.claims"
+      "claims": "claims"
     },
     "list": {
       "pageTitle": "Institutions List",

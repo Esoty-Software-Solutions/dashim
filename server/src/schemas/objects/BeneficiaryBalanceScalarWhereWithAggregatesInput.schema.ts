@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { StringWithAggregatesFilterObjectSchema } from './StringWithAggregatesFilter.schema';
 import { DateTimeWithAggregatesFilterObjectSchema } from './DateTimeWithAggregatesFilter.schema';
 import { BoolWithAggregatesFilterObjectSchema } from './BoolWithAggregatesFilter.schema';
-import { FloatWithAggregatesFilterObjectSchema } from './FloatWithAggregatesFilter.schema';
+import { IntWithAggregatesFilterObjectSchema } from './IntWithAggregatesFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -83,11 +83,11 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceScalarWhereWithAggregatesInput>
           z.string(),
         ])
         .optional(),
-      balance: z
-        .union([
-          z.lazy(() => FloatWithAggregatesFilterObjectSchema),
-          z.number(),
-        ])
+      balancePending: z
+        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
+        .optional(),
+      balanceActual: z
+        .union([z.lazy(() => IntWithAggregatesFilterObjectSchema), z.number()])
         .optional(),
     })
     .strict();

@@ -4,6 +4,9 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
+import { JsonFilterObjectSchema } from './JsonFilter.schema';
+import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
+import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
 import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
 import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { FingerprintBiometricRelationFilterObjectSchema } from './FingerprintBiometricRelationFilter.schema';
@@ -16,7 +19,7 @@ import { VoiceBiometricRelationFilterObjectSchema } from './VoiceBiometricRelati
 import { VoiceBiometricWhereInputObjectSchema } from './VoiceBiometricWhereInput.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
-import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
+import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -53,6 +56,13 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
     isSoftDeleted: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
+    createdById: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    updatedById: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
     isActive: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
@@ -73,6 +83,7 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
     isManuallyInserted: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
+    notes: z.lazy(() => JsonFilterObjectSchema).optional(),
     beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -95,6 +106,19 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
     medicalCenterId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
+    CreatedBy: z
+      .union([
+        z.lazy(() => UserRelationFilterObjectSchema),
+        z.lazy(() => UserWhereInputObjectSchema),
+      ])
+      .optional(),
+    UpdatedBy: z
+      .union([
+        z.lazy(() => UserRelationFilterObjectSchema),
+        z.lazy(() => UserWhereInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     beneficiary: z
       .union([
         z.lazy(() => BeneficiaryRelationFilterObjectSchema),
@@ -135,8 +159,8 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
         z.lazy(() => MedicalCenterWhereInputObjectSchema),
       ])
       .optional(),
-    patientServices: z
-      .lazy(() => PatientServiceListRelationFilterObjectSchema)
+    beneficiaryServices: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

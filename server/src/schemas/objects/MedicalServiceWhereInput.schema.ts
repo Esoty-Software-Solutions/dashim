@@ -7,7 +7,7 @@ import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.sch
 import { IntFilterObjectSchema } from './IntFilter.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
-import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
+import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
 import { InstitutionMedicalServiceListRelationFilterObjectSchema } from './InstitutionMedicalServiceListRelationFilter.schema';
 import { MedicalServiceCategoryRelationFilterObjectSchema } from './MedicalServiceCategoryRelationFilter.schema';
 import { MedicalServiceCategoryWhereInputObjectSchema } from './MedicalServiceCategoryWhereInput.schema';
@@ -82,8 +82,8 @@ const Schema: z.ZodType<Prisma.MedicalServiceWhereInput> = z
         z.lazy(() => MedicalCenterWhereInputObjectSchema),
       ])
       .optional(),
-    patientServices: z
-      .lazy(() => PatientServiceListRelationFilterObjectSchema)
+    beneficiaryServices: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
       .optional(),
     institutionPricing: z
       .lazy(() => InstitutionMedicalServiceListRelationFilterObjectSchema)

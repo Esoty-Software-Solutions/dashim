@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DeviceTypeCreateNestedOneWithoutDeviceTokenInputObjectSchema } from './DeviceTypeCreateNestedOneWithoutDeviceTokenInput.schema';
+import { DeviceTypeEnumCreateNestedOneWithoutDeviceTokenInputObjectSchema } from './DeviceTypeEnumCreateNestedOneWithoutDeviceTokenInput.schema';
 import { UserCreateNestedOneWithoutDeviceTokenInputObjectSchema } from './UserCreateNestedOneWithoutDeviceTokenInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -17,7 +17,7 @@ const Schema: z.ZodType<Prisma.DeviceTokenCreateInput> = z
     deviceName: z.string(),
     token: z.string(),
     deviceType: z.lazy(
-      () => DeviceTypeCreateNestedOneWithoutDeviceTokenInputObjectSchema,
+      () => DeviceTypeEnumCreateNestedOneWithoutDeviceTokenInputObjectSchema,
     ),
     user: z.lazy(() => UserCreateNestedOneWithoutDeviceTokenInputObjectSchema),
   })

@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutUserNestedInput.schema';
+import { GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderEnumUpdateOneRequiredWithoutUserNestedInput.schema';
 import { TenantUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUpdateManyWithoutOwnerNestedInput.schema';
 import { TenantMemberUpdateManyWithoutMemberNestedInputObjectSchema } from './TenantMemberUpdateManyWithoutMemberNestedInput.schema';
 import { BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInput.schema';
@@ -13,6 +13,12 @@ import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInpu
 import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
+import { ReviewStatusUpdateManyWithoutCreatedByNestedInputObjectSchema } from './ReviewStatusUpdateManyWithoutCreatedByNestedInput.schema';
+import { ReviewStatusUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './ReviewStatusUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInput.schema';
+import { EntryRecordUpdateManyWithoutCreatedByNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutCreatedByNestedInput.schema';
+import { EntryRecordUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -172,7 +178,7 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutDeviceTokenInput> = z
       .optional()
       .nullable(),
     gender: z
-      .lazy(() => GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema)
+      .lazy(() => GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema)
       .optional(),
     ownerOf: z
       .lazy(() => TenantUpdateManyWithoutOwnerNestedInputObjectSchema)
@@ -197,7 +203,7 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutDeviceTokenInput> = z
           BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
       )
       .optional(),
-    beneficiaryEntityFutureStatusChanges: z
+    beneficiaryEntityFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
@@ -209,11 +215,35 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutDeviceTokenInput> = z
           BeneficiaryFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
       )
       .optional(),
-    beneficiaryFutureStatusChanges: z
+    beneficiaryFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
       )
+      .optional(),
+    ReviewStatusCreations: z
+      .lazy(() => ReviewStatusUpdateManyWithoutCreatedByNestedInputObjectSchema)
+      .optional(),
+    ReviewStatusUpdates: z
+      .lazy(() => ReviewStatusUpdateManyWithoutUpdatedByNestedInputObjectSchema)
+      .optional(),
+    BeneficiaryServiceCreations: z
+      .lazy(
+        () =>
+          BeneficiaryServiceUpdateManyWithoutCreatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    BeneficiaryServiceUpdates: z
+      .lazy(
+        () =>
+          BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    EntryRecordServiceCreations: z
+      .lazy(() => EntryRecordUpdateManyWithoutCreatedByNestedInputObjectSchema)
+      .optional(),
+    EntryRecordServiceUpdates: z
+      .lazy(() => EntryRecordUpdateManyWithoutUpdatedByNestedInputObjectSchema)
       .optional(),
   })
   .strict();

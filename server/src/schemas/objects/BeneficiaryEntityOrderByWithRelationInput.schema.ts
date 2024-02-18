@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
 import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
-import { CityOrderByWithRelationInputObjectSchema } from './CityOrderByWithRelationInput.schema';
+import { CityEnumOrderByWithRelationInputObjectSchema } from './CityEnumOrderByWithRelationInput.schema';
 import { InsurancePolicyOrderByWithRelationInputObjectSchema } from './InsurancePolicyOrderByWithRelationInput.schema';
 import { BeneficiaryOrderByRelationAggregateInputObjectSchema } from './BeneficiaryOrderByRelationAggregateInput.schema';
 import { BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInput.schema';
@@ -41,7 +41,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityOrderByWithRelationInput> = z
     StatusSetBy: z
       .lazy(() => UserOrderByWithRelationInputObjectSchema)
       .optional(),
-    city: z.lazy(() => CityOrderByWithRelationInputObjectSchema).optional(),
+    city: z.lazy(() => CityEnumOrderByWithRelationInputObjectSchema).optional(),
     insurancePolicy: z
       .lazy(() => InsurancePolicyOrderByWithRelationInputObjectSchema)
       .optional(),

@@ -21,32 +21,35 @@ console.info("unGuardedPrisma connected...");
 try {
   console.info("creating enums...");
   await Promise.all([
-    unGuardedPrisma.gender.createMany({
+    unGuardedPrisma.genderEnum.createMany({
       data: enums.Gender,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.tenantType.createMany({
+    unGuardedPrisma.tenantTypeEnum.createMany({
       data: enums.TenantType,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.role.createMany({ data: enums.Role, skipDuplicates: true }),
-    unGuardedPrisma.deviceType.createMany({
+    unGuardedPrisma.roleEnum.createMany({
+      data: enums.Role,
+      skipDuplicates: true,
+    }),
+    unGuardedPrisma.deviceTypeEnum.createMany({
       data: enums.DeviceType,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.relationship.createMany({
+    unGuardedPrisma.relationshipEnum.createMany({
       data: enums.Relationship,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.fingerType.createMany({
+    unGuardedPrisma.fingerTypeEnum.createMany({
       data: enums.FingerType,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.reviewStatus.createMany({
+    unGuardedPrisma.reviewStatusEnum.createMany({
       data: enums.ReviewStatus,
       skipDuplicates: true,
     }),
-    unGuardedPrisma.country.createMany({
+    unGuardedPrisma.countryEnum.createMany({
       data: enums.Country,
       skipDuplicates: true,
     }),
@@ -67,20 +70,22 @@ try {
 
 console.info("getting enums ids...");
 // TODO: put these in an object
-const genderIds = await unGuardedPrisma.gender.findMany({
+const genderIds = await unGuardedPrisma.genderEnum.findMany({
   select: { id: true },
 });
-const tenantTypeIds = await unGuardedPrisma.tenantType.findMany({
+const tenantTypeIds = await unGuardedPrisma.tenantTypeEnum.findMany({
   select: { id: true },
 });
-const roleIds = await unGuardedPrisma.role.findMany({ select: { id: true } });
-const deviceTypeIds = await unGuardedPrisma.deviceType.findMany({
+const roleIds = await unGuardedPrisma.roleEnum.findMany({
   select: { id: true },
 });
-const relationshipIds = await unGuardedPrisma.relationship.findMany({
+const deviceTypeIds = await unGuardedPrisma.deviceTypeEnum.findMany({
   select: { id: true },
 });
-const relationship = await unGuardedPrisma.relationship.findMany({
+const relationshipIds = await unGuardedPrisma.relationshipEnum.findMany({
+  select: { id: true },
+});
+const relationship = await unGuardedPrisma.relationshipEnum.findMany({
   select: { id: true, name: true },
 });
 const relationshipObject: { [key: string]: string } = relationship.reduce(
@@ -92,7 +97,7 @@ const relationshipObject: { [key: string]: string } = relationship.reduce(
   },
   {},
 );
-const fingerTypeIds = await unGuardedPrisma.fingerType.findMany({
+const fingerTypeIds = await unGuardedPrisma.fingerTypeEnum.findMany({
   select: { id: true },
 });
 console.info("enums ids accumulated...");

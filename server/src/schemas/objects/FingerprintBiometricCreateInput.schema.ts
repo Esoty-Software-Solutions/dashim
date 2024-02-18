@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FingerTypeCreateNestedOneWithoutFingerTypeInputObjectSchema } from './FingerTypeCreateNestedOneWithoutFingerTypeInput.schema';
+import { FingerTypeEnumCreateNestedOneWithoutFingerTypeInputObjectSchema } from './FingerTypeEnumCreateNestedOneWithoutFingerTypeInput.schema';
 import { BeneficiaryCreateNestedOneWithoutFingerprintInputObjectSchema } from './BeneficiaryCreateNestedOneWithoutFingerprintInput.schema';
 import { EntryRecordCreateNestedManyWithoutFingerprintBiometricInputObjectSchema } from './EntryRecordCreateNestedManyWithoutFingerprintBiometricInput.schema';
 
@@ -17,7 +17,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricCreateInput> = z
     deactivationDate: z.coerce.date().optional().nullable(),
     record: z.string(),
     fingerType: z.lazy(
-      () => FingerTypeCreateNestedOneWithoutFingerTypeInputObjectSchema,
+      () => FingerTypeEnumCreateNestedOneWithoutFingerTypeInputObjectSchema,
     ),
     beneficiary: z.lazy(
       () => BeneficiaryCreateNestedOneWithoutFingerprintInputObjectSchema,

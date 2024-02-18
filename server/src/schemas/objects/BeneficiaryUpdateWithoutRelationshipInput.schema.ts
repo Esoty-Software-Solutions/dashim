@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
+import { GenderEnumUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './GenderEnumUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInput.schema';
 import { BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
 import { FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
@@ -137,7 +137,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutRelationshipInput> = z
       .nullable(),
     gender: z
       .lazy(
-        () => GenderUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
+        () =>
+          GenderEnumUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
       )
       .optional(),
     StatusSetBy: z

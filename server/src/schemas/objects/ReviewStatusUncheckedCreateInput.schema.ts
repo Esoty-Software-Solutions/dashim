@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { PatientServiceUncheckedCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutTransactionReviewStatusInput.schema';
-import { PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema } from './PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInput.schema';
+import { BeneficiaryServiceUncheckedCreateNestedOneWithoutReviewStatusInputObjectSchema } from './BeneficiaryServiceUncheckedCreateNestedOneWithoutReviewStatusInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -11,19 +10,14 @@ const Schema: z.ZodType<Prisma.ReviewStatusUncheckedCreateInput> = z
     updatedAt: z.coerce.date().optional(),
     isPublished: z.boolean().optional(),
     isSoftDeleted: z.boolean().optional(),
-    arabic: z.string().optional().nullable(),
-    english: z.string().optional().nullable(),
-    name: z.string(),
-    transactionPatientServices: z
+    createdById: z.string(),
+    updatedById: z.string().optional().nullable(),
+    transactionReviewStatusId: z.string(),
+    medicalReviewStatusId: z.string(),
+    beneficiaryService: z
       .lazy(
         () =>
-          PatientServiceUncheckedCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema,
-      )
-      .optional(),
-    medicalPatientServices: z
-      .lazy(
-        () =>
-          PatientServiceUncheckedCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema,
+          BeneficiaryServiceUncheckedCreateNestedOneWithoutReviewStatusInputObjectSchema,
       )
       .optional(),
   })

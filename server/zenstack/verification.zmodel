@@ -3,7 +3,7 @@ import 'institution'
 
 model FingerprintBiometric extends Base, ActivationStatus {
 
-  fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
+  fingerType FingerTypeEnum @relation(fields: [fingerTypeId], references: [id])
   fingerTypeId String
 
   record String @unique
@@ -44,21 +44,3 @@ model VoiceBiometric extends Base, ActivationStatus {
 
   @@index([beneficiaryId, id])
 }
-
-model FingerType extends Base, LangLocale {
-  name String @unique
-  fingerType FingerprintBiometric[]
-}
-
-// enum FingerType {
-// LEFTTHUMB
-// LEFTINDEX
-// LEFTMIDDLE
-// LEFTRING
-// LEFTLITTLE
-// RIGHTTHUMB
-// RIGHTINDEX
-// RIGHTMIDDLE
-// RIGHTRING
-// RIGHTLITTLE
-// }

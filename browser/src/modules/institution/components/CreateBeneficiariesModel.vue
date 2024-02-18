@@ -92,7 +92,7 @@ async function createSubscriber() {
       >
         <VCard-title class="pa-5">
           <span class="text-h5">{{
-            t("institution.beneficiaries.newbeneficiary")
+            t("institution.beneficiaries.newBeneficiary")
           }}</span>
         </VCard-title>
         <VCard-text>
@@ -186,7 +186,7 @@ async function createSubscriber() {
                 <VBtn
                   color="primary"
                   variant="plain"
-                  @click="addBeneficiary({})"
+                  @click="addBeneficiary({}, false)"
                 >
                   <span>{{
                     t("institution.beneficiaries.addbeneficiary")

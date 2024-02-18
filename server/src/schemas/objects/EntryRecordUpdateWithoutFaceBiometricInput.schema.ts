@@ -4,14 +4,26 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
+import { JsonNullValueInputSchema } from '../enums/JsonNullValueInput.schema';
+import { UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInput.schema';
+import { UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInputObjectSchema } from './UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInput.schema';
 import { BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
 import { FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './IDCardUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './VoiceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
-import { PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutEntryRecordNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodType<Prisma.InputJsonValue> = z.lazy(() =>
+  z.union([
+    literalSchema,
+    z.array(jsonSchema.nullable()),
+    z.record(jsonSchema.nullable()),
+  ]),
+);
 
 const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutFaceBiometricInput> = z
   .object({
@@ -77,6 +89,21 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutFaceBiometricInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    notes: z
+      .union([z.lazy(() => JsonNullValueInputSchema), jsonSchema])
+      .optional(),
+    CreatedBy: z
+      .lazy(
+        () =>
+          UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInputObjectSchema,
+      )
+      .optional(),
+    UpdatedBy: z
+      .lazy(
+        () =>
+          UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInputObjectSchema,
+      )
+      .optional(),
     beneficiary: z
       .lazy(
         () =>
@@ -103,9 +130,10 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutFaceBiometricInput> = z
           MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema,
       )
       .optional(),
-    patientServices: z
+    beneficiaryServices: z
       .lazy(
-        () => PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
+        () =>
+          BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
       )
       .optional(),
   })

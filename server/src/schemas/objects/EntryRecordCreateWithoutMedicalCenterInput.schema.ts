@@ -1,12 +1,24 @@
 import { z } from 'zod';
+import { JsonNullValueInputSchema } from '../enums/JsonNullValueInput.schema';
+import { UserCreateNestedOneWithoutEntryRecordServiceCreationsInputObjectSchema } from './UserCreateNestedOneWithoutEntryRecordServiceCreationsInput.schema';
+import { UserCreateNestedOneWithoutEntryRecordServiceUpdatesInputObjectSchema } from './UserCreateNestedOneWithoutEntryRecordServiceUpdatesInput.schema';
 import { BeneficiaryCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './BeneficiaryCreateNestedOneWithoutEntryRecordsInput.schema';
 import { FingerprintBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FingerprintBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { IDCardCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './IDCardCreateNestedOneWithoutEntryRecordsInput.schema';
 import { FaceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FaceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { VoiceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './VoiceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
-import { PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema } from './PatientServiceCreateNestedManyWithoutEntryRecordInput.schema';
+import { BeneficiaryServiceCreateNestedManyWithoutEntryRecordInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutEntryRecordInput.schema';
 
 import type { Prisma } from '@prisma/client';
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodType<Prisma.InputJsonValue> = z.lazy(() =>
+  z.union([
+    literalSchema,
+    z.array(jsonSchema.nullable()),
+    z.record(jsonSchema.nullable()),
+  ]),
+);
 
 const Schema: z.ZodType<Prisma.EntryRecordCreateWithoutMedicalCenterInput> = z
   .object({
@@ -20,6 +32,17 @@ const Schema: z.ZodType<Prisma.EntryRecordCreateWithoutMedicalCenterInput> = z
     deactivationDate: z.coerce.date().optional().nullable(),
     isValidated: z.boolean(),
     isManuallyInserted: z.boolean().optional(),
+    notes: z.union([z.lazy(() => JsonNullValueInputSchema), jsonSchema]),
+    CreatedBy: z.lazy(
+      () =>
+        UserCreateNestedOneWithoutEntryRecordServiceCreationsInputObjectSchema,
+    ),
+    UpdatedBy: z
+      .lazy(
+        () =>
+          UserCreateNestedOneWithoutEntryRecordServiceUpdatesInputObjectSchema,
+      )
+      .optional(),
     beneficiary: z.lazy(
       () => BeneficiaryCreateNestedOneWithoutEntryRecordsInputObjectSchema,
     ),
@@ -42,9 +65,10 @@ const Schema: z.ZodType<Prisma.EntryRecordCreateWithoutMedicalCenterInput> = z
         () => VoiceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema,
       )
       .optional(),
-    patientServices: z
+    beneficiaryServices: z
       .lazy(
-        () => PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema,
+        () =>
+          BeneficiaryServiceCreateNestedManyWithoutEntryRecordInputObjectSchema,
       )
       .optional(),
   })

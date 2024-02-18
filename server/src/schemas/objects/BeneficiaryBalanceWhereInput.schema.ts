@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { StringFilterObjectSchema } from './StringFilter.schema';
 import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
-import { FloatFilterObjectSchema } from './FloatFilter.schema';
+import { IntFilterObjectSchema } from './IntFilter.schema';
 import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
 import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { BenefitPackageRelationFilterObjectSchema } from './BenefitPackageRelationFilter.schema';
@@ -49,8 +49,11 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceWhereInput> = z
     beneftiPackageId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    balance: z
-      .union([z.lazy(() => FloatFilterObjectSchema), z.number()])
+    balancePending: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
+      .optional(),
+    balanceActual: z
+      .union([z.lazy(() => IntFilterObjectSchema), z.number()])
       .optional(),
     beneficiary: z
       .union([

@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOpe
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { IntFieldUpdateOperationsInputObjectSchema } from './IntFieldUpdateOperationsInput.schema';
-import { PatientServiceUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutMedicalServiceNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutMedicalServiceNestedInput.schema';
 import { InstitutionMedicalServiceUpdateManyWithoutMedicalServiceNestedInputObjectSchema } from './InstitutionMedicalServiceUpdateManyWithoutMedicalServiceNestedInput.schema';
 import { MedicalServiceCategoryUpdateOneRequiredWithoutServicesNestedInputObjectSchema } from './MedicalServiceCategoryUpdateOneRequiredWithoutServicesNestedInput.schema';
 
@@ -82,10 +82,10 @@ const Schema: z.ZodType<Prisma.MedicalServiceUpdateWithoutMedicalCenterInput> =
           z.lazy(() => IntFieldUpdateOperationsInputObjectSchema),
         ])
         .optional(),
-      patientServices: z
+      beneficiaryServices: z
         .lazy(
           () =>
-            PatientServiceUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
+            BeneficiaryServiceUpdateManyWithoutMedicalServiceNestedInputObjectSchema,
         )
         .optional(),
       institutionPricing: z

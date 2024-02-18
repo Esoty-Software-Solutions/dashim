@@ -1,7 +1,7 @@
 import 'base'
 import 'verification'
 import 'policy'
-import 'patientService'
+import 'beneficiaryService'
 
 
 model Institution extends Base, ActivationStatus, location {
@@ -65,13 +65,8 @@ model Beneficiary extends Base, HumanProfile, ActivationStatusWithUser {
   beneficiaryEntityId String
   legacyCode String?
 
-  relationship Relationship @relation(fields: [relationshipId], references: [id])
+  relationship RelationshipEnum @relation(fields: [relationshipId], references: [id])
   relationshipId String
-
-  // isFingerprintVerificationActive Boolean @default(false)
-  // isIdCardVerificationActive Boolean @default(false)
-  // isFaceVerificationActive Boolean @default(false)
-  // isVoiceVerificationActive Boolean @default(false)
 
   fingerprint FingerprintBiometric []
   idCard IDCard[]
@@ -100,30 +95,6 @@ model BeneficiaryFutureStatusChange extends BaseWithUser {
   @@unique([beneficiaryId, changeDate])
 }
 
-
-model Relationship extends Base, LangLocale {
-  name String @unique
-  beneficiary Beneficiary[]
-}
-
-// enum Relationship {
-//     SELF
-//     FATHER
-//     MOTHER
-//     SON
-//     DAUGHTER
-//     BROTHER
-//     SISTER
-//     UNCLE
-//     AUNT
-//     GRANDFATHER
-//     GRANDMOTHER
-//     COUSIN
-//     NEPHEW
-//     NIECE
-//     FRIEND
-//     OTHER
-// }
 
 model InstitutionMedicalService extends Base, ActivationStatus {
   institution Institution @relation(fields: [institutionId], references: [id])

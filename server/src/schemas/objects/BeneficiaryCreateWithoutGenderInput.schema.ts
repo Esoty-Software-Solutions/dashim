@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UserCreateNestedOneWithoutBeneficiaryStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryStatusChangesInput.schema';
 import { BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema } from './BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInput.schema';
-import { RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipCreateNestedOneWithoutBeneficiaryInput.schema';
+import { RelationshipEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema } from './RelationshipEnumCreateNestedOneWithoutBeneficiaryInput.schema';
 import { FingerprintBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FingerprintBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
 import { IDCardCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './IDCardCreateNestedManyWithoutBeneficiaryInput.schema';
 import { FaceBiometricCreateNestedManyWithoutBeneficiaryInputObjectSchema } from './FaceBiometricCreateNestedManyWithoutBeneficiaryInput.schema';
@@ -40,7 +40,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryCreateWithoutGenderInput> = z
         BeneficiaryEntityCreateNestedOneWithoutBeneficiariesInputObjectSchema,
     ),
     relationship: z.lazy(
-      () => RelationshipCreateNestedOneWithoutBeneficiaryInputObjectSchema,
+      () => RelationshipEnumCreateNestedOneWithoutBeneficiaryInputObjectSchema,
     ),
     fingerprint: z
       .lazy(
