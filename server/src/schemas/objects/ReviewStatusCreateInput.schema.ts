@@ -1,6 +1,9 @@
 import { z } from 'zod';
-import { PatientServiceCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema } from './PatientServiceCreateNestedManyWithoutTransactionReviewStatusInput.schema';
-import { PatientServiceCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema } from './PatientServiceCreateNestedManyWithoutMedicalReviewStatusInput.schema';
+import { UserCreateNestedOneWithoutReviewStatusCreationsInputObjectSchema } from './UserCreateNestedOneWithoutReviewStatusCreationsInput.schema';
+import { UserCreateNestedOneWithoutReviewStatusUpdatesInputObjectSchema } from './UserCreateNestedOneWithoutReviewStatusUpdatesInput.schema';
+import { BeneficiaryServiceCreateNestedOneWithoutReviewStatusInputObjectSchema } from './BeneficiaryServiceCreateNestedOneWithoutReviewStatusInput.schema';
+import { ReviewStatusEnumCreateNestedOneWithoutTransactionBeneficiaryServicesInputObjectSchema } from './ReviewStatusEnumCreateNestedOneWithoutTransactionBeneficiaryServicesInput.schema';
+import { ReviewStatusEnumCreateNestedOneWithoutMedicalBeneficiaryServicesInputObjectSchema } from './ReviewStatusEnumCreateNestedOneWithoutMedicalBeneficiaryServicesInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -11,21 +14,28 @@ const Schema: z.ZodType<Prisma.ReviewStatusCreateInput> = z
     updatedAt: z.coerce.date().optional(),
     isPublished: z.boolean().optional(),
     isSoftDeleted: z.boolean().optional(),
-    arabic: z.string().optional().nullable(),
-    english: z.string().optional().nullable(),
-    name: z.string(),
-    transactionPatientServices: z
+    CreatedBy: z.lazy(
+      () => UserCreateNestedOneWithoutReviewStatusCreationsInputObjectSchema,
+    ),
+    UpdatedBy: z
       .lazy(
-        () =>
-          PatientServiceCreateNestedManyWithoutTransactionReviewStatusInputObjectSchema,
+        () => UserCreateNestedOneWithoutReviewStatusUpdatesInputObjectSchema,
       )
       .optional(),
-    medicalPatientServices: z
+    beneficiaryService: z
       .lazy(
         () =>
-          PatientServiceCreateNestedManyWithoutMedicalReviewStatusInputObjectSchema,
+          BeneficiaryServiceCreateNestedOneWithoutReviewStatusInputObjectSchema,
       )
       .optional(),
+    transactionReviewStatus: z.lazy(
+      () =>
+        ReviewStatusEnumCreateNestedOneWithoutTransactionBeneficiaryServicesInputObjectSchema,
+    ),
+    medicalReviewStatus: z.lazy(
+      () =>
+        ReviewStatusEnumCreateNestedOneWithoutMedicalBeneficiaryServicesInputObjectSchema,
+    ),
   })
   .strict();
 

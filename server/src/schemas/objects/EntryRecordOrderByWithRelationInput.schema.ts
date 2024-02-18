@@ -7,7 +7,7 @@ import { IDCardOrderByWithRelationInputObjectSchema } from './IDCardOrderByWithR
 import { FaceBiometricOrderByWithRelationInputObjectSchema } from './FaceBiometricOrderByWithRelationInput.schema';
 import { VoiceBiometricOrderByWithRelationInputObjectSchema } from './VoiceBiometricOrderByWithRelationInput.schema';
 import { MedicalCenterOrderByWithRelationInputObjectSchema } from './MedicalCenterOrderByWithRelationInput.schema';
-import { PatientServiceOrderByRelationAggregateInputObjectSchema } from './PatientServiceOrderByRelationAggregateInput.schema';
+import { BeneficiaryServiceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryServiceOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -77,8 +77,8 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
     medicalCenter: z
       .lazy(() => MedicalCenterOrderByWithRelationInputObjectSchema)
       .optional(),
-    patientServices: z
-      .lazy(() => PatientServiceOrderByRelationAggregateInputObjectSchema)
+    beneficiaryServices: z
+      .lazy(() => BeneficiaryServiceOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

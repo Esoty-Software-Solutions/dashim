@@ -6,7 +6,8 @@ export const ReviewStatusScalarFieldEnumSchema = z.enum([
   'updatedAt',
   'isPublished',
   'isSoftDeleted',
-  'arabic',
-  'english',
-  'name',
+  'createdById',
+  'updatedById',
+  'transactionReviewStatusId',
+  'medicalReviewStatusId',
 ]);

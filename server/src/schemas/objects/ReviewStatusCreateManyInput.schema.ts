@@ -9,9 +9,10 @@ const Schema: z.ZodType<Prisma.ReviewStatusCreateManyInput> = z
     updatedAt: z.coerce.date().optional(),
     isPublished: z.boolean().optional(),
     isSoftDeleted: z.boolean().optional(),
-    arabic: z.string().optional().nullable(),
-    english: z.string().optional().nullable(),
-    name: z.string(),
+    createdById: z.string(),
+    updatedById: z.string().optional().nullable(),
+    transactionReviewStatusId: z.string(),
+    medicalReviewStatusId: z.string(),
   })
   .strict();
 

@@ -13,6 +13,8 @@ import { BeneficiaryEntityListRelationFilterObjectSchema } from './BeneficiaryEn
 import { BeneficiaryListRelationFilterObjectSchema } from './BeneficiaryListRelationFilter.schema';
 import { BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryEntityFutureStatusChangeListRelationFilter.schema';
 import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
+import { ReviewStatusListRelationFilterObjectSchema } from './ReviewStatusListRelationFilter.schema';
+import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -145,7 +147,7 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
         () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
       )
       .optional(),
-    beneficiaryEntityFutureStatusChanges: z
+    beneficiaryEntityFutureStatusUpdates: z
       .lazy(
         () => BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema,
       )
@@ -153,8 +155,20 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
     beneficiaryFutureStatusCreations: z
       .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
       .optional(),
-    beneficiaryFutureStatusChanges: z
+    beneficiaryFutureStatusUpdates: z
       .lazy(() => BeneficiaryFutureStatusChangeListRelationFilterObjectSchema)
+      .optional(),
+    ReviewStatusCreations: z
+      .lazy(() => ReviewStatusListRelationFilterObjectSchema)
+      .optional(),
+    ReviewStatusUpdates: z
+      .lazy(() => ReviewStatusListRelationFilterObjectSchema)
+      .optional(),
+    BeneficiaryServiceCreations: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
+      .optional(),
+    BeneficiaryServiceUpdates: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

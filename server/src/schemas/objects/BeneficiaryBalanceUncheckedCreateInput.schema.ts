@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceUncheckedCreateInput> = z
     isSoftDeleted: z.boolean().optional(),
     beneficiaryId: z.string(),
     beneftiPackageId: z.string(),
-    balance: z.number(),
+    balancePending: z.number(),
+    balanceActual: z.number(),
   })
   .strict();
 

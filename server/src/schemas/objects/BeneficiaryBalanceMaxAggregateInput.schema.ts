@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceMaxAggregateInputType> = z
     isSoftDeleted: z.literal(true).optional(),
     beneficiaryId: z.literal(true).optional(),
     beneftiPackageId: z.literal(true).optional(),
-    balance: z.literal(true).optional(),
+    balancePending: z.literal(true).optional(),
+    balanceActual: z.literal(true).optional(),
   })
   .strict();
 

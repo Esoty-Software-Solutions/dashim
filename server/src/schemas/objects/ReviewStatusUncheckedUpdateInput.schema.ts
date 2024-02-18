@@ -3,8 +3,7 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { PatientServiceUncheckedUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema } from './PatientServiceUncheckedUpdateManyWithoutTransactionReviewStatusNestedInput.schema';
-import { PatientServiceUncheckedUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema } from './PatientServiceUncheckedUpdateManyWithoutMedicalReviewStatusNestedInput.schema';
+import { BeneficiaryServiceUncheckedUpdateOneWithoutReviewStatusNestedInputObjectSchema } from './BeneficiaryServiceUncheckedUpdateOneWithoutReviewStatusNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -40,36 +39,35 @@ const Schema: z.ZodType<Prisma.ReviewStatusUncheckedUpdateInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    arabic: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    english: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    name: z
+    createdById: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    transactionPatientServices: z
-      .lazy(
-        () =>
-          PatientServiceUncheckedUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema,
-      )
+    updatedById: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
+    transactionReviewStatusId: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
       .optional(),
-    medicalPatientServices: z
+    medicalReviewStatusId: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
+    beneficiaryService: z
       .lazy(
         () =>
-          PatientServiceUncheckedUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema,
+          BeneficiaryServiceUncheckedUpdateOneWithoutReviewStatusNestedInputObjectSchema,
       )
       .optional(),
   })

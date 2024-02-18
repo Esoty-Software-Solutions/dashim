@@ -29,12 +29,13 @@ import { benefitPackageMedicalServiceCategoryRouter } from './cruds/benefitPacka
 import { medicalServiceCategoryRouter } from './cruds/medicalServiceCategory.router';
 import { medicalServiceRouter } from './cruds/medicalService.router';
 import { entryRecordRouter } from './cruds/entryRecord.router';
-import { patientServiceRouter } from './cruds/patientService.router';
+import { beneficiaryServiceRouter } from './cruds/beneficiaryService.router';
 import { reviewStatusRouter } from './cruds/reviewStatus.router';
 import { beneficiaryBalanceRouter } from './cruds/beneficiaryBalance.router';
 import { diagnosisAttachmentRouter } from './cruds/diagnosisAttachment.router';
 import { labReportAttachmentRouter } from './cruds/labReportAttachment.router';
 import { prescriptionAttachmentRouter } from './cruds/prescriptionAttachment.router';
+import { reviewStatusEnumRouter } from './cruds/reviewStatusEnum.router';
 import { router } from "@routers/_trpc.router";
 
 export const crudRouter = router({
@@ -69,11 +70,12 @@ export const crudRouter = router({
   medicalServiceCategory: medicalServiceCategoryRouter,
   medicalService: medicalServiceRouter,
   entryRecord: entryRecordRouter,
-  patientService: patientServiceRouter,
+  beneficiaryService: beneficiaryServiceRouter,
   reviewStatus: reviewStatusRouter,
   beneficiaryBalance: beneficiaryBalanceRouter,
   diagnosisAttachment: diagnosisAttachmentRouter,
   labReportAttachment: labReportAttachmentRouter,
   prescriptionAttachment: prescriptionAttachmentRouter,
+  reviewStatusEnum: reviewStatusEnumRouter,
 
 });

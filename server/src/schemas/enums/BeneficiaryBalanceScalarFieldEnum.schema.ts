@@ -8,5 +8,6 @@ export const BeneficiaryBalanceScalarFieldEnumSchema = z.enum([
   'isSoftDeleted',
   'beneficiaryId',
   'beneftiPackageId',
-  'balance',
+  'balancePending',
+  'balanceActual',
 ]);

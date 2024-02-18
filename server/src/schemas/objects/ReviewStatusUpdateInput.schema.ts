@@ -2,9 +2,11 @@ import { z } from 'zod';
 import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
-import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
-import { PatientServiceUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutTransactionReviewStatusNestedInput.schema';
-import { PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInput.schema';
+import { UserUpdateOneRequiredWithoutReviewStatusCreationsNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutReviewStatusCreationsNestedInput.schema';
+import { UserUpdateOneWithoutReviewStatusUpdatesNestedInputObjectSchema } from './UserUpdateOneWithoutReviewStatusUpdatesNestedInput.schema';
+import { BeneficiaryServiceUpdateOneWithoutReviewStatusNestedInputObjectSchema } from './BeneficiaryServiceUpdateOneWithoutReviewStatusNestedInput.schema';
+import { ReviewStatusEnumUpdateOneRequiredWithoutTransactionBeneficiaryServicesNestedInputObjectSchema } from './ReviewStatusEnumUpdateOneRequiredWithoutTransactionBeneficiaryServicesNestedInput.schema';
+import { ReviewStatusEnumUpdateOneRequiredWithoutMedicalBeneficiaryServicesNestedInputObjectSchema } from './ReviewStatusEnumUpdateOneRequiredWithoutMedicalBeneficiaryServicesNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -40,36 +42,33 @@ const Schema: z.ZodType<Prisma.ReviewStatusUpdateInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    arabic: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    english: z
-      .union([
-        z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional()
-      .nullable(),
-    name: z
-      .union([
-        z.string(),
-        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
-      ])
-      .optional(),
-    transactionPatientServices: z
+    CreatedBy: z
       .lazy(
         () =>
-          PatientServiceUpdateManyWithoutTransactionReviewStatusNestedInputObjectSchema,
+          UserUpdateOneRequiredWithoutReviewStatusCreationsNestedInputObjectSchema,
       )
       .optional(),
-    medicalPatientServices: z
+    UpdatedBy: z
+      .lazy(
+        () => UserUpdateOneWithoutReviewStatusUpdatesNestedInputObjectSchema,
+      )
+      .optional(),
+    beneficiaryService: z
       .lazy(
         () =>
-          PatientServiceUpdateManyWithoutMedicalReviewStatusNestedInputObjectSchema,
+          BeneficiaryServiceUpdateOneWithoutReviewStatusNestedInputObjectSchema,
+      )
+      .optional(),
+    transactionReviewStatus: z
+      .lazy(
+        () =>
+          ReviewStatusEnumUpdateOneRequiredWithoutTransactionBeneficiaryServicesNestedInputObjectSchema,
+      )
+      .optional(),
+    medicalReviewStatus: z
+      .lazy(
+        () =>
+          ReviewStatusEnumUpdateOneRequiredWithoutMedicalBeneficiaryServicesNestedInputObjectSchema,
       )
       .optional(),
   })

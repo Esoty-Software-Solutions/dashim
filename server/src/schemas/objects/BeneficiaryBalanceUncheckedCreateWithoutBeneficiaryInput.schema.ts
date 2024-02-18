@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceUncheckedCreateWithoutBeneficia
       isPublished: z.boolean().optional(),
       isSoftDeleted: z.boolean().optional(),
       beneftiPackageId: z.string(),
-      balance: z.number(),
+      balancePending: z.number(),
+      balanceActual: z.number(),
     })
     .strict();
 

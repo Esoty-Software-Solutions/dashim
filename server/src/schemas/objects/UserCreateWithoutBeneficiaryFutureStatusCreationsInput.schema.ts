@@ -8,6 +8,10 @@ import { BeneficiaryCreateNestedManyWithoutStatusSetByInputObjectSchema } from '
 import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
 import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
 import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
+import { ReviewStatusCreateNestedManyWithoutCreatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutCreatedByInput.schema';
+import { ReviewStatusCreateNestedManyWithoutUpdatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutUpdatedByInput.schema';
+import { BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutCreatedByInput.schema';
+import { BeneficiaryServiceCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutUpdatedByInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -65,16 +69,38 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutBeneficiaryFutureStatusCreations
             BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema,
         )
         .optional(),
-      beneficiaryEntityFutureStatusChanges: z
+      beneficiaryEntityFutureStatusUpdates: z
         .lazy(
           () =>
             BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
         )
         .optional(),
-      beneficiaryFutureStatusChanges: z
+      beneficiaryFutureStatusUpdates: z
         .lazy(
           () =>
             BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
+        )
+        .optional(),
+      ReviewStatusCreations: z
+        .lazy(
+          () => ReviewStatusCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      ReviewStatusUpdates: z
+        .lazy(
+          () => ReviewStatusCreateNestedManyWithoutUpdatedByInputObjectSchema,
+        )
+        .optional(),
+      BeneficiaryServiceCreations: z
+        .lazy(
+          () =>
+            BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      BeneficiaryServiceUpdates: z
+        .lazy(
+          () =>
+            BeneficiaryServiceCreateNestedManyWithoutUpdatedByInputObjectSchema,
         )
         .optional(),
     })

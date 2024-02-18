@@ -12,6 +12,10 @@ import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutCreatedByN
 import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
+import { ReviewStatusUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './ReviewStatusUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
+import { ReviewStatusUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './ReviewStatusUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryServiceUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryServiceUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -202,7 +206,7 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateWithoutMemberOfInput> = z
           BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
       )
       .optional(),
-    beneficiaryEntityFutureStatusChanges: z
+    beneficiaryEntityFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
@@ -214,10 +218,34 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateWithoutMemberOfInput> = z
           BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
       )
       .optional(),
-    beneficiaryFutureStatusChanges: z
+    beneficiaryFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryFutureStatusChangeUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    ReviewStatusCreations: z
+      .lazy(
+        () =>
+          ReviewStatusUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    ReviewStatusUpdates: z
+      .lazy(
+        () =>
+          ReviewStatusUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    BeneficiaryServiceCreations: z
+      .lazy(
+        () =>
+          BeneficiaryServiceUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
+      )
+      .optional(),
+    BeneficiaryServiceUpdates: z
+      .lazy(
+        () =>
+          BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
       )
       .optional(),
   })
