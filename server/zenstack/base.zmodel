@@ -55,7 +55,7 @@ abstract model HumanProfile {
 
   birthDate DateTime
 
-  gender Gender @relation(fields: [genderId], references: [id])
+  gender GenderEnum @relation(fields: [genderId], references: [id])
   genderId String
 
   nationality String?
@@ -78,49 +78,10 @@ abstract model LangLocale {
 // }
 
 abstract model location {
-  city City @relation(fields: [cityId], references: [id])
+  city CityEnum @relation(fields: [cityId], references: [id])
   cityId String
 
   address String?
-}
-
-model Gender extends Base, LangLocale {
-  name String @unique
-  user User[]
-  beneficiary Beneficiary[]
-}
-
-// enum Gender {
-//     MALE
-//     FEMALE
-//     unknown
-// }
-
-model Currency extends Base, LangLocale {
-  name String @unique
-  code String @unique
-  symbol String
-  buyExchangeRate Float @default(1)
-  SellExchangeRate Float @default(1)
-}
-
-model City extends Base, LangLocale {
-  name String
-  country Country @relation(fields: [countryId], references: [id])
-  countryId String
-
-  institutions Institution[]
-  medicalcenters MedicalCenter[]
-  beneficiaryEntities BeneficiaryEntity[]
-
-  @@index([name, countryId])
-  @@unique([name, countryId])
-}
-
-model Country extends Base, LangLocale {
-  name String @unique
-  code String @unique
-  cities City[]
 }
 
 abstract model Attachment {

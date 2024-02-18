@@ -43,7 +43,7 @@ model TenantMember extends Base, ActivationStatus {
 
 model Tenant extends Base, ActivationStatus {
   name String
-  type TenantType @relation(fields: [typeId], references: [id])
+  type TenantTypeEnum @relation(fields: [typeId], references: [id])
   typeId String
   description String?
   logo String?
@@ -69,7 +69,7 @@ model DeviceToken extends Base, ActivationStatus {
   deviceName String
   token String
 
-  deviceType DeviceType @relation(fields: [deviceTypeId], references: [id])
+  deviceType DeviceTypeEnum @relation(fields: [deviceTypeId], references: [id])
   deviceTypeId String
 
   user User @relation(fields: [userId], references: [id])
@@ -80,41 +80,10 @@ model DeviceToken extends Base, ActivationStatus {
   @@unique([userId, token])
 }
 
-model TenantType extends Base, LangLocale {
-  name String @unique
 
-  tenant Tenant[]
-}
-// enum TenantType {
-//   INSTITUTION
-//   MEDICAL
-//   GOVERNMENT
-//   PRIVATE
-//   NGO
-//   PERSONAL
-//   OTHER
-// }
 
-model Role extends Base, LangLocale {
-  name String @unique
-}
 
-// enum Role {
-//   ADMIN
-//   MEMBER
-//   GUEST
-// }
 
-model DeviceType extends Base, LangLocale {
-  name String @unique
-  deviceToken DeviceToken[]
-}
 
-// enum DeviceType {
-//   IOS
-//   ANDROID
-//   WEB
-//   OTHER
-// }
 
 
