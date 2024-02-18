@@ -39,70 +39,6 @@ generator erd {
 }
 
 /// @@allow('all', true && isPublished)
-model Gender {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    user User[]
-    beneficiary Beneficiary[]
-}
-
-/// @@allow('all', true && isPublished)
-model Currency {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    code String @unique()
-    symbol String
-    buyExchangeRate Float @default(1)
-    SellExchangeRate Float @default(1)
-}
-
-/// @@allow('all', true && isPublished)
-model City {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String
-    country Country @relation(fields: [countryId], references: [id])
-    countryId String
-    institutions Institution[]
-    medicalcenters MedicalCenter[]
-    beneficiaryEntities BeneficiaryEntity[]
-
-    @@index([name, countryId])
-    @@unique([name, countryId])
-}
-
-/// @@allow('all', true && isPublished)
-model Country {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    code String @unique()
-    cities City[]
-}
-
-/// @@allow('all', true && isPublished)
 model User {
     id String @id()
     createdAt DateTime @default(now())
@@ -119,7 +55,7 @@ model User {
     lastName String
     searchName String
     birthDate DateTime
-    gender Gender @relation(fields: [genderId], references: [id])
+    gender GenderEnum @relation(fields: [genderId], references: [id])
     genderId String
     nationality String?
     nationalID String?
@@ -145,6 +81,8 @@ model User {
     ReviewStatusUpdates ReviewStatus[] @relation("UpdatedBy")
     BeneficiaryServiceCreations BeneficiaryService[] @relation("CreatedBy")
     BeneficiaryServiceUpdates BeneficiaryService[] @relation("UpdatedBy")
+    EntryRecordServiceCreations EntryRecord[] @relation("CreatedBy")
+    EntryRecordServiceUpdates EntryRecord[] @relation("UpdatedBy")
 }
 
 /// @@allow('all', true && isPublished)
@@ -177,7 +115,7 @@ model Tenant {
     deactivationReason String?
     deactivationDate DateTime?
     name String
-    type TenantType @relation(fields: [typeId], references: [id])
+    type TenantTypeEnum @relation(fields: [typeId], references: [id])
     typeId String
     description String?
     logo String?
@@ -205,7 +143,7 @@ model DeviceToken {
     deactivationDate DateTime?
     deviceName String
     token String
-    deviceType DeviceType @relation(fields: [deviceTypeId], references: [id])
+    deviceType DeviceTypeEnum @relation(fields: [deviceTypeId], references: [id])
     deviceTypeId String
     user User @relation(fields: [userId], references: [id])
     userId String
@@ -213,44 +151,6 @@ model DeviceToken {
     @@index([userId])
     @@unique([userId, deviceName])
     @@unique([userId, token])
-}
-
-/// @@allow('all', true && isPublished)
-model TenantType {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    tenant Tenant[]
-}
-
-/// @@allow('all', true && isPublished)
-model Role {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-}
-
-/// @@allow('all', true && isPublished)
-model DeviceType {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    deviceToken DeviceToken[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -263,7 +163,7 @@ model Institution {
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
-    city City @relation(fields: [cityId], references: [id])
+    city CityEnum @relation(fields: [cityId], references: [id])
     cityId String
     address String?
     name String
@@ -300,7 +200,7 @@ model BeneficiaryEntity {
     deactivationDate DateTime?
     StatusSetBy User @relation("StatusSetBy", fields: [statusSetById], references: [id])
     statusSetById String
-    city City @relation(fields: [cityId], references: [id])
+    city CityEnum @relation(fields: [cityId], references: [id])
     cityId String
     address String?
     insurancePolicy InsurancePolicy @relation(fields: [insurancePolicyId], references: [id])
@@ -346,7 +246,7 @@ model Beneficiary {
     lastName String
     searchName String
     birthDate DateTime
-    gender Gender @relation(fields: [genderId], references: [id])
+    gender GenderEnum @relation(fields: [genderId], references: [id])
     genderId String
     nationality String?
     nationalID String?
@@ -358,7 +258,7 @@ model Beneficiary {
     beneficiaryEntity BeneficiaryEntity @relation(fields: [beneficiaryEntityId], references: [id])
     beneficiaryEntityId String
     legacyCode String?
-    relationship Relationship @relation(fields: [relationshipId], references: [id])
+    relationship RelationshipEnum @relation(fields: [relationshipId], references: [id])
     relationshipId String
     fingerprint FingerprintBiometric[]
     idCard IDCard[]
@@ -394,19 +294,6 @@ model BeneficiaryFutureStatusChange {
 }
 
 /// @@allow('all', true && isPublished)
-model Relationship {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    beneficiary Beneficiary[]
-}
-
-/// @@allow('all', true && isPublished)
 model InstitutionMedicalService {
     id String @id()
     createdAt DateTime @default(now())
@@ -436,7 +323,7 @@ model FingerprintBiometric {
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
-    fingerType FingerType @relation(fields: [fingerTypeId], references: [id])
+    fingerType FingerTypeEnum @relation(fields: [fingerTypeId], references: [id])
     fingerTypeId String
     record String @unique()
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
@@ -498,19 +385,6 @@ model VoiceBiometric {
     entryRecords EntryRecord[]
 
     @@index([beneficiaryId, id])
-}
-
-/// @@allow('all', true && isPublished)
-model FingerType {
-    id String @id()
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    isPublished Boolean @default(true)
-    isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    fingerType FingerprintBiometric[]
 }
 
 /// @@allow('all', true && isPublished)
@@ -590,7 +464,7 @@ model MedicalCenter {
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
-    city City @relation(fields: [cityId], references: [id])
+    city CityEnum @relation(fields: [cityId], references: [id])
     cityId String
     address String?
     name String
@@ -688,11 +562,16 @@ model EntryRecord {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
     isValidated Boolean
     isManuallyInserted Boolean @default(false)
+    notes Json
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
     fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
@@ -822,4 +701,132 @@ model ReviewStatusEnum {
     name String @unique()
     transactionBeneficiaryServices ReviewStatus[] @relation("transactionReviewStatus")
     medicalBeneficiaryServices ReviewStatus[] @relation("medicalReviewStatus")
+}
+
+/// @@allow('all', true && isPublished)
+model GenderEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    user User[]
+    beneficiary Beneficiary[]
+}
+
+/// @@allow('all', true && isPublished)
+model CurrencyEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    code String @unique()
+    symbol String
+    buyExchangeRate Float @default(1)
+    SellExchangeRate Float @default(1)
+}
+
+/// @@allow('all', true && isPublished)
+model RelationshipEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    beneficiary Beneficiary[]
+}
+
+/// @@allow('all', true && isPublished)
+model TenantTypeEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    tenant Tenant[]
+}
+
+/// @@allow('all', true && isPublished)
+model RoleEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+}
+
+/// @@allow('all', true && isPublished)
+model DeviceTypeEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    deviceToken DeviceToken[]
+}
+
+/// @@allow('all', true && isPublished)
+model FingerTypeEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    fingerType FingerprintBiometric[]
+}
+
+/// @@allow('all', true && isPublished)
+model CityEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String
+    country CountryEnum @relation(fields: [countryId], references: [id])
+    countryId String
+    institutions Institution[]
+    medicalcenters MedicalCenter[]
+    beneficiaryEntities BeneficiaryEntity[]
+
+    @@index([name, countryId])
+    @@unique([name, countryId])
+}
+
+/// @@allow('all', true && isPublished)
+model CountryEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    code String @unique()
+    cities CityEnum[]
 }

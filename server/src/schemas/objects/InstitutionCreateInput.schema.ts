@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { InstitutionCreatephoneArrayInputObjectSchema } from './InstitutionCreatephoneArrayInput.schema';
 import { InstitutionCreateemailArrayInputObjectSchema } from './InstitutionCreateemailArrayInput.schema';
-import { CityCreateNestedOneWithoutInstitutionsInputObjectSchema } from './CityCreateNestedOneWithoutInstitutionsInput.schema';
+import { CityEnumCreateNestedOneWithoutInstitutionsInputObjectSchema } from './CityEnumCreateNestedOneWithoutInstitutionsInput.schema';
 import { InsurancePolicyCreateNestedManyWithoutInstitutionInputObjectSchema } from './InsurancePolicyCreateNestedManyWithoutInstitutionInput.schema';
 import { InstitutionMedicalServiceCreateNestedManyWithoutInstitutionInputObjectSchema } from './InstitutionMedicalServiceCreateNestedManyWithoutInstitutionInput.schema';
 
@@ -41,7 +41,9 @@ const Schema: z.ZodType<Prisma.InstitutionCreateInput> = z
     instagramLink: z.string(),
     latitude: z.number().optional().nullable(),
     longitude: z.number().optional().nullable(),
-    city: z.lazy(() => CityCreateNestedOneWithoutInstitutionsInputObjectSchema),
+    city: z.lazy(
+      () => CityEnumCreateNestedOneWithoutInstitutionsInputObjectSchema,
+    ),
     policies: z
       .lazy(
         () =>

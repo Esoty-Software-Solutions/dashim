@@ -7,7 +7,7 @@ import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './Nullab
 import { InstitutionUpdatephoneArrayInputObjectSchema } from './InstitutionUpdatephoneArrayInput.schema';
 import { InstitutionUpdateemailArrayInputObjectSchema } from './InstitutionUpdateemailArrayInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
-import { CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema } from './CityUpdateOneRequiredWithoutInstitutionsNestedInput.schema';
+import { CityEnumUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema } from './CityEnumUpdateOneRequiredWithoutInstitutionsNestedInput.schema';
 import { InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInputObjectSchema } from './InstitutionMedicalServiceUpdateManyWithoutInstitutionNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -155,7 +155,8 @@ const Schema: z.ZodType<Prisma.InstitutionUpdateWithoutPoliciesInput> = z
       .nullable(),
     city: z
       .lazy(
-        () => CityUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema,
+        () =>
+          CityEnumUpdateOneRequiredWithoutInstitutionsNestedInputObjectSchema,
       )
       .optional(),
     MedicalCenterPricing: z

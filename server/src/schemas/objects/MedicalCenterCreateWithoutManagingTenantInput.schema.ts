@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { MedicalCenterCreatephoneInputObjectSchema } from './MedicalCenterCreatephoneInput.schema';
 import { MedicalCenterCreateemailInputObjectSchema } from './MedicalCenterCreateemailInput.schema';
-import { CityCreateNestedOneWithoutMedicalcentersInputObjectSchema } from './CityCreateNestedOneWithoutMedicalcentersInput.schema';
+import { CityEnumCreateNestedOneWithoutMedicalcentersInputObjectSchema } from './CityEnumCreateNestedOneWithoutMedicalcentersInput.schema';
 import { MedicalServiceCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './MedicalServiceCreateNestedManyWithoutMedicalCenterInput.schema';
 import { InsurancePolicyMedicalCenterCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './InsurancePolicyMedicalCenterCreateNestedManyWithoutMedicalCenterInput.schema';
 import { EntryRecordCreateNestedManyWithoutMedicalCenterInputObjectSchema } from './EntryRecordCreateNestedManyWithoutMedicalCenterInput.schema';
@@ -43,7 +43,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterCreateWithoutManagingTenantInput> =
       latitude: z.number().optional().nullable(),
       longitude: z.number().optional().nullable(),
       city: z.lazy(
-        () => CityCreateNestedOneWithoutMedicalcentersInputObjectSchema,
+        () => CityEnumCreateNestedOneWithoutMedicalcentersInputObjectSchema,
       ),
       services: z
         .lazy(

@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderUpdateOneRequiredWithoutUserNestedInput.schema';
+import { GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema } from './GenderEnumUpdateOneRequiredWithoutUserNestedInput.schema';
 import { DeviceTokenUpdateManyWithoutUserNestedInputObjectSchema } from './DeviceTokenUpdateManyWithoutUserNestedInput.schema';
 import { TenantUpdateManyWithoutOwnerNestedInputObjectSchema } from './TenantUpdateManyWithoutOwnerNestedInput.schema';
 import { BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInputObjectSchema } from './BeneficiaryEntityUpdateManyWithoutStatusSetByNestedInput.schema';
@@ -17,6 +17,8 @@ import { ReviewStatusUpdateManyWithoutCreatedByNestedInputObjectSchema } from '.
 import { ReviewStatusUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './ReviewStatusUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryServiceUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInput.schema';
+import { EntryRecordUpdateManyWithoutCreatedByNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutCreatedByNestedInput.schema';
+import { EntryRecordUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -176,7 +178,7 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutMemberOfInput> = z
       .optional()
       .nullable(),
     gender: z
-      .lazy(() => GenderUpdateOneRequiredWithoutUserNestedInputObjectSchema)
+      .lazy(() => GenderEnumUpdateOneRequiredWithoutUserNestedInputObjectSchema)
       .optional(),
     deviceToken: z
       .lazy(() => DeviceTokenUpdateManyWithoutUserNestedInputObjectSchema)
@@ -236,6 +238,12 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutMemberOfInput> = z
         () =>
           BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema,
       )
+      .optional(),
+    EntryRecordServiceCreations: z
+      .lazy(() => EntryRecordUpdateManyWithoutCreatedByNestedInputObjectSchema)
+      .optional(),
+    EntryRecordServiceUpdates: z
+      .lazy(() => EntryRecordUpdateManyWithoutUpdatedByNestedInputObjectSchema)
       .optional(),
   })
   .strict();

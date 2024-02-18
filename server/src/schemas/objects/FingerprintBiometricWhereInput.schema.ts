@@ -4,8 +4,8 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
-import { FingerTypeRelationFilterObjectSchema } from './FingerTypeRelationFilter.schema';
-import { FingerTypeWhereInputObjectSchema } from './FingerTypeWhereInput.schema';
+import { FingerTypeEnumRelationFilterObjectSchema } from './FingerTypeEnumRelationFilter.schema';
+import { FingerTypeEnumWhereInputObjectSchema } from './FingerTypeEnumWhereInput.schema';
 import { BeneficiaryRelationFilterObjectSchema } from './BeneficiaryRelationFilter.schema';
 import { BeneficiaryWhereInputObjectSchema } from './BeneficiaryWhereInput.schema';
 import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
@@ -70,8 +70,8 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricWhereInput> = z
       .optional(),
     fingerType: z
       .union([
-        z.lazy(() => FingerTypeRelationFilterObjectSchema),
-        z.lazy(() => FingerTypeWhereInputObjectSchema),
+        z.lazy(() => FingerTypeEnumRelationFilterObjectSchema),
+        z.lazy(() => FingerTypeEnumWhereInputObjectSchema),
       ])
       .optional(),
     beneficiary: z

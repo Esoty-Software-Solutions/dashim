@@ -6,7 +6,7 @@ import { NullableStringFieldUpdateOperationsInputObjectSchema } from './Nullable
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutBeneficiaryStatusChangesNestedInput.schema';
 import { BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInputObjectSchema } from './BeneficiaryEntityUpdateOneRequiredWithoutBeneficiariesNestedInput.schema';
-import { RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
+import { RelationshipEnumUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema } from './RelationshipEnumUpdateOneRequiredWithoutBeneficiaryNestedInput.schema';
 import { FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FingerprintBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { IDCardUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './IDCardUpdateManyWithoutBeneficiaryNestedInput.schema';
 import { FaceBiometricUpdateManyWithoutBeneficiaryNestedInputObjectSchema } from './FaceBiometricUpdateManyWithoutBeneficiaryNestedInput.schema';
@@ -150,7 +150,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryUpdateWithoutGenderInput> = z
     relationship: z
       .lazy(
         () =>
-          RelationshipUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
+          RelationshipEnumUpdateOneRequiredWithoutBeneficiaryNestedInputObjectSchema,
       )
       .optional(),
     fingerprint: z

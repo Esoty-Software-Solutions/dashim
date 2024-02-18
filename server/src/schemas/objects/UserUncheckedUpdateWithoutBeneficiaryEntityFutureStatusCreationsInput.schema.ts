@@ -16,6 +16,8 @@ import { ReviewStatusUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema 
 import { ReviewStatusUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './ReviewStatusUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryServiceUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryServiceUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutCreatedByNestedInput.schema';
+import { EntryRecordUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './EntryRecordUncheckedUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -250,6 +252,18 @@ const Schema: z.ZodType<Prisma.UserUncheckedUpdateWithoutBeneficiaryEntityFuture
         .lazy(
           () =>
             BeneficiaryServiceUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceCreations: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedUpdateManyWithoutCreatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceUpdates: z
+        .lazy(
+          () =>
+            EntryRecordUncheckedUpdateManyWithoutUpdatedByNestedInputObjectSchema,
         )
         .optional(),
     })

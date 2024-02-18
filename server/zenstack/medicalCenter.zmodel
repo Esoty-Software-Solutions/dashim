@@ -4,7 +4,7 @@ import 'policy'
 import 'beneficiaryService'
 
 
-model MedicalCenter extends Base, ActivationStatus,location {
+model MedicalCenter extends Base, ActivationStatus, location {
   name String
   code String
   description String

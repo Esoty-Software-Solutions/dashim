@@ -4,14 +4,14 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
-import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema';
-import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
+import { GenderEnumRelationFilterObjectSchema } from './GenderEnumRelationFilter.schema';
+import { GenderEnumWhereInputObjectSchema } from './GenderEnumWhereInput.schema';
 import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
 import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
 import { BeneficiaryEntityRelationFilterObjectSchema } from './BeneficiaryEntityRelationFilter.schema';
 import { BeneficiaryEntityWhereInputObjectSchema } from './BeneficiaryEntityWhereInput.schema';
-import { RelationshipRelationFilterObjectSchema } from './RelationshipRelationFilter.schema';
-import { RelationshipWhereInputObjectSchema } from './RelationshipWhereInput.schema';
+import { RelationshipEnumRelationFilterObjectSchema } from './RelationshipEnumRelationFilter.schema';
+import { RelationshipEnumWhereInputObjectSchema } from './RelationshipEnumWhereInput.schema';
 import { FingerprintBiometricListRelationFilterObjectSchema } from './FingerprintBiometricListRelationFilter.schema';
 import { IDCardListRelationFilterObjectSchema } from './IDCardListRelationFilter.schema';
 import { FaceBiometricListRelationFilterObjectSchema } from './FaceBiometricListRelationFilter.schema';
@@ -119,8 +119,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .optional(),
     gender: z
       .union([
-        z.lazy(() => GenderRelationFilterObjectSchema),
-        z.lazy(() => GenderWhereInputObjectSchema),
+        z.lazy(() => GenderEnumRelationFilterObjectSchema),
+        z.lazy(() => GenderEnumWhereInputObjectSchema),
       ])
       .optional(),
     StatusSetBy: z
@@ -137,8 +137,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .optional(),
     relationship: z
       .union([
-        z.lazy(() => RelationshipRelationFilterObjectSchema),
-        z.lazy(() => RelationshipWhereInputObjectSchema),
+        z.lazy(() => RelationshipEnumRelationFilterObjectSchema),
+        z.lazy(() => RelationshipEnumWhereInputObjectSchema),
       ])
       .optional(),
     fingerprint: z

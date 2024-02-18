@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
-import { CityOrderByWithRelationInputObjectSchema } from './CityOrderByWithRelationInput.schema';
+import { CityEnumOrderByWithRelationInputObjectSchema } from './CityEnumOrderByWithRelationInput.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './TenantOrderByWithRelationInput.schema';
 import { MedicalServiceOrderByRelationAggregateInputObjectSchema } from './MedicalServiceOrderByRelationAggregateInput.schema';
 import { InsurancePolicyMedicalCenterOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCenterOrderByRelationAggregateInput.schema';
@@ -59,7 +59,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
       ])
       .optional(),
     managingTenantId: z.lazy(() => SortOrderSchema).optional(),
-    city: z.lazy(() => CityOrderByWithRelationInputObjectSchema).optional(),
+    city: z.lazy(() => CityEnumOrderByWithRelationInputObjectSchema).optional(),
     managingTenant: z
       .lazy(() => TenantOrderByWithRelationInputObjectSchema)
       .optional(),

@@ -4,8 +4,8 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
-import { DeviceTypeRelationFilterObjectSchema } from './DeviceTypeRelationFilter.schema';
-import { DeviceTypeWhereInputObjectSchema } from './DeviceTypeWhereInput.schema';
+import { DeviceTypeEnumRelationFilterObjectSchema } from './DeviceTypeEnumRelationFilter.schema';
+import { DeviceTypeEnumWhereInputObjectSchema } from './DeviceTypeEnumWhereInput.schema';
 import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
 import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
 
@@ -72,8 +72,8 @@ const Schema: z.ZodType<Prisma.DeviceTokenWhereInput> = z
       .optional(),
     deviceType: z
       .union([
-        z.lazy(() => DeviceTypeRelationFilterObjectSchema),
-        z.lazy(() => DeviceTypeWhereInputObjectSchema),
+        z.lazy(() => DeviceTypeEnumRelationFilterObjectSchema),
+        z.lazy(() => DeviceTypeEnumWhereInputObjectSchema),
       ])
       .optional(),
     user: z

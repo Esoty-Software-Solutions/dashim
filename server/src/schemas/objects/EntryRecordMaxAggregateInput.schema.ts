@@ -9,6 +9,8 @@ const Schema: z.ZodType<Prisma.EntryRecordMaxAggregateInputType> = z
     updatedAt: z.literal(true).optional(),
     isPublished: z.literal(true).optional(),
     isSoftDeleted: z.literal(true).optional(),
+    createdById: z.literal(true).optional(),
+    updatedById: z.literal(true).optional(),
     isActive: z.literal(true).optional(),
     deactivationReason: z.literal(true).optional(),
     deactivationDate: z.literal(true).optional(),

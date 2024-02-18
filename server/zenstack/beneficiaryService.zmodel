@@ -4,9 +4,11 @@ import 'medicalCenter';
 import 'verification'
 import 'policy'
 
-model EntryRecord extends Base, ActivationStatus {
+model EntryRecord extends BaseWithUser, ActivationStatus {
   isValidated Boolean
   isManuallyInserted Boolean @default(false)
+
+  notes Json
 
   beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
   beneficiaryId String

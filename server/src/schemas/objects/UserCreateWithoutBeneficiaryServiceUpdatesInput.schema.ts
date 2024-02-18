@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenderCreateNestedOneWithoutUserInputObjectSchema } from './GenderCreateNestedOneWithoutUserInput.schema';
+import { GenderEnumCreateNestedOneWithoutUserInputObjectSchema } from './GenderEnumCreateNestedOneWithoutUserInput.schema';
 import { DeviceTokenCreateNestedManyWithoutUserInputObjectSchema } from './DeviceTokenCreateNestedManyWithoutUserInput.schema';
 import { TenantCreateNestedManyWithoutOwnerInputObjectSchema } from './TenantCreateNestedManyWithoutOwnerInput.schema';
 import { TenantMemberCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMemberCreateNestedManyWithoutMemberInput.schema';
@@ -12,6 +12,8 @@ import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjec
 import { ReviewStatusCreateNestedManyWithoutCreatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutCreatedByInput.schema';
 import { ReviewStatusCreateNestedManyWithoutUpdatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutUpdatedByInput.schema';
 import { BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutCreatedByInput.schema';
+import { EntryRecordCreateNestedManyWithoutCreatedByInputObjectSchema } from './EntryRecordCreateNestedManyWithoutCreatedByInput.schema';
+import { EntryRecordCreateNestedManyWithoutUpdatedByInputObjectSchema } from './EntryRecordCreateNestedManyWithoutUpdatedByInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -42,7 +44,9 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutBeneficiaryServiceUpdatesInput> 
       isPhoneVerified: z.boolean().optional(),
       passwordHash: z.string(),
       avatar: z.string().optional().nullable(),
-      gender: z.lazy(() => GenderCreateNestedOneWithoutUserInputObjectSchema),
+      gender: z.lazy(
+        () => GenderEnumCreateNestedOneWithoutUserInputObjectSchema,
+      ),
       deviceToken: z
         .lazy(() => DeviceTokenCreateNestedManyWithoutUserInputObjectSchema)
         .optional(),
@@ -101,6 +105,16 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutBeneficiaryServiceUpdatesInput> 
         .lazy(
           () =>
             BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceCreations: z
+        .lazy(
+          () => EntryRecordCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceUpdates: z
+        .lazy(
+          () => EntryRecordCreateNestedManyWithoutUpdatedByInputObjectSchema,
         )
         .optional(),
     })

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { UserCreateNestedOneWithoutBeneficiaryEntityStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryEntityStatusChangesInput.schema';
-import { CityCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './CityCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
+import { CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
 import { InsurancePolicyCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './InsurancePolicyCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
 import { BeneficiaryCreateNestedManyWithoutBeneficiaryEntityInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutBeneficiaryEntityInput.schema';
 import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutBeneficiaryEntityInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutBeneficiaryEntityInput.schema';
@@ -23,7 +23,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityCreateInput> = z
         UserCreateNestedOneWithoutBeneficiaryEntityStatusChangesInputObjectSchema,
     ),
     city: z.lazy(
-      () => CityCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema,
+      () => CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema,
     ),
     insurancePolicy: z.lazy(
       () =>

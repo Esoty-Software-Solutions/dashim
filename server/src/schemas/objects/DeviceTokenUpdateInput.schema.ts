@@ -4,7 +4,7 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
-import { DeviceTypeUpdateOneRequiredWithoutDeviceTokenNestedInputObjectSchema } from './DeviceTypeUpdateOneRequiredWithoutDeviceTokenNestedInput.schema';
+import { DeviceTypeEnumUpdateOneRequiredWithoutDeviceTokenNestedInputObjectSchema } from './DeviceTypeEnumUpdateOneRequiredWithoutDeviceTokenNestedInput.schema';
 import { UserUpdateOneRequiredWithoutDeviceTokenNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutDeviceTokenNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -76,7 +76,7 @@ const Schema: z.ZodType<Prisma.DeviceTokenUpdateInput> = z
     deviceType: z
       .lazy(
         () =>
-          DeviceTypeUpdateOneRequiredWithoutDeviceTokenNestedInputObjectSchema,
+          DeviceTypeEnumUpdateOneRequiredWithoutDeviceTokenNestedInputObjectSchema,
       )
       .optional(),
     user: z

@@ -7,7 +7,7 @@ import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './Nullab
 import { MedicalCenterUpdatephoneInputObjectSchema } from './MedicalCenterUpdatephoneInput.schema';
 import { MedicalCenterUpdateemailInputObjectSchema } from './MedicalCenterUpdateemailInput.schema';
 import { NullableFloatFieldUpdateOperationsInputObjectSchema } from './NullableFloatFieldUpdateOperationsInput.schema';
-import { CityUpdateOneRequiredWithoutMedicalcentersNestedInputObjectSchema } from './CityUpdateOneRequiredWithoutMedicalcentersNestedInput.schema';
+import { CityEnumUpdateOneRequiredWithoutMedicalcentersNestedInputObjectSchema } from './CityEnumUpdateOneRequiredWithoutMedicalcentersNestedInput.schema';
 import { MedicalServiceUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './MedicalServiceUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { InsurancePolicyMedicalCenterUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './InsurancePolicyMedicalCenterUpdateManyWithoutMedicalCenterNestedInput.schema';
 import { EntryRecordUpdateManyWithoutMedicalCenterNestedInputObjectSchema } from './EntryRecordUpdateManyWithoutMedicalCenterNestedInput.schema';
@@ -151,7 +151,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterUpdateWithoutManagingTenantInput> =
       city: z
         .lazy(
           () =>
-            CityUpdateOneRequiredWithoutMedicalcentersNestedInputObjectSchema,
+            CityEnumUpdateOneRequiredWithoutMedicalcentersNestedInputObjectSchema,
         )
         .optional(),
       services: z

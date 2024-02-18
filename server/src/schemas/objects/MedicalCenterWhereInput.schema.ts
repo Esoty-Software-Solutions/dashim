@@ -6,8 +6,8 @@ import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema'
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { StringNullableListFilterObjectSchema } from './StringNullableListFilter.schema';
 import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
-import { CityRelationFilterObjectSchema } from './CityRelationFilter.schema';
-import { CityWhereInputObjectSchema } from './CityWhereInput.schema';
+import { CityEnumRelationFilterObjectSchema } from './CityEnumRelationFilter.schema';
+import { CityEnumWhereInputObjectSchema } from './CityEnumWhereInput.schema';
 import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
 import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { MedicalServiceListRelationFilterObjectSchema } from './MedicalServiceListRelationFilter.schema';
@@ -109,8 +109,8 @@ const Schema: z.ZodType<Prisma.MedicalCenterWhereInput> = z
       .optional(),
     city: z
       .union([
-        z.lazy(() => CityRelationFilterObjectSchema),
-        z.lazy(() => CityWhereInputObjectSchema),
+        z.lazy(() => CityEnumRelationFilterObjectSchema),
+        z.lazy(() => CityEnumWhereInputObjectSchema),
       ])
       .optional(),
     managingTenant: z

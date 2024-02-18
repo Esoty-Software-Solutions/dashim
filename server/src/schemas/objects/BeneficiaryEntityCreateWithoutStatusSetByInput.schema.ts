@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CityCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './CityCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
+import { CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
 import { InsurancePolicyCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema } from './InsurancePolicyCreateNestedOneWithoutBeneficiaryEntitiesInput.schema';
 import { BeneficiaryCreateNestedManyWithoutBeneficiaryEntityInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutBeneficiaryEntityInput.schema';
 import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutBeneficiaryEntityInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutBeneficiaryEntityInput.schema';
@@ -19,7 +19,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityCreateWithoutStatusSetByInput> =
       deactivationDate: z.coerce.date().optional().nullable(),
       address: z.string().optional().nullable(),
       city: z.lazy(
-        () => CityCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema,
+        () =>
+          CityEnumCreateNestedOneWithoutBeneficiaryEntitiesInputObjectSchema,
       ),
       insurancePolicy: z.lazy(
         () =>
