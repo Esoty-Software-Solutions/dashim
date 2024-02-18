@@ -17,7 +17,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceMaxOrderByAggregateInput> = z
     medicalCenterCode: z.lazy(() => SortOrderSchema).optional(),
     basePrice: z.lazy(() => SortOrderSchema).optional(),
     medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
-    templateId: z.lazy(() => SortOrderSchema).optional(),
+    categoryId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();
 

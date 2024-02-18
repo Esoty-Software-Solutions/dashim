@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { InstitutionCreatephoneArrayInputObjectSchema } from './InstitutionCreatephoneArrayInput.schema';
 import { InstitutionCreateemailArrayInputObjectSchema } from './InstitutionCreateemailArrayInput.schema';
+import { CityCreateNestedOneWithoutInstitutionsInputObjectSchema } from './CityCreateNestedOneWithoutInstitutionsInput.schema';
 import { InsurancePolicyCreateNestedManyWithoutInstitutionInputObjectSchema } from './InsurancePolicyCreateNestedManyWithoutInstitutionInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -16,12 +17,11 @@ const Schema: z.ZodType<Prisma.InstitutionCreateWithoutMedicalCenterPricingInput
       isActive: z.boolean().optional(),
       deactivationReason: z.string().optional().nullable(),
       deactivationDate: z.coerce.date().optional().nullable(),
+      address: z.string().optional().nullable(),
       name: z.string(),
       code: z.string(),
       legacyCode: z.string().optional().nullable(),
       description: z.string().optional().nullable(),
-      cityHQ: z.string().optional().nullable(),
-      address: z.string().optional().nullable(),
       phoneArray: z
         .union([
           z.lazy(() => InstitutionCreatephoneArrayInputObjectSchema),
@@ -41,6 +41,9 @@ const Schema: z.ZodType<Prisma.InstitutionCreateWithoutMedicalCenterPricingInput
       instagramLink: z.string(),
       latitude: z.number().optional().nullable(),
       longitude: z.number().optional().nullable(),
+      city: z.lazy(
+        () => CityCreateNestedOneWithoutInstitutionsInputObjectSchema,
+      ),
       policies: z
         .lazy(
           () =>

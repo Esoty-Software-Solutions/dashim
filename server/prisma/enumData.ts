@@ -5,21 +5,21 @@ import { ar, en } from "@faker-js/faker";
 export const Gender = [
   {
     ...SeedHelper.functions.fakeGender(),
-    id: cuid2.createId(),
+    // id: cuid2.createId(),
     name: "Unknown",
     english: "Unknown",
     arabic: "غير معروف",
   },
   {
     ...SeedHelper.functions.fakeGender(),
-    id: cuid2.createId(),
+    // id: cuid2.createId(),
     name: "female",
     english: "female",
     arabic: "أنثى",
   },
   {
     ...SeedHelper.functions.fakeGender(),
-    id: cuid2.createId(),
+    // id: cuid2.createId(),
     name: "male",
     english: "male",
     arabic: "ذكر",
@@ -298,6 +298,13 @@ export const FingerType = [
     english: "right little",
     arabic: "اليد اليمنى الصغيرة",
   },
+  {
+    ...SeedHelper.functions.fakeFingerType(),
+    id: cuid2.createId(),
+    name: "unkown",
+    english: "unkown",
+    arabic: "مجهول",
+  },
 ];
 
 export const Currency = [
@@ -429,5 +436,15 @@ export const ReviewStatus = [
     name: "reopened",
     english: "Reopened",
     arabic: "تم إعادة الفتح",
+  },
+];
+
+export const Country = [
+  {
+    ...SeedHelper.functions.fakeCountry(),
+    name: "libya",
+    english: "Libya",
+    arabic: "ليبيا",
+    code: "LY",
   },
 ];

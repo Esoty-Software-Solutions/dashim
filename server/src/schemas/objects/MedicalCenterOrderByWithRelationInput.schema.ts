@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
+import { CityOrderByWithRelationInputObjectSchema } from './CityOrderByWithRelationInput.schema';
 import { TenantOrderByWithRelationInputObjectSchema } from './TenantOrderByWithRelationInput.schema';
 import { MedicalServiceOrderByRelationAggregateInputObjectSchema } from './MedicalServiceOrderByRelationAggregateInput.schema';
 import { InsurancePolicyMedicalCenterOrderByRelationAggregateInputObjectSchema } from './InsurancePolicyMedicalCenterOrderByRelationAggregateInput.schema';
@@ -28,16 +29,16 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    name: z.lazy(() => SortOrderSchema).optional(),
-    code: z.lazy(() => SortOrderSchema).optional(),
-    description: z.lazy(() => SortOrderSchema).optional(),
-    cityHQ: z.lazy(() => SortOrderSchema).optional(),
+    cityId: z.lazy(() => SortOrderSchema).optional(),
     address: z
       .union([
         z.lazy(() => SortOrderSchema),
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
+    name: z.lazy(() => SortOrderSchema).optional(),
+    code: z.lazy(() => SortOrderSchema).optional(),
+    description: z.lazy(() => SortOrderSchema).optional(),
     phone: z.lazy(() => SortOrderSchema).optional(),
     email: z.lazy(() => SortOrderSchema).optional(),
     website: z.lazy(() => SortOrderSchema).optional(),
@@ -58,6 +59,7 @@ const Schema: z.ZodType<Prisma.MedicalCenterOrderByWithRelationInput> = z
       ])
       .optional(),
     managingTenantId: z.lazy(() => SortOrderSchema).optional(),
+    city: z.lazy(() => CityOrderByWithRelationInputObjectSchema).optional(),
     managingTenant: z
       .lazy(() => TenantOrderByWithRelationInputObjectSchema)
       .optional(),

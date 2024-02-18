@@ -3,6 +3,9 @@ import { StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdat
 import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
+import { InstitutionUpdateManyWithoutCityNestedInputObjectSchema } from './InstitutionUpdateManyWithoutCityNestedInput.schema';
+import { MedicalCenterUpdateManyWithoutCityNestedInputObjectSchema } from './MedicalCenterUpdateManyWithoutCityNestedInput.schema';
+import { BeneficiaryEntityUpdateManyWithoutCityNestedInputObjectSchema } from './BeneficiaryEntityUpdateManyWithoutCityNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -57,6 +60,15 @@ const Schema: z.ZodType<Prisma.CityUpdateWithoutCountryInput> = z
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
+      .optional(),
+    institutions: z
+      .lazy(() => InstitutionUpdateManyWithoutCityNestedInputObjectSchema)
+      .optional(),
+    medicalcenters: z
+      .lazy(() => MedicalCenterUpdateManyWithoutCityNestedInputObjectSchema)
+      .optional(),
+    beneficiaryEntities: z
+      .lazy(() => BeneficiaryEntityUpdateManyWithoutCityNestedInputObjectSchema)
       .optional(),
   })
   .strict();

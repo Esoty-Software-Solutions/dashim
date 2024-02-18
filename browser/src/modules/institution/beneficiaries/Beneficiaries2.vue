@@ -14,6 +14,7 @@ import useDataFilters, {
   asyncSelect,
   asyncAutocomplete,
 } from "@/modules/filter/composables/dataFilter";
+import CreateBeneficiariesModel from "@/modules/institution/components/CreateBeneficiariesModel.vue";
 import { client, type RouterInput } from "@/queries";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
@@ -72,6 +73,7 @@ const institutionSelect = asyncSelect(
 const citySelect = asyncAutocomplete(
   {
     value: store.selectedCity,
+    enabled: store.selectedCityEnabled,
     props: () => ({
       label: t("common.city"),
       itemValue: "id",
@@ -79,7 +81,7 @@ const citySelect = asyncAutocomplete(
       autoSelectFirst: true,
       multiple: true,
       // usage of returnObject is mandatory
-      returnObject: true,
+      // returnObject: true,
     }),
   },
   {
@@ -184,12 +186,19 @@ function selectAll() {
 
   console.log(selected.value);
 }
+
+function openACreateBeneficiaryDialog() {
+  store.dialog.value = !store.dialog.value;
+}
 function paginated() {
   console.log("paginated");
 
   // benefeciaryTableList
   selected.value = [];
   selectedCount.value = 0;
+}
+function closeDialiog() {
+  store.dialog.value = false;
 }
 
 // table headers
@@ -240,6 +249,32 @@ const headers = ref<TableHeader[]>([
   //   width: "0.5rem",
   // },
   {
+    title: t("common.creationDate"),
+    key: "createdAt",
+    sortable: false,
+    width: "2.7rem",
+  },
+  {
+    title: t("common.updatedAt"),
+    key: "updatedAt",
+    sortable: false,
+    width: "2.7rem",
+  },
+  {
+    title: t("common.status"),
+    key: "isActive",
+    sortable: false,
+    align: "center",
+    width: "0.5rem",
+  },
+  {
+    title: t("common.city"),
+    key: "city",
+    sortable: false,
+    align: "center",
+    width: "0.5rem",
+  },
+  {
     title: t("common.actions"),
     key: "actions",
     sortable: false,
@@ -250,6 +285,10 @@ const headers = ref<TableHeader[]>([
 </script>
 
 <template>
+  <CreateBeneficiariesModel
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -261,8 +300,12 @@ const headers = ref<TableHeader[]>([
         <VBtn @click="selectAll">Select All 2</VBtn>
         <VBtn @click="refresh">refresh</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
-          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openACreateBeneficiaryDialog"
+        >
+          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>
@@ -275,7 +318,7 @@ const headers = ref<TableHeader[]>([
         :item-value="(item) => item.id"
         show-select
         :headers="headers"
-        @input="onSelected($event)"
+        @input="onSelected"
         @update:page="paginated"
         @update:items-per-page="paginated"
       >
@@ -287,9 +330,11 @@ const headers = ref<TableHeader[]>([
             //   .map((b) => b.firstName)[0] -->
         <template #item.name="{ item }">
           {{ item.beneficiaries[0]?.firstName }}
-
-          {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
-          {{ item.lastName }}
+          {{ item.beneficiaries[0]?.secondName }}
+          {{ item.beneficiaries[0]?.thirdName }}
+          {{ item.beneficiaries[0]?.lastName }}
+          <!-- {{ item.firstName }} {{ item.secondName }} {{ item.thirdName }}
+          {{ item.lastName }} -->
         </template>
         <template #expanded-row="{ columns, item }">
           <td :colspan="columns.length">
@@ -318,7 +363,9 @@ const headers = ref<TableHeader[]>([
                   <td>
                     {{ beneficiary.firstName }} {{ beneficiary.lastName }}
                   </td>
-                  <td>{{ beneficiary.birthDate }}</td>
+                  <td>
+                    {{ new Date(beneficiary.birthDate).toLocaleDateString() }}
+                  </td>
                   <td>{{ beneficiary.relationshipId }}</td>
                   <td>
                     {{ new Date(beneficiary.createdAt).toLocaleDateString() }}
@@ -338,20 +385,26 @@ const headers = ref<TableHeader[]>([
             <VDivider />
           </td>
         </template>
-        <!-- <template #item.birthDate="{ item }">
+        <template #item.birthDate="{ item }">
           {{ new Date(item.birthDate).toLocaleDateString() }}
         </template>
+
         <template #item.createdAt="{ item }">
           {{ new Date(item.createdAt).toLocaleDateString() }}
         </template>
         <template #item.updatedAt="{ item }">
           {{ new Date(item.updatedAt).toLocaleDateString() }}
         </template>
+        <template #item.city="{ item }">
+          {{ item.city?.name }}
+        </template>
         <template #item.isActive="{ item }">
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
-        </template> -->
+        </template>
+
+        <!-- </template> -->
       </VDataTableServer>
     </template>
   </DataPageBase>

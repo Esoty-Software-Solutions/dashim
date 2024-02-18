@@ -4,10 +4,11 @@ import { unGuardedPrisma } from "@config/db";
 import type { Request as ExpressRequest } from "express";
 import ServerError from "@utilities/error";
 
+export const FAKE_USER_ID = "bgwdccqvmyjr0n53iuv62hhs";
 export async function getUserIdFromCookie(
   request: Request | ExpressRequest,
 ): Promise<UserType["id"]> {
-  const userId = "wjusowuzu7wqd4sn0666k62i"; //TODO: parse cookie
+  const userId = FAKE_USER_ID; //TODO: parse cookie
   if (userId == null) {
     throw new ServerError({
       message: "no userId available in the cookie",

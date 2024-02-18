@@ -9,6 +9,6 @@ export const FaceBiometricScalarFieldEnumSchema = z.enum([
   'isActive',
   'deactivationReason',
   'deactivationDate',
-  'hash',
+  'record',
   'beneficiaryId',
 ]);

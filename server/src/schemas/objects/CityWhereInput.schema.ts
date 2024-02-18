@@ -5,6 +5,9 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { CountryRelationFilterObjectSchema } from './CountryRelationFilter.schema';
 import { CountryWhereInputObjectSchema } from './CountryWhereInput.schema';
+import { InstitutionListRelationFilterObjectSchema } from './InstitutionListRelationFilter.schema';
+import { MedicalCenterListRelationFilterObjectSchema } from './MedicalCenterListRelationFilter.schema';
+import { BeneficiaryEntityListRelationFilterObjectSchema } from './BeneficiaryEntityListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -60,6 +63,15 @@ const Schema: z.ZodType<Prisma.CityWhereInput> = z
         z.lazy(() => CountryRelationFilterObjectSchema),
         z.lazy(() => CountryWhereInputObjectSchema),
       ])
+      .optional(),
+    institutions: z
+      .lazy(() => InstitutionListRelationFilterObjectSchema)
+      .optional(),
+    medicalcenters: z
+      .lazy(() => MedicalCenterListRelationFilterObjectSchema)
+      .optional(),
+    beneficiaryEntities: z
+      .lazy(() => BeneficiaryEntityListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

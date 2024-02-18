@@ -6,7 +6,7 @@ import { NullableStringFieldUpdateOperationsInputObjectSchema } from './Nullable
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
 import { BenefitPackageUpdatecopayDistrubtionInputObjectSchema } from './BenefitPackageUpdatecopayDistrubtionInput.schema';
 import { BenefitPackageUpdatethreasholdInputObjectSchema } from './BenefitPackageUpdatethreasholdInput.schema';
-import { BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema } from './BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInput.schema';
+import { BenefitPackageMedicalServiceCategoryUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema } from './BenefitPackageMedicalServiceCategoryUncheckedUpdateManyWithoutBenefitPackageNestedInput.schema';
 import { BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInputObjectSchema } from './BeneficiaryBalanceUncheckedUpdateManyWithoutBeneftiPackageNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -87,10 +87,10 @@ const Schema: z.ZodType<Prisma.BenefitPackageUncheckedUpdateInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    medicalServiceTemplates: z
+    medicalServiceCategories: z
       .lazy(
         () =>
-          BenefitPackageMedicalServiceTemplateUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema,
+          BenefitPackageMedicalServiceCategoryUncheckedUpdateManyWithoutBenefitPackageNestedInputObjectSchema,
       )
       .optional(),
     beneficiaryBalances: z

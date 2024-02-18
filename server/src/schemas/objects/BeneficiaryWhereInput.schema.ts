@@ -8,8 +8,8 @@ import { GenderRelationFilterObjectSchema } from './GenderRelationFilter.schema'
 import { GenderWhereInputObjectSchema } from './GenderWhereInput.schema';
 import { UserRelationFilterObjectSchema } from './UserRelationFilter.schema';
 import { UserWhereInputObjectSchema } from './UserWhereInput.schema';
-import { SubscriberRelationFilterObjectSchema } from './SubscriberRelationFilter.schema';
-import { SubscriberWhereInputObjectSchema } from './SubscriberWhereInput.schema';
+import { BeneficiaryEntityRelationFilterObjectSchema } from './BeneficiaryEntityRelationFilter.schema';
+import { BeneficiaryEntityWhereInputObjectSchema } from './BeneficiaryEntityWhereInput.schema';
 import { RelationshipRelationFilterObjectSchema } from './RelationshipRelationFilter.schema';
 import { RelationshipWhereInputObjectSchema } from './RelationshipWhereInput.schema';
 import { FingerprintBiometricListRelationFilterObjectSchema } from './FingerprintBiometricListRelationFilter.schema';
@@ -90,14 +90,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
       .optional()
       .nullable(),
-    residence: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
-    address: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
     isActive: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
@@ -115,7 +107,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
     statusSetById: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    subscriberId: z
+    beneficiaryEntityId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
     legacyCode: z
@@ -124,18 +116,6 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
       .nullable(),
     relationshipId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
-    isFingerprintVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isIdCardVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isFaceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
-      .optional(),
-    isVoiceVerificationActive: z
-      .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
     gender: z
       .union([
@@ -149,10 +129,10 @@ const Schema: z.ZodType<Prisma.BeneficiaryWhereInput> = z
         z.lazy(() => UserWhereInputObjectSchema),
       ])
       .optional(),
-    subscriber: z
+    beneficiaryEntity: z
       .union([
-        z.lazy(() => SubscriberRelationFilterObjectSchema),
-        z.lazy(() => SubscriberWhereInputObjectSchema),
+        z.lazy(() => BeneficiaryEntityRelationFilterObjectSchema),
+        z.lazy(() => BeneficiaryEntityWhereInputObjectSchema),
       ])
       .optional(),
     relationship: z

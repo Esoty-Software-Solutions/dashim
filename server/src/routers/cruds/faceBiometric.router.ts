@@ -94,19 +94,17 @@ export const faceBiometricRouter = router({
     .input(FaceBiometricFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.faceBiometric.findMany(input),
-            ctx.prisma.faceBiometric.count({ where: input?.where }),
-            ctx.prisma.faceBiometric.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.faceBiometric.findMany(input),
+          ctx.prisma.faceBiometric.count({ where: input?.where }),
+          ctx.prisma.faceBiometric.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

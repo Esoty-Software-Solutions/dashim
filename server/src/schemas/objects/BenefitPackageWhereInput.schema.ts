@@ -5,7 +5,7 @@ import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { IntNullableListFilterObjectSchema } from './IntNullableListFilter.schema';
-import { BenefitPackageMedicalServiceTemplateListRelationFilterObjectSchema } from './BenefitPackageMedicalServiceTemplateListRelationFilter.schema';
+import { BenefitPackageMedicalServiceCategoryListRelationFilterObjectSchema } from './BenefitPackageMedicalServiceCategoryListRelationFilter.schema';
 import { InsurancePolicyRelationFilterObjectSchema } from './InsurancePolicyRelationFilter.schema';
 import { InsurancePolicyWhereInputObjectSchema } from './InsurancePolicyWhereInput.schema';
 import { BeneficiaryBalanceListRelationFilterObjectSchema } from './BeneficiaryBalanceListRelationFilter.schema';
@@ -69,10 +69,10 @@ const Schema: z.ZodType<Prisma.BenefitPackageWhereInput> = z
     insurancePolicyId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    medicalServiceTemplates: z
+    medicalServiceCategories: z
       .lazy(
         () =>
-          BenefitPackageMedicalServiceTemplateListRelationFilterObjectSchema,
+          BenefitPackageMedicalServiceCategoryListRelationFilterObjectSchema,
       )
       .optional(),
     insurancePolicy: z

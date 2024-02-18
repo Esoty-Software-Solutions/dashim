@@ -84,7 +84,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceUncheckedUpdateManyInput> = z
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    templateId: z
+    categoryId: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

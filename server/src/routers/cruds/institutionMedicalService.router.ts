@@ -94,19 +94,17 @@ export const institutionMedicalServiceRouter = router({
     .input(InstitutionMedicalServiceFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.institutionMedicalService.findMany(input),
-            ctx.prisma.institutionMedicalService.count({ where: input?.where }),
-            ctx.prisma.institutionMedicalService.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.institutionMedicalService.findMany(input),
+          ctx.prisma.institutionMedicalService.count({ where: input?.where }),
+          ctx.prisma.institutionMedicalService.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

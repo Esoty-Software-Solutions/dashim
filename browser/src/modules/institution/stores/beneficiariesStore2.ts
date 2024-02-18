@@ -29,11 +29,12 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
 
   type CityOutput = RouterOutput["crud"]["city"]["findMany"];
   type City = NonNullable<CityOutput>["data"][number];
-  const selectedCity = ref<City | null>(null);
+  const selectedCity = ref<City[] | string[]>([]);
   const selectedCityEnabled = useLocalStorage<boolean>(
     "beneficiariesList.selectedCityEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -86,13 +87,21 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
               nameFilterEnabled.value && nameFilter.value.trim()
                 ? {
                     some: {
-                      firstName:
+                      searchName:
                         nameFilterEnabled.value && nameFilter.value.trim()
                           ? { contains: nameFilter.value.trim() }
                           : undefined,
                     },
                   }
                 : undefined,
+          },
+          {
+            cityId: {
+              in:
+                selectedCity.value.length !== 0 && selectedCityEnabled.value
+                  ? selectedCity.value
+                  : undefined,
+            },
           },
         ],
 
@@ -103,7 +112,43 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
         },
       },
     })),
-    findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.procedure.listBeneficiaryEntities.query,
+
+    // the first fetch is when the filters/page change
+    // const { binding, items, triggerFetch } = useQuerierTable({
+    //   storageKey: "beneficiariesList2",
+    //   input: () => {
+    //     if (nameFilterEnabled.value && nameFilter.value.trim()) {
+    //       return {
+    //         where: {
+    //           AND: [
+    //             {
+    //               beneficiaries: {
+    //                 some: {
+    //                   searchName: { contains: nameFilter.value.trim() },
+    //                 },
+    //               },
+    //             },
+    //           ],
+    //           NOT: {
+    //             beneficiaries: {
+    //               none: {},
+    //             },
+    //           },
+    //         },
+    //       };
+    //     }
+    //     return {
+    //       where: {
+    //         NOT: {
+    //           beneficiaries: {
+    //             none: {},
+    //           },
+    //         },
+    //       },
+    //     };
+    //   },
+    //   findCallback: client.procedure.listBeneficiaryEntities.query,
     onError(error) {
       globalStore.setMessage("Error while connection to server.");
       console.error(error);
@@ -128,6 +173,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     selectedInstitutionEnabled,
     selectedCity,
     selectedCityEnabled,
+    dialog,
   };
 });
 

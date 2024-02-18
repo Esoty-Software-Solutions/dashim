@@ -67,7 +67,7 @@ const Schema: z.ZodType<Prisma.MedicalServiceScalarWhereInput> = z
     medicalCenterId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    templateId: z
+    categoryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
   })

@@ -6,6 +6,8 @@ import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema'
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
 import { StringNullableListFilterObjectSchema } from './StringNullableListFilter.schema';
 import { FloatNullableFilterObjectSchema } from './FloatNullableFilter.schema';
+import { CityRelationFilterObjectSchema } from './CityRelationFilter.schema';
+import { CityWhereInputObjectSchema } from './CityWhereInput.schema';
 import { TenantRelationFilterObjectSchema } from './TenantRelationFilter.schema';
 import { TenantWhereInputObjectSchema } from './TenantWhereInput.schema';
 import { MedicalServiceListRelationFilterObjectSchema } from './MedicalServiceListRelationFilter.schema';
@@ -61,6 +63,13 @@ const Schema: z.ZodType<Prisma.MedicalCenterWhereInput> = z
       ])
       .optional()
       .nullable(),
+    cityId: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    address: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
     name: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
@@ -70,13 +79,6 @@ const Schema: z.ZodType<Prisma.MedicalCenterWhereInput> = z
     description: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),
-    cityHQ: z
-      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
-      .optional(),
-    address: z
-      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
-      .optional()
-      .nullable(),
     phone: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     email: z.lazy(() => StringNullableListFilterObjectSchema).optional(),
     website: z
@@ -104,6 +106,12 @@ const Schema: z.ZodType<Prisma.MedicalCenterWhereInput> = z
       .nullable(),
     managingTenantId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    city: z
+      .union([
+        z.lazy(() => CityRelationFilterObjectSchema),
+        z.lazy(() => CityWhereInputObjectSchema),
+      ])
       .optional(),
     managingTenant: z
       .union([

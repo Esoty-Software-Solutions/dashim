@@ -27,7 +27,7 @@ const Schema: z.ZodType<Prisma.VoiceBiometricOrderByWithAggregationInput> = z
         z.lazy(() => SortOrderInputObjectSchema),
       ])
       .optional(),
-    hash: z.lazy(() => SortOrderSchema).optional(),
+    record: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     _count: z
       .lazy(() => VoiceBiometricCountOrderByAggregateInputObjectSchema)

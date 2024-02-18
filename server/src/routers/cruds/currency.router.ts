@@ -94,19 +94,17 @@ export const currencyRouter = router({
     .input(CurrencyFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
-        const [subscribers, filteredCount, unFilteredCount] = await Promise.all(
-          [
-            ctx.prisma.currency.findMany(input),
-            ctx.prisma.currency.count({ where: input?.where }),
-            ctx.prisma.currency.count(),
-          ],
-        );
+        const [data, filteredCount, unFilteredCount] = await Promise.all([
+          ctx.prisma.currency.findMany(input),
+          ctx.prisma.currency.count({ where: input?.where }),
+          ctx.prisma.currency.count(),
+        ]);
         const statistics: {
           key: string;
           value: string | number | boolean;
         }[] = [];
         return {
-          data: subscribers,
+          data,
           filteredCount,
           unFilteredCount,
           statistics,

@@ -59,7 +59,7 @@ const Schema: z.ZodType<Prisma.FaceBiometricUpdateManyMutationInput> = z
       ])
       .optional()
       .nullable(),
-    hash: z
+    record: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

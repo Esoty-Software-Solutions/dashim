@@ -3,10 +3,10 @@ import { GenderCreateNestedOneWithoutUserInputObjectSchema } from './GenderCreat
 import { DeviceTokenCreateNestedManyWithoutUserInputObjectSchema } from './DeviceTokenCreateNestedManyWithoutUserInput.schema';
 import { TenantCreateNestedManyWithoutOwnerInputObjectSchema } from './TenantCreateNestedManyWithoutOwnerInput.schema';
 import { TenantMemberCreateNestedManyWithoutMemberInputObjectSchema } from './TenantMemberCreateNestedManyWithoutMemberInput.schema';
-import { SubscriberCreateNestedManyWithoutStatusSetByInputObjectSchema } from './SubscriberCreateNestedManyWithoutStatusSetByInput.schema';
+import { BeneficiaryEntityCreateNestedManyWithoutStatusSetByInputObjectSchema } from './BeneficiaryEntityCreateNestedManyWithoutStatusSetByInput.schema';
 import { BeneficiaryCreateNestedManyWithoutStatusSetByInputObjectSchema } from './BeneficiaryCreateNestedManyWithoutStatusSetByInput.schema';
-import { SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
-import { SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
+import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
+import { BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
 import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutCreatedByInput.schema';
 import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema } from './BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInput.schema';
 
@@ -31,8 +31,6 @@ const Schema: z.ZodType<Prisma.UserCreateInput> = z
     birthDate: z.coerce.date(),
     nationality: z.string().optional().nullable(),
     nationalID: z.string().optional().nullable(),
-    residence: z.string().optional().nullable(),
-    address: z.string().optional().nullable(),
     username: z.string(),
     email: z.string(),
     isEmailVerificationActive: z.boolean().optional(),
@@ -50,24 +48,27 @@ const Schema: z.ZodType<Prisma.UserCreateInput> = z
     memberOf: z
       .lazy(() => TenantMemberCreateNestedManyWithoutMemberInputObjectSchema)
       .optional(),
-    subscriberStatusChanges: z
-      .lazy(() => SubscriberCreateNestedManyWithoutStatusSetByInputObjectSchema)
+    beneficiaryEntityStatusChanges: z
+      .lazy(
+        () =>
+          BeneficiaryEntityCreateNestedManyWithoutStatusSetByInputObjectSchema,
+      )
       .optional(),
     beneficiaryStatusChanges: z
       .lazy(
         () => BeneficiaryCreateNestedManyWithoutStatusSetByInputObjectSchema,
       )
       .optional(),
-    subscriberFutureStatusCreations: z
+    beneficiaryEntityFutureStatusCreations: z
       .lazy(
         () =>
-          SubscriberFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema,
+          BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutCreatedByInputObjectSchema,
       )
       .optional(),
-    subscriberFutureStatusChanges: z
+    beneficiaryEntityFutureStatusChanges: z
       .lazy(
         () =>
-          SubscriberFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
+          BeneficiaryEntityFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjectSchema,
       )
       .optional(),
     beneficiaryFutureStatusCreations: z

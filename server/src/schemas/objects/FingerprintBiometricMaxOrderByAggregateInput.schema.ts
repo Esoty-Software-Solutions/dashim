@@ -14,7 +14,7 @@ const Schema: z.ZodType<Prisma.FingerprintBiometricMaxOrderByAggregateInput> = z
     deactivationReason: z.lazy(() => SortOrderSchema).optional(),
     deactivationDate: z.lazy(() => SortOrderSchema).optional(),
     fingerTypeId: z.lazy(() => SortOrderSchema).optional(),
-    hash: z.lazy(() => SortOrderSchema).optional(),
+    record: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
   })
   .strict();

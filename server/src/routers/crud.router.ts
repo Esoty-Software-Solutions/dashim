@@ -10,8 +10,8 @@ import { tenantTypeRouter } from './cruds/tenantType.router';
 import { roleRouter } from './cruds/role.router';
 import { deviceTypeRouter } from './cruds/deviceType.router';
 import { institutionRouter } from './cruds/institution.router';
-import { subscriberRouter } from './cruds/subscriber.router';
-import { subscriberFutureStatusChangeRouter } from './cruds/subscriberFutureStatusChange.router';
+import { beneficiaryEntityRouter } from './cruds/beneficiaryEntity.router';
+import { beneficiaryEntityFutureStatusChangeRouter } from './cruds/beneficiaryEntityFutureStatusChange.router';
 import { beneficiaryRouter } from './cruds/beneficiary.router';
 import { beneficiaryFutureStatusChangeRouter } from './cruds/beneficiaryFutureStatusChange.router';
 import { relationshipRouter } from './cruds/relationship.router';
@@ -25,8 +25,8 @@ import { insurancePolicyRouter } from './cruds/insurancePolicy.router';
 import { benefitPackageRouter } from './cruds/benefitPackage.router';
 import { insurancePolicyMedicalCenterRouter } from './cruds/insurancePolicyMedicalCenter.router';
 import { medicalCenterRouter } from './cruds/medicalCenter.router';
-import { benefitPackageMedicalServiceTemplateRouter } from './cruds/benefitPackageMedicalServiceTemplate.router';
-import { medicalServiceTemplateRouter } from './cruds/medicalServiceTemplate.router';
+import { benefitPackageMedicalServiceCategoryRouter } from './cruds/benefitPackageMedicalServiceCategory.router';
+import { medicalServiceCategoryRouter } from './cruds/medicalServiceCategory.router';
 import { medicalServiceRouter } from './cruds/medicalService.router';
 import { entryRecordRouter } from './cruds/entryRecord.router';
 import { patientServiceRouter } from './cruds/patientService.router';
@@ -50,8 +50,8 @@ export const crudRouter = router({
   role: roleRouter,
   deviceType: deviceTypeRouter,
   institution: institutionRouter,
-  subscriber: subscriberRouter,
-  subscriberFutureStatusChange: subscriberFutureStatusChangeRouter,
+  beneficiaryEntity: beneficiaryEntityRouter,
+  beneficiaryEntityFutureStatusChange: beneficiaryEntityFutureStatusChangeRouter,
   beneficiary: beneficiaryRouter,
   beneficiaryFutureStatusChange: beneficiaryFutureStatusChangeRouter,
   relationship: relationshipRouter,
@@ -65,8 +65,8 @@ export const crudRouter = router({
   benefitPackage: benefitPackageRouter,
   insurancePolicyMedicalCenter: insurancePolicyMedicalCenterRouter,
   medicalCenter: medicalCenterRouter,
-  benefitPackageMedicalServiceTemplate: benefitPackageMedicalServiceTemplateRouter,
-  medicalServiceTemplate: medicalServiceTemplateRouter,
+  benefitPackageMedicalServiceCategory: benefitPackageMedicalServiceCategoryRouter,
+  medicalServiceCategory: medicalServiceCategoryRouter,
   medicalService: medicalServiceRouter,
   entryRecord: entryRecordRouter,
   patientService: patientServiceRouter,
