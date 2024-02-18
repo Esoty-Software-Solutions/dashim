@@ -63,6 +63,7 @@ export async function listBeneficiaryEntities(
                   isActive: true,
                   city: {
                     select: {
+                      id: true,
                       arabic: true,
                       english: true,
                       name: true,
@@ -81,11 +82,30 @@ export async function listBeneficiaryEntities(
                       fourthName: true,
                       lastName: true,
                       birthDate: true,
-                      genderId: true,
-                      relationshipId: true,
+                      gender: {
+                        select: {
+                          id: true,
+                          name: true,
+                          arabic: true,
+                          english: true,
+                        },
+                      },
+                      relationship: {
+                        select: {
+                          id: true,
+                          name: true,
+                          arabic: true,
+                          english: true,
+                        },
+                      },
                       StatusSetBy: StatusSetByFields,
                       beneficiaryBalances: {
-                        select: { id: true, balance: true, updatedAt: true },
+                        select: {
+                          id: true,
+                          balanceActual: true,
+                          balancePending: true,
+                          updatedAt: true,
+                        },
                       },
                     },
                   },
