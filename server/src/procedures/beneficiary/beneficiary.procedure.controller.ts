@@ -5,26 +5,16 @@ import {
   DEFAULT_MAX_RETRIES,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-} from "./_config.controller";
-========
 } from "@procedures/_config";
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
 import {
   ListBeneficiaryEntityInputSchema,
   CreateBeneficiaryEntityInputSchema,
   UpdateBeneficiaryEntityInputSchema,
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-} from "@schemas/procedures/beneficiary.procedure.schema";
-import { rules } from "./beneficiary.rule";
-import { actions } from "./beneficiary.action";
-========
 } from "./beneficiary.procedure.schema";
 import { rules } from "./beneficiary.procedure.rule";
 import { actions } from "./beneficiary.procedure.action";
 
 import { FAKE_USER_ID } from "@utilities/auth";
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
 
 const StatusSetByFields = {
   //* Using Prisma operation "include" includes all fields in the return type
@@ -73,10 +63,7 @@ export async function listBeneficiaryEntities(
                   isActive: true,
                   city: {
                     select: {
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-========
                       id: true,
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
                       arabic: true,
                       english: true,
                       name: true,
@@ -95,10 +82,6 @@ export async function listBeneficiaryEntities(
                       fourthName: true,
                       lastName: true,
                       birthDate: true,
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-                      genderId: true,
-                      relationshipId: true,
-========
                       gender: {
                         select: {
                           id: true,
@@ -115,7 +98,6 @@ export async function listBeneficiaryEntities(
                           english: true,
                         },
                       },
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
                       StatusSetBy: StatusSetByFields,
                       beneficiaryBalances: {
                         select: {
@@ -133,13 +115,10 @@ export async function listBeneficiaryEntities(
                 //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
                 //   StatusSetBy: selectStatusSetBy,
                 // },
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-========
                 // include: { //* This blows up the return type
                 //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
                 //   StatusSetBy: selectStatusSetBy,
                 // },
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
               }),
               tx.beneficiaryEntity.count({
                 where: input?.where,
@@ -201,15 +180,6 @@ export async function createBeneficiaryEntity(
   const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
   // input data business rules
   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
-<<<<<<<< HEAD:server/src/controllers/beneficiary.controller.ts
-  // business logic
-  const processedInput = await actions.formatToPrismaCreateShape(
-    // userId,
-    "bgwdccqvmyjr0n53iuv62hhs",
-    validInput,
-  );
-  console.log(processedInput.userId);
-========
   rules.oneFatherRelationshipMustExist.evaluation(
     validInput.data.beneficiaries,
   );
@@ -221,7 +191,6 @@ export async function createBeneficiaryEntity(
     FAKE_USER_ID,
     validInput,
   );
->>>>>>>> dev:server/src/procedures/beneficiary/beneficiary.procedure.controller.ts
 
   return await enhancedPrisma(userId).beneficiaryEntity.create({
     data: processedInput,
