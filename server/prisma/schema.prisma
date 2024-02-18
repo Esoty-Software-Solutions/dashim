@@ -81,6 +81,8 @@ model User {
     ReviewStatusUpdates ReviewStatus[] @relation("UpdatedBy")
     BeneficiaryServiceCreations BeneficiaryService[] @relation("CreatedBy")
     BeneficiaryServiceUpdates BeneficiaryService[] @relation("UpdatedBy")
+    EntryRecordServiceCreations EntryRecord[] @relation("CreatedBy")
+    EntryRecordServiceUpdates EntryRecord[] @relation("UpdatedBy")
 }
 
 /// @@allow('all', true && isPublished)
@@ -560,11 +562,16 @@ model EntryRecord {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
     isValidated Boolean
     isManuallyInserted Boolean @default(false)
+    notes Json
     beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
     beneficiaryId String
     fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])

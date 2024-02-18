@@ -4,8 +4,18 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
+import { JsonNullValueInputSchema } from '../enums/JsonNullValueInput.schema';
 
 import type { Prisma } from '@prisma/client';
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodType<Prisma.InputJsonValue> = z.lazy(() =>
+  z.union([
+    literalSchema,
+    z.array(jsonSchema.nullable()),
+    z.record(jsonSchema.nullable()),
+  ]),
+);
 
 const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
   .object({
@@ -39,6 +49,19 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
+    createdById: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
+    updatedById: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional()
+      .nullable(),
     isActive: z
       .union([
         z.boolean(),
@@ -70,6 +93,9 @@ const Schema: z.ZodType<Prisma.EntryRecordUncheckedUpdateManyInput> = z
         z.boolean(),
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
+      .optional(),
+    notes: z
+      .union([z.lazy(() => JsonNullValueInputSchema), jsonSchema])
       .optional(),
     beneficiaryId: z
       .union([

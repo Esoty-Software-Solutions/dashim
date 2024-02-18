@@ -15,6 +15,7 @@ import { BeneficiaryEntityFutureStatusChangeListRelationFilterObjectSchema } fro
 import { BeneficiaryFutureStatusChangeListRelationFilterObjectSchema } from './BeneficiaryFutureStatusChangeListRelationFilter.schema';
 import { ReviewStatusListRelationFilterObjectSchema } from './ReviewStatusListRelationFilter.schema';
 import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
+import { EntryRecordListRelationFilterObjectSchema } from './EntryRecordListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -169,6 +170,12 @@ const Schema: z.ZodType<Prisma.UserWhereInput> = z
       .optional(),
     BeneficiaryServiceUpdates: z
       .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
+      .optional(),
+    EntryRecordServiceCreations: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
+      .optional(),
+    EntryRecordServiceUpdates: z
+      .lazy(() => EntryRecordListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

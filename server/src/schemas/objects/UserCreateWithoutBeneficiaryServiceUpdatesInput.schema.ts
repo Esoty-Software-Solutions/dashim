@@ -12,6 +12,8 @@ import { BeneficiaryFutureStatusChangeCreateNestedManyWithoutUpdatedByInputObjec
 import { ReviewStatusCreateNestedManyWithoutCreatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutCreatedByInput.schema';
 import { ReviewStatusCreateNestedManyWithoutUpdatedByInputObjectSchema } from './ReviewStatusCreateNestedManyWithoutUpdatedByInput.schema';
 import { BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutCreatedByInput.schema';
+import { EntryRecordCreateNestedManyWithoutCreatedByInputObjectSchema } from './EntryRecordCreateNestedManyWithoutCreatedByInput.schema';
+import { EntryRecordCreateNestedManyWithoutUpdatedByInputObjectSchema } from './EntryRecordCreateNestedManyWithoutUpdatedByInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -103,6 +105,16 @@ const Schema: z.ZodType<Prisma.UserCreateWithoutBeneficiaryServiceUpdatesInput> 
         .lazy(
           () =>
             BeneficiaryServiceCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceCreations: z
+        .lazy(
+          () => EntryRecordCreateNestedManyWithoutCreatedByInputObjectSchema,
+        )
+        .optional(),
+      EntryRecordServiceUpdates: z
+        .lazy(
+          () => EntryRecordCreateNestedManyWithoutUpdatedByInputObjectSchema,
         )
         .optional(),
     })

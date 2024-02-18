@@ -4,6 +4,9 @@ import { DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldU
 import { BoolFieldUpdateOperationsInputObjectSchema } from './BoolFieldUpdateOperationsInput.schema';
 import { NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema';
 import { NullableDateTimeFieldUpdateOperationsInputObjectSchema } from './NullableDateTimeFieldUpdateOperationsInput.schema';
+import { JsonNullValueInputSchema } from '../enums/JsonNullValueInput.schema';
+import { UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInputObjectSchema } from './UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInput.schema';
+import { UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInputObjectSchema } from './UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInput.schema';
 import { BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './BeneficiaryUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
 import { FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FingerprintBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './IDCardUpdateOneWithoutEntryRecordsNestedInput.schema';
@@ -12,6 +15,15 @@ import { VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } fro
 import { MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodType<Prisma.InputJsonValue> = z.lazy(() =>
+  z.union([
+    literalSchema,
+    z.array(jsonSchema.nullable()),
+    z.record(jsonSchema.nullable()),
+  ]),
+);
 
 const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutBeneficiaryServicesInput> =
   z
@@ -77,6 +89,21 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateWithoutBeneficiaryServicesInput>
           z.boolean(),
           z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
         ])
+        .optional(),
+      notes: z
+        .union([z.lazy(() => JsonNullValueInputSchema), jsonSchema])
+        .optional(),
+      CreatedBy: z
+        .lazy(
+          () =>
+            UserUpdateOneRequiredWithoutEntryRecordServiceCreationsNestedInputObjectSchema,
+        )
+        .optional(),
+      UpdatedBy: z
+        .lazy(
+          () =>
+            UserUpdateOneWithoutEntryRecordServiceUpdatesNestedInputObjectSchema,
+        )
         .optional(),
       beneficiary: z
         .lazy(

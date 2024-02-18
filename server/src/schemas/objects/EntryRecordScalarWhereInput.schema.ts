@@ -4,6 +4,7 @@ import { DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { BoolFilterObjectSchema } from './BoolFilter.schema';
 import { StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeNullableFilterObjectSchema } from './DateTimeNullableFilter.schema';
+import { JsonFilterObjectSchema } from './JsonFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -40,6 +41,13 @@ const Schema: z.ZodType<Prisma.EntryRecordScalarWhereInput> = z
     isSoftDeleted: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
+    createdById: z
+      .union([z.lazy(() => StringFilterObjectSchema), z.string()])
+      .optional(),
+    updatedById: z
+      .union([z.lazy(() => StringNullableFilterObjectSchema), z.string()])
+      .optional()
+      .nullable(),
     isActive: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
@@ -60,6 +68,7 @@ const Schema: z.ZodType<Prisma.EntryRecordScalarWhereInput> = z
     isManuallyInserted: z
       .union([z.lazy(() => BoolFilterObjectSchema), z.boolean()])
       .optional(),
+    notes: z.lazy(() => JsonFilterObjectSchema).optional(),
     beneficiaryId: z
       .union([z.lazy(() => StringFilterObjectSchema), z.string()])
       .optional(),

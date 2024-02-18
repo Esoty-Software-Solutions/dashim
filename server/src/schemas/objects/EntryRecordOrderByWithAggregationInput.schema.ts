@@ -14,6 +14,13 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithAggregationInput> = z
     updatedAt: z.lazy(() => SortOrderSchema).optional(),
     isPublished: z.lazy(() => SortOrderSchema).optional(),
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
+    createdById: z.lazy(() => SortOrderSchema).optional(),
+    updatedById: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
       .union([
@@ -29,6 +36,7 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithAggregationInput> = z
       .optional(),
     isValidated: z.lazy(() => SortOrderSchema).optional(),
     isManuallyInserted: z.lazy(() => SortOrderSchema).optional(),
+    notes: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerprintId: z
       .union([

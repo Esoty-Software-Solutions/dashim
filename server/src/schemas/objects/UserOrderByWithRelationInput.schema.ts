@@ -11,6 +11,7 @@ import { BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectS
 import { BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryFutureStatusChangeOrderByRelationAggregateInput.schema';
 import { ReviewStatusOrderByRelationAggregateInputObjectSchema } from './ReviewStatusOrderByRelationAggregateInput.schema';
 import { BeneficiaryServiceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryServiceOrderByRelationAggregateInput.schema';
+import { EntryRecordOrderByRelationAggregateInputObjectSchema } from './EntryRecordOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -139,6 +140,12 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
       .optional(),
     BeneficiaryServiceUpdates: z
       .lazy(() => BeneficiaryServiceOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    EntryRecordServiceCreations: z
+      .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    EntryRecordServiceUpdates: z
+      .lazy(() => EntryRecordOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

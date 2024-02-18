@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { SortOrderSchema } from '../enums/SortOrder.schema';
 import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
+import { UserOrderByWithRelationInputObjectSchema } from './UserOrderByWithRelationInput.schema';
 import { BeneficiaryOrderByWithRelationInputObjectSchema } from './BeneficiaryOrderByWithRelationInput.schema';
 import { FingerprintBiometricOrderByWithRelationInputObjectSchema } from './FingerprintBiometricOrderByWithRelationInput.schema';
 import { IDCardOrderByWithRelationInputObjectSchema } from './IDCardOrderByWithRelationInput.schema';
@@ -18,6 +19,13 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
     updatedAt: z.lazy(() => SortOrderSchema).optional(),
     isPublished: z.lazy(() => SortOrderSchema).optional(),
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
+    createdById: z.lazy(() => SortOrderSchema).optional(),
+    updatedById: z
+      .union([
+        z.lazy(() => SortOrderSchema),
+        z.lazy(() => SortOrderInputObjectSchema),
+      ])
+      .optional(),
     isActive: z.lazy(() => SortOrderSchema).optional(),
     deactivationReason: z
       .union([
@@ -33,6 +41,7 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
       .optional(),
     isValidated: z.lazy(() => SortOrderSchema).optional(),
     isManuallyInserted: z.lazy(() => SortOrderSchema).optional(),
+    notes: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     fingerprintId: z
       .union([
@@ -59,6 +68,12 @@ const Schema: z.ZodType<Prisma.EntryRecordOrderByWithRelationInput> = z
       ])
       .optional(),
     medicalCenterId: z.lazy(() => SortOrderSchema).optional(),
+    CreatedBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
+      .optional(),
+    UpdatedBy: z
+      .lazy(() => UserOrderByWithRelationInputObjectSchema)
+      .optional(),
     beneficiary: z
       .lazy(() => BeneficiaryOrderByWithRelationInputObjectSchema)
       .optional(),
