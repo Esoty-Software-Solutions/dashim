@@ -20,9 +20,13 @@ model User extends Base, ActivationStatus, HumanProfile {
   beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
 
   beneficiaryEntityFutureStatusCreations BeneficiaryEntityFutureStatusChange[] @relation("CreatedBy")
-  beneficiaryEntityFutureStatusChanges BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
+  beneficiaryEntityFutureStatusUpdates BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
   beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
-  beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
+  beneficiaryFutureStatusUpdates BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
+  ReviewStatusCreations ReviewStatus[] @relation("CreatedBy")
+  ReviewStatusUpdates ReviewStatus[] @relation("UpdatedBy")
+  BeneficiaryServiceCreations BeneficiaryService[] @relation("CreatedBy")
+  BeneficiaryServiceUpdates BeneficiaryService[] @relation("UpdatedBy")
 }
 
 model TenantMember extends Base, ActivationStatus {
