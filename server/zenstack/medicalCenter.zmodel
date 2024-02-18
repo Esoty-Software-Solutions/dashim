@@ -1,7 +1,7 @@
 import 'base'
 import 'user'
 import 'policy'
-import 'patientService'
+import 'beneficiaryService'
 
 
 model MedicalCenter extends Base, ActivationStatus,location {
@@ -64,7 +64,7 @@ model MedicalService extends Base, ActivationStatus {
   medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
   medicalCenterId String
 
-  patientServices PatientService[]
+  beneficiaryServices BeneficiaryService[]
   institutionPricing InstitutionMedicalService[]
 
   category MedicalServiceCategory @relation(fields: [categoryId], references: [id])
