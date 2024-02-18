@@ -27,6 +27,8 @@ model User extends Base, ActivationStatus, HumanProfile {
   ReviewStatusUpdates ReviewStatus[] @relation("UpdatedBy")
   BeneficiaryServiceCreations BeneficiaryService[] @relation("CreatedBy")
   BeneficiaryServiceUpdates BeneficiaryService[] @relation("UpdatedBy")
+  EntryRecordServiceCreations EntryRecord[] @relation("CreatedBy")
+  EntryRecordServiceUpdates EntryRecord[] @relation("UpdatedBy")
 }
 
 model TenantMember extends Base, ActivationStatus {
