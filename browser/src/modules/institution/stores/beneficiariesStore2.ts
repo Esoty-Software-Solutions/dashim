@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
 import useQuerierTable from "@/modules/shared/composables/useQuerierTable";
-import { client } from "@/queries";
+import { client, type RouterInput, type RouterOutput } from "@/queries";
 
 const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   const idSearch = ref("");
@@ -11,6 +11,27 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   const nameFilter = useLocalStorage("beneficiariesList.nameFilterValue", "");
   const nameFilterEnabled = useLocalStorage<boolean>(
     "beneficiariesList.nameFilterEnabled",
+    true,
+  );
+  const isActiveFilter = ref<string | null>("true");
+  const isActiveFilterEnabled = useLocalStorage<boolean>(
+    "beneficiariesList.isActiveFilterEnabled",
+    true,
+  );
+
+  type InstitutionOutput = RouterOutput["crud"]["institution"]["findMany"];
+  type Institution = NonNullable<InstitutionOutput>["data"][number];
+  const selectedInstitution = ref<Institution | null>(null);
+  const selectedInstitutionEnabled = useLocalStorage<boolean>(
+    "beneficiariesList.selectedInstitutionEnabled",
+    true,
+  );
+
+  type CityOutput = RouterOutput["crud"]["city"]["findMany"];
+  type City = NonNullable<CityOutput>["data"][number];
+  const selectedCity = ref<City[] | string[]>([]);
+  const selectedCityEnabled = useLocalStorage<boolean>(
+    "beneficiariesList.selectedCityEnabled",
     true,
   );
   const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
@@ -27,41 +48,107 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   // }
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
-  // the first fetch is when the filters/page change
+  // the first fetch is when the filters/page change'
+
+  // TODO set filter type
+  // type WhereFilter = RouterOutput["procedure"]["listSubscribers"]["where"];
+  function buildFilter() {
+    console.log(selectedInstitution.value);
+
+    return { where: {} };
+  }
   const { binding, items, triggerFetch } = useQuerierTable({
     storageKey: "beneficiariesList2",
-    input: () => {
-      if (nameFilterEnabled.value && nameFilter.value.trim()) {
-        return {
-          where: {
-            AND: [
-              {
-                beneficiaries: {
-                  some: {
-                    searchName: { contains: nameFilter.value.trim() },
-                  },
-                },
-              },
-            ],
-            NOT: {
-              beneficiaries: {
-                none: {},
-              },
+    input: computed(() => ({
+      where: {
+        AND: [
+          {
+            isActive:
+              isActiveFilterEnabled.value && isActiveFilter.value == "true"
+                ? true
+                : undefined,
+          },
+          {
+            isActive:
+              isActiveFilterEnabled.value && isActiveFilter.value == undefined
+                ? false
+                : undefined,
+          },
+          {
+            insurancePolicy: {
+              institutionId:
+                selectedInstitution.value && selectedInstitutionEnabled.value
+                  ? selectedInstitution.value
+                  : undefined,
             },
           },
-        };
-      }
-      return {
-        where: {
-          NOT: {
-            beneficiaries: {
-              none: {},
+          {
+            beneficiaries:
+              nameFilterEnabled.value && nameFilter.value.trim()
+                ? {
+                    some: {
+                      searchName:
+                        nameFilterEnabled.value && nameFilter.value.trim()
+                          ? { contains: nameFilter.value.trim() }
+                          : undefined,
+                    },
+                  }
+                : undefined,
+          },
+          {
+            cityId: {
+              in:
+                selectedCity.value.length !== 0 && selectedCityEnabled.value
+                  ? selectedCity.value
+                  : undefined,
             },
+          },
+        ],
+
+        NOT: {
+          beneficiaries: {
+            none: {},
           },
         },
-      };
-    },
+      },
+    })),
     findCallback: client.procedure.listBeneficiaryEntities.query,
+
+    // the first fetch is when the filters/page change
+    // const { binding, items, triggerFetch } = useQuerierTable({
+    //   storageKey: "beneficiariesList2",
+    //   input: () => {
+    //     if (nameFilterEnabled.value && nameFilter.value.trim()) {
+    //       return {
+    //         where: {
+    //           AND: [
+    //             {
+    //               beneficiaries: {
+    //                 some: {
+    //                   searchName: { contains: nameFilter.value.trim() },
+    //                 },
+    //               },
+    //             },
+    //           ],
+    //           NOT: {
+    //             beneficiaries: {
+    //               none: {},
+    //             },
+    //           },
+    //         },
+    //       };
+    //     }
+    //     return {
+    //       where: {
+    //         NOT: {
+    //           beneficiaries: {
+    //             none: {},
+    //           },
+    //         },
+    //       },
+    //     };
+    //   },
+    //   findCallback: client.procedure.listBeneficiaryEntities.query,
     onError(error) {
       globalStore.setMessage("Error while connection to server.");
       console.error(error);
@@ -80,6 +167,12 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     binding,
     items,
     triggerFetch,
+    isActiveFilter,
+    isActiveFilterEnabled,
+    selectedInstitution,
+    selectedInstitutionEnabled,
+    selectedCity,
+    selectedCityEnabled,
     dialog,
   };
 });
