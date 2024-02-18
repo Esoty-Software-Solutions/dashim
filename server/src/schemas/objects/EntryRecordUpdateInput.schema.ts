@@ -10,7 +10,7 @@ import { IDCardUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './IDC
 import { FaceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './FaceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { VoiceBiometricUpdateOneWithoutEntryRecordsNestedInputObjectSchema } from './VoiceBiometricUpdateOneWithoutEntryRecordsNestedInput.schema';
 import { MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema } from './MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInput.schema';
-import { PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './PatientServiceUpdateManyWithoutEntryRecordNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -109,9 +109,10 @@ const Schema: z.ZodType<Prisma.EntryRecordUpdateInput> = z
           MedicalCenterUpdateOneRequiredWithoutEntryRecordsNestedInputObjectSchema,
       )
       .optional(),
-    patientServices: z
+    beneficiaryServices: z
       .lazy(
-        () => PatientServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
+        () =>
+          BeneficiaryServiceUpdateManyWithoutEntryRecordNestedInputObjectSchema,
       )
       .optional(),
   })

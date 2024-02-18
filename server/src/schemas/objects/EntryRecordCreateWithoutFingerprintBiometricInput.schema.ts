@@ -4,7 +4,7 @@ import { IDCardCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './IDC
 import { FaceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './FaceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { VoiceBiometricCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './VoiceBiometricCreateNestedOneWithoutEntryRecordsInput.schema';
 import { MedicalCenterCreateNestedOneWithoutEntryRecordsInputObjectSchema } from './MedicalCenterCreateNestedOneWithoutEntryRecordsInput.schema';
-import { PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema } from './PatientServiceCreateNestedManyWithoutEntryRecordInput.schema';
+import { BeneficiaryServiceCreateNestedManyWithoutEntryRecordInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutEntryRecordInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -42,10 +42,10 @@ const Schema: z.ZodType<Prisma.EntryRecordCreateWithoutFingerprintBiometricInput
       medicalCenter: z.lazy(
         () => MedicalCenterCreateNestedOneWithoutEntryRecordsInputObjectSchema,
       ),
-      patientServices: z
+      beneficiaryServices: z
         .lazy(
           () =>
-            PatientServiceCreateNestedManyWithoutEntryRecordInputObjectSchema,
+            BeneficiaryServiceCreateNestedManyWithoutEntryRecordInputObjectSchema,
         )
         .optional(),
     })

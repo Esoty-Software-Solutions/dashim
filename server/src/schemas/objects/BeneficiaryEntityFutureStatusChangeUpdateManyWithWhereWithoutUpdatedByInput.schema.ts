@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { BeneficiaryEntityFutureStatusChangeScalarWhereInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeScalarWhereInput.schema';
 import { BeneficiaryEntityFutureStatusChangeUpdateManyMutationInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyMutationInput.schema';
-import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusChangesInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusChangesInput.schema';
+import { BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusUpdatesInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusUpdatesInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -18,7 +18,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryEntityFutureStatusChangeUpdateManyWith
         ),
         z.lazy(
           () =>
-            BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusChangesInputObjectSchema,
+            BeneficiaryEntityFutureStatusChangeUncheckedUpdateManyWithoutBeneficiaryEntityFutureStatusUpdatesInputObjectSchema,
         ),
       ]),
     })

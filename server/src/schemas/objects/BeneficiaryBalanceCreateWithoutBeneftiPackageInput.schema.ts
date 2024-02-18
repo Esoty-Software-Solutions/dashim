@@ -11,7 +11,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceCreateWithoutBeneftiPackageInpu
       updatedAt: z.coerce.date().optional(),
       isPublished: z.boolean().optional(),
       isSoftDeleted: z.boolean().optional(),
-      balance: z.number(),
+      balancePending: z.number(),
+      balanceActual: z.number(),
       beneficiary: z.lazy(
         () =>
           BeneficiaryCreateNestedOneWithoutBeneficiaryBalancesInputObjectSchema,

@@ -13,6 +13,10 @@ import { BeneficiaryUpdateManyWithoutStatusSetByNestedInputObjectSchema } from '
 import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInput.schema';
 import { BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
 import { BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInput.schema';
+import { ReviewStatusUpdateManyWithoutCreatedByNestedInputObjectSchema } from './ReviewStatusUpdateManyWithoutCreatedByNestedInput.schema';
+import { ReviewStatusUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './ReviewStatusUpdateManyWithoutUpdatedByNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutCreatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutCreatedByNestedInput.schema';
+import { BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema } from './BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -201,16 +205,38 @@ const Schema: z.ZodType<Prisma.UserUpdateWithoutBeneficiaryFutureStatusCreations
             BeneficiaryEntityFutureStatusChangeUpdateManyWithoutCreatedByNestedInputObjectSchema,
         )
         .optional(),
-      beneficiaryEntityFutureStatusChanges: z
+      beneficiaryEntityFutureStatusUpdates: z
         .lazy(
           () =>
             BeneficiaryEntityFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
         )
         .optional(),
-      beneficiaryFutureStatusChanges: z
+      beneficiaryFutureStatusUpdates: z
         .lazy(
           () =>
             BeneficiaryFutureStatusChangeUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      ReviewStatusCreations: z
+        .lazy(
+          () => ReviewStatusUpdateManyWithoutCreatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      ReviewStatusUpdates: z
+        .lazy(
+          () => ReviewStatusUpdateManyWithoutUpdatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      BeneficiaryServiceCreations: z
+        .lazy(
+          () =>
+            BeneficiaryServiceUpdateManyWithoutCreatedByNestedInputObjectSchema,
+        )
+        .optional(),
+      BeneficiaryServiceUpdates: z
+        .lazy(
+          () =>
+            BeneficiaryServiceUpdateManyWithoutUpdatedByNestedInputObjectSchema,
         )
         .optional(),
     })

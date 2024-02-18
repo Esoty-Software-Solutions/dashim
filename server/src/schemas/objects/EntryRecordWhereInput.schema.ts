@@ -16,7 +16,7 @@ import { VoiceBiometricRelationFilterObjectSchema } from './VoiceBiometricRelati
 import { VoiceBiometricWhereInputObjectSchema } from './VoiceBiometricWhereInput.schema';
 import { MedicalCenterRelationFilterObjectSchema } from './MedicalCenterRelationFilter.schema';
 import { MedicalCenterWhereInputObjectSchema } from './MedicalCenterWhereInput.schema';
-import { PatientServiceListRelationFilterObjectSchema } from './PatientServiceListRelationFilter.schema';
+import { BeneficiaryServiceListRelationFilterObjectSchema } from './BeneficiaryServiceListRelationFilter.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -135,8 +135,8 @@ const Schema: z.ZodType<Prisma.EntryRecordWhereInput> = z
         z.lazy(() => MedicalCenterWhereInputObjectSchema),
       ])
       .optional(),
-    patientServices: z
-      .lazy(() => PatientServiceListRelationFilterObjectSchema)
+    beneficiaryServices: z
+      .lazy(() => BeneficiaryServiceListRelationFilterObjectSchema)
       .optional(),
   })
   .strict();

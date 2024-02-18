@@ -1,0 +1,8 @@
+import 'base'
+
+
+model ReviewStatusEnum extends Base, LangLocale {
+  name String @unique
+  transactionBeneficiaryServices ReviewStatus[] @relation("transactionReviewStatus")
+  medicalBeneficiaryServices ReviewStatus[] @relation("medicalReviewStatus")
+}

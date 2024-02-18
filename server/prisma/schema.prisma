@@ -138,9 +138,13 @@ model User {
     beneficiaryEntityStatusChanges BeneficiaryEntity[] @relation("StatusSetBy")
     beneficiaryStatusChanges Beneficiary[] @relation("StatusSetBy")
     beneficiaryEntityFutureStatusCreations BeneficiaryEntityFutureStatusChange[] @relation("CreatedBy")
-    beneficiaryEntityFutureStatusChanges BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
+    beneficiaryEntityFutureStatusUpdates BeneficiaryEntityFutureStatusChange[] @relation("UpdatedBy")
     beneficiaryFutureStatusCreations BeneficiaryFutureStatusChange[] @relation("CreatedBy")
-    beneficiaryFutureStatusChanges BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
+    beneficiaryFutureStatusUpdates BeneficiaryFutureStatusChange[] @relation("UpdatedBy")
+    ReviewStatusCreations ReviewStatus[] @relation("CreatedBy")
+    ReviewStatusUpdates ReviewStatus[] @relation("UpdatedBy")
+    BeneficiaryServiceCreations BeneficiaryService[] @relation("CreatedBy")
+    BeneficiaryServiceUpdates BeneficiaryService[] @relation("UpdatedBy")
 }
 
 /// @@allow('all', true && isPublished)
@@ -666,7 +670,7 @@ model MedicalService {
     basePrice Int
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
     medicalCenterId String
-    patientServices PatientService[]
+    beneficiaryServices BeneficiaryService[]
     institutionPricing InstitutionMedicalService[]
     category MedicalServiceCategory @relation(fields: [categoryId], references: [id])
     categoryId String
@@ -701,24 +705,25 @@ model EntryRecord {
     voiceId String?
     medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
     medicalCenterId String
-    patientServices PatientService[]
+    beneficiaryServices BeneficiaryService[]
 }
 
 /// @@allow('all', true && isPublished)
-model PatientService {
+model BeneficiaryService {
     id String @id()
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
     isActive Boolean @default(true)
     deactivationReason String?
     deactivationDate DateTime?
     name String
     Note String?
-    isWorkInjury Boolean @default(false)
-    isExamination Boolean @default(false)
-    groupCode String
     billedAmmount Int
     allowedAmmount Int
     copayAmmount Int
@@ -726,12 +731,13 @@ model PatientService {
     coveredAmount Int
     defferedAmount Int
     coinsuranceAmount Int
+    notes Json
+    isExamination Boolean
+    groupId String
+    reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
+    reviewStatusId String @unique()
     entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
     entryRecordId String
-    transactionReviewStatus ReviewStatus @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
-    transactionReviewStatusId String
-    medicalReviewStatus ReviewStatus @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
-    medicalReviewStatusId String
     medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
     medicalServiceId String
 }
@@ -743,11 +749,15 @@ model ReviewStatus {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
-    arabic String?
-    english String?
-    name String @unique()
-    transactionPatientServices PatientService[] @relation("transactionReviewStatus")
-    medicalPatientServices PatientService[] @relation("medicalReviewStatus")
+    CreatedBy User @relation("CreatedBy", fields: [createdById], references: [id])
+    createdById String
+    UpdatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+    updatedById String?
+    beneficiaryService BeneficiaryService?
+    transactionReviewStatus ReviewStatusEnum @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
+    transactionReviewStatusId String
+    medicalReviewStatus ReviewStatusEnum @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
+    medicalReviewStatusId String
 }
 
 /// @@allow('all', true && isPublished)
@@ -761,7 +771,8 @@ model BeneficiaryBalance {
     beneficiaryId String
     beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
     beneftiPackageId String
-    balance Float
+    balancePending Int
+    balanceActual Int
 
     @@index([beneficiaryId, beneftiPackageId])
     @@unique([beneficiaryId, beneftiPackageId])
@@ -797,4 +808,18 @@ model PrescriptionAttachment {
     updatedAt DateTime @updatedAt()
     isPublished Boolean @default(true)
     isSoftDeleted Boolean @default(false)
+}
+
+/// @@allow('all', true && isPublished)
+model ReviewStatusEnum {
+    id String @id()
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+    isPublished Boolean @default(true)
+    isSoftDeleted Boolean @default(false)
+    arabic String?
+    english String?
+    name String @unique()
+    transactionBeneficiaryServices ReviewStatus[] @relation("transactionReviewStatus")
+    medicalBeneficiaryServices ReviewStatus[] @relation("medicalReviewStatus")
 }

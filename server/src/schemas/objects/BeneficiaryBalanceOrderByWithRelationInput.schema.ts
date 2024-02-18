@@ -14,7 +14,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceOrderByWithRelationInput> = z
     isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
     beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
     beneftiPackageId: z.lazy(() => SortOrderSchema).optional(),
-    balance: z.lazy(() => SortOrderSchema).optional(),
+    balancePending: z.lazy(() => SortOrderSchema).optional(),
+    balanceActual: z.lazy(() => SortOrderSchema).optional(),
     beneficiary: z
       .lazy(() => BeneficiaryOrderByWithRelationInputObjectSchema)
       .optional(),

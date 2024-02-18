@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UserCreateNestedOneWithoutBeneficiaryFutureStatusChangesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryFutureStatusChangesInput.schema';
+import { UserCreateNestedOneWithoutBeneficiaryFutureStatusUpdatesInputObjectSchema } from './UserCreateNestedOneWithoutBeneficiaryFutureStatusUpdatesInput.schema';
 import { BeneficiaryCreateNestedOneWithoutFutureStatusInputObjectSchema } from './BeneficiaryCreateNestedOneWithoutFutureStatusInput.schema';
 
 import type { Prisma } from '@prisma/client';
@@ -18,7 +18,7 @@ const Schema: z.ZodType<Prisma.BeneficiaryFutureStatusChangeCreateWithoutCreated
       UpdatedBy: z
         .lazy(
           () =>
-            UserCreateNestedOneWithoutBeneficiaryFutureStatusChangesInputObjectSchema,
+            UserCreateNestedOneWithoutBeneficiaryFutureStatusUpdatesInputObjectSchema,
         )
         .optional(),
       beneficiary: z.lazy(

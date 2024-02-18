@@ -9,6 +9,8 @@ import { BeneficiaryEntityOrderByRelationAggregateInputObjectSchema } from './Be
 import { BeneficiaryOrderByRelationAggregateInputObjectSchema } from './BeneficiaryOrderByRelationAggregateInput.schema';
 import { BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInput.schema';
 import { BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema } from './BeneficiaryFutureStatusChangeOrderByRelationAggregateInput.schema';
+import { ReviewStatusOrderByRelationAggregateInputObjectSchema } from './ReviewStatusOrderByRelationAggregateInput.schema';
+import { BeneficiaryServiceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryServiceOrderByRelationAggregateInput.schema';
 
 import type { Prisma } from '@prisma/client';
 
@@ -106,7 +108,7 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
           BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
       )
       .optional(),
-    beneficiaryEntityFutureStatusChanges: z
+    beneficiaryEntityFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryEntityFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
@@ -118,11 +120,23 @@ const Schema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z
           BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
       )
       .optional(),
-    beneficiaryFutureStatusChanges: z
+    beneficiaryFutureStatusUpdates: z
       .lazy(
         () =>
           BeneficiaryFutureStatusChangeOrderByRelationAggregateInputObjectSchema,
       )
+      .optional(),
+    ReviewStatusCreations: z
+      .lazy(() => ReviewStatusOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    ReviewStatusUpdates: z
+      .lazy(() => ReviewStatusOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    BeneficiaryServiceCreations: z
+      .lazy(() => BeneficiaryServiceOrderByRelationAggregateInputObjectSchema)
+      .optional(),
+    BeneficiaryServiceUpdates: z
+      .lazy(() => BeneficiaryServiceOrderByRelationAggregateInputObjectSchema)
       .optional(),
   })
   .strict();

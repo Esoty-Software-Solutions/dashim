@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PatientServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './PatientServiceCreateNestedManyWithoutMedicalServiceInput.schema';
+import { BeneficiaryServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './BeneficiaryServiceCreateNestedManyWithoutMedicalServiceInput.schema';
 import { InstitutionMedicalServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema } from './InstitutionMedicalServiceCreateNestedManyWithoutMedicalServiceInput.schema';
 import { MedicalServiceCategoryCreateNestedOneWithoutServicesInputObjectSchema } from './MedicalServiceCategoryCreateNestedOneWithoutServicesInput.schema';
 
@@ -19,10 +19,10 @@ const Schema: z.ZodType<Prisma.MedicalServiceCreateWithoutMedicalCenterInput> =
       name: z.string(),
       medicalCenterCode: z.string(),
       basePrice: z.number(),
-      patientServices: z
+      beneficiaryServices: z
         .lazy(
           () =>
-            PatientServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema,
+            BeneficiaryServiceCreateNestedManyWithoutMedicalServiceInputObjectSchema,
         )
         .optional(),
       institutionPricing: z

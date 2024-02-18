@@ -18,7 +18,8 @@ const Schema: z.ZodType<Prisma.BeneficiaryBalanceOrderByWithAggregationInput> =
       isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
       beneficiaryId: z.lazy(() => SortOrderSchema).optional(),
       beneftiPackageId: z.lazy(() => SortOrderSchema).optional(),
-      balance: z.lazy(() => SortOrderSchema).optional(),
+      balancePending: z.lazy(() => SortOrderSchema).optional(),
+      balanceActual: z.lazy(() => SortOrderSchema).optional(),
       _count: z
         .lazy(() => BeneficiaryBalanceCountOrderByAggregateInputObjectSchema)
         .optional(),

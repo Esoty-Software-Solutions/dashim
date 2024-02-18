@@ -38,21 +38,26 @@ const Schema: z.ZodType<Prisma.ReviewStatusUncheckedUpdateManyInput> = z
         z.lazy(() => BoolFieldUpdateOperationsInputObjectSchema),
       ])
       .optional(),
-    arabic: z
+    createdById: z
+      .union([
+        z.string(),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+      ])
+      .optional(),
+    updatedById: z
       .union([
         z.string(),
         z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
       ])
       .optional()
       .nullable(),
-    english: z
+    transactionReviewStatusId: z
       .union([
         z.string(),
-        z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+        z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
       ])
-      .optional()
-      .nullable(),
-    name: z
+      .optional(),
+    medicalReviewStatusId: z
       .union([
         z.string(),
         z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),

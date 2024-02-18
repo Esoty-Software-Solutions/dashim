@@ -1,0 +1,91 @@
+import 'base'
+import 'enum'
+import 'medicalCenter';
+import 'verification'
+import 'policy'
+
+model EntryRecord extends Base, ActivationStatus {
+  isValidated Boolean
+  isManuallyInserted Boolean @default(false)
+
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+  fingerprintBiometric FingerprintBiometric? @relation(fields: [fingerprintId], references: [id])
+  fingerprintId String?
+  idCardBiometric IDCard? @relation(fields: [idCardId], references: [id])
+  idCardId String?
+  faceBiometric FaceBiometric? @relation(fields: [faceId], references: [id])
+  faceId String?
+  voiceBiometric VoiceBiometric? @relation(fields: [voiceId], references: [id])
+  voiceId String?
+  medicalCenter MedicalCenter @relation(fields: [medicalCenterId], references: [id])
+  medicalCenterId String
+
+  beneficiaryServices BeneficiaryService[]
+}
+
+
+model BeneficiaryService extends BaseWithUser, ActivationStatus {
+  name String
+  Note String?
+
+  // الحقول الأسفل تخزن بالقرش
+  billedAmmount Int // قيمة الخدمة المفوترة
+  allowedAmmount Int // قيمة الخدمة المسموح بها
+  copayAmmount Int  // قيمة المتحمله على المستفيد
+  cashAmount Int // قيمة المدفوعه نقديا من قبل المريض
+  coveredAmount Int // قيمة المغطاه من قبل الشركة
+  defferedAmount Int // قيمة المؤجله من قبل الشركة
+  coinsuranceAmount Int // قيمة التأمين المشترك
+
+  notes Json // ملاحظات
+
+  isExamination Boolean
+  groupId String // معرف المجموعة
+
+  // TODO: it might be worth replacing groupId and isExamination with a self-referencing relation model
+  // mainService BeneficiaryService? @relation("MainService", fields: [mainServiceID], references: [id])
+  // mainServiceID String?
+  // supplementServices BeneficiaryService[] @relation("MainService")
+
+  reviewStatus ReviewStatus @relation(fields: [reviewStatusId], references: [id])
+  reviewStatusId String @unique
+
+  entryRecord EntryRecord @relation(fields: [entryRecordId], references: [id])
+  entryRecordId String
+
+  medicalService MedicalService @relation(fields: [medicalServiceId], references: [id])
+  medicalServiceId String
+}
+
+model ReviewStatus extends BaseWithUser {
+  beneficiaryService BeneficiaryService?
+  transactionReviewStatus ReviewStatusEnum @relation("transactionReviewStatus", fields: [transactionReviewStatusId], references: [id])
+  transactionReviewStatusId String
+  medicalReviewStatus ReviewStatusEnum @relation("medicalReviewStatus", fields: [medicalReviewStatusId], references: [id])
+  medicalReviewStatusId String
+}
+
+model BeneficiaryBalance extends Base {
+  beneficiary Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  beneficiaryId String
+
+  beneftiPackage BenefitPackage @relation(fields: [beneftiPackageId], references: [id])
+  beneftiPackageId String
+
+  balancePending Int // الرصيد المعلق
+  balanceActual Int // الرصيد الفعلي
+
+
+  @@index([beneficiaryId, beneftiPackageId])
+  @@unique([beneficiaryId, beneftiPackageId])
+}
+
+model DiagnosisAttachment extends Base, Attachment {
+}
+
+model LabReportAttachment extends Base {
+}
+
+model PrescriptionAttachment extends Base {
+}
