@@ -6,21 +6,21 @@ import cuid2 from "@paralleldrive/cuid2";
 import { SeedHelper } from "../scripts/generateSeederFiles";
 // import { Gender } from "../../app/server/models/gender.server";
 // import { DeviceToken } from "../src/models/deviceToken";
-// import { fakeDeviceToken } from "./fakeData/functions";
+// import { fakeDeviceToken, fakeBeneficiary } from './fakeData/functions';
 import * as enums from "./enumData";
 // import { Institution } from "~/models/institution";
-// import { SubscriberGroup } from "../../app/server/models/subscriberGroup.server";
+// import { Beneficiary } from "../../app/server/models/beneficiary.server";
 // import { InsurancePolicy } from "~/models/insurancePolicy";
 import { unGuardedPrisma } from "@config/db";
 
-type Object = { [key: string]: any; id?: string };
+type Object = { [key: string]: any; id: string };
 
 await unGuardedPrisma.$connect();
 console.info("unGuardedPrisma connected...");
 
 try {
   console.info("creating enums...");
-  await Promise.all([
+  await Promise.allSettled([
     unGuardedPrisma.genderEnum.createMany({
       data: enums.Gender,
       skipDuplicates: true,
@@ -100,9 +100,17 @@ const relationshipObject: { [key: string]: string } = relationship.reduce(
 const fingerTypeIds = await unGuardedPrisma.fingerTypeEnum.findMany({
   select: { id: true },
 });
+
+const cityIds = await unGuardedPrisma.cityEnum.findMany({
+  select: { id: true },
+});
+
+const userIds = await unGuardedPrisma.user.findMany({
+  select: { id: true },
+});
 console.info("enums ids accumulated...");
 
-function getRandomId(objArr: Object[]) {
+function getRandomId(objArr: Object[]): string {
   return objArr[Math.floor(Math.random() * objArr.length)].id;
 }
 
@@ -168,28 +176,12 @@ SeedHelper.sortedTable.forEach(async (table) => {});
 //   console.log("done...");
 // }
 
-// async function createFakeInstitution() {
-//   const data: Prisma.InstitutionCreateManyInput = {
-//     ...SeedHelper.functions.fakeInstitutionComplete(),
-//     id: cuid2.createId(),
-//     createdAt: new Date(),
-//   };
-//   // console.log('user before\n', data)
-//   await SeedHelper.fieldOverride(data);
-//   // console.log('user after\n', data)
-//   return data;
-// }
-
-async function createFakeBeneficiaryEntity(
-  institutionId: string,
-  insurancePolicyId: string,
-) {
-  const data: Prisma.BeneficiaryEntityCreateManyInput = {
-    ...SeedHelper.functions.fakeBeneficiaryEntityComplete(),
+async function createFakeInstitution(cityId: string) {
+  const data: Prisma.InstitutionCreateManyInput = {
+    ...SeedHelper.functions.fakeInstitutionComplete(),
     id: cuid2.createId(),
     createdAt: new Date(),
-    institutionId,
-    insurancePolicyId,
+    cityId,
   };
   // console.log('user before\n', data)
   await SeedHelper.fieldOverride(data);
@@ -197,24 +189,45 @@ async function createFakeBeneficiaryEntity(
   return data;
 }
 
-// async function createFakeSubscriberGroup(
-//   genderIds: string,
-//   subscriberId: string,
-//   relationshipId: string,
-// ) {
-//   const data: Prisma.SubscriberGroupCreateManyInput = {
-//     ...SeedHelper.functions.fakeSubscriberGroupComplete(),
-//     id: cuid2.createId(),
-//     createdAt: new Date(),
-//     genderId: genderIds,
-//     subscriberId: subscriberId,
-//     relationshipId,
-//   };
-//   // console.log('user before\n', data)
-//   await SeedHelper.fieldOverride(data);
-//   // console.log('user after\n', data)
-//   return data;
-// }
+async function createFakeBeneficiaryEntity(
+  insurancePolicyId: string,
+  cityId: string,
+  userId: string,
+) {
+  const data: Prisma.BeneficiaryEntityCreateManyInput = {
+    ...SeedHelper.functions.fakeBeneficiaryEntityComplete(),
+    id: cuid2.createId(),
+    createdAt: new Date(),
+    insurancePolicyId,
+    cityId,
+    statusSetById: userId,
+  };
+  // console.log('user before\n', data)
+  await SeedHelper.fieldOverride(data);
+  // console.log('user after\n', data)
+  return data;
+}
+
+async function createFakeBeneficiary(
+  genderId: string,
+  beneficiaryEntityId: string,
+  relationshipId: string,
+  userId: string,
+) {
+  const data: Prisma.BeneficiaryUncheckedCreateInput = {
+    ...SeedHelper.functions.fakeBeneficiaryComplete(),
+    id: cuid2.createId(),
+    createdAt: new Date(),
+    genderId,
+    beneficiaryEntityId,
+    relationshipId,
+    statusSetById: userId,
+  };
+  // console.log('user before\n', data)
+  await SeedHelper.fieldOverride(data);
+  // console.log('user after\n', data)
+  return data;
+}
 
 // async function createFakeTenant() {
 //   const data: Prisma.TenantCreateManyInput = {
@@ -228,112 +241,118 @@ async function createFakeBeneficiaryEntity(
 //   return data;
 // }
 
-// async function createFakeInsurancePolicy(institutionId: string) {
-//   const data: Prisma.InsurancePolicyCreateManyInput = {
-//     ...SeedHelper.functions.fakeInsurancePolicyComplete(),
-//     id: cuid2.createId(),
-//     createdAt: new Date(),
-//     institutionId,
-//   };
-//   // console.log('user before\n', data)
-//   await SeedHelper.fieldOverride(data);
-//   // console.log('user after\n', data)
-//   return data;
-// }
+async function createFakeInsurancePolicy(institutionId: string) {
+  const data: Prisma.InsurancePolicyCreateManyInput = {
+    ...SeedHelper.functions.fakeInsurancePolicyComplete(),
+    id: cuid2.createId(),
+    createdAt: new Date(),
+    institutionId,
+  };
+  // console.log('user before\n', data)
+  await SeedHelper.fieldOverride(data);
+  // console.log('user after\n', data)
+  return data;
+}
 
-// async function addInstitutions(
-//   institutionCount: number,
-//   SubscriberAverageCount: number,
-//   maxSubscriberGroupSize: number = 10,
-// ) {
-//   const probability = 0.9;
-//   console.log(
-//     "adding ",
-//     institutionCount,
-//     " institutions with",
-//     SubscriberAverageCount,
-//     "subscribers each with a max group size of ",
-//     maxSubscriberGroupSize,
-//     "...",
-//   );
-//   const institutions: Prisma.InstitutionCreateManyInput[] = [];
-//   const subscribers: Prisma.SubscriberCreateManyInput[] = [];
-//   const subscribersGroups: Prisma.SubscriberGroupCreateManyInput[] = [];
-//   const tenants: Prisma.TenantCreateManyInput[] = [];
-//   const insurancePolicys: Prisma.InsurancePolicyCreateManyInput[] = [];
-//   for (let i = 0; i < institutionCount; i++) {
-//     const institution = await createFakeInstitution();
-//     institutions.push(institution);
-//     const insurancePolicy = await createFakeInsurancePolicy(institution.id);
-//     insurancePolicys.push(insurancePolicy);
-//     // const tenant = await SeedHelper.functions.fakeTenantComplete()
-//     // tenants.push(tenant)
-//     for (let k = 0; k < SubscriberAverageCount; k++) {
-//       // console.log('subscriber', k)
-//       const subscriber = await createFakeSubscriber(
-//         institution.id,
-//         insurancePolicy.id,
-//       );
-//       subscribers.push(subscriber);
-//       const subscriberGroupCount = Math.ceil(
-//         Math.pow(Math.random(), 2.5) * maxSubscriberGroupSize,
-//       );
-//       let relationshipCopy = [...relationship];
-//       let relationshipId;
-//       for (let j = 0; j < subscriberGroupCount; j++) {
-//         // console.log('subscriberGroup', j)
-//         const genderId =
-//           genderIds[Math.floor(Math.random() * genderIds.length)].id;
+async function addInstitutions(
+  institutionCount: number,
+  BeneficiaryEntityAverageCount: number,
+  maxBeneficiarySize: number = 10,
+) {
+  const probability = 0.9;
+  console.log(
+    "adding ",
+    institutionCount,
+    " institutions with",
+    BeneficiaryEntityAverageCount,
+    "beneficiaryEntities each with a max group size of ",
+    maxBeneficiarySize,
+    "...",
+  );
+  const institutions: Prisma.InstitutionCreateManyInput[] = [];
+  const beneficiaryEntities: Prisma.BeneficiaryEntityCreateManyInput[] = [];
+  const beneficiaryEntitiesGroups: Prisma.BeneficiaryCreateManyInput[] = [];
+  const tenants: Prisma.TenantCreateManyInput[] = [];
+  const insurancePolicys: Prisma.InsurancePolicyCreateManyInput[] = [];
+  for (let i = 0; i < institutionCount; i++) {
+    const institution = await createFakeInstitution(getRandomId(cityIds));
+    institutions.push(institution);
+    const insurancePolicy = await createFakeInsurancePolicy(institution.id);
+    insurancePolicys.push(insurancePolicy);
+    // const tenant = await SeedHelper.functions.fakeTenantComplete()
+    // tenants.push(tenant)
+    for (let k = 0; k < BeneficiaryEntityAverageCount; k++) {
+      // console.log('beneficiaryEntity', k)
+      const beneficiaryEntity = await createFakeBeneficiaryEntity(
+        insurancePolicy.id,
+        getRandomId(cityIds),
+        getRandomId(userIds),
+      );
+      beneficiaryEntities.push(beneficiaryEntity);
+      const beneficiaryCount = Math.ceil(
+        Math.pow(Math.random(), 2.5) * maxBeneficiarySize,
+      );
+      let relationshipCopy = [...relationship];
+      let relationshipId;
+      for (let j = 0; j < beneficiaryCount; j++) {
+        // console.log('beneficiary', j)
+        const genderId = getRandomId(genderIds);
+        const userId = getRandomId(userIds);
 
-//         const selfRelationShipId = relationshipObject["self"];
-//         if (j === 0) {
-//           relationshipId = relationshipObject["self"];
-//           // Remove 'self' from relationshipCopy
-//           // console.log(
-//           //   'relationshipCopy  length before',
-//           //   relationshipCopy.length,
-//           //   '\n',
-//           //   relationshipCopy
-//           // )
-//           relationshipCopy = relationshipCopy.filter(
-//             (item) => item.name !== "self",
-//           );
-//           // console.log(
-//           //   'relationshipCopy  length after',
-//           //   relationshipCopy.length,
-//           //   '\n',
-//           //   relationshipCopy
-//           // )
-//         } else {
-//           relationshipId =
-//             relationshipCopy[
-//               Math.floor(Math.random() * relationshipCopy.length)
-//             ].id;
-//           if (relationshipId === selfRelationShipId) {
-//             console.error("self relationship is repeated");
-//           }
-//         }
-//         const subscriberGroup = await createFakeSubscriberGroup(
-//           genderId,
-//           subscriber.id,
-//           relationshipId,
-//         );
-//         subscribersGroups.push(subscriberGroup);
-//       }
-//     }
+        const selfRelationShipId = relationshipObject["self"];
+        if (j === 0) {
+          relationshipId = relationshipObject["self"];
+          // Remove 'self' from relationshipCopy
+          // console.log(
+          //   'relationshipCopy  length before',
+          //   relationshipCopy.length,
+          //   '\n',
+          //   relationshipCopy
+          // )
+          relationshipCopy = relationshipCopy.filter(
+            (item) => item.name !== "self",
+          );
+          // console.log(
+          //   'relationshipCopy  length after',
+          //   relationshipCopy.length,
+          //   '\n',
+          //   relationshipCopy
+          // )
+        } else {
+          relationshipId =
+            relationshipCopy[
+              Math.floor(Math.random() * relationshipCopy.length)
+            ].id;
+          if (relationshipId === selfRelationShipId) {
+            console.error("self relationship is repeated");
+          }
+        }
+        const beneficiary = await createFakeBeneficiary(
+          genderId,
+          beneficiaryEntity.id,
+          relationshipId,
+          userId,
+        );
+        beneficiaryEntitiesGroups.push(beneficiary);
+      }
+    }
 
-//     if (Math.random() > 0.9) continue; // 10% chance to not create device token
-//   }
-//   // TODO: make the prisma actions below a transaction
-//   console.log("starting the prisma calls...");
-//   // await unGuardedPrisma.tenant.createMany({ data: tenants })
-//   await unGuardedPrisma.institution.createMany({ data: institutions });
-//   await unGuardedPrisma.insurancePolicy.createMany({ data: insurancePolicys });
-//   await unGuardedPrisma.subscriber.createMany({ data: subscribers });
-//   await unGuardedPrisma.subscriberGroup.createMany({ data: subscribersGroups });
-//   console.log("done...");
-// }
+    if (Math.random() > 0.9) continue; // 10% chance to not create device token
+  }
+  // TODO: make the prisma actions below a transaction
+  console.log("starting the prisma calls...");
+  // await unGuardedPrisma.tenant.createMany({ data: tenants })
+  await unGuardedPrisma.institution.createMany({ data: institutions });
+  await unGuardedPrisma.insurancePolicy.createMany({ data: insurancePolicys });
+  await unGuardedPrisma.beneficiaryEntity.createMany({
+    data: beneficiaryEntities,
+  });
+  await unGuardedPrisma.beneficiary.createMany({
+    data: beneficiaryEntitiesGroups,
+  });
+  console.log("done...");
+}
 
-// // TODO: add timer to see how long it takes to run
+// TODO: add timer to see how long it takes to run
 // await addUsers(1500);
-// await addInstitutions(10, 10000, 13);
+await addInstitutions(20, 20000, 13);

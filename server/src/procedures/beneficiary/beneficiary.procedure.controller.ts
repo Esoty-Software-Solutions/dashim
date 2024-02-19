@@ -44,132 +44,133 @@ export async function listBeneficiaryEntities(
 
   const validInput = ListBeneficiaryEntityInputSchema.parse(input);
 
-  while (true) {
-    try {
-      return await enhancedPrisma(userId).$transaction(
-        async (tx) => {
-          // Code running in a transaction...
-          const [data, filteredCount, unFilteredCount, activeCount] =
-            await Promise.all([
-              tx.beneficiaryEntity.findMany({
-                where: validInput?.where,
-                orderBy: validInput?.orderBy,
-                skip: validInput?.skip,
-                take: validInput?.take,
-                select: {
-                  id: true,
-                  createdAt: true,
-                  updatedAt: true,
-                  isActive: true,
-                  city: {
-                    select: {
-                      id: true,
-                      arabic: true,
-                      english: true,
-                      name: true,
-                    },
+  // while (true) {
+  try {
+    // return await enhancedPrisma(userId).$transaction(
+    //   async (enhancedPrisma(userId)) => {
+    // Code running in a transaction...
+    const [data, filteredCount, unFilteredCount, activeCount] =
+      await Promise.all([
+        enhancedPrisma(userId).beneficiaryEntity.findMany({
+          where: validInput?.where,
+          orderBy: validInput?.orderBy,
+          skip: validInput?.skip,
+          take: validInput?.take,
+          select: {
+            id: true,
+            createdAt: true,
+            updatedAt: true,
+            isActive: true,
+            // city: {
+            //   select: {
+            //     id: true,
+            //     arabic: true,
+            //     english: true,
+            //     name: true,
+            //   },
+            // },
+            insurancePolicyId: true,
+            beneficiaries: {
+              select: {
+                id: true,
+                createdAt: true,
+                updatedAt: true,
+                isActive: true,
+                firstName: true,
+                secondName: true,
+                thirdName: true,
+                fourthName: true,
+                lastName: true,
+                birthDate: true,
+                // gender: {
+                //   select: {
+                //     id: true,
+                //     name: true,
+                //     arabic: true,
+                //     english: true,
+                //   },
+                // },
+                // relationship: {
+                //   select: {
+                //     id: true,
+                //     name: true,
+                //     arabic: true,
+                //     english: true,
+                //   },
+                // },
+                // StatusSetBy: StatusSetByFields,
+                beneficiaryBalances: {
+                  select: {
+                    id: true,
+                    balanceActual: true,
+                    balancePending: true,
+                    updatedAt: true,
                   },
-                  insurancePolicyId: true,
-                  beneficiaries: {
-                    select: {
-                      id: true,
-                      createdAt: true,
-                      updatedAt: true,
-                      isActive: true,
-                      firstName: true,
-                      secondName: true,
-                      thirdName: true,
-                      fourthName: true,
-                      lastName: true,
-                      birthDate: true,
-                      gender: {
-                        select: {
-                          id: true,
-                          name: true,
-                          arabic: true,
-                          english: true,
-                        },
-                      },
-                      relationship: {
-                        select: {
-                          id: true,
-                          name: true,
-                          arabic: true,
-                          english: true,
-                        },
-                      },
-                      StatusSetBy: StatusSetByFields,
-                      beneficiaryBalances: {
-                        select: {
-                          id: true,
-                          balanceActual: true,
-                          balancePending: true,
-                          updatedAt: true,
-                        },
-                      },
-                    },
-                  },
-                  StatusSetBy: StatusSetByFields,
                 },
-                // include: { //* This blows up the return type
-                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
-                //   StatusSetBy: selectStatusSetBy,
-                // },
-                // include: { //* This blows up the return type
-                //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
-                //   StatusSetBy: selectStatusSetBy,
-                // },
-              }),
-              tx.beneficiaryEntity.count({
-                where: input?.where,
-              }),
-              tx.beneficiaryEntity.count(),
-              tx.beneficiaryEntity.count({
-                where: { ...input?.where, isActive: true },
-              }),
-            ]);
-          const inActiveCount = filteredCount - activeCount;
-          // const maxAge = await tx.subscriber.aggregate({where: input.where, select: {age: true}})
-          const statistics = [
-            { key: "activeCount", value: activeCount },
-            { key: "inActiveCount", value: inActiveCount },
-          ];
+              },
+            },
+            // StatusSetBy: StatusSetByFields,
+          },
+          // include: { //* This blows up the return type
+          //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+          //   StatusSetBy: selectStatusSetBy,
+          // },
+          // include: { //* This blows up the return type
+          //   beneficiaries: { select: { StatusSetBy: selectStatusSetBy } },
+          //   StatusSetBy: selectStatusSetBy,
+          // },
+        }),
+        enhancedPrisma(userId).beneficiaryEntity.count({
+          where: input?.where,
+        }),
+        20, //enhancedPrisma(userId).beneficiaryEntity.count(),
+        20,
+        // enhancedPrisma(userId).beneficiaryEntity.count({
+        //   // where: { ...input?.where, isActive: true },
+        // }),
+      ]);
+    const inActiveCount = filteredCount - activeCount;
+    // const maxAge = await enhancedPrisma(userId).subscriber.aggregate({where: input.where, select: {age: true}})
+    const statistics = [
+      { key: "activeCount", value: activeCount },
+      { key: "inActiveCount", value: inActiveCount },
+    ];
 
-          // const metaData = {
-          //   uFCount,
-          //   priceFilter: { min: 0, max: 1000 },
-          //   countryFilter: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
-          //   cityFilter: ["Cairo", "Alexandria", "Giza"],
-          // };
+    // const metaData = {
+    //   uFCount,
+    //   priceFilter: { min: 0, max: 1000 },
+    //   countryFilter: ["Egypt", "Saudi Arabia", "United Arab Emirates"],
+    //   cityFilter: ["Cairo", "Alexandria", "Giza"],
+    // };
 
-          return {
-            data,
-            filteredCount,
-            unFilteredCount,
-            statistics,
-          };
-        },
-        {
-          //   maxWait: 5000, // default: 2000
-          //   timeout: 10000, // default: 5000
-          isolationLevel: Prisma.TransactionIsolationLevel.Serializable, // optional, default defined by database configuration
-        },
-      );
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        // The .code property can be accessed in a type-safe manner
-        if (error.code === "P2034") {
-          retries++;
-          if (retries >= MAX_RETRIES) {
-            throw error;
-          }
-          continue;
+    return {
+      data,
+      filteredCount,
+      unFilteredCount,
+      statistics,
+    };
+    // },
+    // {
+    //   //   maxWait: 5000, // default: 2000
+    //   //   timeout: 10000, // default: 5000
+    //   isolationLevel: Prisma.TransactionIsolationLevel.Serializable, // optional, default defined by database configuration
+    // },
+    // );
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (error.code === "P2034") {
+        retries++;
+        if (retries >= MAX_RETRIES) {
+          throw error;
         }
+        // continue;
       }
-      throw error;
     }
+    throw error;
   }
 }
+// }
 // }
 
 export async function createBeneficiaryEntity(

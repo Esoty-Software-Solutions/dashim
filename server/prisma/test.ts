@@ -75,7 +75,7 @@ for (const TableName of SeedHelper.tablesFullList) {
     if (!(SKIP_SEEDED_TABLES && count > 0)) {
       // await (unGuardedPrisma as any)[tableName].deleteMany();
       console.log("Skipping ", TableName);
-      const size = 50; // replace with your desired size
+      const size = 3; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
@@ -156,7 +156,7 @@ for (const TableName of SeedHelper.sortedTable) {
       const count: number = await (unGuardedPrisma as any)[tableName].count(); // TODO: put in a try and catch
       console.log("Count before insertion: ", count);
       // await (unGuardedPrisma as any)[tableName].deleteMany();
-      const size = 50; // replace with your desired size
+      const size = 3; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
