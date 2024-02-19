@@ -5,18 +5,18 @@ import { ref, computed } from "vue";
 import useQuerierTable from "@/modules/shared/composables/useQuerierTable";
 import { client, type RouterInput, type RouterOutput } from "@/queries";
 
-const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
+const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
   const idSearch = ref("");
   const idEnabled = ref(true);
-  const nameFilter = useLocalStorage("beneficiariesList.nameFilterValue", "");
+  const nameFilter = useLocalStorage("beneficiariesList2.nameFilterValue", "");
   const nameFilterEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.nameFilterEnabled",
+    "beneficiariesList2.nameFilterEnabled",
     true,
   );
 
   const isActiveFilter = ref<string | null>("true");
   const isActiveFilterEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.isActiveFilterEnabled",
+    "beneficiariesList2.isActiveFilterEnabled",
     true,
   );
 
@@ -24,7 +24,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   type Institution = NonNullable<InstitutionOutput>["data"][number];
   const selectedInstitution = ref<Institution | null>(null);
   const selectedInstitutionEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.selectedInstitutionEnabled",
+    "beneficiariesList2.selectedInstitutionEnabled",
     true,
   );
 
@@ -32,7 +32,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   type City = NonNullable<CityOutput>["data"][number];
   const selectedCity = ref<City[] | string[]>([]);
   const selectedCityEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.selectedCityEnabled",
+    "beneficiariesList2.selectedCityEnabled",
     true,
   );
   const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
