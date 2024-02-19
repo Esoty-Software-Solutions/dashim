@@ -96,22 +96,22 @@ const BeneficiaryWhereInput = z
 const BeneficiaryEntityWhereInput: z.ZodType<Prisma.BeneficiaryEntityWhereInput> =
   z
     .object({
-      AND: z
-        .union([
-          z.lazy(() => BeneficiaryEntityWhereInput),
-          z.lazy(() => BeneficiaryEntityWhereInput).array(),
-        ])
-        .optional(),
-      OR: z
-        .lazy(() => BeneficiaryEntityWhereInput)
-        .array()
-        .optional(),
-      NOT: z
-        .union([
-          z.lazy(() => BeneficiaryEntityWhereInput),
-          z.lazy(() => BeneficiaryEntityWhereInput).array(),
-        ])
-        .optional(),
+      // AND: z
+      //   .union([
+      //     z.lazy(() => BeneficiaryEntityWhereInput),
+      //     z.lazy(() => BeneficiaryEntityWhereInput).array(),
+      //   ])
+      //   .optional(),
+      // OR: z
+      //   .lazy(() => BeneficiaryEntityWhereInput)
+      //   .array()
+      //   .optional(),
+      // NOT: z
+      //   .union([
+      //     z.lazy(() => BeneficiaryEntityWhereInput),
+      //     z.lazy(() => BeneficiaryEntityWhereInput).array(),
+      //   ])
+      // .optional(),
       id: StringFilterObjectSchema.optional(),
       createdAt: DateTimeFilterObjectSchema.optional(),
       updatedAt: DateTimeFilterObjectSchema.optional(),

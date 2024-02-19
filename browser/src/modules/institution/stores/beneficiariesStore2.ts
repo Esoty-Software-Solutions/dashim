@@ -54,55 +54,66 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     storageKey: "beneficiariesList2",
     input: computed(() => ({
       where: {
-        AND: [
-          {
-            isActive:
-              isActiveFilterEnabled.value && isActiveFilter.value == "true"
-                ? true
-                : undefined,
-          },
-          {
-            isActive:
-              isActiveFilterEnabled.value && isActiveFilter.value == undefined
-                ? false
-                : undefined,
-          },
-          {
-            insurancePolicy: {
-              institutionId:
-                selectedInstitution.value && selectedInstitutionEnabled.value
-                  ? selectedInstitution.value
-                  : undefined,
-            },
-          },
-          {
-            beneficiaries:
-              nameFilterEnabled.value && nameFilter.value.trim()
-                ? {
-                    some: {
-                      searchName:
-                        nameFilterEnabled.value && nameFilter.value.trim()
-                          ? { contains: nameFilter.value.trim() }
-                          : undefined,
-                    },
-                  }
-                : undefined,
-          },
-          {
-            cityId: {
-              in:
-                selectedCity.value.length !== 0 && selectedCityEnabled.value
-                  ? selectedCity.value
-                  : undefined,
-            },
-          },
-        ],
-
-        NOT: {
-          beneficiaries: {
-            none: {},
-          },
-        },
+        //   AND: [
+        //     {
+        isActive:
+          isActiveFilterEnabled.value && isActiveFilter.value == "true"
+            ? true
+            : undefined,
+        //     },
+        //     {
+        isActive:
+          isActiveFilterEnabled.value && isActiveFilter.value == undefined
+            ? false
+            : undefined,
+        //     },
+        //     {
+        // insurancePolicy:  {
+        //   institutionId:
+        //     selectedInstitution.value && selectedInstitutionEnabled.value
+        //       ? selectedInstitution.value
+        //       : undefined,
+        // },
+        insurancePolicy:
+          selectedInstitution.value && selectedInstitutionEnabled.value
+            ? {
+                institutionId: selectedInstitution.value,
+              }
+            : undefined,
+        //     },
+        //     {
+        beneficiaries:
+          nameFilterEnabled.value && nameFilter.value.trim()
+            ? {
+                some: {
+                  searchName:
+                    nameFilterEnabled.value && nameFilter.value.trim()
+                      ? { contains: nameFilter.value.trim() }
+                      : undefined,
+                },
+              }
+            : undefined,
+        //     },
+        //     {
+        // cityId: {
+        //   in:
+        //     selectedCity.value.length !== 0 && selectedCityEnabled.value
+        //       ? selectedCity.value
+        //       : undefined,
+        // },
+        cityId:
+          selectedCity.value.length !== 0 && selectedCityEnabled.value
+            ? {
+                in: selectedCity.value,
+              }
+            : undefined,
+        //     },
+        //   ],
+        //   NOT: {
+        //     beneficiaries: {
+        //       none: {},
+        //     },
+        //   },
       },
     })),
     findCallback: client.procedure.listBeneficiaryEntities.query,
