@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, watch } from "vue";
+import { ref, toRefs, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -14,11 +14,16 @@ import useDataFilters, {
   asyncSelect,
   asyncAutocomplete,
 } from "@/modules/filter/composables/dataFilter";
-import CreateBeneficiariesModel from "@/modules/institution/components/CreateBeneficiariesModel.vue";
 import { client, type RouterInput } from "@/queries";
+
+// import CreateBeneficiariesModel from "@/modules/institution/components/CreateBeneficiariesModel.vue";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
+// simple usage
+const CreateBeneficiariesModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateBeneficiariesModel.vue"),
+);
 defineOptions({
   name: "InstitutionsBeneficiariesPage",
 });

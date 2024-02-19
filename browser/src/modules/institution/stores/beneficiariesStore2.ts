@@ -5,18 +5,18 @@ import { ref, computed } from "vue";
 import useQuerierTable from "@/modules/shared/composables/useQuerierTable";
 import { client, type RouterInput, type RouterOutput } from "@/queries";
 
-const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
+const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
   const idSearch = ref("");
   const idEnabled = ref(true);
-  const nameFilter = useLocalStorage("beneficiariesList.nameFilterValue", "");
+  const nameFilter = useLocalStorage("beneficiariesList2.nameFilterValue", "");
   const nameFilterEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.nameFilterEnabled",
+    "beneficiariesList2.nameFilterEnabled",
     true,
   );
 
   const isActiveFilter = ref<string | null>("true");
   const isActiveFilterEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.isActiveFilterEnabled",
+    "beneficiariesList2.isActiveFilterEnabled",
     true,
   );
 
@@ -24,7 +24,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   type Institution = NonNullable<InstitutionOutput>["data"][number];
   const selectedInstitution = ref<Institution | null>(null);
   const selectedInstitutionEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.selectedInstitutionEnabled",
+    "beneficiariesList2.selectedInstitutionEnabled",
     true,
   );
 
@@ -32,7 +32,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
   type City = NonNullable<CityOutput>["data"][number];
   const selectedCity = ref<City[] | string[]>([]);
   const selectedCityEnabled = useLocalStorage<boolean>(
-    "beneficiariesList.selectedCityEnabled",
+    "beneficiariesList2.selectedCityEnabled",
     true,
   );
   const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
@@ -54,55 +54,66 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     storageKey: "beneficiariesList2",
     input: computed(() => ({
       where: {
-        AND: [
-          {
-            isActive:
-              isActiveFilterEnabled.value && isActiveFilter.value == "true"
-                ? true
-                : undefined,
-          },
-          {
-            isActive:
-              isActiveFilterEnabled.value && isActiveFilter.value == undefined
-                ? false
-                : undefined,
-          },
-          {
-            insurancePolicy: {
-              institutionId:
-                selectedInstitution.value && selectedInstitutionEnabled.value
-                  ? selectedInstitution.value
-                  : undefined,
-            },
-          },
-          {
-            beneficiaries:
-              nameFilterEnabled.value && nameFilter.value.trim()
-                ? {
-                    some: {
-                      searchName:
-                        nameFilterEnabled.value && nameFilter.value.trim()
-                          ? { contains: nameFilter.value.trim() }
-                          : undefined,
-                    },
-                  }
-                : undefined,
-          },
-          {
-            cityId: {
-              in:
-                selectedCity.value.length !== 0 && selectedCityEnabled.value
-                  ? selectedCity.value
-                  : undefined,
-            },
-          },
-        ],
-
-        NOT: {
-          beneficiaries: {
-            none: {},
-          },
-        },
+        //   AND: [
+        //     {
+        isActive:
+          isActiveFilterEnabled.value && isActiveFilter.value == "true"
+            ? true
+            : undefined,
+        //     },
+        //     {
+        isActive:
+          isActiveFilterEnabled.value && isActiveFilter.value == undefined
+            ? false
+            : undefined,
+        //     },
+        //     {
+        // insurancePolicy:  {
+        //   institutionId:
+        //     selectedInstitution.value && selectedInstitutionEnabled.value
+        //       ? selectedInstitution.value
+        //       : undefined,
+        // },
+        insurancePolicy:
+          selectedInstitution.value && selectedInstitutionEnabled.value
+            ? {
+                institutionId: selectedInstitution.value,
+              }
+            : undefined,
+        //     },
+        //     {
+        beneficiaries:
+          nameFilterEnabled.value && nameFilter.value.trim()
+            ? {
+                some: {
+                  searchName:
+                    nameFilterEnabled.value && nameFilter.value.trim()
+                      ? { contains: nameFilter.value.trim() }
+                      : undefined,
+                },
+              }
+            : undefined,
+        //     },
+        //     {
+        // cityId: {
+        //   in:
+        //     selectedCity.value.length !== 0 && selectedCityEnabled.value
+        //       ? selectedCity.value
+        //       : undefined,
+        // },
+        cityId:
+          selectedCity.value.length !== 0 && selectedCityEnabled.value
+            ? {
+                in: selectedCity.value,
+              }
+            : undefined,
+        //     },
+        //   ],
+        //   NOT: {
+        //     beneficiaries: {
+        //       none: {},
+        //     },
+        //   },
       },
     })),
     findCallback: client.procedure.listBeneficiaryEntities.query,
