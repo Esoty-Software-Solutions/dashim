@@ -18,103 +18,103 @@ type Object = { [key: string]: any; id: string };
 await unGuardedPrisma.$connect();
 console.info("unGuardedPrisma connected...");
 
-try {
-  console.info("creating enums...");
-  await Promise.allSettled([
-    unGuardedPrisma.genderEnum.createMany({
-      data: enums.Gender,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.tenantTypeEnum.createMany({
-      data: enums.TenantType,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.roleEnum.createMany({
-      data: enums.Role,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.deviceTypeEnum.createMany({
-      data: enums.DeviceType,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.relationshipEnum.createMany({
-      data: enums.Relationship,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.fingerTypeEnum.createMany({
-      data: enums.FingerType,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.reviewStatusEnum.createMany({
-      data: enums.ReviewStatus,
-      skipDuplicates: true,
-    }),
-    unGuardedPrisma.countryEnum.createMany({
-      data: enums.Country,
-      skipDuplicates: true,
-    }),
-  ]);
-  console.info("enums created...");
-} catch (e) {
-  //! This will throw one error if multiple enums already exist
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    if (e.code === "P2002") {
-      console.info("enums already exist...");
+export async function EnumSeed() {
+  try {
+    console.info("creating enums...");
+    await Promise.all([
+      unGuardedPrisma.genderEnum.createMany({
+        data: enums.Gender,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.tenantTypeEnum.createMany({
+        data: enums.TenantType,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.roleEnum.createMany({
+        data: enums.Role,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.deviceTypeEnum.createMany({
+        data: enums.DeviceType,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.relationshipEnum.createMany({
+        data: enums.Relationship,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.fingerTypeEnum.createMany({
+        data: enums.FingerType,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.reviewStatusEnum.createMany({
+        data: enums.ReviewStatus,
+        skipDuplicates: true,
+      }),
+      unGuardedPrisma.countryEnum.createMany({
+        data: enums.Country,
+        skipDuplicates: true,
+      }),
+    ]);
+    console.info("enums created...");
+  } catch (e) {
+    //! This will throw one error if multiple enums already exist
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        console.info("enums already exist...");
+      } else {
+        console.error(e);
+      }
     } else {
       console.error(e);
     }
-  } else {
-    console.error(e);
   }
 }
 
 console.info("getting enums ids...");
 // TODO: put these in an object
-const genderIds = await unGuardedPrisma.genderEnum.findMany({
-  select: { id: true },
-});
-const tenantTypeIds = await unGuardedPrisma.tenantTypeEnum.findMany({
-  select: { id: true },
-});
-const roleIds = await unGuardedPrisma.roleEnum.findMany({
-  select: { id: true },
-});
-const deviceTypeIds = await unGuardedPrisma.deviceTypeEnum.findMany({
-  select: { id: true },
-});
-const relationshipIds = await unGuardedPrisma.relationshipEnum.findMany({
-  select: { id: true },
-});
-const relationship = await unGuardedPrisma.relationshipEnum.findMany({
-  select: { id: true, name: true },
-});
-const relationshipObject: { [key: string]: string } = relationship.reduce(
-  (obj, item) => {
-    return {
-      ...obj,
-      [item.name]: item.id,
-    };
-  },
-  {},
-);
-const fingerTypeIds = await unGuardedPrisma.fingerTypeEnum.findMany({
-  select: { id: true },
-});
+// const genderIds = await unGuardedPrisma.genderEnum.findMany({
+//   select: { id: true },
+// });
+// const tenantTypeIds = await unGuardedPrisma.tenantTypeEnum.findMany({
+//   select: { id: true },
+// });
+// const roleIds = await unGuardedPrisma.roleEnum.findMany({
+//   select: { id: true },
+// });
+// const deviceTypeIds = await unGuardedPrisma.deviceTypeEnum.findMany({
+//   select: { id: true },
+// });
+// const relationshipIds = await unGuardedPrisma.relationshipEnum.findMany({
+//   select: { id: true },
+// });
+// const relationship = await unGuardedPrisma.relationshipEnum.findMany({
+//   select: { id: true, name: true },
+// });
+// const relationshipObject: { [key: string]: string } = relationship.reduce(
+//   (obj, item) => {
+//     return {
+//       ...obj,
+//       [item.name]: item.id,
+//     };
+//   },
+//   {},
+// );
+// const fingerTypeIds = await unGuardedPrisma.fingerTypeEnum.findMany({
+//   select: { id: true },
+// });
 
-const cityIds = await unGuardedPrisma.cityEnum.findMany({
-  select: { id: true },
-});
+// const cityIds = await unGuardedPrisma.cityEnum.findMany({
+//   select: { id: true },
+// });
 
-const userIds = await unGuardedPrisma.user.findMany({
-  select: { id: true },
-});
+// const userIds = await unGuardedPrisma.user.findMany({
+//   select: { id: true },
+// });
 console.info("enums ids accumulated...");
 
 function getRandomId(objArr: Object[]): string {
   return objArr[Math.floor(Math.random() * objArr.length)].id;
 }
-
-SeedHelper.sortedTable.forEach(async (table) => {});
 
 // async function createFakeUser(obj: Object) {
 //   const data = {
@@ -122,7 +122,7 @@ SeedHelper.sortedTable.forEach(async (table) => {});
 //     ...obj,
 //   };
 //   // console.log('user before\n', user)
-//   await SeedHelper.fieldOverride(data);
+//   await SeedHelper.fieldOverride(data, { tableName: "User" });
 //   // console.log('user after\n', user)
 //   return data;
 // }
@@ -136,7 +136,7 @@ SeedHelper.sortedTable.forEach(async (table) => {});
 //     createdAt: new Date(),
 //   };
 //   // console.log('user before\n', data)
-//   await SeedHelper.fieldOverride(data);
+//   await SeedHelper.fieldOverride(data , { tableName: "DeviceToken" });
 //   // console.log('user after\n', data)
 //   return data;
 // }
@@ -184,7 +184,7 @@ async function createFakeInstitution(cityId: string) {
     cityId,
   };
   // console.log('user before\n', data)
-  await SeedHelper.fieldOverride(data);
+  await SeedHelper.fieldOverride(data, { tableName: "Institution" });
   // console.log('user after\n', data)
   return data;
 }
@@ -203,7 +203,7 @@ async function createFakeBeneficiaryEntity(
     statusSetById: userId,
   };
   // console.log('user before\n', data)
-  await SeedHelper.fieldOverride(data);
+  await SeedHelper.fieldOverride(data, { tableName: "BeneficiaryEntity" });
   // console.log('user after\n', data)
   return data;
 }
@@ -224,34 +224,135 @@ async function createFakeBeneficiary(
     statusSetById: userId,
   };
   // console.log('user before\n', data)
-  await SeedHelper.fieldOverride(data);
+  await SeedHelper.fieldOverride(data, { tableName: "Beneficiary" });
   // console.log('user after\n', data)
   return data;
 }
 
-// async function createFakeTenant() {
-//   const data: Prisma.TenantCreateManyInput = {
-//     ...SeedHelper.functions.fakeTenantComplete(),
-//     id: cuid2.createId(),
-//     createdAt: new Date(),
-//   };
-//   // console.log('user before\n', data)
-//   await SeedHelper.fieldOverride(data);
-//   // console.log('user after\n', data)
-//   return data;
-// }
+async function createFakeTenant({
+  typeId,
+  ownerId,
+}: {
+  typeId: string;
+  ownerId: string;
+}) {
+  const data: Prisma.TenantCreateManyInput = {
+    ...SeedHelper.functions.fakeTenantComplete(),
+    id: cuid2.createId(),
+    typeId,
+    ownerId,
+  };
+  // console.log('user before\n', data)
+  await SeedHelper.fieldOverride(data, { tableName: "Tenant" });
+  // console.log('user after\n', data)
+  return data;
+}
 
 async function createFakeInsurancePolicy(institutionId: string) {
   const data: Prisma.InsurancePolicyCreateManyInput = {
     ...SeedHelper.functions.fakeInsurancePolicyComplete(),
     id: cuid2.createId(),
-    createdAt: new Date(),
     institutionId,
   };
   // console.log('user before\n', data)
-  await SeedHelper.fieldOverride(data);
+  await SeedHelper.fieldOverride(data, { tableName: "InsurancePolicy" });
   // console.log('user after\n', data)
   return data;
+}
+
+async function createFakeMedicalCenter({
+  cityId,
+  managingTenantId,
+}: {
+  cityId: string;
+  managingTenantId: string;
+}) {
+  const data: Prisma.MedicalCenterCreateManyInput = {
+    ...SeedHelper.functions.fakeMedicalCenterComplete(),
+    id: cuid2.createId(),
+    cityId,
+    managingTenantId,
+  };
+  await SeedHelper.fieldOverride(data, { tableName: "MedicalCenter" });
+  return data;
+}
+
+async function createFakeMedicalService({
+  categoryId,
+  medicalCenterId,
+}: {
+  categoryId: string;
+  medicalCenterId: string;
+}) {
+  const data: Prisma.MedicalServiceCreateManyInput = {
+    ...SeedHelper.functions.fakeMedicalServiceComplete(),
+    id: cuid2.createId(),
+    categoryId,
+    medicalCenterId,
+  };
+  await SeedHelper.fieldOverride(data, { tableName: "MedicalService" });
+  return data;
+}
+
+async function addMedicalCenters(
+  medicalCenterCount: number,
+  medicalServiceCount: number,
+) {
+  console.log(
+    "adding ",
+    medicalCenterCount,
+    " medicalCenters with",
+    medicalServiceCount,
+    "medicalServices each...",
+  );
+  const medicalCenters: Prisma.MedicalCenterCreateManyInput[] = [];
+  const tenants: Prisma.TenantCreateManyInput[] = [];
+  const categoryIds = await unGuardedPrisma.medicalServiceCategory.findMany({
+    select: { id: true },
+  });
+  const cityIds = await unGuardedPrisma.cityEnum.findMany({
+    select: { id: true },
+  });
+  const typeIds = await unGuardedPrisma.tenantTypeEnum.findMany({
+    select: { id: true },
+  });
+  const ownerIds = await unGuardedPrisma.user.findMany({
+    select: { id: true },
+  });
+  for (let i = 0; i < medicalCenterCount; i++) {
+    const medicalServices: Prisma.MedicalServiceCreateManyInput[] = [];
+    const cityId = getRandomId(cityIds);
+    const tenant = await createFakeTenant({
+      typeId: getRandomId(typeIds),
+      ownerId: getRandomId(ownerIds),
+    });
+    tenants.push(tenant);
+    const medicalCenter = await createFakeMedicalCenter({
+      cityId,
+      managingTenantId: tenant.id,
+    });
+    medicalCenters.push(medicalCenter);
+    for (let k = 0; k < medicalServiceCount; k++) {
+      const categoryId = getRandomId(categoryIds);
+      const medicalService = await createFakeMedicalService({
+        categoryId,
+        medicalCenterId: medicalCenter.id,
+      });
+      medicalServices.push(medicalService);
+    }
+    const insertTenant = unGuardedPrisma.tenant.createMany({ data: tenant });
+    const insertMedicalCenter = unGuardedPrisma.medicalCenter.createMany({
+      data: medicalCenter,
+    });
+    const insertMedicalServices = unGuardedPrisma.medicalService.createMany({
+      data: medicalServices,
+    });
+    await unGuardedPrisma.$transaction([
+      insertTenant,
+      insertMedicalCenter,
+      insertMedicalServices,
+    ]);
+  }
 }
 
 async function addInstitutions(
@@ -270,15 +371,39 @@ async function addInstitutions(
     "...",
   );
   const institutions: Prisma.InstitutionCreateManyInput[] = [];
-  const beneficiaryEntities: Prisma.BeneficiaryEntityCreateManyInput[] = [];
-  const beneficiaryEntitiesGroups: Prisma.BeneficiaryCreateManyInput[] = [];
   const tenants: Prisma.TenantCreateManyInput[] = [];
-  const insurancePolicys: Prisma.InsurancePolicyCreateManyInput[] = [];
+
+  const cityIds = await unGuardedPrisma.cityEnum.findMany({
+    select: { id: true },
+  });
+  const userIds = await unGuardedPrisma.user.findMany({
+    select: { id: true },
+  });
+  const genderIds = await unGuardedPrisma.genderEnum.findMany({
+    select: { id: true },
+  });
+  const relationship = await unGuardedPrisma.relationshipEnum.findMany({
+    select: { id: true, name: true },
+  });
+  const relationshipObject: { [key: string]: string } = relationship.reduce(
+    (obj, item) => {
+      return {
+        ...obj,
+        [item.name]: item.id,
+      };
+    },
+    {},
+  );
   for (let i = 0; i < institutionCount; i++) {
+    const beneficiaryEntities: Prisma.BeneficiaryEntityCreateManyInput[] = [];
+    const insurancePolicies: Prisma.InsurancePolicyCreateManyInput[] = [];
+    const beneficiaries: Prisma.BeneficiaryCreateManyInput[] = [];
+
     const institution = await createFakeInstitution(getRandomId(cityIds));
+
     institutions.push(institution);
     const insurancePolicy = await createFakeInsurancePolicy(institution.id);
-    insurancePolicys.push(insurancePolicy);
+    insurancePolicies.push(insurancePolicy);
     // const tenant = await SeedHelper.functions.fakeTenantComplete()
     // tenants.push(tenant)
     for (let k = 0; k < BeneficiaryEntityAverageCount; k++) {
@@ -333,26 +458,41 @@ async function addInstitutions(
           relationshipId,
           userId,
         );
-        beneficiaryEntitiesGroups.push(beneficiary);
+        beneficiaries.push(beneficiary);
       }
     }
-
-    if (Math.random() > 0.9) continue; // 10% chance to not create device token
+    const insertInstitution = unGuardedPrisma.institution.createMany({
+      data: institution,
+    });
+    const insertInsurancePolicies = unGuardedPrisma.insurancePolicy.createMany({
+      data: insurancePolicies,
+    });
+    const insertBeneficiaryEntities =
+      unGuardedPrisma.beneficiaryEntity.createMany({
+        data: beneficiaryEntities,
+      });
+    const insertBeneficiaries = unGuardedPrisma.beneficiary.createMany({
+      data: beneficiaries,
+    });
+    await unGuardedPrisma.$transaction([
+      insertInstitution,
+      insertInsurancePolicies,
+      insertBeneficiaryEntities,
+      insertBeneficiaries,
+    ]);
   }
   // TODO: make the prisma actions below a transaction
   console.log("starting the prisma calls...");
   // await unGuardedPrisma.tenant.createMany({ data: tenants })
-  await unGuardedPrisma.institution.createMany({ data: institutions });
-  await unGuardedPrisma.insurancePolicy.createMany({ data: insurancePolicys });
-  await unGuardedPrisma.beneficiaryEntity.createMany({
-    data: beneficiaryEntities,
-  });
-  await unGuardedPrisma.beneficiary.createMany({
-    data: beneficiaryEntitiesGroups,
-  });
+
   console.log("done...");
 }
 
 // TODO: add timer to see how long it takes to run
 // await addUsers(1500);
-await addInstitutions(20, 20000, 13);
+// await addInstitutions(2, 50000, 13);
+
+export const customSeeder = [
+  { key: "Institution", seed: () => addInstitutions(4, 55000, 13) },
+  { key: "MedicalCenter", seed: () => addMedicalCenters(5, 1500) },
+];
