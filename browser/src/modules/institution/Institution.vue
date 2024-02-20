@@ -35,6 +35,9 @@ const tabs = ref([
   },
   {
     text: t("institution.tabs.insurancePolicy"),
+    to: {
+      name: "InstitutionsInsurancePolicies",
+    },
   },
   {
     text: t("institution.tabs.benefitPackage"),

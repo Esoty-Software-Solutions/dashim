@@ -20,7 +20,11 @@
     "lastName": "Last Name",
     "gender": "Gender",
     "city": "City",
-    "medicalCenter": "Medical Center"
+    "medicalCenter": "Medical Center",
+    "Accumulatedlimit": "Accumulated limit",
+    "BalanceResetDate": "Balance Reset Date",
+    "renewalDate": "renewal Date",
+    "serviceEntryTimeWindow": "service Entry Time Window"
   },
   "accounting": {
     "claims": "Claims"
@@ -46,6 +50,13 @@
     "network": {
       "pageTitle": "Network List",
       "newMedicalCenter": "New Medical Center"
+    },
+    "insurancePolicies": {
+      "newInsurancePolicy": "New Insurance Policy"
+    },
+    "actions": {
+      "selectAll": "Select All",
+      "refresh": "refresh"
     }
   },
   "locale": {
