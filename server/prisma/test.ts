@@ -4,6 +4,7 @@ import { unGuardedPrisma } from "@config/db";
 import { type Prisma, PrismaClient } from "@prisma/client";
 import * as enumData from "./enumData";
 import dotenv from "dotenv";
+import { EnumSeed, customSeeder } from "./playground";
 
 dotenv.config();
 
@@ -54,10 +55,11 @@ export type enumTableType = {
 const enumTableData: enumTableType = enumData;
 
 const SKIP_SEEDED_TABLES = process.env.SKIP_SEEDED_TABLES !== "false"; // if variable is not set, it will be undefined, which is falsey
-const prisma = new PrismaClient();
 
-await prisma.$connect();
+await unGuardedPrisma.$connect();
 console.info("prisma connected...");
+
+await EnumSeed();
 
 console.info("Seeding ", SeedHelper.tablesFullList.length, " tables");
 console.info("Skip populated Tables: ", SKIP_SEEDED_TABLES);
@@ -74,11 +76,12 @@ for (const TableName of SeedHelper.tablesFullList) {
     console.log("Count before insertion: ", count);
     if (!(SKIP_SEEDED_TABLES && count > 0)) {
       // await (unGuardedPrisma as any)[tableName].deleteMany();
-      console.log("Skipping ", TableName);
-      const size = 3; // replace with your desired size
+
+      const size = 5; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
+          // @ts-ignore
           data = SeedHelper.functions["fake" + TableName + "Complete"]();
           await SeedHelper.fieldOverride(data);
           // console.log("ending an iteration");
@@ -124,7 +127,10 @@ for (const TableName of SeedHelper.tablesFullList) {
         TableName,
         " table",
       );
+    } else {
+      console.log("Skipping ", TableName);
     }
+
     tableRowIds[TableName] = await (unGuardedPrisma as any)[tableName].findMany(
       {
         select: { id: true },
@@ -143,7 +149,7 @@ for (const TableName of SeedHelper.sortedTable) {
     let isTableReady = true; // are all dependencies seeded?
     // TODO: make this a function
     SeedHelper.tableDep[TableName].forEach(async (dependencyTable: string) => {
-      if (tableRowIds[dependencyTable]) {
+      if (tableRowIds[dependencyTable].length > 0) {
         isTableReady = isTableReady && true;
         // console.log(dependencyTable, " has rows");
       } else {
@@ -155,83 +161,103 @@ for (const TableName of SeedHelper.sortedTable) {
     if (isTableReady) {
       const count: number = await (unGuardedPrisma as any)[tableName].count(); // TODO: put in a try and catch
       console.log("Count before insertion: ", count);
-      // await (unGuardedPrisma as any)[tableName].deleteMany();
-      const size = 3; // replace with your desired size
-      const dataArray = await Promise.all(
-        new Array(size).fill(null).map(async (data: Object) => {
-          // console.log("starting an iteration");
-          data = SeedHelper.functions["fake" + TableName + "Complete"]();
-          await SeedHelper.fieldOverride(data);
-          // console.log("ending an iteration");
+      if (!(SKIP_SEEDED_TABLES && count > 0)) {
+        const CustomFunction = customSeeder.find(
+          (obj) => obj.key === TableName,
+        );
+        if (CustomFunction) {
+          console.log("Custom Seeder for ", TableName);
+          await CustomFunction.seed();
+        } else {
+          console.log("Auto Seeder for ", TableName);
+          // await (unGuardedPrisma as any)[tableName].deleteMany();
+          const size = 5; // replace with your desired size
+          const dataArray = await Promise.all(
+            new Array(size).fill(null).map(async (data: Object) => {
+              // console.log("starting an iteration");
+              // @ts-ignore
+              data = SeedHelper.functions["fake" + TableName + "Complete"]();
+              await SeedHelper.fieldOverride(data);
+              // console.log("ending an iteration");
 
-          Object.keys(SeedHelper.tableRefs[TableName]).forEach((key) => {
-            //   console.log("key: ", key);
-            //   console.log("value: ", SeedHelper.tableRefs[TableName][key]);
-            const array = tableRowIds[SeedHelper.tableRefs[TableName][key]];
-            const randomIndex = Math.floor(Math.random() * array.length);
-            data[key] = array[randomIndex]["id"];
-          });
+              Object.keys(SeedHelper.tableRefs[TableName]).forEach((key) => {
+                //   console.log("key: ", key);
+                //   console.log("value: ", SeedHelper.tableRefs[TableName][key]);
+                const array = tableRowIds[SeedHelper.tableRefs[TableName][key]];
+                const randomIndex = Math.floor(Math.random() * array.length);
+                data[key] = array[randomIndex]["id"];
+              });
 
-          Object.keys(data).forEach((key) => {
-            if (Number.isInteger(data[key])) {
-              if (data[key] > 2147483647 || data[key] < -2147483648) {
-                // console.error(
-                //   `Value ${data[key]} at key ${key} is too large for an INT4 field.`,
-                // );
-                data[key] = Math.floor(Math.random() * 2147483647);
-                // console.info(`${key} is reassigned to ${data[key]}.`);
-              }
-            }
-            if (Array.isArray(data[key])) {
-              data[key] = data[key].map((value: number) => {
-                if (Number.isInteger(value)) {
-                  if (value > 2147483647 || value < -2147483648) {
+              Object.keys(data).forEach((key) => {
+                if (Number.isInteger(data[key])) {
+                  if (data[key] > 2147483647 || data[key] < -2147483648) {
                     // console.error(
-                    //   `Value ${value} at key ${key} array is too large for an INT4 field.`,
+                    //   `Value ${data[key]} at key ${key} is too large for an INT4 field.`,
                     // );
-                    value = Math.floor(Math.random() * 2147483647);
-                    // console.info(
-                    //   `Element of ${key} is reassigned to ${value}.`,
-                    // );
+                    data[key] = Math.floor(Math.random() * 2147483647);
+                    // console.info(`${key} is reassigned to ${data[key]}.`);
                   }
                 }
-                return value;
+                if (Array.isArray(data[key])) {
+                  data[key] = data[key].map((value: number) => {
+                    if (Number.isInteger(value)) {
+                      if (value > 2147483647 || value < -2147483648) {
+                        // console.error(
+                        //   `Value ${value} at key ${key} array is too large for an INT4 field.`,
+                        // );
+                        value = Math.floor(Math.random() * 2147483647);
+                        // console.info(
+                        //   `Element of ${key} is reassigned to ${value}.`,
+                        // );
+                      }
+                    }
+                    return value;
+                  });
+                }
               });
-            }
-          });
-          return data;
-        }),
-      );
-      try {
-        console.log("pushing data for ", TableName);
-        const CreateResults = await (unGuardedPrisma as any)[
-          tableName
-        ].createMany({
-          data: dataArray,
-          skipDuplicates: true,
-        });
-        console.log(
-          "Added ",
-          CreateResults.count,
-          " rows to ",
-          TableName,
-          " table",
-        );
-        tableRowIds[TableName] = await (unGuardedPrisma as any)[
-          tableName
-        ].findMany({
-          select: { id: true },
-        });
-      } catch (error) {
-        console.log(
-          "Error with table ",
-          tableName,
-          "\nhere is the error:\n",
-          error,
-          "\nhere is the data:\n",
-          dataArray,
-        );
+              return data;
+            }),
+          );
+          try {
+            console.log("pushing data for ", TableName);
+            const CreateResults = await (unGuardedPrisma as any)[
+              tableName
+            ].createMany({
+              data: dataArray,
+              skipDuplicates: true,
+            });
+            console.log(
+              "Added ",
+              CreateResults.count,
+              " rows to ",
+              TableName,
+              " table",
+            );
+          } catch (error) {
+            console.log(
+              "Error with table ",
+              tableName,
+              "\nhere is the error:\n",
+              error,
+              "\nhere is the data:\n",
+              dataArray,
+            );
+          }
+        }
+      } else {
+        console.log("Skipping ", TableName);
       }
+    } else {
+      console.log("Skipping ", TableName);
+    }
+    tableRowIds[TableName] = await (unGuardedPrisma as any)[tableName].findMany(
+      {
+        select: { id: true },
+      },
+    );
+    if (TableName == "InsurancePolicy") {
+      console.log("InsurancePolicy: ", tableRowIds[TableName]);
+      console.log("InsurancePolicy id length: ", tableRowIds[TableName].length);
     }
   }
 }
