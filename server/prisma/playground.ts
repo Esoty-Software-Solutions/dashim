@@ -12,6 +12,9 @@ import * as enums from "./enumData";
 // import { Beneficiary } from "../../app/server/models/beneficiary.server";
 // import { InsurancePolicy } from "~/models/insurancePolicy";
 import { unGuardedPrisma } from "@config/db";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type Object = { [key: string]: any; id: string };
 
@@ -357,7 +360,7 @@ async function addMedicalCenters(
 
 async function addInstitutions(
   institutionCount: number,
-  BeneficiaryEntityAverageCount: number,
+  BeneficiaryEntityCount: number,
   maxBeneficiarySize: number = 10,
 ) {
   const probability = 0.9;
@@ -365,7 +368,7 @@ async function addInstitutions(
     "adding ",
     institutionCount,
     " institutions with",
-    BeneficiaryEntityAverageCount,
+    BeneficiaryEntityCount,
     "beneficiaryEntities each with a max group size of ",
     maxBeneficiarySize,
     "...",
@@ -406,7 +409,7 @@ async function addInstitutions(
     insurancePolicies.push(insurancePolicy);
     // const tenant = await SeedHelper.functions.fakeTenantComplete()
     // tenants.push(tenant)
-    for (let k = 0; k < BeneficiaryEntityAverageCount; k++) {
+    for (let k = 0; k < BeneficiaryEntityCount; k++) {
       // console.log('beneficiaryEntity', k)
       const beneficiaryEntity = await createFakeBeneficiaryEntity(
         insurancePolicy.id,
@@ -492,7 +495,30 @@ async function addInstitutions(
 // await addUsers(1500);
 // await addInstitutions(2, 50000, 13);
 
+const SEED_INSTITUTION_COUNT = Number(process.env.SEED_INSTITUTION_COUNT);
+const SEED_MEDICAL_CENTER_COUNT = Number(process.env.SEED_MEDICAL_CENTER_COUNT);
+const SEED_MEDICAL_SERVICE_COUNT = Number(
+  process.env.SEED_MEDICAL_SERVICE_COUNT,
+);
+const SEED_BENEFICIARY_COUNT = Number(process.env.SEED_BENEFICIARY_COUNT);
+const SEED_BENEFICIARY_ENTITY_COUNT = Number(
+  process.env.SEED_BENEFICIARY_ENTITY_COUNT,
+);
+// const SEED_USER_COUNT = Number(process.env.SEED_USER_COUNT);
+
 export const customSeeder = [
-  { key: "Institution", seed: () => addInstitutions(1, 500, 13) },
-  { key: "MedicalCenter", seed: () => addMedicalCenters(1, 1) },
+  {
+    key: "Institution",
+    seed: () =>
+      addInstitutions(
+        SEED_INSTITUTION_COUNT,
+        SEED_BENEFICIARY_ENTITY_COUNT,
+        SEED_BENEFICIARY_COUNT,
+      ),
+  },
+  {
+    key: "MedicalCenter",
+    seed: () =>
+      addMedicalCenters(SEED_MEDICAL_CENTER_COUNT, SEED_MEDICAL_SERVICE_COUNT),
+  },
 ];
