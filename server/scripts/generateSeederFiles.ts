@@ -110,6 +110,22 @@ async function fieldOverride(
     return false;
   }
 
+  function normalize(text: string) {
+    return text.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g, "");
+  }
+
+  function generateSearchName(text: string) {
+    let result = text;
+
+    // Generate variations of the full name with each character skipped
+    for (let i = 0; i < text.length; i++) {
+      const variation = text.slice(0, i) + text.slice(i + 1);
+      result += " " + variation;
+    }
+
+    return result;
+  }
+
   if (sanityCheck("id", true)) {
     if (!isCuid(object["id"])) object["id"] = cuid2.createId();
   }
@@ -159,13 +175,16 @@ async function fieldOverride(
   }
 
   if (sanityCheck("searchName", true)) {
-    object["searchName"] =
-      (object["firstName"] || "") +
-      (object["secondName"] || "") +
-      (object["thirdName"] || "") +
-      (object["fourthName"] || "") +
-      (object["fifthName"] || "") +
-      (object["lastName"] || "");
+    object["searchName"] = generateSearchName(
+      normalize(
+        (object["firstName"] || "") +
+          (object["secondName"] || "") +
+          (object["thirdName"] || "") +
+          (object["fourthName"] || "") +
+          (object["fifthName"] || "") +
+          (object["lastName"] || ""),
+      ),
+    );
   }
 
   if (sanityCheck("address")) {
