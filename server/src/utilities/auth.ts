@@ -4,7 +4,7 @@ import { unGuardedPrisma } from "@config/db";
 import type { Request as ExpressRequest } from "express";
 import ServerError from "@utilities/error";
 
-export const FAKE_USER_ID = "bgwdccqvmyjr0n53iuv62hhs";
+export const FAKE_USER_ID = "x9cv8ywg9swy55s24tzeyr61";
 export async function getUserIdFromCookie(
   request: Request | ExpressRequest,
 ): Promise<UserType["id"]> {

@@ -182,33 +182,39 @@ async function fieldOverride(
     });
   }
 
+  if (sanityCheck("code", true)) {
+    object["code"] = faker.database.mongodbObjectId();
+  }
+
   if ((tableName !== "" && sanityCheck("name", true)) || sanityCheck("name")) {
+    // console.log("generating name for table: ", tableName);
     switch (tableName) {
-      case "Institution" || "MedicalCenter" || "Tenant":
-        //Statements executed when the result of expression matches value1
+      case "Institution":
+      case "MedicalCenter":
+      case "Tenant":
         object["name"] = faker.company.name();
         break;
       case "DiagnosisAttachment":
-        //Statements executed when the result of expression matches value1
         object["name"] = faker.system.fileName();
         break;
-      case "PatientService" || "MedicalService" || "MedicalServiceTemplate":
-        //Statements executed when the result of expression matches value1
+      case "PatientService":
+      case "MedicalService":
+      case "MedicalServiceTemplate":
         object["name"] = faker.commerce.productName();
         break;
-      case "BenefitPackage" || "InsurancePolicy":
-        //Statements executed when the result of expression matches value1
+      case "BenefitPackage":
+      case "InsurancePolicy":
         object["name"] = faker.commerce.product();
         break;
       default:
-        //Statements executed when none of the values match the value of the expression
         object["name"] = faker.person.firstName();
         break;
     }
   }
 
   // TODO: Produce Arabic text
-  if (sanityCheck("english", true) || tableName !== "") {
+  // if (sanityCheck("english", true) || tableName !== "") { //TODO: not sure why tableName exist so I removed it
+  if (sanityCheck("english", true)) {
     object["english"] = faker.string.alpha({ length: { min: 5, max: 15 } });
     if (object["name"]) {
       //replace name with english
@@ -286,7 +292,7 @@ async function fieldOverride(
     }
   }
 
-  if (sanityCheck("website")) {
+  if (sanityCheck("website", true)) {
     object["website"] = faker.internet.url();
   }
 
@@ -322,7 +328,7 @@ export type Functions = {
   // ...other properties...
 };
 
-const functions: Functions = GeneratedFunctions;
+const functions = GeneratedFunctions;
 
 export const SeedHelper = {
   tableDep,
