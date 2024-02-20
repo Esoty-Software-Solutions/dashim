@@ -3,6 +3,44 @@ import { Prisma } from "@prisma/client";
 
 export const SortOrderSchema = z.enum(["asc", "desc"]);
 
+export const StringInsensitiveFilterObjectSchema = z.union([
+  z.string().toLowerCase().trim(),
+  z
+    .object({
+      equals: z.string().toLowerCase().trim().optional(),
+      in: z.string().toLowerCase().trim().array().optional(),
+      notIn: z.string().toLowerCase().trim().array().optional(),
+      contains: z.string().toLowerCase().trim().optional(),
+      startsWith: z.string().toLowerCase().trim().optional(),
+      endsWith: z.string().toLowerCase().trim().optional(),
+      mode: z.enum(["default", "insensitive"]).optional(),
+      not: z.string().toLowerCase().trim().optional(),
+      // not: z
+      //   .union([z.string().toLowerCase().trim(), z.lazy(() => NestedStringFilterObjectSchema)])
+      //   .optional(),
+    })
+    .strict(),
+]);
+
+export const StringInsensitiveNullableFilterObjectSchema = z.union([
+  z.string().toLowerCase().trim().nullable(),
+  z
+    .object({
+      equals: z.string().toLowerCase().trim().optional().nullable(),
+      in: z.string().toLowerCase().trim().array().optional().nullable(),
+      notIn: z.string().toLowerCase().trim().array().optional().nullable(),
+      contains: z.string().toLowerCase().trim().optional(),
+      startsWith: z.string().toLowerCase().trim().optional(),
+      endsWith: z.string().toLowerCase().trim().optional(),
+      mode: z.enum(["default", "insensitive"]).optional(),
+      not: z.string().toLowerCase().trim().optional().nullable(),
+      // not: z
+      //   .union([z.string().toLowerCase().trim(), z.lazy(() => NestedStringFilterObjectSchema)])
+      //   .optional(),
+    })
+    .strict(),
+]);
+
 export const StringFilterObjectSchema = z.union([
   z.string(),
   z
