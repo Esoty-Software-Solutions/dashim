@@ -493,6 +493,6 @@ async function addInstitutions(
 // await addInstitutions(2, 50000, 13);
 
 export const customSeeder = [
-  { key: "Institution", seed: () => addInstitutions(4, 55000, 13) },
-  { key: "MedicalCenter", seed: () => addMedicalCenters(5, 1500) },
+  { key: "Institution", seed: () => addInstitutions(1, 500, 13) },
+  { key: "MedicalCenter", seed: () => addMedicalCenters(1, 1) },
 ];
