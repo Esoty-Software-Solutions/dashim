@@ -43,6 +43,22 @@
       "insurancePolicy": "سياسة التأمين",
       "network": "الشبكة",
       "claims": "@.define:accounting.claims"
+    },
+    "beneficiaries": {
+      "pageTitle": "قائمة المشتركين",
+      "newbeneficiary": "إضافة مشترك جديد",
+      "addbeneficiary": "اضف فرد عائلة"
+    },
+    "network": {
+      "pageTitle": "شبكة المراكز",
+      "newMedicalCenter": "إضافة مركز جديد"
+    },
+    "insurancePolicies": {
+      "newInsurancePolicy": "عقد تأمين جديد"
+    },
+    "actions": {
+      "selectAll": "تحديد الكل",
+      "refresh": "تحديث"
     }
   },
   "accounting": {
