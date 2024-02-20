@@ -223,19 +223,19 @@ const headers = ref<TableHeader[]>([
           </VChip>
         </template>
       </VDataTableServer>
-      <v-navigation-drawer v-model="drawer" location="right">
-        <v-list>
-          <v-list-item class="d-flex flex-row-reverse">
+      <VNavigationDrawer v-model="drawer" location="right">
+        <VList>
+          <VListItem class="d-flex flex-row-reverse">
             <!-- <VIcon :icon="mdiClose" /> -->
 
             <VBtn variant="flat" :icon="mdiClose" @click="drawer = false" />
-          </v-list-item>
+          </VListItem>
 
-          <v-list-item title="Navigation drawer">
+          <VListItem title="Navigation drawer">
             {{ selectedItem }}
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+          </VListItem>
+        </VList>
+      </VNavigationDrawer>
     </template>
   </DataPageBase>
 </template>
