@@ -360,7 +360,7 @@ async function addMedicalCenters(
 
 async function addInstitutions(
   institutionCount: number,
-  BeneficiaryEntityAverageCount: number,
+  BeneficiaryEntityCount: number,
   maxBeneficiarySize: number = 10,
 ) {
   const probability = 0.9;
@@ -368,7 +368,7 @@ async function addInstitutions(
     "adding ",
     institutionCount,
     " institutions with",
-    BeneficiaryEntityAverageCount,
+    BeneficiaryEntityCount,
     "beneficiaryEntities each with a max group size of ",
     maxBeneficiarySize,
     "...",
@@ -409,7 +409,7 @@ async function addInstitutions(
     insurancePolicies.push(insurancePolicy);
     // const tenant = await SeedHelper.functions.fakeTenantComplete()
     // tenants.push(tenant)
-    for (let k = 0; k < BeneficiaryEntityAverageCount; k++) {
+    for (let k = 0; k < BeneficiaryEntityCount; k++) {
       // console.log('beneficiaryEntity', k)
       const beneficiaryEntity = await createFakeBeneficiaryEntity(
         insurancePolicy.id,
@@ -512,8 +512,8 @@ export const customSeeder = [
     seed: () =>
       addInstitutions(
         SEED_INSTITUTION_COUNT,
-        SEED_BENEFICIARY_COUNT,
         SEED_BENEFICIARY_ENTITY_COUNT,
+        SEED_BENEFICIARY_COUNT,
       ),
   },
   {
