@@ -94,6 +94,16 @@ export const beneficiaryRouter = router({
     .input(BeneficiaryFindManySchema)
     .query(async ({ ctx, input }) => {
       try {
+        // ! This is a workaround for the searchName field needs future refactoring
+        if (input?.where?.searchName) {
+          //ts-ignore
+          (input.where.searchName as any).contains = (
+            input.where.searchName as any
+          ).contains
+            .toLowerCase()
+            .replace(/\s/g, "");
+        }
+
         const [data, filteredCount, unFilteredCount] = await Promise.all([
           ctx.prisma.beneficiary.findMany(input),
           ctx.prisma.beneficiary.count({ where: input?.where }),
