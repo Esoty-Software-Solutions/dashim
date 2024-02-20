@@ -2,12 +2,16 @@
 import { ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiClose } from "@mdi/js";
 
 import useInsurancePoliciesStore from "../stores/insurancePoliciesStore";
 
 import DataPageBase from "@/modules/dataPage/DataPageBase.vue";
-import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
+import useDataFilters, {
+  text,
+  asyncSelect,
+} from "@/modules/filter/composables/dataFilter";
+import { client, type RouterInput } from "@/queries";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
@@ -19,11 +23,41 @@ const store = toRefs(useInsurancePoliciesStore());
 // console.log(store.binding.value.items);
 let selected = ref([""]);
 let selectedCount = ref(0);
+
+// filters
+// async filter
+type InstitutionInput = Exclude<
+  RouterInput["crud"]["institution"]["findMany"],
+  void
+>;
+const institutionSelect = asyncSelect(
+  {
+    value: store.selectedInstitution,
+    enabled: store.selectedInstitutionEnabled,
+    props: () => ({
+      label: t("common.institution"),
+      itemValue: "id",
+      itemTitle: "name",
+      clearable: true,
+      // multiple: true,
+      // returnObject: true,
+    }),
+  },
+  {
+    immediate: true,
+    input: () => ({}),
+    async onFetch(input: InstitutionInput) {
+      const res = await client.crud.institution.findMany.query(input);
+      return res?.data ?? [];
+    },
+  },
+);
 const { FilterComponent } = useDataFilters({
   sheetProps: {
     elevation: 0,
   },
   filter: {
+    institution: institutionSelect,
     firstName: text({
       value: store.nameFilter,
       enabled: store.nameFilterEnabled,
@@ -68,7 +102,8 @@ function paginated() {
   selected.value = [];
   selectedCount.value = 0;
 }
-
+const drawer = ref(false);
+const selectedItem = ref({});
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -162,6 +197,12 @@ const headers = ref<TableHeader[]>([
         @input="onSelected($event)"
         @update:page="paginated"
         @update:items-per-page="paginated"
+        @click:row="
+          (event, row) => {
+            drawer = true;
+            selectedItem.value = row.item;
+          }
+        "
       >
         <!-- local date "sv-SE" for 2024-02-02 fromat -->
         <template #item.createdAt="{ item }">
@@ -182,6 +223,19 @@ const headers = ref<TableHeader[]>([
           </VChip>
         </template>
       </VDataTableServer>
+      <v-navigation-drawer v-model="drawer" location="right">
+        <v-list>
+          <v-list-item class="d-flex flex-row-reverse">
+            <!-- <VIcon :icon="mdiClose" /> -->
+
+            <VBtn variant="flat" :icon="mdiClose" @click="drawer = false" />
+          </v-list-item>
+
+          <v-list-item title="Navigation drawer">
+            {{ selectedItem }}
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
     </template>
   </DataPageBase>
 </template>
