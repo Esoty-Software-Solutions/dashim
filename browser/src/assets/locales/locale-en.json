@@ -24,7 +24,8 @@
     "Accumulatedlimit": "Accumulated limit",
     "BalanceResetDate": "Balance Reset Date",
     "renewalDate": "renewal Date",
-    "serviceEntryTimeWindow": "service Entry Time Window"
+    "serviceEntryTimeWindow": "service Entry Time Window",
+    "serviceCategory": "Service Category"
   },
   "accounting": {
     "claims": "Claims"
@@ -53,6 +54,9 @@
     },
     "insurancePolicies": {
       "newInsurancePolicy": "New Insurance Policy"
+    },
+    "benefitPackages": {
+      "newBenefitBackage": "new Benefit Backage"
     },
     "actions": {
       "selectAll": "Select All",

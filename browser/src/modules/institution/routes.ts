@@ -33,6 +33,11 @@ const routes: RouteRecordRaw[] = [
         name: "InstitutionsInsurancePolicies",
         component: () => import("./insurancePolicies/InsurancePolicies.vue"),
       },
+      {
+        path: "benefitPackages",
+        name: "InstitutionsBenefitPackages",
+        component: () => import("./benefitBackages/BenefitPackages.vue"),
+      },
     ],
   },
 ];
