@@ -279,7 +279,7 @@ $outline-start-width: $toggle-area-width + 8px
 
 // Remove the border adjacent to the toggle area
 .d-data-filter-base
-  &__content  .v-field
+  &__content > .v-input > .v-input__control .v-field
 
     .v-locale--is-ltr &
       border-bottom-left-radius: 0
