@@ -36,6 +36,8 @@ import {
 export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
 import { render as renderChips, type ChipsDataFilter } from "./chipsFilter";
 export { chips, type ChipsDataFilterItem } from "./chipsFilter";
+import { render as renderRange, type RangeDataFilter } from "./rangeFilter";
+export { range } from "./rangeFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
@@ -43,6 +45,8 @@ export { text } from "./textFilter";
 
 import type { DataFiltersDisplay, DataFilterInjection } from "./types";
 import type { Merge, Prettify } from "@/utils";
+
+import "@/modules/filter/styles/main.sass";
 
 /*
  * Filter Types
@@ -62,7 +66,8 @@ type DataFilter =
   | TextDataFilter
   | SelectDataFilter
   | AutocompleteDataFilter
-  | ChipsDataFilter;
+  | ChipsDataFilter
+  | RangeDataFilter;
 type Icon = (typeof VIcon)["$props"]["icon"];
 
 interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
@@ -255,6 +260,8 @@ export default function useDataFilters<
           filterNode = renderAutocomplete(definition, injection, nodeProps);
         } else if (definition.type === "chips") {
           filterNode = renderChips(definition, injection, nodeProps);
+        } else if (definition.type === "range") {
+          filterNode = renderRange(definition, injection, nodeProps);
         }
         // TODO: render other types of filters
 
