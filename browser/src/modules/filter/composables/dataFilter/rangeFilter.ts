@@ -43,6 +43,7 @@ export interface RangeDataFilter extends DataFilterBase {
   maxFieldProps?: MaybeRefOrGetter<VTextFieldType["$props"]>;
 
   value?: MaybeRefOrGetter<[start: number, end: number]>;
+  hideMinMax?: boolean;
 
   contentBorder: true;
 }
@@ -109,6 +110,7 @@ const DataFilterRange = defineComponent({
         {
           type: "number",
           class: "flex-grow-0 flex-shrink-1",
+          style: "min-width: 2rem; max-width: 5rem",
           variant: "plain",
           "onUpdate:focused": (value: boolean) => {
             ctx.emit("update:focused", value);
@@ -213,11 +215,15 @@ const DataFilterRange = defineComponent({
         props.sliderProps,
       );
 
-      return h(VRangeSlider, _sliderPros, {
-        prepend: () => minField,
+      const children = !props.definition.hideMinMax
+        ? {
+            prepend: () => minField,
 
-        append: () => maxField,
-      });
+            append: () => maxField,
+          }
+        : {};
+
+      return h(VRangeSlider, _sliderPros, children);
     };
   },
 });
