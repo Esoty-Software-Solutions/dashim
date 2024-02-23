@@ -173,6 +173,7 @@ const DataFilterRange = defineComponent({
         VTextField,
         mergeProps(
           {
+            min: minVal.value,
             max: currentMax.value,
             modelValue: rawCurrentMin.value,
 
@@ -192,6 +193,7 @@ const DataFilterRange = defineComponent({
           {
             modelValue: rawCurrentMax.value,
             min: currentMin.value,
+            max: maxVal.value,
 
             "onUpdate:modelValue": [
               (value: number) => (rawCurrentMax.value = value),

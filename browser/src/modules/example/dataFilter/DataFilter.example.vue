@@ -132,25 +132,6 @@ const rangeValue = ref<[number, number]>([20, 60]);
 
 const { FilterComponent: FilterComponent2 } = useDataFilters({
   filter: {
-    ranger: range({
-      value: rangeValue,
-      props: () => ({
-        strict: true,
-        step: 1,
-
-        min: 20,
-      }),
-
-      commonFieldProps: () => ({
-        variant: "outlined",
-      }),
-
-      label: "Price (LYD)",
-
-      display: {
-        md: 12,
-      },
-    }),
     chips: chips({
       value: chipValue,
       items: chipOptions,
@@ -172,6 +153,26 @@ const { FilterComponent: FilterComponent2 } = useDataFilters({
       props: () => ({
         label: "Vuetify label",
       }),
+    }),
+
+    ranger: range({
+      value: rangeValue,
+      props: () => ({
+        strict: true,
+        step: 1,
+
+        min: 20,
+      }),
+
+      commonFieldProps: () => ({
+        variant: "outlined",
+      }),
+
+      label: "Price (LYD)",
+
+      display: {
+        md: 12,
+      },
     }),
   },
 });
@@ -212,11 +213,11 @@ const { FilterComponent: FilterComponent2 } = useDataFilters({
 
     <FilterComponent2 />
     <VCardText>
-      <VCardItem> Selected Chip Value: {{ chipValue }}. </VCardItem>
+      {{ rangeValue }}
 
       <br />
 
-      {{ rangeValue }}
+      <VCardItem> Selected Chip Value: {{ chipValue }}. </VCardItem>
     </VCardText>
   </VContainer>
 </template>
