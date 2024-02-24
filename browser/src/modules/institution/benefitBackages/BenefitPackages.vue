@@ -291,7 +291,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
               'text-primary': item.id == store.selectedBenefitPackege.value,
             }"
           >
-            <td>{{ item.name }}</td>
+            <td style="border-right: none">{{ item.name }}</td>
           </tr></template
         >
         <!-- local date "sv-SE" for 2024-02-02 fromat -->
