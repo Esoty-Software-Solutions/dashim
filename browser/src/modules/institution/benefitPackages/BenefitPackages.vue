@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 
 import { mdiPlus, mdiClose } from "@mdi/js";
 
-import useBenefitBackageStore from "../stores/benefitPackageStore";
+import useBenefitPackageStore from "../stores/benefitPackageStore";
 
 import DataPageBase from "@/modules/dataPage/DataPageBase.vue";
 import useDataFilters, {
@@ -19,7 +19,7 @@ defineOptions({
   name: "InstitutionsBenefitPackagesPage",
 });
 const { t } = useI18n();
-const store = toRefs(useBenefitBackageStore());
+const store = toRefs(useBenefitPackageStore());
 let selected = ref([""]);
 let selectedCount = ref(0);
 
@@ -262,7 +262,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
         <VBtn @click="refresh">{{ t("institution.actions.refresh") }}</VBtn>
         <VSpacer />
         <VBtn color="primary" variant="plain">
-          <span>{{ t("institution.benefitPackages.newBenefitBackage") }}</span>
+          <span>{{ t("institution.benefitPackages.newBenefitPackage") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>
@@ -307,10 +307,14 @@ const servicePackageHeaders = ref<TableHeader[]>([
           </VChip>
         </template>
       </VDataTableServer>
-      <VNavigationDrawer v-model="drawer" location="right" width="600">
+      <VNavigationDrawer
+        v-model="drawer"
+        class="fill-height"
+        location="right"
+        width="600"
+      >
         <VList class="pa-0">
           <VListItem class="d-flex flex-row-reverse">
-            <!-- <VIcon :icon="mdiClose" /> -->
             <VBtn variant="flat" :icon="mdiClose" @click="drawer = false" />
           </VListItem>
           <VListItem
@@ -320,10 +324,11 @@ const servicePackageHeaders = ref<TableHeader[]>([
         </VList>
         <VContainer
           ref="container"
-          v-bind="$attrs"
           fluid
-          class="d-flex py-1 px-0 ga-1 flex-column h-75"
+          class="d-flex pb-0 py-1 px-0 ga-1 flex-column h-75"
         >
+          <CategoryFilterComponent />
+
           <VDefaultsProvider
             :defaults="{
               VDataTableServer: {
@@ -332,6 +337,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
                 fixedFooter: true,
                 hover: true,
                 color: 'primary',
+                class: ['mb-auto'],
               },
               VDataTable: {
                 style: 'flex: 1 1 0; min-height: 0;',
@@ -345,7 +351,6 @@ const servicePackageHeaders = ref<TableHeader[]>([
               },
             }"
           >
-            <CategoryFilterComponent />
             <VDataTableServer
               v-model="selected"
               :item-value="(item) => item.id"
@@ -361,6 +366,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
                 </VList>
               </template>
             </VDataTableServer>
+
             <!-- <VDataTable
               :items-per-page="store.medicalServices.value.length"
               :fixed-footer="true"

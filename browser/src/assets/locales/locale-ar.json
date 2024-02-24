@@ -56,6 +56,9 @@
     "insurancePolicies": {
       "newInsurancePolicy": "عقد تأمين جديد"
     },
+    "benefitPackages": {
+      "newBenefitPackage": "باقة جديدة"
+    },
     "actions": {
       "selectAll": "تحديد الكل",
       "refresh": "تحديث"

@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: "benefitPackages",
         name: "InstitutionsBenefitPackages",
-        component: () => import("./benefitBackages/BenefitPackages.vue"),
+        component: () => import("./benefitPackages/BenefitPackages.vue"),
       },
     ],
   },
