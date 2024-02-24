@@ -20,7 +20,6 @@ defineOptions({
 });
 const { t } = useI18n();
 const store = toRefs(useBenefitBackageStore());
-// console.log(store.binding.value.items);
 let selected = ref([""]);
 let selectedCount = ref(0);
 
@@ -83,30 +82,30 @@ const insurancePoliciesSelect = asyncSelect(
     },
   },
 );
-const serviceCategoriesSelect = asyncSelect(
-  {
-    value: store.selectedServiceCategory,
-    enabled: store.selectedServiceCategoryEnabled,
-    props: () => ({
-      label: t("common.serviceCategory"),
-      itemValue: "id",
-      itemTitle: "name",
-      clearable: true,
-      // returnObject: true,
-    }),
-  },
-  {
-    immediate: true,
-    input: () => ({
-      where: { id: { in: store.selectedServiceCategoriesIds.value } },
-    }),
-    async onFetch(input: InsurancePolicyInput) {
-      const res =
-        await client.crud.medicalServiceCategory.findMany.query(input);
-      return res?.data ?? [];
-    },
-  },
-);
+// const serviceCategoriesSelect = asyncSelect(
+//   {
+//     value: store.selectedServiceCategory,
+//     enabled: store.selectedServiceCategoryEnabled,
+//     props: () => ({
+//       label: t("common.serviceCategory"),
+//       itemValue: "id",
+//       itemTitle: "name",
+//       clearable: true,
+//       // returnObject: true,
+//     }),
+//   },
+//   {
+//     immediate: true,
+//     input: () => ({
+//       where: { id: { in: store.selectedServiceCategoriesIds.value } },
+//     }),
+//     async onFetch(input: InsurancePolicyInput) {
+//       const res =
+//         await client.crud.medicalServiceCategory.findMany.query(input);
+//       return res?.data ?? [];
+//     },
+//   },
+// );
 const { FilterComponent } = useDataFilters({
   sheetProps: {
     elevation: 0,
@@ -136,12 +135,22 @@ const { FilterComponent: CategoryFilterComponent } = useDataFilters({
     md: 12,
   },
   filter: {
-    category: serviceCategoriesSelect,
+    name: text({
+      value: store.categoryNameFilter,
+      enabled: store.categoryNameFilterEnabled,
+      enableOnFocus: false,
+      props: {
+        label: "Name",
+      },
+      display: {
+        md: 12,
+      },
+    }),
   },
 });
 
 watch(
-  () => ({ ...store.binding.value }),
+  () => ({ ...store.benefitPackagesBinding.value }),
   () => {
     console.log("items updated");
     selected.value = [];
@@ -171,8 +180,6 @@ watch(
   },
 );
 function onSelected($event) {
-  // selected.value = store.binding.value.items
-  // selected.value
   console.log(selected.value);
   selectedCount.value = selected.value.length;
 }
@@ -180,8 +187,10 @@ function refresh() {
   store.triggerFetch.value();
 }
 function selectAll() {
-  selected.value = store.binding.value.items.map((item) => item.id);
-  selectedCount.value = store.binding.value.itemsLength;
+  selected.value = store.benefitPackagesBinding.value.items.map(
+    (item) => item.id,
+  );
+  selectedCount.value = store.benefitPackagesBinding.value.itemsLength;
 
   console.log(selected.value);
 }
@@ -249,7 +258,6 @@ const servicePackageHeaders = ref<TableHeader[]>([
     <template #actions>
       <VCardActions>
         {{ selectedCount }}
-        <!-- {{ selected.length }} {{ store.binding.value.itemsLength }} -->
         <VBtn @click="selectAll">{{ t("institution.actions.selectAll") }}</VBtn>
         <VBtn @click="refresh">{{ t("institution.actions.refresh") }}</VBtn>
         <VSpacer />
@@ -265,7 +273,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
         :item-value="(item) => item.id"
         show-select
         :headers="headers"
-        v-bind="store.binding.value"
+        v-bind="store.benefitPackagesBinding.value"
         @input="onSelected($event)"
         @update:page="paginated"
         @update:items-per-page="paginated"
@@ -299,7 +307,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
           </VChip>
         </template>
       </VDataTableServer>
-      <VNavigationDrawer v-model="drawer" location="right">
+      <VNavigationDrawer v-model="drawer" location="right" width="600">
         <VList class="pa-0">
           <VListItem class="d-flex flex-row-reverse">
             <!-- <VIcon :icon="mdiClose" /> -->
@@ -338,7 +346,22 @@ const servicePackageHeaders = ref<TableHeader[]>([
             }"
           >
             <CategoryFilterComponent />
-            <VDataTable
+            <VDataTableServer
+              v-model="selected"
+              :item-value="(item) => item.id"
+              :headers="servicePackageHeaders"
+              v-bind="store.serviceCategoriesBinding.value"
+            >
+              <template #item.name="{ item }">
+                <VList class="pa-0">
+                  <VListItem class="mb-2">
+                    {{ item.name }}
+                    <VChip color="primary">Category</VChip>
+                  </VListItem>
+                </VList>
+              </template>
+            </VDataTableServer>
+            <!-- <VDataTable
               :items-per-page="store.medicalServices.value.length"
               :fixed-footer="true"
               :fixed-header="true"
@@ -351,17 +374,11 @@ const servicePackageHeaders = ref<TableHeader[]>([
                   <VListItem class="mb-2">
                     {{ item.name }}
                     <VChip color="primary">Category</VChip>
-                    <!-- <VChip
-                      v-for="(category, index) in store.serviceCategories"
-                      :key="index"
-                      color="primary"
-                      >{{ category.name }}</VChip
-                    > -->
                   </VListItem>
                 </VList>
               </template>
               <template #bottom
-            /></VDataTable>
+            /></VDataTable> -->
           </VDefaultsProvider>
         </VContainer>
       </VNavigationDrawer>

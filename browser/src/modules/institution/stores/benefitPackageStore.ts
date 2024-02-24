@@ -42,10 +42,22 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     "benefitPackagesList.selectedServiceCategoryEnabled",
     true,
   );
+  const categoryNameFilter = useLocalStorage(
+    "benefitPackagesList.categoryNameFilter",
+    "",
+  );
+  const categoryNameFilterEnabled = useLocalStorage<boolean>(
+    "benefitPackagesList.categoryFilterEnabled",
+    true,
+  );
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
-  const { binding, items, triggerFetch } = useQuerierTable({
+  const {
+    binding: benefitPackagesBinding,
+    items: benefitPackagesItems,
+    triggerFetch,
+  } = useQuerierTable({
     storageKey: "benefitPackagesList.benefitPackage",
     input: computed(() => ({
       where: {
@@ -88,6 +100,27 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     immediate: true,
   });
 
+  const { binding: serviceCategoriesBinding, items: serviceCategoriesItems } =
+    useQuerierTable({
+      storageKey: "benefitPackagesList.serviceCategoriesBinding",
+      input: computed(() => ({
+        where: {
+          id: { in: selectedServiceCategoriesIds.value },
+          name:
+            categoryNameFilterEnabled.value && categoryNameFilter.value.trim()
+              ? { contains: categoryNameFilter.value.trim() }
+              : undefined,
+        },
+      })),
+      // findCallback: client.procedure.listSubscribers.query,
+      findCallback: client.crud.medicalServiceCategory.findMany.query,
+      onError(error) {
+        globalStore.setMessage("Error while connection to server.");
+        console.error(error);
+      },
+      immediate: true,
+    });
+
   const { items: serviceCategories } = useApi({
     storageKey: "benefitPackagesList.medicalServiceCategory",
 
@@ -111,31 +144,31 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     },
     // immediate: true,
   });
-  const { items: medicalServices } = useApi({
-    storageKey: "benefitPackagesList.medicalService",
+  // const { items: medicalServices } = useApi({
+  //   storageKey: "benefitPackagesList.medicalService",
 
-    // if (nameFilterEnabled.value && nameFilter.value.trim()) {
-    //   // searchName : { contains: nameFilter.value.trim() }
-    //   return {
-    //     where: { name: { contains: nameFilter.value.trim() } },
-    //   };
-    // }
-    input: computed(() => ({
-      take: 20,
-      where: {
-        categoryId: selectedServiceCategory.value
-          ? selectedServiceCategory.value
-          : { in: selectedServiceCategoriesIds.value },
-      },
-    })),
-    // findCallback: client.procedure.listSubscribers.query,
-    findCallback: client.crud.medicalService.findMany.query,
-    onError(error) {
-      globalStore.setMessage("Error while connection to server.");
-      console.error(error);
-    },
-    // immediate: true,
-  });
+  //   // if (nameFilterEnabled.value && nameFilter.value.trim()) {
+  //   //   // searchName : { contains: nameFilter.value.trim() }
+  //   //   return {
+  //   //     where: { name: { contains: nameFilter.value.trim() } },
+  //   //   };
+  //   // }
+  //   input: computed(() => ({
+  //     take: 20,
+  //     where: {
+  //       categoryId: selectedServiceCategory.value
+  //         ? selectedServiceCategory.value
+  //         : { in: selectedServiceCategoriesIds.value },
+  //     },
+  //   })),
+  //   // findCallback: client.procedure.listSubscribers.query,
+  //   findCallback: client.crud.medicalService.findMany.query,
+  //   onError(error) {
+  //     globalStore.setMessage("Error while connection to server.");
+  //     console.error(error);
+  //   },
+  //   // immediate: true,
+  // });
   // &_& depending on ts performance and inference capabilities
   // `items`, `input` should have the proper types
 
@@ -144,8 +177,8 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     idEnabled,
     nameFilter,
     nameFilterEnabled,
-    binding,
-    items,
+    benefitPackagesBinding,
+    benefitPackagesItems,
     triggerFetch,
     selectedInstitution,
     selectedInstitutionEnabled,
@@ -158,7 +191,11 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     selectedServiceCategoryEnabled,
     selectedServiceCategory,
     serviceCategories,
-    medicalServices,
+    serviceCategoriesBinding,
+    serviceCategoriesItems,
+    categoryNameFilter,
+    categoryNameFilterEnabled,
+    // medicalServices,
     // if using "immediate=true"
   };
 });
