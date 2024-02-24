@@ -5,7 +5,7 @@ import ServerError from "@utilities/error";
 export const actions = {
   getSelfRelationshipObject: async () => {
     try {
-      return unGuardedPrisma.relationship.findUniqueOrThrow({
+      return unGuardedPrisma.relationshipEnum.findUniqueOrThrow({
         where: { name: "self" },
         select: { id: true },
       });
