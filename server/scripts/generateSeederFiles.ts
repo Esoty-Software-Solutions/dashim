@@ -111,7 +111,11 @@ async function fieldOverride(
   }
 
   function normalize(text: string) {
-    return text.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g, "");
+    return text
+      .trim()
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, "");
   }
 
   function generateSearchName(text: string) {
@@ -175,14 +179,18 @@ async function fieldOverride(
   }
 
   if (sanityCheck("searchName", true)) {
-    object["searchName"] = generateSearchName(
+    object["searchName"] = /*generateSearchName*/(
       normalize(
-        (object["firstName"] || "") +
-          (object["secondName"] || "") +
-          (object["thirdName"] || "") +
-          (object["fourthName"] || "") +
-          (object["fifthName"] || "") +
-          (object["lastName"] || ""),
+        [
+          object["firstName"],
+          object["secondName"],
+          object["thirdName"],
+          object["fourthName"],
+          object["lastName"],
+        ]
+          .filter((name) => name) // Remove any empty or undefined names
+          .map((name) => (name ? name.replace(/\s/g, "") : "")) // Trim whitespace from each name
+          .join(" "), // Concatenate the names with a space
       ),
     );
   }

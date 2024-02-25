@@ -55,6 +55,9 @@ export type enumTableType = {
 const enumTableData: enumTableType = enumData;
 
 const SKIP_SEEDED_TABLES = process.env.SKIP_SEEDED_TABLES !== "false"; // if variable is not set, it will be undefined, which is falsey
+const GENERIC_TABLE_SEEDING_COUNT = Number(
+  process.env.GENERIC_TABLE_SEEDING_COUNT,
+);
 
 await unGuardedPrisma.$connect();
 console.info("prisma connected...");
@@ -77,7 +80,7 @@ for (const TableName of SeedHelper.tablesFullList) {
     if (!(SKIP_SEEDED_TABLES && count > 0)) {
       // await (unGuardedPrisma as any)[tableName].deleteMany();
 
-      const size = 5; // replace with your desired size
+      const size = GENERIC_TABLE_SEEDING_COUNT; // replace with your desired size
       const dataArray = await Promise.all(
         new Array(size).fill(null).map(async (data: Object) => {
           // console.log("starting an iteration");
@@ -171,7 +174,7 @@ for (const TableName of SeedHelper.sortedTable) {
         } else {
           console.log("Auto Seeder for ", TableName);
           // await (unGuardedPrisma as any)[tableName].deleteMany();
-          const size = 5; // replace with your desired size
+          const size = GENERIC_TABLE_SEEDING_COUNT; // replace with your desired size
           const dataArray = await Promise.all(
             new Array(size).fill(null).map(async (data: Object) => {
               // console.log("starting an iteration");
