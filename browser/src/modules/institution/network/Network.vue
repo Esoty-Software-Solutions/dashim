@@ -227,7 +227,7 @@ const headers = ref<TableHeader[]>([
                         item.id == store.selectedInstitutionId.value,
                     }"
                   >
-                    <td>{{ item.name }}</td>
+                    <td style="border-right: none">{{ item.name }}</td>
                   </tr>
                 </template>
                 <template #bottom
@@ -259,7 +259,7 @@ const headers = ref<TableHeader[]>([
                         item.id == store.selectedInsurancePolicyId.value,
                     }"
                   >
-                    <td>{{ item.name }}</td>
+                    <td style="border-right: none">{{ item.name }}</td>
                   </tr>
                 </template>
                 <template #bottom
