@@ -236,9 +236,34 @@ const UpdateBeneficiaryInputSchema = z
   })
   .strict();
 
+// beneficiarySchema
+
+const CreateBeneficiaryInputSchema = z
+  .object({
+    data: z
+      .object({
+        id: z.string().cuid2(),
+        firstName: z.string(),
+        secondName: z.string().optional(),
+        thirdName: z.string().optional(),
+        fourthName: z.string().optional(),
+        lastName: z.string(),
+        birthDate: z.coerce.date(),
+        genderId: z.string(),
+        nationality: z.string().optional(),
+        nationalID: z.string().optional(),
+        relationshipId: z.string(),
+        // isActive: z.boolean().optional(),
+        beneficiaryEntityId: z.string(),
+      })
+      .strict(),
+  })
+  .strict();
+
 export {
   ListBeneficiaryEntityInputSchema,
   CreateBeneficiaryEntityInputSchema,
   UpdateBeneficiaryEntityInputSchema,
   UpdateBeneficiaryInputSchema,
+  CreateBeneficiaryInputSchema,
 };

@@ -1,5 +1,6 @@
 import {
   CreateBeneficiaryEntityInputSchema,
+  CreateBeneficiaryInputSchema,
   ListBeneficiaryEntityInputSchema,
 } from "@procedures/beneficiary/beneficiary.procedure.schema";
 import { _procedure } from "@procedures/_procedures";
@@ -25,6 +26,15 @@ export const procedureRouter = router({
     .mutation(async ({ ctx, input }) => {
       try {
         return _procedure.createBeneficiaryEntity(ctx.req, input);
+      } catch (error) {
+        throwCustomError(error);
+      }
+    }),
+  createBeneficiary: publicProcedure
+    .input(CreateBeneficiaryInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return _procedure.createBeneficiary(ctx.req, input);
       } catch (error) {
         throwCustomError(error);
       }

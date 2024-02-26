@@ -29,6 +29,8 @@ export const rules: Record<string, RuleTemplate> = {
         (element) => element.relationshipId === selfRelationship.id,
       );
       if (matchingElements.length !== 1) {
+        console.log("more than one self");
+
         throw new ServerError({
           message: this.description,
           code: "UNPROCESSABLE_CONTENT",
@@ -42,11 +44,12 @@ export const rules: Record<string, RuleTemplate> = {
     description:
       "Every Beneficiary Entity needs to have at most one beneficiary with a 'father' relationship declared",
     evaluation: async function (beneficiaries: Beneficiary[]) {
-      const selfRelationship = await actions.getSelfRelationshipObject();
+      const selfRelationship = await actions.getFatherRelationshipObject();
       const matchingElements = beneficiaries.filter(
         (element) => element.relationshipId === selfRelationship.id,
       );
       if (matchingElements.length > 1) {
+        console.log("more than one father");
         throw new ServerError({
           message: this.description,
           code: "UNPROCESSABLE_CONTENT",
@@ -60,11 +63,13 @@ export const rules: Record<string, RuleTemplate> = {
     description:
       "Every Beneficiary Entity needs to have at most one beneficiary with a 'mother' relationship declared",
     evaluation: async function (beneficiaries: Beneficiary[]) {
-      const selfRelationship = await actions.getSelfRelationshipObject();
+      const selfRelationship = await actions.getMotherRelationshipObject();
       const matchingElements = beneficiaries.filter(
         (element) => element.relationshipId === selfRelationship.id,
       );
+
       if (matchingElements.length > 1) {
+        console.log("more than one mother");
         throw new ServerError({
           message: this.description,
           code: "UNPROCESSABLE_CONTENT",
@@ -72,4 +77,22 @@ export const rules: Record<string, RuleTemplate> = {
       }
     },
   },
+  // beneficiaryRelationshipMustNotBeSelf: {
+  //   id: "1",
+  //   name: "self Relationship Must Exist",
+  //   description:
+  //     "Every Beneficiary Entity needs to have one beneficiary with a 'self' relationship declared",
+  //   evaluation: async function (beneficiary: Beneficiary) {
+  //     const selfRelationship = await actions.getSelfRelationshipObject();
+  //     const matchingElements =
+  //       beneficiary.relationshipId === selfRelationship.id;
+
+  //     if (matchingElements) {
+  //       throw new ServerError({
+  //         message: this.description,
+  //         code: "UNPROCESSABLE_CONTENT",
+  //       });
+  //     }
+  //   },
+  // },
 };
