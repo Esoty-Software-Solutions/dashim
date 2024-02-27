@@ -2,7 +2,7 @@
 import { ref, toRefs, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useBeneficiariesStore from "../stores/beneficiariesStore2";
 
@@ -24,6 +24,9 @@ import type { TableHeader } from "@/modules/shared/interfaces";
 const CreateBeneficiariesModel = defineAsyncComponent(
   () => import("@/modules/institution/components/CreateBeneficiariesModel.vue"),
 );
+const CreateBeneficiaryModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateBeneficiaryModel.vue"),
+);
 defineOptions({
   name: "InstitutionsBeneficiariesPage",
 });
@@ -34,6 +37,8 @@ const store = toRefs(useBeneficiariesStore());
 let selected = ref<any[]>([]);
 let selectedCount = ref(0);
 let expanded = ref([]);
+const deleteDialog = ref(false);
+const selectedBeneficiaryEntity = ref("");
 
 const chipOptions: ChipsDataFilterItem<string>[] = [
   {
@@ -206,6 +211,34 @@ function paginated() {
 function closeDialiog() {
   store.dialog.value = false;
 }
+function deleteItemConfirm(item) {
+  console.log(item);
+
+  closeDelete();
+}
+function closeDelete() {
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
+function editItem(item) {
+  console.log(item);
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function openAddBeneficiaryDialog(item) {
+  console.log(store.addBeneficiarydialog.value);
+
+  selectedBeneficiaryEntity.value = item;
+  store.addBeneficiarydialog.value = !store.addBeneficiarydialog.value;
+}
+function closeAddBeneficiaryDialiog() {
+  store.triggerFetch.value();
+  store.addBeneficiarydialog.value = false;
+}
 
 // table headers
 const headers = ref<TableHeader[]>([
@@ -285,7 +318,6 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
     align: "center",
   },
 ]);
@@ -293,8 +325,15 @@ const headers = ref<TableHeader[]>([
 
 <template>
   <CreateBeneficiariesModel
+    v-if="store.dialog.value"
     :dialog="store.dialog.value"
     @update-dialog="closeDialiog"
+  />
+  <CreateBeneficiaryModel
+    v-if="store.addBeneficiarydialog.value"
+    :dialog="store.addBeneficiarydialog.value"
+    :beneficiary-entity="selectedBeneficiaryEntity"
+    @update-dialog="closeAddBeneficiaryDialiog"
   />
   <DataPageBase>
     <template #filters>
@@ -410,8 +449,40 @@ const headers = ref<TableHeader[]>([
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
         </template>
-        <!-- </template> -->
+        <template #item.actions="{ item }">
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPlus"
+            @click="openAddBeneficiaryDialog(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click="deleteItem(item)"
+          />
+        </template>
       </VDataTableServer>
     </template>
   </DataPageBase>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5"
+        >Are you sure you want to delete this item?</VCardTitle
+      >
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

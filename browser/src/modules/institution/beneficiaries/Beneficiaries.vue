@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, computed, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus } from "@mdi/js";
@@ -72,6 +72,12 @@ function paginated() {
   selected.value = [];
   selectedCount.value = 0;
 }
+function openACreateBeneficiaryDialog() {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog() {
+  store.dialog.value = false;
+}
 
 // table headers
 const headers = ref<TableHeader[]>([
@@ -127,9 +133,17 @@ const headers = ref<TableHeader[]>([
     align: "center",
   },
 ]);
+const CreateBeneficiaryModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateBeneficiaryModel.vue"),
+);
 </script>
 
 <template>
+  <CreateBeneficiaryModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -141,8 +155,12 @@ const headers = ref<TableHeader[]>([
         <VBtn @click="selectAll">Select All</VBtn>
         <VBtn @click="refresh">refresh</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
-          <span>{{ t("institution.beneficiaries.newBeneficiary") }}</span>
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openACreateBeneficiaryDialog"
+        >
+          <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
       </VCardActions>

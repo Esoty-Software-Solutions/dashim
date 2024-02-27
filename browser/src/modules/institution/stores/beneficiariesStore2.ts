@@ -36,6 +36,10 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     true,
   );
   const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
+  const addBeneficiarydialog = useLocalStorage<boolean>(
+    "createBeneficiaries.addBeneficiarydialog",
+    false,
+  );
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -178,6 +182,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     selectedCity,
     selectedCityEnabled,
     dialog,
+    addBeneficiarydialog,
   };
 });
 
