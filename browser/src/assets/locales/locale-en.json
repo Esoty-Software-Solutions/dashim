@@ -25,7 +25,8 @@
     "BalanceResetDate": "Balance Reset Date",
     "renewalDate": "renewal Date",
     "serviceEntryTimeWindow": "service Entry Time Window",
-    "serviceCategory": "Service Category"
+    "serviceCategory": "Service Category",
+    "nationality": "Nationality"
   },
   "accounting": {
     "claims": "Claims"
@@ -46,6 +47,7 @@
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
       "newbeneficiary": "New Beneficiary",
+      "newBeneficiary": "New Beneficiary",
       "addbeneficiary": "Add Beneficiary"
     },
     "network": {
