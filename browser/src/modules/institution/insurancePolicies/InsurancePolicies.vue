@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, toRefs, watch } from "vue";
+import { ref, toRefs, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus, mdiClose } from "@mdi/js";
+import { mdiPlus, mdiClose, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useInsurancePoliciesStore from "../stores/insurancePoliciesStore";
 
@@ -23,7 +23,12 @@ const store = toRefs(useInsurancePoliciesStore());
 // console.log(store.binding.value.items);
 let selected = ref([""]);
 let selectedCount = ref(0);
+const deleteDialog = ref(false);
 
+const CreateInsurancePolicyModel = defineAsyncComponent(
+  () =>
+    import("@/modules/institution/components/CreateInsurancePolicyModel.vue"),
+);
 // filters
 // async filter
 type InstitutionInput = Exclude<
@@ -104,6 +109,20 @@ function paginated() {
 }
 const drawer = ref(false);
 const selectedItem = ref({});
+
+function editItem(item) {
+  console.log(item);
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function openCreateInsurancePolicyDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog() {
+  store.triggerFetch.value();
+  store.dialog.value = false;
+}
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -161,13 +180,18 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
 </script>
 
 <template>
+  <CreateInsurancePolicyModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -179,7 +203,11 @@ const headers = ref<TableHeader[]>([
         <VBtn @click="selectAll">{{ t("institution.actions.selectAll") }}</VBtn>
         <VBtn @click="refresh">{{ t("institution.actions.refresh") }}</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openCreateInsurancePolicyDialog"
+        >
           <span>{{
             t("institution.insurancePolicies.newInsurancePolicy")
           }}</span>
@@ -199,7 +227,9 @@ const headers = ref<TableHeader[]>([
         @update:items-per-page="paginated"
         @click:row="
           (event, row) => {
-            drawer = true;
+            console.log(event);
+
+            // drawer = true;
             selectedItem.value = row.item;
           }
         "
@@ -221,6 +251,20 @@ const headers = ref<TableHeader[]>([
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
+        </template>
+        <template #item.actions>
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click="deleteItem(item)"
+          />
         </template>
       </VDataTableServer>
       <VNavigationDrawer v-model="drawer" location="right">

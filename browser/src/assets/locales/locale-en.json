@@ -23,6 +23,7 @@
     "medicalCenter": "Medical Center",
     "Accumulatedlimit": "Accumulated limit",
     "BalanceResetDate": "Balance Reset Date",
+    "issueDate": "Issue Date",
     "renewalDate": "renewal Date",
     "serviceEntryTimeWindow": "service Entry Time Window",
     "serviceCategory": "Service Category",
@@ -48,7 +49,8 @@
     },
     "list": {
       "pageTitle": "Institutions List",
-      "newInstitution": "New Institution"
+      "newInstitution": "New Institution",
+      "newInsurancePolicy": "New Insurance Policy"
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",

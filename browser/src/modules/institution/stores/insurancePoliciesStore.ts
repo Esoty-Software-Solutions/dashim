@@ -14,6 +14,11 @@ const useInsurancePoliciesStore = defineStore(
       "insurancePoliciesList.nameFilterValue",
       "",
     );
+    const dialog = useLocalStorage<boolean>(
+      "createInsurancePolicy.dialog",
+      false,
+    );
+
     const nameFilterEnabled = useLocalStorage<boolean>(
       "insurancePoliciesList.nameFilterEnabled",
       true,
@@ -71,6 +76,7 @@ const useInsurancePoliciesStore = defineStore(
       triggerFetch,
       selectedInstitution,
       selectedInstitutionEnabled,
+      dialog,
     };
   },
 );
