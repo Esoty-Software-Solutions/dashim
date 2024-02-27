@@ -15,8 +15,9 @@ const useStoreList = defineStore("institutionsStoreList", () => {
     "institutionsList.nameFilterEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>("createInstitution.dialog", false);
 
-  const { binding, items } = useQuerierTable({
+  const { binding, items, triggerFetch } = useQuerierTable({
     /*
      * There are multiple ways to pass your input as this is a `MayBeRefOrGetter`
      * _might want to learn more about this at_
@@ -56,8 +57,9 @@ const useStoreList = defineStore("institutionsStoreList", () => {
   return {
     nameFilter,
     nameFilterEnabled,
-
+    dialog,
     binding,
+    triggerFetch,
   };
 });
 

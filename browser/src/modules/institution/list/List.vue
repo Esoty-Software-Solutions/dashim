@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, toRefs, computed } from "vue";
+import { ref, toRefs, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useListStore from "../stores/storeList";
 
@@ -18,7 +18,10 @@ defineOptions({
 const { t } = useI18n();
 
 const store = toRefs(useListStore());
-
+const deleteDialog = ref(false);
+const CreateInstitutionModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateInstitutionModel.vue"),
+);
 /* ****
  *  filters
  * ********** */
@@ -41,8 +44,36 @@ const { FilterComponent } = useDataFilters({
   },
 });
 
-// table headers
+function deleteItemConfirm(item) {
+  console.log(item);
 
+  closeDelete();
+}
+function closeDelete() {
+  store.triggerFetch.value();
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
+function editItem(item) {
+  console.log(item);
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function openCreateInstitutionDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog() {
+  store.triggerFetch.value();
+  store.dialog.value = false;
+}
+function refresh() {
+  store.triggerFetch.value();
+}
+// table headers
 const headers = ref<TableHeader[]>([
   {
     title: t("common.name"),
@@ -69,13 +100,18 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
 </script>
 
 <template>
+  <CreateInstitutionModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -83,10 +119,14 @@ const headers = ref<TableHeader[]>([
 
     <template #actions>
       <VCardActions>
-        <VBtn> Action 1 </VBtn>
+        <VBtn @click="refresh">Refresh </VBtn>
 
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openCreateInstitutionDialog"
+        >
           <span>{{ t("institution.list.newInstitution") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
@@ -105,9 +145,40 @@ const headers = ref<TableHeader[]>([
         </template>
 
         <template #item.actions>
-          <VIcon :icon="mdiPlus" />
+          <!-- <VIcon :icon="mdiPlus" /> -->
+          <!-- <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPlus"
+            @click="openAddInstitutionDialog(item)"
+          /> -->
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click="deleteItem(item)"
+          />
         </template>
       </VDataTableServer>
     </template>
   </DataPageBase>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5"
+        >Are you sure you want to delete this item?</VCardTitle
+      >
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

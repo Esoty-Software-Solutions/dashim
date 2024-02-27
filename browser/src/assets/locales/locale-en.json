@@ -25,7 +25,14 @@
     "BalanceResetDate": "Balance Reset Date",
     "renewalDate": "renewal Date",
     "serviceEntryTimeWindow": "service Entry Time Window",
-    "serviceCategory": "Service Category"
+    "serviceCategory": "Service Category",
+    "code": "Code",
+    "facebookLink": "Facebook Link",
+    "googleMapsLink": "Google Maps Link",
+    "instagramLink": "Instagram Link",
+    "twitterLink": "twitter Link",
+    "website": "Website",
+    "address": "Address"
   },
   "accounting": {
     "claims": "Claims"
