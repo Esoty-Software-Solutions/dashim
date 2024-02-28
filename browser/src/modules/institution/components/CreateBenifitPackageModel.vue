@@ -52,7 +52,6 @@ onMounted(async () => {
     @update:model-value="emit('update-dialog')"
   >
     <VCard>
-      {{ store.benefitPackage }}
       <v-form
         ref="BenefitPackageform"
         v-model="store.valid"
