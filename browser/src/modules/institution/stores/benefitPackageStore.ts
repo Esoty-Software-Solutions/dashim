@@ -15,6 +15,8 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     "benefitPackagesList.nameFilterEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>("benefitPackage.dialog", false);
+
   type InstitutionOutput = RouterOutput["crud"]["institution"]["findMany"];
   type Institution = NonNullable<InstitutionOutput>["data"][number];
   const selectedInstitution = ref<Institution["id"] | null>(null);
@@ -195,6 +197,7 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     serviceCategoriesItems,
     categoryNameFilter,
     categoryNameFilterEnabled,
+    dialog,
     // medicalServices,
     // if using "immediate=true"
   };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, watch, watchEffect } from "vue";
+import { ref, toRefs, watch, watchEffect, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { mdiPlus, mdiClose } from "@mdi/js";
@@ -22,7 +22,10 @@ const { t } = useI18n();
 const store = toRefs(useBenefitPackageStore());
 let selected = ref([""]);
 let selectedCount = ref(0);
-
+const CreateBenifitPackageModel = defineAsyncComponent(
+  () =>
+    import("@/modules/institution/components/CreateBenifitPackageModel.vue"),
+);
 // filters
 // async filter
 type InstitutionInput = Exclude<
@@ -202,6 +205,14 @@ function paginated() {
 }
 const drawer = ref(false);
 let expanded = ref([]);
+
+function openCreateBenefitPackageDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog() {
+  store.triggerFetch.value();
+  store.dialog.value = false;
+}
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -251,6 +262,11 @@ const servicePackageHeaders = ref<TableHeader[]>([
 </script>
 
 <template>
+  <CreateBenifitPackageModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -261,7 +277,11 @@ const servicePackageHeaders = ref<TableHeader[]>([
         <VBtn @click="selectAll">{{ t("institution.actions.selectAll") }}</VBtn>
         <VBtn @click="refresh">{{ t("institution.actions.refresh") }}</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openCreateBenefitPackageDialog"
+        >
           <span>{{ t("institution.benefitPackages.newBenefitPackage") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>

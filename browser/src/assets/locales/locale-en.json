@@ -33,7 +33,9 @@
     "instagramLink": "Instagram Link",
     "twitterLink": "twitter Link",
     "website": "Website",
-    "address": "Address"
+    "address": "Address",
+    "threashold": "Threashold",
+    "copayDistrubtion": "Copay Distrubtion"
   },
   "accounting": {
     "claims": "Claims"
