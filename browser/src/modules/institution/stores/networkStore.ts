@@ -2,6 +2,8 @@ import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref, computed, watch, watchEffect } from "vue";
 
+import useApi from "../composables/useApi";
+
 import useQuerierTable from "@/modules/shared/composables/useQuerierTable";
 import { client } from "@/queries";
 
@@ -19,6 +21,10 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
 
   const selectedInsurancePolicyId = ref("");
   const insurancePolicyMedicalCenterIds = ref<string[] | never[]>([]);
+  const dialog = useLocalStorage<boolean>(
+    "network.addMedicalCenterDialog",
+    false,
+  );
 
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
@@ -93,12 +99,12 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
   // `items`, `input` should have the proper types
 
   const {
-    binding: insurancePolicyMedicalCenterBinding,
+    // binding: insurancePolicyMedicalCenterBinding,
     items: insurancePolicyMedicalCenterItems,
     triggerFetch: insurancePolicyMedicalCenterTriggerFetch,
-  } = useQuerierTable({
+  } = useApi({
     storageKey: "networkList.insurancePolicyMedicalCenter",
-    input: () => {
+    input: computed(() => ({
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
       // const where: any = {};
       // if (nameFilterEnabled.value && nameFilter.value.trim()) {
@@ -114,16 +120,14 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
       //     // },
       //   };
       // }
-      return {
-        where: {
-          insurancePolicy: {
-            id: selectedInsurancePolicyId.value
-              ? selectedInsurancePolicyId.value
-              : undefined,
-          },
+      where: {
+        insurancePolicy: {
+          id: selectedInsurancePolicyId.value
+            ? selectedInsurancePolicyId.value
+            : undefined,
         },
-      };
-    },
+      },
+    })),
     // findCallback: client.procedure.listSubscribers.query,
     findCallback: client.crud.insurancePolicyMedicalCenter.findMany.query,
     onError(error) {
@@ -138,29 +142,27 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     triggerFetch: medicalCenterTriggerFetch,
   } = useQuerierTable({
     storageKey: "networkList.medicalCenter",
-    input: () => {
+    input: computed(() => ({
       // type inputType = Parameters<typeof client.crud.beneficiary.findMany.query>[0]
       // const where: any = {};
       // if (nameFilterEnabled.value && nameFilter.value.trim()) {
       // searchName : { contains: nameFilter.value.trim() }
-      return {
-        where: {
-          id: { in: insurancePolicyMedicalCenterIds.value },
-          name:
-            nameFilterEnabled.value && nameFilter.value.trim()
-              ? { contains: nameFilter.value.trim() }
-              : undefined,
+      where: {
+        id: { in: insurancePolicyMedicalCenterIds.value },
+        name:
+          nameFilterEnabled.value && nameFilter.value.trim()
+            ? { contains: nameFilter.value.trim() }
+            : undefined,
 
-          //   name: { contains: nameFilter.value.trim() },
-          //   insurancePolicy: {
-          //     id: selectedInsurancePolicyId.value
-          //       ? selectedInsurancePolicyId.value
-          //       : undefined,
-          //   },
-        },
-      };
+        //   name: { contains: nameFilter.value.trim() },
+        //   insurancePolicy: {
+        //     id: selectedInsurancePolicyId.value
+        //       ? selectedInsurancePolicyId.value
+        //       : undefined,
+        //   },
+      },
       // }
-    },
+    })),
     // findCallback: client.procedure.listSubscribers.query,
     findCallback: client.crud.medicalCenter.findMany.query,
     onError(error) {
@@ -169,6 +171,8 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     },
     immediate: true,
   });
+
+  function deleteMedicalCenter() {}
   return {
     idSearch,
     idEnabled,
@@ -185,7 +189,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     insurancePoliciesBinding,
     insurancePoliciesItems,
     insurancePoliciesTriggerFetch,
-    insurancePolicyMedicalCenterBinding,
+    // insurancePolicyMedicalCenterBinding,
     insurancePolicyMedicalCenterItems,
     insurancePolicyMedicalCenterTriggerFetch,
     insurancePolicyMedicalCenterIds,
@@ -193,6 +197,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     institutions,
     getInsurancePolicies,
     insurancePolicies,
+    dialog,
   };
 });
 

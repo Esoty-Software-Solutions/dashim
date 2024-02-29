@@ -2,7 +2,7 @@
 import { ref, toRefs, watch, watchEffect, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus, mdiClose } from "@mdi/js";
+import { mdiPlus, mdiClose, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useBenefitPackageStore from "../stores/benefitPackageStore";
 
@@ -22,6 +22,8 @@ const { t } = useI18n();
 const store = toRefs(useBenefitPackageStore());
 let selected = ref([""]);
 let selectedCount = ref(0);
+const deleteDialog = ref(false);
+
 const CreateBenifitPackageModel = defineAsyncComponent(
   () =>
     import("@/modules/institution/components/CreateBenifitPackageModel.vue"),
@@ -213,6 +215,25 @@ function closeDialiog() {
   store.triggerFetch.value();
   store.dialog.value = false;
 }
+function editItem(item) {
+  console.log(item);
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function deleteItemConfirm(item) {
+  console.log(item);
+
+  closeDelete();
+}
+function closeDelete() {
+  store.triggerFetch.value();
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -245,7 +266,7 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
@@ -325,6 +346,20 @@ const servicePackageHeaders = ref<TableHeader[]>([
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
+        </template>
+        <template #item.actions="{ item }">
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click.stop="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click.stop="deleteItem(item)"
+          />
         </template>
       </VDataTableServer>
       <VNavigationDrawer
@@ -410,4 +445,17 @@ const servicePackageHeaders = ref<TableHeader[]>([
       </VNavigationDrawer>
     </template>
   </DataPageBase>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5"
+        >Are you sure you want to delete this item?</VCardTitle
+      >
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

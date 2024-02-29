@@ -61,7 +61,8 @@
     },
     "network": {
       "pageTitle": "Network List",
-      "newMedicalCenter": "New Medical Center"
+      "newMedicalCenter": "New Medical Center",
+      "addMedicalCenter": "Add Medical Center"
     },
     "insurancePolicies": {
       "newInsurancePolicy": "New Insurance Policy"

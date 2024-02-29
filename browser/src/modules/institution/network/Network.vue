@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { ref, toRefs, computed, watch, watchEffect, unref } from "vue";
+import {
+  ref,
+  toRefs,
+  computed,
+  watch,
+  watchEffect,
+  unref,
+  defineAsyncComponent,
+} from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiClose, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useNetworkStore from "../stores/networkStore";
 
@@ -11,6 +19,9 @@ import useDataFilters, { text } from "@/modules/filter/composables/dataFilter";
 
 import type { TableHeader } from "@/modules/shared/interfaces";
 
+const AddMedicalCenterModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/AddMedicalCenterModel.vue"),
+);
 defineOptions({
   name: "InstitutionsNetworkPage",
 });
@@ -20,6 +31,8 @@ const getInsurancePoliciesUnRef = unref(store.getInsurancePolicies);
 // console.log(store.binding.value.items);
 let selected = ref([""]);
 let selectedCount = ref(0);
+const deleteDialog = ref(false);
+
 const { FilterComponent } = useDataFilters({
   sheetProps: {
     elevation: 0,
@@ -93,11 +106,41 @@ function selectAll() {
 
   console.log(selected.value);
 }
+function openAddMedicalCenterDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog() {
+  console.log("closing dialog");
+
+  store.dialog.value = false;
+}
 // function handleClick(event, row) {
 //   store.selectedInstitutionId.value = row.item.id;
 //   // console.log("Clicked item: ", row.item.id);
 // }
+function editItem(item) {
+  console.log(item);
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function deleteItemConfirm(item) {
+  console.log(item);
 
+  closeDelete();
+}
+function closeDelete() {
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
+function insurancePolicyMedicalCenterTriggerFetch() {
+  console.log("update policyId");
+
+  store.insurancePolicyMedicalCenterTriggerFetch.value();
+}
 // table headers
 const institutionHeaders = ref<TableHeader[]>([
   {
@@ -126,13 +169,6 @@ const headers = ref<TableHeader[]>([
     },
   },
   {
-    title: t("common.actions"),
-    key: "actions",
-    sortable: false,
-    width: "1rem",
-    align: "center",
-  },
-  {
     title: t("common.creationDate"),
     key: "createdAt",
     sortable: false,
@@ -151,6 +187,13 @@ const headers = ref<TableHeader[]>([
     align: "center",
     width: "0.5rem",
   },
+  {
+    title: t("common.actions"),
+    key: "actions",
+    sortable: false,
+    width: "150",
+    align: "center",
+  },
 ]);
 // onMounted(() => {
 //   store.value.getInstitutions();
@@ -158,6 +201,16 @@ const headers = ref<TableHeader[]>([
 </script>
 
 <template>
+  <AddMedicalCenterModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    :insurance-policy-id="store.selectedInsurancePolicyId"
+    :already-added-centers="store.insurancePolicyMedicalCenterIds"
+    @update-dialog="closeDialiog"
+    @insurance-policy-medical-center-trigger-fetch="
+      insurancePolicyMedicalCenterTriggerFetch
+    "
+  />
   <VContainer
     ref="container"
     v-bind="$attrs"
@@ -217,6 +270,7 @@ const headers = ref<TableHeader[]>([
                   (event, row) => {
                     store.selectedInstitutionId.value = row.item.id;
                     store.insurancePolicyMedicalCenterIds.value = [];
+                    store.selectedInsurancePolicyId.value = '';
                   }
                 "
               >
@@ -282,7 +336,12 @@ const headers = ref<TableHeader[]>([
                   <VBtn @click="selectAll">Select All</VBtn>
                   <VBtn @click="refresh">refresh</VBtn>
                   <VSpacer />
-                  <VBtn color="primary" variant="plain">
+                  <VBtn
+                    v-if="store.selectedInsurancePolicyId.value"
+                    color="primary"
+                    variant="plain"
+                    @click="openAddMedicalCenterDialog"
+                  >
                     <span>{{ t("institution.network.newMedicalCenter") }}</span>
                     <VIcon end :icon="mdiPlus" />
                   </VBtn>
@@ -309,7 +368,19 @@ const headers = ref<TableHeader[]>([
                 </template>
 
                 <template #item.actions>
-                  <VIcon :icon="mdiPlus" />
+                  <!-- <VIcon
+                    class="mx-1"
+                    color="primary"
+                    :icon="mdiPencil"
+                    @click.stop="editItem(item)"
+                  /> -->
+                  <VIcon
+                    v-if="store.selectedInsurancePolicyId.value"
+                    class="mx-1"
+                    color="primary"
+                    :icon="mdiDelete"
+                    @click.stop="deleteItem(item)"
+                  />
                 </template>
               </VDataTableServer>
             </VContainer>
@@ -319,4 +390,17 @@ const headers = ref<TableHeader[]>([
       </VRow>
     </VDefaultsProvider>
   </VContainer>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5"
+        >Are you sure you want to delete this item?</VCardTitle
+      >
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>
