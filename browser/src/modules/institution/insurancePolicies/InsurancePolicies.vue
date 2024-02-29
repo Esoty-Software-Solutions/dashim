@@ -257,13 +257,13 @@ const headers = ref<TableHeader[]>([
             class="mx-1"
             color="primary"
             :icon="mdiPencil"
-            @click="editItem(item)"
+            @click.stop="editItem(item)"
           />
           <VIcon
             class="mx-1"
             color="primary"
             :icon="mdiDelete"
-            @click="deleteItem(item)"
+            @click.stop="deleteItem(item)"
           />
         </template>
       </VDataTableServer>

@@ -57,12 +57,12 @@ onMounted(async () => {
         v-model="store.valid"
         @submit.prevent="createBenefitPackage"
       >
-        <VCard-title class="pa-5">
+        <VCardTitle class="pa-5">
           <span class="text-h5"
             >{{ t("institution.benefitPackages.newBenefitPackage") }}
           </span>
-        </VCard-title>
-        <VCard-text>
+        </VCardTitle>
+        <VCardText>
           <VContainer>
             <VRow>
               <VCol cols="12" sm="6" md="6">
@@ -112,6 +112,7 @@ onMounted(async () => {
                   :label="$t('common.threashold')"
                   variant="outlined"
                   required
+                  class="py-1"
                   @click:append="
                     store.benefitPackage.threashold.splice(index, 1)
                   "
@@ -153,14 +154,14 @@ onMounted(async () => {
             </VRow>
           </VContainer>
           <small>*indicates required field</small>
-        </VCard-text>
-        <VCard-actions>
+        </VCardText>
+        <VCardActions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
             Close
           </VBtn>
           <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
-        </VCard-actions>
+        </VCardActions>
       </v-form>
     </VCard>
   </VDialog>

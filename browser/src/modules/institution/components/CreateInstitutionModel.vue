@@ -61,12 +61,12 @@ onMounted(async () => {
         v-model="store.valid"
         @submit.prevent="createInstitution"
       >
-        <VCard-title class="pa-5">
+        <VCardTitle class="pa-5">
           <span class="text-h5"
             >{{ t("institution.list.newInstitution") }}
           </span>
-        </VCard-title>
-        <VCard-text>
+        </VCardTitle>
+        <VCardText>
           <VContainer>
             <!-- {{ store.Institution }} -->
             <!-- {{ InstitutionEntity }} -->
@@ -158,14 +158,14 @@ onMounted(async () => {
             </VRow>
           </VContainer>
           <small>*indicates required field</small>
-        </VCard-text>
-        <VCard-actions>
+        </VCardText>
+        <VCardActions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
             Close
           </VBtn>
           <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
-        </VCard-actions>
+        </VCardActions>
       </v-form>
     </VCard>
   </VDialog>
