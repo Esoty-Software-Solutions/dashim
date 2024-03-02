@@ -148,6 +148,9 @@ function insurancePolicyMedicalCenterTriggerFetch() {
 
   store.insurancePolicyMedicalCenterTriggerFetch.value();
 }
+const selectedLength = computed(() => {
+  return selected.value.length;
+});
 // table headers
 const institutionHeaders = ref<TableHeader[]>([
   {
@@ -342,7 +345,10 @@ const headers = ref<TableHeader[]>([
                   {{ selectedCount }}
                   <VBtn @click="selectAll">Select All</VBtn>
                   <VBtn @click="refresh">refresh</VBtn>
-                  <VBtn color="red" @click="deleteItem(selected)"
+                  <VBtn
+                    v-if="selectedLength"
+                    color="red"
+                    @click="deleteItem(selected)"
                     >delete all</VBtn
                   >
                   <VSpacer />
