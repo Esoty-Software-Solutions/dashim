@@ -137,9 +137,9 @@ function useApi<
       },
     );
 
-    // watch(() => options.input, triggerFetch, {
-    //   immediate: options.immediate,
-    // });
+    watch(() => options.input, triggerFetch, {
+      immediate: options.immediate,
+    });
   }
 
   setupWatchers();
