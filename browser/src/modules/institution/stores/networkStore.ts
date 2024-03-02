@@ -25,7 +25,7 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     "network.addMedicalCenterDialog",
     false,
   );
-
+  const deletedItems = ref<string[]>([]);
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
@@ -172,7 +172,21 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     immediate: true,
   });
 
-  function deleteMedicalCenter() {}
+  async function deleteMedicalCenter(id) {
+    console.log(deletedItems.value);
+
+    if (deletedItems.value.length > 0) {
+      const response =
+        await client.crud.insurancePolicyMedicalCenter.deleteMany.mutate({
+          where: {
+            insurancePolicyId: selectedInsurancePolicyId.value,
+            medicalCenterId: { in: deletedItems.value },
+          },
+        });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   return {
     idSearch,
     idEnabled,
@@ -198,6 +212,8 @@ const useNetworkStore = defineStore("NetworkStoreList", () => {
     getInsurancePolicies,
     insurancePolicies,
     dialog,
+    deleteMedicalCenter,
+    deletedItems,
   };
 });
 

@@ -121,16 +121,23 @@ function closeDialiog() {
 function editItem(item) {
   console.log(item);
 }
-function deleteItem(item) {
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
   deleteDialog.value = true;
 }
-function deleteItemConfirm(item) {
-  console.log(item);
-
+async function deleteItemConfirm(item) {
+  await store.deleteMedicalCenter.value();
+  await store.insurancePolicyMedicalCenterTriggerFetch.value();
   closeDelete();
 }
 function closeDelete() {
   deleteDialog.value = false;
+  store.deletedItems.value = [];
   // nextTick(() => {
   //   editedItem.value = Object.assign({}, defaultItem.value)
   //   editedIndex.value = -1
@@ -335,6 +342,9 @@ const headers = ref<TableHeader[]>([
                   {{ selectedCount }}
                   <VBtn @click="selectAll">Select All</VBtn>
                   <VBtn @click="refresh">refresh</VBtn>
+                  <VBtn color="red" @click="deleteItem(selected)"
+                    >delete all</VBtn
+                  >
                   <VSpacer />
                   <VBtn
                     v-if="store.selectedInsurancePolicyId.value"
@@ -367,7 +377,7 @@ const headers = ref<TableHeader[]>([
                   </VChip>
                 </template>
 
-                <template #item.actions>
+                <template #item.actions="{ item }">
                   <!-- <VIcon
                     class="mx-1"
                     color="primary"
@@ -379,7 +389,7 @@ const headers = ref<TableHeader[]>([
                     class="mx-1"
                     color="primary"
                     :icon="mdiDelete"
-                    @click.stop="deleteItem(item)"
+                    @click.stop="deleteItem(item.id)"
                   />
                 </template>
               </VDataTableServer>
@@ -393,8 +403,8 @@ const headers = ref<TableHeader[]>([
   <VDialog v-model="deleteDialog" max-width="500px">
     <VCard>
       <VCardTitle class="text-h5"
-        >Are you sure you want to delete this item?</VCardTitle
-      >
+        >Are you sure you want to delete this item?
+      </VCardTitle>
       <VCardActions>
         <VSpacer />
         <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
