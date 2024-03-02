@@ -218,10 +218,18 @@ function closeDialiog() {
 function editItem(item) {
   console.log(item);
 }
-function deleteItem(item) {
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
   deleteDialog.value = true;
 }
-function deleteItemConfirm(item) {
+async function deleteItemConfirm(item) {
+  await store.deleteBenefitPackage.value();
+  store.triggerFetch.value();
   console.log(item);
 
   closeDelete();
@@ -358,7 +366,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
             class="mx-1"
             color="primary"
             :icon="mdiDelete"
-            @click.stop="deleteItem(item)"
+            @click.stop="deleteItem(item.id)"
           />
         </template>
       </VDataTableServer>

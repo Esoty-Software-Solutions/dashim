@@ -44,11 +44,6 @@ const { FilterComponent } = useDataFilters({
   },
 });
 
-function deleteItemConfirm(item) {
-  console.log(item);
-
-  closeDelete();
-}
 function closeDelete() {
   store.triggerFetch.value();
   deleteDialog.value = false;
@@ -60,7 +55,13 @@ function closeDelete() {
 function editItem(item) {
   console.log(item);
 }
-function deleteItem(item) {
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
   deleteDialog.value = true;
 }
 function openCreateInstitutionDialog(item) {
@@ -72,6 +73,13 @@ function closeDialiog() {
 }
 function refresh() {
   store.triggerFetch.value();
+}
+async function deleteItemConfirm(item) {
+  await store.deleteInstitution.value();
+  store.triggerFetch.value();
+  console.log(item);
+
+  closeDelete();
 }
 // table headers
 const headers = ref<TableHeader[]>([
@@ -144,7 +152,7 @@ const headers = ref<TableHeader[]>([
           </VChip>
         </template>
 
-        <template #item.actions>
+        <template #item.actions="{ item }">
           <!-- <VIcon :icon="mdiPlus" /> -->
           <!-- <VIcon
             class="mx-1"
@@ -162,7 +170,7 @@ const headers = ref<TableHeader[]>([
             class="mx-1"
             color="primary"
             :icon="mdiDelete"
-            @click="deleteItem(item)"
+            @click="deleteItem(item.id)"
           />
         </template>
       </VDataTableServer>

@@ -16,7 +16,19 @@ const useStoreList = defineStore("institutionsStoreList", () => {
     true,
   );
   const dialog = useLocalStorage<boolean>("createInstitution.dialog", false);
+  const deletedItems = ref<string[]>([]);
 
+  async function deleteInstitution(id) {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.institution.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   const { binding, items, triggerFetch } = useQuerierTable({
     /*
      * There are multiple ways to pass your input as this is a `MayBeRefOrGetter`
@@ -34,6 +46,7 @@ const useStoreList = defineStore("institutionsStoreList", () => {
      * https://www.typescriptlang.org/docs/handbook/type-inference.html#contextual-typing
      *
      */
+
     input: () => {
       // you may want to use this if you want to access the types ahead of time.
       /* const where: FindManyInput['where'] = {} */
@@ -60,6 +73,8 @@ const useStoreList = defineStore("institutionsStoreList", () => {
     dialog,
     binding,
     triggerFetch,
+    deleteInstitution,
+    deletedItems,
   };
 });
 

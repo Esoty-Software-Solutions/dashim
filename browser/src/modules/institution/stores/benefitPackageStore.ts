@@ -52,6 +52,19 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     "benefitPackagesList.categoryFilterEnabled",
     true,
   );
+  const deletedItems = ref<string[]>([]);
+
+  async function deleteBenefitPackage(id) {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.benefitPackage.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
@@ -198,6 +211,8 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     categoryNameFilter,
     categoryNameFilterEnabled,
     dialog,
+    deletedItems,
+    deleteBenefitPackage,
     // medicalServices,
     // if using "immediate=true"
   };

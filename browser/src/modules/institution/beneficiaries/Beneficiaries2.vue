@@ -54,7 +54,7 @@ type InstitutionInput = Exclude<
   RouterInput["crud"]["institution"]["findMany"],
   void
 >;
-const institutionSelect = asyncSelect(
+const institutionSelect = asyncAutocomplete(
   {
     value: store.selectedInstitution,
     enabled: store.selectedInstitutionEnabled,
