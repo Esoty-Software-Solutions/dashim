@@ -47,7 +47,8 @@
       "network": "Network",
       "insurancePolicy": "Insurance Policy",
       "benefitPackage": "Benefit Package",
-      "claims": "claims"
+      "claims": "claims",
+      "beneficiariesEntity": "Beneficiaries Entity"
     },
     "list": {
       "pageTitle": "Institutions List",

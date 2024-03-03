@@ -8,6 +8,7 @@ import { client, type RouterInput } from "@/queries";
 // See the input later
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type FindManyInput = RouterInput["crud"]["institution"]["findMany"];
+// type UpdateOneInput = RouterInput["crud"]["institution"];
 
 const useStoreList = defineStore("institutionsStoreList", () => {
   const nameFilter = useLocalStorage("institutionsList.nameFilterValue", "");
@@ -17,6 +18,11 @@ const useStoreList = defineStore("institutionsStoreList", () => {
   );
   const dialog = useLocalStorage<boolean>("createInstitution.dialog", false);
   const deletedItems = ref<string[]>([]);
+  const editDialog = useLocalStorage<boolean>(
+    "createInstitution.editDialog",
+    false,
+  );
+  const editedItem = ref({});
 
   async function deleteInstitution(id) {
     if (deletedItems.value.length > 0) {
@@ -75,6 +81,8 @@ const useStoreList = defineStore("institutionsStoreList", () => {
     triggerFetch,
     deleteInstitution,
     deletedItems,
+    editDialog,
+    editedItem,
   };
 });
 

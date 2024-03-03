@@ -22,6 +22,9 @@ const deleteDialog = ref(false);
 const CreateInstitutionModel = defineAsyncComponent(
   () => import("@/modules/institution/components/CreateInstitutionModel.vue"),
 );
+const EditInstitutionModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditInstitutionModel.vue"),
+);
 /* ****
  *  filters
  * ********** */
@@ -53,6 +56,8 @@ function closeDelete() {
   // })
 }
 function editItem(item) {
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
   console.log(item);
 }
 function deleteItem(id) {
@@ -67,15 +72,21 @@ function deleteItem(id) {
 function openCreateInstitutionDialog(item) {
   store.dialog.value = !store.dialog.value;
 }
-function closeDialiog() {
+
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
   store.triggerFetch.value();
-  store.dialog.value = false;
 }
 function refresh() {
   store.triggerFetch.value();
 }
-async function deleteItemConfirm(item) {
-  await store.deleteInstitution.value();
+async function deleteItemConfirm(item: string) {
+  await store.deleteInstitution.value(item);
   store.triggerFetch.value();
   console.log(item);
 
@@ -118,7 +129,13 @@ const headers = ref<TableHeader[]>([
   <CreateInstitutionModel
     v-if="store.dialog.value"
     :dialog="store.dialog.value"
-    @update-dialog="closeDialiog"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditInstitutionModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :institution="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
     <template #filters>
