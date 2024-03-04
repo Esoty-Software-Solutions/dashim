@@ -30,6 +30,11 @@ const useInsurancePoliciesStore = defineStore(
       "beneficiariesList2.selectedInstitutionEnabled",
       true,
     );
+    const editDialog = useLocalStorage<boolean>(
+      "createInstitution.editDialog",
+      false,
+    );
+    const editedItem = ref({});
     // if using "immediate=true"
     // the table will to hit the api without the need to change dependant
     // the first fetch is when the filters/page change
@@ -77,6 +82,8 @@ const useInsurancePoliciesStore = defineStore(
       selectedInstitution,
       selectedInstitutionEnabled,
       dialog,
+      editDialog,
+      editedItem,
     };
   },
 );

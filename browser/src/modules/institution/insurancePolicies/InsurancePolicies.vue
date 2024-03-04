@@ -29,6 +29,10 @@ const CreateInsurancePolicyModel = defineAsyncComponent(
   () =>
     import("@/modules/institution/components/CreateInsurancePolicyModel.vue"),
 );
+const EditInsurancePolicyModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditInsurancePolicyModel.vue"),
+);
+
 // filters
 // async filter
 type InstitutionInput = Exclude<
@@ -111,7 +115,8 @@ const drawer = ref(false);
 const selectedItem = ref({});
 
 function editItem(item) {
-  console.log(item);
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
 }
 function deleteItem(item) {
   deleteDialog.value = true;
@@ -119,9 +124,14 @@ function deleteItem(item) {
 function openCreateInsurancePolicyDialog(item) {
   store.dialog.value = !store.dialog.value;
 }
-function closeDialiog() {
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
   store.triggerFetch.value();
-  store.dialog.value = false;
 }
 // table headers
 const headers = ref<TableHeader[]>([
@@ -190,7 +200,13 @@ const headers = ref<TableHeader[]>([
   <CreateInsurancePolicyModel
     v-if="store.dialog.value"
     :dialog="store.dialog.value"
-    @update-dialog="closeDialiog"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditInsurancePolicyModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :insurance-policy="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
     <template #filters>
@@ -252,7 +268,7 @@ const headers = ref<TableHeader[]>([
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
         </template>
-        <template #item.actions>
+        <template #item.actions="{ item }">
           <VIcon
             class="mx-1"
             color="primary"

@@ -424,7 +424,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
                 <VList class="pa-0">
                   <VListItem class="mb-2">
                     {{ item.name }}
-                    <VChip color="primary">Category</VChip>
+                    <VChip color="primary">Package</VChip>
                   </VListItem>
                 </VList>
               </template>

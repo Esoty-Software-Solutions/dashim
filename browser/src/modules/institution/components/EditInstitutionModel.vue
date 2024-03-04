@@ -8,6 +8,7 @@ import { mdiCalendar } from "@mdi/js";
 import { useDate } from "vuetify";
 
 import usecreateInstitutionStore from "../stores/editInstitutionStore";
+
 let store = usecreateInstitutionStore();
 
 const props = defineProps(["dialog", "institution"]);
@@ -44,7 +45,7 @@ function updateField(value: string | number, name: string) {
   console.log(store.sentInstitution);
 }
 const updatedFieldsEmpty = computed(() => {
-  return !Object.keys(store.sentInstitution).length > 0;
+  return Object.keys(store.sentInstitution).length > 0;
 });
 function closeEditDialiog() {
   store.$reset();
@@ -184,7 +185,7 @@ onMounted(async () => {
             Close
           </VBtn>
           <VBtn
-            :disabled="updatedFieldsEmpty"
+            :disabled="!updatedFieldsEmpty"
             type="submit"
             color="primary"
             variant="plain"
