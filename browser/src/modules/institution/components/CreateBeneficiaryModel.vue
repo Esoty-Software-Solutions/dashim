@@ -90,7 +90,7 @@ onMounted(async () => {
       >
         <VCard-title class="pa-5">
           <span class="text-h5"
-            >{{ t("institution.beneficiaries.addbeneficiary") }} to
+            >{{ t("institution.beneficiaries.addbeneficiary") }}
             {{ selfBeneficiary.firstName }} {{ selfBeneficiary.lastName }}
           </span>
         </VCard-title>

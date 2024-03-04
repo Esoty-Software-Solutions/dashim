@@ -30,6 +30,11 @@ const CreateBeneficiaryModel = defineAsyncComponent(
 const EditBeneficiaryModel = defineAsyncComponent(
   () => import("@/modules/institution/components/EditBeneficiaryModel.vue"),
 );
+const EditBeneficiaryEntityModel = defineAsyncComponent(
+  () =>
+    import("@/modules/institution/components/EditBeneficiaryEntityModel.vue"),
+);
+
 defineOptions({
   name: "InstitutionsBeneficiariesPage",
 });
@@ -219,10 +224,11 @@ function closeDialiog(dialogType) {
     store.editDialog.value = false;
     store.editNestedDialog.value = false;
   }
+  store.triggerFetch.value();
 }
-function deleteItemConfirm(item) {
-  console.log(item);
-
+async function deleteItemConfirm(item) {
+  await store.deleteBeneficiary.value();
+  store.triggerFetch.value();
   closeDelete();
 }
 function closeDelete() {
@@ -236,7 +242,13 @@ function editItem(item) {
   store.editDialog.value = !store.editDialog.value;
   store.editedItem = item;
 }
-function deleteItem(item) {
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
   deleteDialog.value = true;
 }
 function editNestedItem(item) {
@@ -357,6 +369,12 @@ const headers = ref<TableHeader[]>([
     v-if="store.editNestedDialog.value"
     :dialog="store.editNestedDialog.value"
     :beneficiary="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
+  />
+  <EditBeneficiaryEntityModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :beneficiary-entity="store.editedItem"
     @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
@@ -505,7 +523,7 @@ const headers = ref<TableHeader[]>([
             class="mx-1"
             color="primary"
             :icon="mdiDelete"
-            @click="deleteItem(item)"
+            @click="deleteItem(item.id)"
           />
         </template>
       </VDataTableServer>

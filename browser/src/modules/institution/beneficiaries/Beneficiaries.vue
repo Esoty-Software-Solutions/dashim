@@ -88,6 +88,7 @@ function closeDialiog(dialogType) {
   if (dialogType == "edit") {
     store.editDialog.value = false;
   }
+  store.triggerFetch.value();
 }
 function editItem(item) {
   store.editDialog.value = !store.editDialog.value;

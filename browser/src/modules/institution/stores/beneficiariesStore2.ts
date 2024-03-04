@@ -49,7 +49,19 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     false,
   );
   const editedItem = ref({});
+  const deletedItems = ref<string[]>([]);
 
+  async function deleteBeneficiary() {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.beneficiaryEntity.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -196,6 +208,8 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     editNestedDialog,
     editDialog,
     editedItem,
+    deletedItems,
+    deleteBeneficiary,
   };
 });
 

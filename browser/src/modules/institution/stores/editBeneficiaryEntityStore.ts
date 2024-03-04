@@ -1,13 +1,14 @@
 import { useLocalStorage } from "@vueuse/core";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { defineStore, storeToRefs } from "pinia";
+import { computed, ref } from "vue";
 
-import { createId } from "@paralleldrive/cuid2";
+// import { createId } from "@paralleldrive/cuid2";
+import useApi from "../composables/useApi";
 
 import { client } from "@/queries";
 
-type createSubscriberProcedureInput = Parameters<
-  typeof client.procedure.createBeneficiaryEntity.mutate
+type updateBeneficiaryProcedureInput = Parameters<
+  typeof client.crud.beneficiaryEntity.updateOne.mutate
 >[0]["data"];
 type InstitutionCrudResponse = Awaited<
   ReturnType<typeof client.crud.institution.findMany.query>
@@ -37,138 +38,144 @@ type CityCrudResponse = Awaited<
 type CityCrudResponseData = NonNullable<CityCrudResponse>["data"];
 
 type BeneficiaryInput = Parameters<
-  typeof client.procedure.createBeneficiaryEntity.mutate
+  typeof client.crud.beneficiaryEntity.updateOne.mutate
 >[0]["data"]["beneficiaries"][0];
 // declare const properlyTyped: { prop: { a: string } };
 
-const useCreateBeneficiariesStore = defineStore(
-  "CreateBeneficiariesStore",
-  () => {
-    const dialog = useLocalStorage<boolean>(
-      "createBeneficiaries.createBeneficiariesDialog",
-      false,
-    );
-    const subscriberRef = ref<createSubscriberProcedureInput>({
-      id: createId(),
-      insurancePolicyId: "",
-      beneficiaries: [] as BeneficiaryInput[],
-      cityId: "",
+const useEditBeneficiariesStore = defineStore("EditBeneficiariesStore", () => {
+  const dialog = useLocalStorage<boolean>(
+    "editBeneficiaries.editBeneficiariesDialog",
+    false,
+  );
+  const beneficiaryRef = ref<updateBeneficiaryProcedureInput>({});
+  const beneficiary = useLocalStorage<updateBeneficiaryProcedureInput>(
+    "editBeneficiaries.beneficiary",
+    beneficiaryRef,
+  );
+  const sentBeneficiaryRef = ref<updateBeneficiaryProcedureInput>({});
+  const sentBeneficiary = useLocalStorage<updateBeneficiaryProcedureInput>(
+    "editBeneficiaries.sentBeneficiary",
+    sentBeneficiaryRef,
+  );
+  const selectedInstitutionId = ref<string>("");
+  const relations = ref<RelationshipCrudResponseData>([]);
+  const valid = ref(false);
+
+  const { items: cities, triggerFetch: getCities } = useApi({
+    storageKey: "editBeneficiaryEntity.cities",
+    input: computed(() => ({
+      where: {},
+    })),
+    // findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.crud.cityEnum.findMany.query,
+    onError(error) {
+      globalStore.setMessage("Error while connection to server.");
+      console.error(error);
+    },
+    immediate: true,
+  });
+  const { items: insurancePolicies, triggerFetch: getInsurancePolicies } =
+    useApi({
+      storageKey: "editBeneficiaryEntity.insurancePolicies",
+      input: computed(() => ({
+        where: { institutionId: selectedInstitutionId.value },
+      })),
+      // findCallback: client.procedure.listSubscribers.query,
+      findCallback: client.crud.insurancePolicy.findMany.query,
+      onError(error) {
+        globalStore.setMessage("Error while connection to server.");
+        console.error(error);
+      },
+      immediate: true,
     });
-    const subscriber = useLocalStorage<createSubscriberProcedureInput>(
-      "createBeneficiaries.subscriber",
-      subscriberRef,
-    );
-    const institutions = ref<InstitutionCrudResponseData>([]);
-    const selectedInstitutionId = ref<string>("");
-    const insurancePolicies = ref<InsurancePoliciesCrudResponseData>([]);
-    const relations = ref<RelationshipCrudResponseData>([]);
-    const genders = ref<GenderCrudResponseData>([]);
-    const cities = ref<CityCrudResponseData>([]);
-    const valid = ref(false);
 
-    const getInstitutions = async () => {
-      const response: InstitutionCrudResponse =
-        await client.crud.institution.findMany.query({
-          take: 5,
+  const {
+    items: insurancePolicy,
+    triggerFetch: getBeneficiaryInsurancePolicy,
+  } = useApi({
+    storageKey: "editBeneficiaryEntity.insurancePolicy",
+    input: computed(() => ({
+      where: { id: beneficiary.value.insurancePolicyId },
+    })),
+    // findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.crud.insurancePolicy.findMany.query,
+    onError(error) {
+      globalStore.setMessage("Error while connection to server.");
+      console.error(error);
+    },
+    immediate: true,
+  });
+  const { items: institution, triggerFetch: getInstitution } = useApi({
+    storageKey: "editBeneficiaryEntity.insurancePolicy",
+    input: computed(() => ({
+      where: { id: selectedInstitutionId.value },
+    })),
+    // findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.crud.institution.findMany.query,
+    onError(error) {
+      globalStore.setMessage("Error while connection to server.");
+      console.error(error);
+    },
+    immediate: true,
+  });
+  const { items: institutions, triggerFetch: getInstitutions } = useApi({
+    storageKey: "editBeneficiaryEntity.institutions",
+    input: computed(() => ({
+      where: {},
+    })),
+    // findCallback: client.procedure.listSubscribers.query,
+    findCallback: client.crud.institution.findMany.query,
+    onError(error) {
+      globalStore.setMessage("Error while connection to server.");
+      console.error(error);
+    },
+    immediate: true,
+  });
+  const updateBeneficiary = async () => {
+    try {
+      if (valid.value && beneficiary.value?.beneficiaries?.length > 0) {
+        // console.log(beneficiary.value);
+        const response = await client.crud.beneficiaryEntity.updateOne.mutate({
+          data: sentBeneficiary.value,
+          where: {
+            id: beneficiary.value.id,
+          },
         });
-      institutions.value = response && response.data ? response.data : [];
-    };
-    const getInsurancePolicies = async () => {
-      console.log("selected");
-      const response = await client.crud.insurancePolicy.findMany.query({
-        where: {
-          institutionId: selectedInstitutionId.value,
-        },
-      });
-      if (response) {
-        insurancePolicies.value = response.data;
-      }
-      console.log(response);
-    };
-    const getRelations = async () => {
-      try {
-        const response = await client.crud.relationshipEnum.findMany.query({
-          take: 10,
-        });
-        console.log(response);
+        console.log("response", response);
 
-        relations.value = response.data;
-      } catch (error) {
-        console.log(error);
+        return response;
       }
-    };
-    const getGenders = async () => {
-      try {
-        const response = await client.crud.genderEnum.findMany.query({
-          take: 10,
-        });
-        console.log(response);
-
-        genders.value = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const getCities = async () => {
-      try {
-        const response: CityCrudResponse =
-          await client.crud.cityEnum.findMany.query({
-            take: 10,
-          });
-        console.log(response);
-
-        cities.value = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const createSubscriber = async () => {
-      try {
-        if (valid.value && subscriber.value?.beneficiaries?.length > 0) {
-          // console.log(subscriber.value);
-          const response =
-            await client.procedure.createBeneficiaryEntity.mutate({
-              data: subscriber.value,
-            });
-          console.log("response", response);
-
-          return response;
-        }
-      } catch (error) {
-        console.log("error1 ", error);
-        return error;
-      }
-    };
-    function $reset() {
-      dialog.value = false;
-      subscriber.value = {
-        id: createId(),
-        insurancePolicyId: "",
-        beneficiaries: [] as BeneficiaryInput[],
-        cityId: "",
-      };
+    } catch (error) {
+      console.log("error1 ", error);
+      return error;
     }
-    return {
-      dialog,
-      createSubscriber,
-      subscriber,
-      subscriberRef,
-      institutions,
-      getInstitutions,
-      selectedInstitutionId,
-      getInsurancePolicies,
-      insurancePolicies,
-      getRelations,
-      relations,
-      genders,
-      getGenders,
-      valid,
-      getCities,
-      cities,
-      $reset,
-      // properlyTyped
-    };
-  },
-);
+  };
+  function $reset() {
+    dialog.value = false;
+    beneficiary.value = {};
+    selectedInstitutionId.value = "";
+  }
+  return {
+    dialog,
+    updateBeneficiary,
+    beneficiary,
+    beneficiaryRef,
+    institutions,
+    getInstitutions,
+    selectedInstitutionId,
+    getInsurancePolicies,
+    insurancePolicies,
+    relations,
+    valid,
+    getCities,
+    cities,
+    $reset,
+    sentBeneficiary,
+    insurancePolicy,
+    getBeneficiaryInsurancePolicy,
+    institution,
+    getInstitution,
+  };
+});
 
-export default useCreateBeneficiariesStore;
+export default useEditBeneficiariesStore;
