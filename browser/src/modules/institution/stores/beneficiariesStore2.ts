@@ -40,6 +40,16 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     "createBeneficiaries.addBeneficiarydialog",
     false,
   );
+  const editDialog = useLocalStorage<boolean>(
+    "createBeneficiaries.editDialog",
+    false,
+  );
+  const editNestedDialog = useLocalStorage<boolean>(
+    "createBeneficiaries.editNestedDialog",
+    false,
+  );
+  const editedItem = ref({});
+
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -183,6 +193,9 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     selectedCityEnabled,
     dialog,
     addBeneficiarydialog,
+    editNestedDialog,
+    editDialog,
+    editedItem,
   };
 });
 

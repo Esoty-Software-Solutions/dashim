@@ -48,7 +48,8 @@
       "pageTitle": "Beneficiaries List",
       "newbeneficiary": "New Beneficiary",
       "newBeneficiary": "New Beneficiary",
-      "addbeneficiary": "Add Beneficiary"
+      "addbeneficiary": "Add Beneficiary",
+      "editbeneficiary": "Edit Beneficiary"
     },
     "network": {
       "pageTitle": "Network List",

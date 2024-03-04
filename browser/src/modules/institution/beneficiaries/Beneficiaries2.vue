@@ -27,6 +27,9 @@ const CreateBeneficiariesModel = defineAsyncComponent(
 const CreateBeneficiaryModel = defineAsyncComponent(
   () => import("@/modules/institution/components/CreateBeneficiaryModel.vue"),
 );
+const EditBeneficiaryModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditBeneficiaryModel.vue"),
+);
 defineOptions({
   name: "InstitutionsBeneficiariesPage",
 });
@@ -208,8 +211,14 @@ function paginated() {
   selected.value = [];
   selectedCount.value = 0;
 }
-function closeDialiog() {
-  store.dialog.value = false;
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+    store.editNestedDialog.value = false;
+  }
 }
 function deleteItemConfirm(item) {
   console.log(item);
@@ -224,9 +233,18 @@ function closeDelete() {
   // })
 }
 function editItem(item) {
-  console.log(item);
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
 }
 function deleteItem(item) {
+  deleteDialog.value = true;
+}
+function editNestedItem(item) {
+  store.editNestedDialog.value = !store.editNestedDialog.value;
+  store.editedItem = item;
+  console.log(item);
+}
+function deleteNestedItem(item) {
   deleteDialog.value = true;
 }
 function openAddBeneficiaryDialog(item) {
@@ -327,13 +345,19 @@ const headers = ref<TableHeader[]>([
   <CreateBeneficiariesModel
     v-if="store.dialog.value"
     :dialog="store.dialog.value"
-    @update-dialog="closeDialiog"
+    @update-dialog="closeDialiog('add')"
   />
   <CreateBeneficiaryModel
     v-if="store.addBeneficiarydialog.value"
     :dialog="store.addBeneficiarydialog.value"
     :beneficiary-entity="selectedBeneficiaryEntity"
     @update-dialog="closeAddBeneficiaryDialiog"
+  />
+  <EditBeneficiaryModel
+    v-if="store.editNestedDialog.value"
+    :dialog="store.editNestedDialog.value"
+    :beneficiary="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
     <template #filters>
@@ -399,6 +423,7 @@ const headers = ref<TableHeader[]>([
                   <th class="text-left">{{ t("common.creationDate") }}</th>
                   <th class="text-left">{{ t("common.updatedAt") }}</th>
                   <th class="text-left">{{ t("common.status") }}</th>
+                  <th class="text-left">{{ t("common.actions") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -424,6 +449,20 @@ const headers = ref<TableHeader[]>([
                     <VChip :color="beneficiary.isActive ? 'primary' : 'error'">
                       {{ beneficiary.isActive ? "Active" : "Inactive" }}
                     </VChip>
+                  </td>
+                  <td>
+                    <VIcon
+                      class="mx-1"
+                      color="primary"
+                      :icon="mdiPencil"
+                      @click="editNestedItem(beneficiary)"
+                    />
+                    <VIcon
+                      class="mx-1"
+                      color="primary"
+                      :icon="mdiDelete"
+                      @click="deleteNestedItem(beneficiary)"
+                    />
                   </td>
                 </tr>
               </tbody>
