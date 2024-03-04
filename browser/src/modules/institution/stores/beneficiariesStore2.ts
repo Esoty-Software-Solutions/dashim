@@ -62,6 +62,18 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
       console.log(response);
     }
   }
+
+  async function deleteNestedBeneficiary() {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.beneficiary.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -210,6 +222,7 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     editedItem,
     deletedItems,
     deleteBeneficiary,
+    deleteNestedBeneficiary,
   };
 });
 

@@ -45,6 +45,8 @@ const store = toRefs(useBeneficiariesStore());
 let selected = ref<any[]>([]);
 let selectedCount = ref(0);
 let expanded = ref([]);
+const nested = ref(false);
+
 const deleteDialog = ref(false);
 const selectedBeneficiaryEntity = ref("");
 
@@ -227,10 +229,16 @@ function closeDialiog(dialogType) {
   store.triggerFetch.value();
 }
 async function deleteItemConfirm(item) {
-  await store.deleteBeneficiary.value();
+  if (nested.value) {
+    await store.deleteNestedBeneficiary.value();
+  } else {
+    await store.deleteBeneficiary.value();
+  }
   store.triggerFetch.value();
   closeDelete();
+  nested.value = false;
 }
+
 function closeDelete() {
   deleteDialog.value = false;
   // nextTick(() => {
@@ -256,9 +264,21 @@ function editNestedItem(item) {
   store.editedItem = item;
   console.log(item);
 }
-function deleteNestedItem(item) {
+function deleteNestedItem(id) {
+  nested.value = true;
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
   deleteDialog.value = true;
 }
+// async function deleteNestedItemConfirm(item) {
+//   await store.deleteNestedBeneficiary.value();
+//   store.triggerFetch.value();
+//   closeDelete();
+// }
 function openAddBeneficiaryDialog(item) {
   console.log(store.addBeneficiarydialog.value);
 
@@ -479,7 +499,7 @@ const headers = ref<TableHeader[]>([
                       class="mx-1"
                       color="primary"
                       :icon="mdiDelete"
-                      @click="deleteNestedItem(beneficiary)"
+                      @click="deleteNestedItem(beneficiary.id)"
                     />
                   </td>
                 </tr>
