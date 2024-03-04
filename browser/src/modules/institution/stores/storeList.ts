@@ -59,7 +59,7 @@ const useStoreList = defineStore("institutionsStoreList", () => {
       const where: any = {};
 
       if (nameFilterEnabled.value && nameFilter.value.trim()) {
-        where.name = { equals: nameFilter.value.trim() };
+        where.name = { contains: nameFilter.value.trim() };
       }
 
       return {
