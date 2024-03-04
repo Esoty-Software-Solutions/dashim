@@ -2,7 +2,7 @@
 import { ref, toRefs, computed, watch, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 
 import useBeneficiariesStore from "../stores/beneficiariesStore";
 
@@ -14,6 +14,12 @@ import type { TableHeader } from "@/modules/shared/interfaces";
 defineOptions({
   name: "InstitutionsBeneficiariesPage",
 });
+const CreateBeneficiaryModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateBeneficiaryModel.vue"),
+);
+const EditBeneficiaryModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditBeneficiaryModel.vue"),
+);
 const { t } = useI18n();
 const store = toRefs(useBeneficiariesStore());
 // console.log(store.binding.value.items);
@@ -75,10 +81,21 @@ function paginated() {
 function openACreateBeneficiaryDialog() {
   store.dialog.value = !store.dialog.value;
 }
-function closeDialiog() {
-  store.dialog.value = false;
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
 }
-
+function editItem(item) {
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
+}
+function deleteItem(item) {
+  deleteDialog.value = true;
+}
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -129,20 +146,23 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
-const CreateBeneficiaryModel = defineAsyncComponent(
-  () => import("@/modules/institution/components/CreateBeneficiaryModel.vue"),
-);
 </script>
 
 <template>
   <CreateBeneficiaryModel
     v-if="store.dialog.value"
     :dialog="store.dialog.value"
-    @update-dialog="closeDialiog"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditBeneficiaryModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :beneficiary="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
     <template #filters>
@@ -155,11 +175,8 @@ const CreateBeneficiaryModel = defineAsyncComponent(
         <VBtn @click="selectAll">Select All</VBtn>
         <VBtn @click="refresh">refresh</VBtn>
         <VSpacer />
-        <VBtn
-          color="primary"
-          variant="plain"
-          @click="openACreateBeneficiaryDialog"
-        >
+        <!-- @click="openACreateBeneficiaryDialog" -->
+        <VBtn color="primary" variant="plain">
           <span>{{ t("institution.beneficiaries.newbeneficiary") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
@@ -194,6 +211,20 @@ const CreateBeneficiaryModel = defineAsyncComponent(
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
+        </template>
+        <template #item.actions="{ item }">
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click="deleteItem(item)"
+          />
         </template>
       </VDataTableServer>
     </template>

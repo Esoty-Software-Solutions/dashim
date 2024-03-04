@@ -76,8 +76,12 @@ function closeEditDialiog() {
 onMounted(async () => {
   try {
     store.beneficiary = props.beneficiary;
-    store.beneficiary.genderId = props.beneficiary?.gender?.id;
-    store.beneficiary.relationshipId = props.beneficiary?.relationship?.id;
+    if (props.beneficiary.gender) {
+      store.beneficiary.genderId = props.beneficiary?.gender?.id;
+    }
+    if (props.beneficiary.relationship) {
+      store.beneficiary.relationshipId = props.beneficiary?.relationship?.id;
+    }
     inputDate.value = date.format(props.beneficiary.birthDate, "keyboardDate");
     await store.triggerRelationshipsFetch();
     await store.triggerGendersFetch();
