@@ -19,7 +19,8 @@
     "thirdName": "اسم الجد",
     "lastName": "اللقب",
     "gender": "الجنس",
-    "city": "المدينة"
+    "city": "المدينة",
+    "nationality": "الجنسية"
   },
   "locale": {
     "ar": {

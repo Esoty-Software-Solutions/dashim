@@ -13,6 +13,15 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     "beneficiariesList.nameFilterEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>(
+    "createBeneficiary.createBeneficiaryDialog",
+    false,
+  );
+  const editDialog = useLocalStorage<boolean>(
+    "beneficiariesList.editDialog",
+    false,
+  );
+  const editedItem = ref({});
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -63,6 +72,9 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList", () => {
     binding,
     items,
     triggerFetch,
+    dialog,
+    editDialog,
+    editedItem,
   };
 });
 
