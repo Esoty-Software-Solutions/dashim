@@ -3,6 +3,7 @@ import {
   listBeneficiaryEntities,
   createBeneficiaryEntity,
   // updateBeneficiaryEntity,
+  createBeneficiary,
 } from "@procedures/beneficiary/beneficiary.procedure.controller";
 
 export const _procedure = {
@@ -11,5 +12,6 @@ export const _procedure = {
   // addSubscribers: middleware(_addSubscribers),
   listBeneficiaryEntities: middleware(listBeneficiaryEntities),
   createBeneficiaryEntity: middleware(createBeneficiaryEntity),
+  createBeneficiary: middleware(createBeneficiary),
   // updateBeneficiaryEntity: middleware(updateBeneficiaryEntity),
 };

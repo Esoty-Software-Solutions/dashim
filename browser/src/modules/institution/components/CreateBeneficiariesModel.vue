@@ -96,7 +96,6 @@ async function createSubscriber() {
           }}</span>
         </VCardTitle>
         <VCardText>
-          {{ store.valid }}
           <VContainer>
             <VRow>
               <!-- <VCol cols="12" sm="6" md="4">

@@ -1,8 +1,12 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { CreateBeneficiaryEntityInputSchema } from "./beneficiary.procedure.schema";
+import {
+  CreateBeneficiaryEntityInputSchema,
+  CreateBeneficiaryInputSchema,
+} from "./beneficiary.procedure.schema";
 
 export const actions = {
+  // Beneficairy Entity
   formatToPrismaCreateShape: async function (
     userId: string,
     beneficiaryEntity: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
@@ -30,6 +34,30 @@ export const actions = {
           })),
         },
       },
+    };
+
+    return formattedData;
+  },
+  // Beneficiary
+  formatBeneficiaryToPrismaCreateShape: async function (
+    userId: string,
+    beneficiary: z.infer<typeof CreateBeneficiaryInputSchema>,
+  ) {
+    const formattedData: Prisma.BeneficiaryUncheckedCreateInput = {
+      ...beneficiary.data,
+      statusSetById: userId,
+      searchName: this.normalizeSearchName(
+        [
+          beneficiary.data.firstName,
+          beneficiary.data.secondName,
+          beneficiary.data.thirdName,
+          beneficiary.data.fourthName,
+          beneficiary.data.lastName,
+        ]
+          .filter((name) => name) // Remove any empty or undefined names
+          .map((name) => (name ? name.replace(/\s/g, "") : "")) // Trim whitespace from each name
+          .join(" "), // Concatenate the names with a space
+      ), //TODO: this is a computed field so it should be optional
     };
 
     return formattedData;

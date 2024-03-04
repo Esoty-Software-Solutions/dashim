@@ -20,6 +20,7 @@
     "lastName": "اللقب",
     "gender": "الجنس",
     "city": "المدينة",
+    "nationality": "الجنسية",
     "Accumulatedlimit": "السقف العام"
   },
   "locale": {

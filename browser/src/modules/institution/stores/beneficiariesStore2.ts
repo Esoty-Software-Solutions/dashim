@@ -36,6 +36,44 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     true,
   );
   const dialog = useLocalStorage<boolean>("createBeneficiaries.dialog", false);
+  const addBeneficiarydialog = useLocalStorage<boolean>(
+    "createBeneficiaries.addBeneficiarydialog",
+    false,
+  );
+  const editDialog = useLocalStorage<boolean>(
+    "createBeneficiaries.editDialog",
+    false,
+  );
+  const editNestedDialog = useLocalStorage<boolean>(
+    "createBeneficiaries.editNestedDialog",
+    false,
+  );
+  const editedItem = ref({});
+  const deletedItems = ref<string[]>([]);
+
+  async function deleteBeneficiary() {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.beneficiaryEntity.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
+
+  async function deleteNestedBeneficiary() {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.beneficiary.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   // const getSubs = async ()=>{
   // let subs =  await client.procedure.listSubscribers.query()
   //  if(subs?.data){
@@ -178,6 +216,13 @@ const useBeneficiariesStore = defineStore("BeneficiariesStoreList2", () => {
     selectedCity,
     selectedCityEnabled,
     dialog,
+    addBeneficiarydialog,
+    editNestedDialog,
+    editDialog,
+    editedItem,
+    deletedItems,
+    deleteBeneficiary,
+    deleteNestedBeneficiary,
   };
 });
 
