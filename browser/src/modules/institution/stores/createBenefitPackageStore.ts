@@ -71,8 +71,8 @@ const useCreateBenefitPackageStore = defineStore(
       benefitPackage.value = {
         id: createId(),
         name: "",
-        copayDistrubtion: [],
-        threashold: [],
+        copayDistrubtion: [0],
+        threashold: [0],
         insurancePolicyId: "",
       };
     }

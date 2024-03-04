@@ -11,8 +11,8 @@ type BenefitPackageInput = Parameters<
 >[0]["data"];
 // declare const properlyTyped: { prop: { a: string } };
 
-const useCreateBenefitPackageStore = defineStore(
-  "CreateBenefitPackageStore",
+const useEditBenefitPackageStore = defineStore(
+  "EditBenefitPackageStore",
   () => {
     const dialog = useLocalStorage<boolean>(
       "editBenefitPackage.editBenefitPackageDialog",
@@ -85,4 +85,4 @@ const useCreateBenefitPackageStore = defineStore(
   },
 );
 
-export default useCreateBenefitPackageStore;
+export default useEditBenefitPackageStore;
