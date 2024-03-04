@@ -18,6 +18,7 @@ import { el } from "vuetify/locale";
 
 import LocaleMenu from "../../components/LocaleMenu.vue";
 
+import logo from "@/assets/logo.svg";
 import useSession from "@/modules/auth/stores/session";
 import useConfig from "@/modules/shared/stores/configStore";
 import useLayoutStore from "@/modules/shared/stores/layoutStore";
@@ -46,12 +47,12 @@ const showDrawer = computed(() => {
 
 /** Drawer menu items */
 const items: DrawerMenuItem[] = [
-  {
-    title: "Patients",
-    icon: mdiAccountGroup,
-    to: { name: "Home" },
-    exact: true,
-  },
+  // {
+  //   title: "Patients",
+  //   icon: mdiAccountGroup,
+  //   to: { name: "Home" },
+  //   exact: true,
+  // },
   {
     title: "Institutions",
     icon: mdiAccountGroup,
@@ -104,21 +105,22 @@ function changeLocale() {
     @update:rail="onRailChange"
     @update:model-value="layoutStore.drawer = $event"
   >
-    <VList>
-      <VListItem>
-        <VListItemTitle class="text-capitalize">
-          <!-- {{ sessionStore.user?.fullName }} -->
-        </VListItemTitle>
-        <VListItemSubtitle>
-          <!-- {{ sessionStore.user?.email }} -->
-        </VListItemSubtitle>
-        <template #prepend>
-          <VAvatar color="primary">
-            <!-- {{ sessionStore.user?.fullName.slice(0, 2)?.toUpperCase() }} -->
-          </VAvatar>
-        </template>
-      </VListItem>
-    </VList>
+    <!-- <VList> -->
+    <!-- <VListItem> -->
+    <!-- <VListItemTitle class="text-capitalize"> -->
+    <!-- {{ sessionStore.user?.fullName }} -->
+    <!-- </VListItemTitle> -->
+    <!-- <VListItemSubtitle> -->
+    <!-- {{ sessionStore.user?.email }} -->
+    <!-- </VListItemSubtitle> -->
+    <!-- <template #prepend> -->
+    <VAvatar :image="logo" size="x-large">
+      <!-- <VImg alt="logo" :src="logo" /> -->
+      <!-- {{ sessionStore.user?.fullName.slice(0, 2)?.toUpperCase() }} -->
+    </VAvatar>
+    <!-- </template> -->
+    <!-- </VListItem> -->
+    <!-- </VList> -->
 
     <VDivider thickness="2" />
 

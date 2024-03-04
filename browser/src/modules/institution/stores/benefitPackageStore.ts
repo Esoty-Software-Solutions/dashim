@@ -15,6 +15,8 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     "benefitPackagesList.nameFilterEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>("benefitPackage.dialog", false);
+
   type InstitutionOutput = RouterOutput["crud"]["institution"]["findMany"];
   type Institution = NonNullable<InstitutionOutput>["data"][number];
   const selectedInstitution = ref<Institution["id"] | null>(null);
@@ -50,6 +52,23 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     "benefitPackagesList.categoryFilterEnabled",
     true,
   );
+  const deletedItems = ref<string[]>([]);
+  const editDialog = useLocalStorage<boolean>(
+    "benefitPackagesList.editDialog",
+    false,
+  );
+  const editedItem = ref({});
+  async function deleteBenefitPackage(id) {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.benefitPackage.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
   // if using "immediate=true"
   // the table will to hit the api without the need to change dependant
   // the first fetch is when the filters/page change
@@ -195,6 +214,10 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     serviceCategoriesItems,
     categoryNameFilter,
     categoryNameFilterEnabled,
+    dialog,
+    deletedItems,
+    deleteBenefitPackage,
+    editDialog,
     // medicalServices,
     // if using "immediate=true"
   };

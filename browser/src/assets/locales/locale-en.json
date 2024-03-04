@@ -23,10 +23,20 @@
     "medicalCenter": "Medical Center",
     "Accumulatedlimit": "Accumulated limit",
     "BalanceResetDate": "Balance Reset Date",
+    "issueDate": "Issue Date",
     "renewalDate": "renewal Date",
     "serviceEntryTimeWindow": "service Entry Time Window",
     "serviceCategory": "Service Category",
-    "nationality": "Nationality"
+    "nationality": "Nationality",
+    "code": "Code",
+    "facebookLink": "Facebook Link",
+    "googleMapsLink": "Google Maps Link",
+    "instagramLink": "Instagram Link",
+    "twitterLink": "twitter Link",
+    "website": "Website",
+    "address": "Address",
+    "threashold": "Threashold",
+    "copayDistrubtion": "Copay Distrubtion"
   },
   "accounting": {
     "claims": "Claims"
@@ -38,28 +48,33 @@
       "network": "Network",
       "insurancePolicy": "Insurance Policy",
       "benefitPackage": "Benefit Package",
-      "claims": "claims"
+      "claims": "claims",
+      "beneficiariesEntity": "Beneficiaries Entity"
     },
     "list": {
       "pageTitle": "Institutions List",
-      "newInstitution": "New Institution"
+      "newInstitution": "New Institution",
+      "editInstitution": "Edit Institution",
+      "newInsurancePolicy": "New Insurance Policy"
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
       "newbeneficiary": "New Beneficiary",
-      "newBeneficiary": "New Beneficiary",
-      "addbeneficiary": "Add Beneficiary",
-      "editbeneficiary": "Edit Beneficiary"
+      "editbeneficiary": "Edit Beneficiary",
+      "addbeneficiary": "Add Beneficiary"
     },
     "network": {
       "pageTitle": "Network List",
-      "newMedicalCenter": "New Medical Center"
+      "newMedicalCenter": "New Medical Center",
+      "addMedicalCenter": "Add Medical Center"
     },
     "insurancePolicies": {
-      "newInsurancePolicy": "New Insurance Policy"
+      "newInsurancePolicy": "New Insurance Policy",
+      "editInsurancePolicy": "Edit Insurance Policy"
     },
     "benefitPackages": {
-      "newBenefitPackage": "new Benefit Package"
+      "newBenefitPackage": "new Benefit Package",
+      "editBenefitPackage": "Edit Benefit Package"
     },
     "actions": {
       "selectAll": "Select All",

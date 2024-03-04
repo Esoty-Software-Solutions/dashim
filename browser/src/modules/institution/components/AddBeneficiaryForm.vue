@@ -87,7 +87,7 @@ function updatePickerDate() {
 
 <template>
   <VCard>
-    <VCard-actions>
+    <VCardActions>
       <VSpacer />
       <!-- {{ props.beneficiary }} -->
 
@@ -95,13 +95,13 @@ function updatePickerDate() {
         x
         <!-- <VIcon :icon="mdiDelete" /> -->
       </VBtn>
-    </VCard-actions>
-    <VCard-title>
+    </VCardActions>
+    <VCardTitle>
       <span class="text-h5">{{
         t("institution.beneficiaries.newbeneficiary")
       }}</span>
-    </VCard-title>
-    <VCard-text>
+    </VCardTitle>
+    <VCardText>
       <!-- <v-form ref="beneficiaryform" v-model="valid"> -->
       <VContainer>
         <VRow>
@@ -249,7 +249,7 @@ function updatePickerDate() {
       </VContainer>
       <!-- </v-form> -->
       <small>*indicates required field</small>
-    </VCard-text>
+    </VCardText>
   </VCard>
 </template>
 <style scoped></style>

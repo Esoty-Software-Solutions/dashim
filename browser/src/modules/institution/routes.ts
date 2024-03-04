@@ -24,8 +24,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import("./network/Network.vue"),
       },
       {
-        path: "beneficiaries2",
-        name: "InstitutionsBeneficiaries2",
+        path: "InstitutionsBeneficiariesEntity",
+        name: "InstitutionsBeneficiariesEntity",
         component: () => import("./beneficiaries/Beneficiaries2.vue"),
       },
       {

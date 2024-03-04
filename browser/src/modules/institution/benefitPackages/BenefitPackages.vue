@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, toRefs, watch, watchEffect } from "vue";
+import { ref, toRefs, watch, watchEffect, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus, mdiClose } from "@mdi/js";
+import { mdiPlus, mdiClose, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useBenefitPackageStore from "../stores/benefitPackageStore";
 
@@ -22,6 +22,15 @@ const { t } = useI18n();
 const store = toRefs(useBenefitPackageStore());
 let selected = ref([""]);
 let selectedCount = ref(0);
+const deleteDialog = ref(false);
+
+const CreateBenifitPackageModel = defineAsyncComponent(
+  () =>
+    import("@/modules/institution/components/CreateBenifitPackageModel.vue"),
+);
+const EditBenifitPackageModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditBenifitPackageModel.vue"),
+);
 
 // filters
 // async filter
@@ -202,6 +211,48 @@ function paginated() {
 }
 const drawer = ref(false);
 let expanded = ref([]);
+
+function openCreateBenefitPackageDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
+  store.triggerFetch.value();
+}
+function editItem(item) {
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
+}
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
+  deleteDialog.value = true;
+}
+async function deleteItemConfirm(item) {
+  await store.deleteBenefitPackage.value();
+  store.triggerFetch.value();
+  console.log(item);
+
+  closeDelete();
+}
+function closeDelete() {
+  store.triggerFetch.value();
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
+
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -234,7 +285,7 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
@@ -251,6 +302,17 @@ const servicePackageHeaders = ref<TableHeader[]>([
 </script>
 
 <template>
+  <CreateBenifitPackageModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditBenifitPackageModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :benefit-package="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -261,7 +323,11 @@ const servicePackageHeaders = ref<TableHeader[]>([
         <VBtn @click="selectAll">{{ t("institution.actions.selectAll") }}</VBtn>
         <VBtn @click="refresh">{{ t("institution.actions.refresh") }}</VBtn>
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openCreateBenefitPackageDialog"
+        >
           <span>{{ t("institution.benefitPackages.newBenefitPackage") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
@@ -305,6 +371,20 @@ const servicePackageHeaders = ref<TableHeader[]>([
           <VChip :color="item.isActive ? 'primary' : 'error'">
             {{ item.isActive ? "Active" : "Inactive" }}
           </VChip>
+        </template>
+        <template #item.actions="{ item }">
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click.stop="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click.stop="deleteItem(item.id)"
+          />
         </template>
       </VDataTableServer>
       <VNavigationDrawer
@@ -361,7 +441,7 @@ const servicePackageHeaders = ref<TableHeader[]>([
                 <VList class="pa-0">
                   <VListItem class="mb-2">
                     {{ item.name }}
-                    <VChip color="primary">Category</VChip>
+                    <VChip color="primary">Package</VChip>
                   </VListItem>
                 </VList>
               </template>
@@ -390,4 +470,17 @@ const servicePackageHeaders = ref<TableHeader[]>([
       </VNavigationDrawer>
     </template>
   </DataPageBase>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5"
+        >Are you sure you want to delete this item?</VCardTitle
+      >
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>
