@@ -28,6 +28,10 @@ const CreateBenifitPackageModel = defineAsyncComponent(
   () =>
     import("@/modules/institution/components/CreateBenifitPackageModel.vue"),
 );
+const EditBenifitPackageModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditBenifitPackageModel.vue"),
+);
+
 // filters
 // async filter
 type InstitutionInput = Exclude<
@@ -211,12 +215,18 @@ let expanded = ref([]);
 function openCreateBenefitPackageDialog(item) {
   store.dialog.value = !store.dialog.value;
 }
-function closeDialiog() {
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
   store.triggerFetch.value();
-  store.dialog.value = false;
 }
 function editItem(item) {
-  console.log(item);
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
 }
 function deleteItem(id) {
   if (id && typeof id == "string") {
@@ -242,6 +252,7 @@ function closeDelete() {
   //   editedIndex.value = -1
   // })
 }
+
 // table headers
 const headers = ref<TableHeader[]>([
   {
@@ -294,7 +305,13 @@ const servicePackageHeaders = ref<TableHeader[]>([
   <CreateBenifitPackageModel
     v-if="store.dialog.value"
     :dialog="store.dialog.value"
-    @update-dialog="closeDialiog"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditBenifitPackageModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :benefit-package="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
   />
   <DataPageBase>
     <template #filters>

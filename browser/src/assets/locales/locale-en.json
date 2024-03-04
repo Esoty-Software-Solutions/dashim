@@ -53,11 +53,13 @@
     "list": {
       "pageTitle": "Institutions List",
       "newInstitution": "New Institution",
+      "editInstitution": "Edit Institution",
       "newInsurancePolicy": "New Insurance Policy"
     },
     "beneficiaries": {
       "pageTitle": "Beneficiaries List",
       "newbeneficiary": "New Beneficiary",
+      "editbeneficiary": "Edit Beneficiary",
       "addbeneficiary": "Add Beneficiary"
     },
     "network": {
@@ -66,10 +68,12 @@
       "addMedicalCenter": "Add Medical Center"
     },
     "insurancePolicies": {
-      "newInsurancePolicy": "New Insurance Policy"
+      "newInsurancePolicy": "New Insurance Policy",
+      "editInsurancePolicy": "Edit Insurance Policy"
     },
     "benefitPackages": {
-      "newBenefitPackage": "new Benefit Package"
+      "newBenefitPackage": "new Benefit Package",
+      "editBenefitPackage": "Edit Benefit Package"
     },
     "actions": {
       "selectAll": "Select All",

@@ -76,7 +76,7 @@ onMounted(async () => {
       >
         <VCardTitle class="pa-5">
           <span class="text-h5"
-            >{{ t("institution.list.newInstitution") }}
+            >{{ t("institution.list.editInstitution") }}
           </span>
         </VCardTitle>
         <VCardText>

@@ -53,7 +53,11 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     true,
   );
   const deletedItems = ref<string[]>([]);
-
+  const editDialog = useLocalStorage<boolean>(
+    "benefitPackagesList.editDialog",
+    false,
+  );
+  const editedItem = ref({});
   async function deleteBenefitPackage(id) {
     if (deletedItems.value.length > 0) {
       const response = await client.crud.benefitPackage.deleteMany.mutate({
@@ -213,6 +217,7 @@ const useBenefitPackagesStore = defineStore("BenefitPackagesStoreList", () => {
     dialog,
     deletedItems,
     deleteBenefitPackage,
+    editDialog,
     // medicalServices,
     // if using "immediate=true"
   };

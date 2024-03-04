@@ -34,6 +34,7 @@ const BalanceResetDateFormatted = computed(() =>
 
 watch(BalanceResetDateFormatted, (value) => {
   store.insurancePolicy.BalanceResetDate = value;
+  store.sentInsurancePolicy.BalanceResetDate = value;
 });
 function BalanceResetDateUpdatePickerDate() {
   BalanceResetDateDatePickerDate.value = BalanceResetDateFormatted.value;
@@ -54,6 +55,7 @@ const issueDateFormatted = computed(() =>
 
 watch(issueDateFormatted, (value) => {
   store.insurancePolicy.issueDate = value;
+  store.sentInsurancePolicy.issueDate = value;
 });
 function issueDateUpdatePickerDate() {
   issueDatePickerDate.value = issueDateFormatted.value;
@@ -73,6 +75,7 @@ const renewalDateFormatted = computed(() =>
 
 watch(renewalDateFormatted, (value) => {
   store.insurancePolicy.renewalDate = value;
+  store.sentInsurancePolicy.renewalDate = value;
 });
 function renewalDateUpdatePickerDate() {
   renewalDatePickerDate.value = renewalDateFormatted.value;
@@ -97,6 +100,16 @@ async function updateInsurancePolicy() {
   } catch (error) {
     console.log(error);
   }
+}
+function updateField(value: string | number, name: string) {
+  store.sentInsurancePolicy[name] = value;
+}
+const updatedFieldsEmpty = computed(() => {
+  return Object.keys(store.sentInsurancePolicy).length > 0;
+});
+function closeEditDialiog() {
+  store.$reset();
+  emit("update-dialog");
 }
 onMounted(async () => {
   try {
@@ -133,11 +146,9 @@ onMounted(async () => {
         v-model="store.valid"
         @submit.prevent="updateInsurancePolicy"
       >
-        {{ store.insurancePolicy }}
-        {{ props.insurancePolicy }}
         <VCardTitle class="pa-5">
           <span class="text-h5"
-            >{{ t("institution.list.newInsurancePolicy") }}
+            >{{ t("institution.insurancePolicies.editInsurancePolicy") }}
           </span>
         </VCardTitle>
         <VCardText>
@@ -150,6 +161,7 @@ onMounted(async () => {
                   :label="$t('common.name')"
                   variant="outlined"
                   required
+                  @update:model-value="updateField($event, 'name')"
                 />
               </VCol>
               <VCol cols="12" sm="6" md="4">
@@ -162,6 +174,7 @@ onMounted(async () => {
                   item-value="id"
                   required
                   :rules="required"
+                  @update:model-value="updateField($event, 'institutionId')"
                 />
               </VCol>
               <VCol cols="12" sm="6" md="4">
@@ -172,6 +185,7 @@ onMounted(async () => {
                   :label="$t('common.Accumulatedlimit')"
                   variant="outlined"
                   required
+                  @update:model-value="updateField($event, 'Accumulatedlimit')"
                 />
               </VCol>
               <VCol cols="12" sm="6" md="4">
@@ -273,10 +287,17 @@ onMounted(async () => {
         </VCardText>
         <VCardActions>
           <VSpacer />
-          <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
+          <VBtn color="primary" variant="plain" @click="closeEditDialiog">
             Close
           </VBtn>
-          <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
+          <VBtn
+            :disable="!updatedFieldsEmpty"
+            type="submit"
+            color="primary"
+            variant="plain"
+          >
+            Save
+          </VBtn>
         </VCardActions>
       </v-form>
     </VCard>

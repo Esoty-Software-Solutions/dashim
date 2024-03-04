@@ -28,9 +28,14 @@ const useEditInsurancePolicyStore = defineStore(
       "editInsurancePolicy.InsurancePolicy",
       insurancePolicyRef,
     );
+    const sentInsurancePolicyRef = ref<InsurancePolicyInput>({
+      BalanceResetDate: new Date("1991-05-27T18:52:09.013Z"),
+      issueDate: new Date("1991-05-27T18:52:09.013Z"),
+      renewalDate: new Date("1991-05-27T18:52:09.013Z"),
+    });
     const sentInsurancePolicy = useLocalStorage(
       "editInsurancePolicy.sentInsurancePolicy",
-      insurancePolicyRef,
+      sentInsurancePolicyRef,
     );
     // const relations = ref<RelationshipCrudResponseData>([]);
     // const genders = ref<GenderCrudResponseData>([]);
