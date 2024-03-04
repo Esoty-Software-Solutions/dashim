@@ -45,9 +45,9 @@ const tabs = ref([
       name: "InstitutionsBenefitPackages",
     },
   },
-  {
-    text: t("institution.tabs.claims"),
-  },
+  // {
+  //   text: t("institution.tabs.claims"),
+  // },
 ]);
 </script>
 
