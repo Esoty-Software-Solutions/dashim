@@ -33,11 +33,11 @@ let store = useEditBeneficiariesStore();
 //   // }
 // }
 const emit = defineEmits(["update-dialog", "closeDialiog"]);
-const selfBeneficiary = ref(
-  props.beneficiaryEntity.beneficiaries.find(
-    ({ relationship }) => relationship.name === "self",
-  ),
-);
+// const selfBeneficiary = ref(
+//   props.beneficiaryEntity.beneficiaries.find(
+//     ({ relationship }) => relationship.name === "self",
+//   ),
+// );
 function getInsurancePolicies(value) {
   store.selectedInstitutionId = value;
   // store.beneficiary.insurancePolicyId = "";
@@ -111,7 +111,7 @@ async function updateBeneficiary() {
         <VCard-title class="pa-5">
           <span class="text-h5"
             >{{ t("institution.beneficiaries.editBeneficiary") }}
-            {{ selfBeneficiary.firstName }} {{ selfBeneficiary.lastName }}
+            <!-- {{ selfBeneficiary?.firstName }} {{ selfBeneficiary?.lastName }} -->
           </span>
         </VCard-title>
         <VCard-text>
