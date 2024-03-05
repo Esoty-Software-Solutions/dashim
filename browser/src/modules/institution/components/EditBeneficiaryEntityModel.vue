@@ -183,9 +183,11 @@ async function updateBeneficiary() {
         <VCard-actions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="closeEditDialiog">
-            Close
+            {{ t("components.close") }}
           </VBtn>
-          <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
+          <VBtn type="submit" color="primary" variant="plain">
+            {{ t("components.save") }}
+          </VBtn>
         </VCard-actions>
       </v-form>
     </VCard>

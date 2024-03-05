@@ -11,7 +11,7 @@
     "relationship": "العلافة",
     "actions": "إجراء",
     "add": "إضافة",
-    "id": "Id",
+    "id": "رقم التعريف",
     "institution": "المؤسسة",
     "insurancePolicy": "العفد",
     "firstName": "الاسم",
@@ -21,7 +21,23 @@
     "gender": "الجنس",
     "city": "المدينة",
     "nationality": "الجنسية",
-    "Accumulatedlimit": "السقف العام"
+    "Accumulatedlimit": "السقف العام",
+    "medicalCenter": "مركز",
+    "BalanceResetDate": "Balance Reset Date",
+    "issueDate": "Issue Date",
+    "renewalDate": "renewal Date",
+    "serviceEntryTimeWindow": "service Entry Time Window",
+    "serviceCategory": "Service Category",
+    "code": "Code",
+    "facebookLink": "رابط الفيسبوك",
+    "googleMapsLink": "رابط الموقع على الخريطة",
+    "instagramLink": "Instagram Link",
+    "twitterLink": "twitter Link",
+    "website": "موقع الويب",
+    "address": "العنوان",
+    "threashold": "السقف",
+    "copayDistrubtion": "النسبة",
+    "relationshipId": "العلاقة"
   },
   "locale": {
     "ar": {
@@ -44,12 +60,14 @@
       "benefitPackage": "باقات المستفيدين",
       "insurancePolicy": "سياسة التأمين",
       "network": "الشبكة",
-      "claims": "@.define:accounting.claims"
+      "claims": "@.define:accounting.claims",
+      "beneficiariesEntity": "مجموعة المستفيدين"
     },
     "beneficiaries": {
       "pageTitle": "قائمة المشتركين",
       "newbeneficiary": "إضافة مشترك جديد",
-      "addbeneficiary": "اضف فرد عائلة"
+      "addbeneficiary": "اضف فرد عائلة",
+      "editbeneficiary": "تعديل"
     },
     "network": {
       "pageTitle": "شبكة المراكز",
@@ -68,5 +86,17 @@
   },
   "accounting": {
     "claims": "مطالبات"
+  },
+  "components": {
+    "save": "حفظ",
+    "close": "إغلاق",
+    "cancel": "إلغاء",
+    "deleteConfirmation": "تأكيد الحذف",
+    "ok": "موافق"
+  },
+  "actions": {
+    "selectAll": "تحديد الكل",
+    "refresh": "تحديث",
+    "deleteAll": "حذف الكل"
   }
 }

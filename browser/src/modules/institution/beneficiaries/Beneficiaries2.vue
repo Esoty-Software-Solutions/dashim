@@ -405,8 +405,8 @@ const headers = ref<TableHeader[]>([
       <VCardActions>
         {{ selectedCount }}
         <!-- {{ selected.length }} {{ store.binding.value.itemsLength }} -->
-        <VBtn @click="selectAll">Select All 2</VBtn>
-        <VBtn @click="refresh">refresh</VBtn>
+        <VBtn @click="selectAll">{{ t("actions.selectAll") }}</VBtn>
+        <VBtn @click="refresh">{{ t("actions.refresh") }}</VBtn>
         <VSpacer />
         <VBtn
           color="primary"
@@ -551,13 +551,17 @@ const headers = ref<TableHeader[]>([
   </DataPageBase>
   <VDialog v-model="deleteDialog" max-width="500px">
     <VCard>
-      <VCardTitle class="text-h5"
-        >Are you sure you want to delete this item?</VCardTitle
-      >
+      <VCardTitle class="text-h5">{{
+        t("components.deleteConfirmation")
+      }}</VCardTitle>
       <VCardActions>
         <VSpacer />
-        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
-        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VBtn color="primary" variant="text" @click="closeDelete">{{
+          t("components.cancel")
+        }}</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">{{
+          t("components.ok")
+        }}</VBtn>
         <VSpacer />
       </VCardActions>
     </VCard>

@@ -173,8 +173,8 @@ const headers = ref<TableHeader[]>([
       <VCardActions>
         {{ selectedCount }}
         <!-- {{ selected.length }} {{ store.binding.value.itemsLength }} -->
-        <VBtn @click="selectAll">Select All</VBtn>
-        <VBtn @click="refresh">refresh</VBtn>
+        <VBtn @click="selectAll">{{ t("actions.selectAll") }}</VBtn>
+        <VBtn @click="refresh">{{ t("actions.refresh") }}</VBtn>
         <VSpacer />
         <!-- @click="openACreateBeneficiaryDialog" -->
         <VBtn color="primary" variant="plain">
