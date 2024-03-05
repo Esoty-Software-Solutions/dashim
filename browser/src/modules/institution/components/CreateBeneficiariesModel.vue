@@ -208,9 +208,11 @@ async function createSubscriber() {
         <VCardActions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
-            Close
+            {{ t("components.close") }}
           </VBtn>
-          <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
+          <VBtn type="submit" color="primary" variant="plain">
+            {{ t("components.save") }}
+          </VBtn>
         </VCardActions>
       </v-form>
     </VCard>

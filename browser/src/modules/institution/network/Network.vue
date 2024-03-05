@@ -343,13 +343,13 @@ const headers = ref<TableHeader[]>([
               <VSheet class="mb-0">
                 <VCardActions>
                   {{ selectedCount }}
-                  <VBtn @click="selectAll">Select All</VBtn>
-                  <VBtn @click="refresh">refresh</VBtn>
+                  <VBtn @click="selectAll">{{ t("actions.selectAll") }}</VBtn>
+                  <VBtn @click="refresh">{{ t("actions.refresh") }}</VBtn>
                   <VBtn
                     v-if="selectedLength"
                     color="red"
                     @click="deleteItem(selected)"
-                    >delete all</VBtn
+                    >{{ t("actions.deleteAll") }}</VBtn
                   >
                   <VSpacer />
                   <VBtn
@@ -409,12 +409,16 @@ const headers = ref<TableHeader[]>([
   <VDialog v-model="deleteDialog" max-width="500px">
     <VCard>
       <VCardTitle class="text-h5"
-        >Are you sure you want to delete this item?
+        >{{ t("components.deleteConfirmation") }}
       </VCardTitle>
       <VCardActions>
         <VSpacer />
-        <VBtn color="primary" variant="text" @click="closeDelete">Cancel</VBtn>
-        <VBtn color="red" variant="text" @click="deleteItemConfirm">OK</VBtn>
+        <VBtn color="primary" variant="text" @click="closeDelete">{{
+          t("components.cancel")
+        }}</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">{{
+          t("components.ok")
+        }}</VBtn>
         <VSpacer />
       </VCardActions>
     </VCard>

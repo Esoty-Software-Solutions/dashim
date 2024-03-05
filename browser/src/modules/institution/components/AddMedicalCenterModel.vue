@@ -118,10 +118,10 @@ const headers = ref<TableHeader[]>([
       <VCardActions>
         <VSpacer />
         <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
-          Close
+          {{ t("components.close") }}
         </VBtn>
         <VBtn color="primary" variant="plain" @click="addMedicalCenter">
-          Save
+          {{ t("components.save") }}
         </VBtn>
       </VCardActions>
     </VCard>

@@ -228,7 +228,7 @@ onMounted(async () => {
         <VCard-actions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="closeEditDialiog">
-            Close
+            {{ t("components.close") }}
           </VBtn>
           <VBtn
             :disabled="!updatedFieldsEmpty"
@@ -236,7 +236,7 @@ onMounted(async () => {
             color="primary"
             variant="plain"
           >
-            Save
+            {{ t("components.save") }}
           </VBtn>
         </VCard-actions>
       </v-form>
