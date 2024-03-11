@@ -42,14 +42,14 @@ const outputObjectDir: string = path.resolve(
   "objects",
 );
 
-const SchemaTemplatePath = path.join(__dirname, "schemaRouterFileTemplate.ts");
-const SchemaTemplate = fs.readFileSync(SchemaTemplatePath, "utf-8");
+// const SchemaTemplatePath = path.join(__dirname, "schemaRouterFileTemplate.ts");
+// const SchemaTemplate = fs.readFileSync(SchemaTemplatePath, "utf-8");
 
-const SchemaTemplatePathCO = path.join(
-  __dirname,
-  "schemaRouterCOFileTemplate.ts",
-);
-const SchemaTemplateCO = fs.readFileSync(SchemaTemplatePathCO, "utf-8");
+// const SchemaTemplatePathCO = path.join(
+//   __dirname,
+//   "schemaRouterCOFileTemplate.ts",
+// );
+// const SchemaTemplateCO = fs.readFileSync(SchemaTemplatePathCO, "utf-8");
 
 const SchemaOutputDir: string = path.resolve(
   __dirname,
@@ -62,7 +62,7 @@ const SchemaOutputDir: string = path.resolve(
 const routeTemplatePath = path.join(__dirname, "routerFileTemplate.ts");
 const routeTemplate = fs.readFileSync(routeTemplatePath, "utf-8");
 
-const routeTemplatePathCO = path.join(__dirname, "routerCOFileTemplate.ts");
+const routeTemplatePathCO = path.join(__dirname, "routerFileTemplate.ts");
 const routeTemplateCO = fs.readFileSync(routeTemplatePathCO, "utf-8");
 
 const routeOutputDir: string = path.resolve(__dirname, "..", "src", "routers");
@@ -132,30 +132,30 @@ copyFiles(sourceObjectDir, outputObjectDir);
 
 let fileCounter = 0;
 
-TableNames.forEach((TableName) => {
-  const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
-  let output: string = "";
-  console.info("generating schema file for: ", TableName);
-  if (tableNamesDoNotCO.includes(TableName)) {
-    output = SchemaTemplate.replace(/User/g, TableName).replace(
-      /user(?!Id)/g,
-      tableName,
-    );
-  } else {
-    output = SchemaTemplateCO.replace(/User/g, TableName).replace(
-      /user(?!Id)/g,
-      tableName,
-    );
-  }
-  fs.writeFileSync(
-    path.join(SchemaOutputDir, `${tableName}.schema.ts`),
-    output,
-  );
-  fileCounter++;
-});
+// TableNames.forEach((TableName) => {
+//   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
+//   let output: string = "";
+//   console.info("generating schema file for: ", TableName);
+//   if (tableNamesDoNotCO.includes(TableName)) {
+//     output = SchemaTemplate.replace(/User/g, TableName).replace(
+//       /user(?!Id)/g,
+//       tableName,
+//     );
+//   } else {
+//     output = SchemaTemplateCO.replace(/User/g, TableName).replace(
+//       /user(?!Id)/g,
+//       tableName,
+//     );
+//   }
+//   fs.writeFileSync(
+//     path.join(SchemaOutputDir, `${tableName}.schema.ts`),
+//     output,
+//   );
+//   fileCounter++;
+// });
 
-console.info(`Generated ${fileCounter} files`);
-console.info("Schema output is: ", SchemaOutputDir);
+// console.info(`Generated ${fileCounter} files`);
+// console.info("Schema output is: ", SchemaOutputDir);
 
 fileCounter = 0;
 
@@ -183,7 +183,8 @@ console.info("output is: ", path.join(routeOutputDir, "cruds"));
 
 // creating the aggregate router
 
-const routerTemplate = `import { router } from "@routers/_trpc.router";`;
+const routerTemplate = `import { Router } from "express";
+export const crudRouter = Router();\n`;
 
 function generateRouters(template: string) {
   const routerFilePath = path.join(routeOutputDir, `${template}.router.ts`); // adjust the path as needed
@@ -202,7 +203,7 @@ function generateRouters(template: string) {
     const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
     // Generate import and router statements for each table
     const importStatement = `import { ${tableName}Router } from './${template}s/${tableName}.router';\n`;
-    const routerStatement = `  ${tableName}: ${tableName}Router,\n`;
+    const routerStatement = `crudRouter.use("/${tableName}", ${tableName}Router );\n`;
 
     // Add import and router statements to their respective strings
     importStatements += importStatement;
@@ -213,9 +214,8 @@ function generateRouters(template: string) {
   crudRouterFile = importStatements + crudRouterFile;
 
   // Add router statements to the router object
-  crudRouterFile =
-    crudRouterFile +
-    `\n\nexport const ${template}Router = router({\n${routerStatements}\n});`;
+  crudRouterFile = crudRouterFile + "\n\n" + routerStatements;
+  // `\n\nexport const ${template}Router = router({\n${routerStatements}\n});`;
 
   console.log(`Added ${fileCounter} imports and routers to _.router.ts`);
   fs.writeFileSync(routerFilePath, crudRouterFile);
