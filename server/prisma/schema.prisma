@@ -22,15 +22,6 @@ generator dbml {
     provider = "prisma-dbml-generator"
 }
 
-generator trpc {
-    provider = "prisma-trpc-generator"
-    withZod = true
-    withMiddleware = false
-    withShield = false
-    contextPath = "../src/routers/_context.router"
-    trpcOptionsPath = "trpcOptions"
-}
-
 generator erd {
     provider = "prisma-erd-generator"
     theme = "forest"
