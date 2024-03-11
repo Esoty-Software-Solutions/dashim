@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // RelationshipEnumAggregateSchema,
-  RelationshipEnumCreateManySchema,
-  RelationshipEnumCreateOneSchema,
-  RelationshipEnumDeleteManySchema,
-  RelationshipEnumDeleteOneSchema,
-  RelationshipEnumFindFirstSchema,
-  RelationshipEnumFindManySchema,
-  RelationshipEnumFindUniqueSchema,
-  // RelationshipEnumGroupBySchema,
-  // RelationshipEnumUpdateManySchema,
-  RelationshipEnumUpdateOneSchema,
-  // RelationshipEnumUpsertSchema,
-  RelationshipEnumCountSchema,
-} from "@schemas/routers/relationshipEnum.schema";
+import { Router, json } from "express";
+import { RelationshipEnum } from "@models/relationshipEnum.model";
 
-export const relationshipEnumRouter = router({
-  // aggregate: publicProcedure
-  //   .input(RelationshipEnumAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationshipEnum.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const relationshipEnumRouter = Router();
 
-  createMany: publicProcedure
-    .input(RelationshipEnumCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(RelationshipEnumCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(RelationshipEnumDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(RelationshipEnumDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(RelationshipEnumFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(RelationshipEnumFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationshipEnum.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(RelationshipEnumFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.relationshipEnum.findMany(input),
-          ctx.prisma.relationshipEnum.count({ where: input?.where }),
-          ctx.prisma.relationshipEnum.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(RelationshipEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(RelationshipEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.relationshipEnum.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(RelationshipEnumGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationshipEnum.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(RelationshipEnumUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationshipEnum.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(RelationshipEnumUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(RelationshipEnumUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.relationshipEnum.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(RelationshipEnumCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.relationshipEnum.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+relationshipEnumRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+relationshipEnumRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.aggregate(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.findFirst(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.findMany(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    RelationshipEnum.findMany(req, input),
+    RelationshipEnum.count(req, { where: input?.where }),
+    RelationshipEnum.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+relationshipEnumRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.findUnique(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await RelationshipEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+relationshipEnumRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.groupBy(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await RelationshipEnum.count(req, input, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/createMany", async (req, res) => {
+  res.json(await RelationshipEnum.createMany(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/createOne", async (req, res) => {
+  res.json(await RelationshipEnum.createOne(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/deleteMany", async (req, res) => {
+  res.json(await RelationshipEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/deleteOne", async (req, res) => {
+  res.json(await RelationshipEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/updateMany", async (req, res) => {
+  res.json(await RelationshipEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/updateOne", async (req, res) => {
+  res.json(await RelationshipEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+relationshipEnumRouter.post("/upsert", async (req, res) => {
+  res.json(await RelationshipEnum.upsert(req, req.body, { bypassMiddleware: true }));
 });

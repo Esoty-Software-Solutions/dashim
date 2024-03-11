@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // ReviewStatusAggregateSchema,
-  ReviewStatusCreateManySchema,
-  ReviewStatusCreateOneSchema,
-  ReviewStatusDeleteManySchema,
-  ReviewStatusDeleteOneSchema,
-  ReviewStatusFindFirstSchema,
-  ReviewStatusFindManySchema,
-  ReviewStatusFindUniqueSchema,
-  // ReviewStatusGroupBySchema,
-  // ReviewStatusUpdateManySchema,
-  ReviewStatusUpdateOneSchema,
-  // ReviewStatusUpsertSchema,
-  ReviewStatusCountSchema,
-} from "@schemas/routers/reviewStatus.schema";
+import { Router, json } from "express";
+import { ReviewStatus } from "@models/reviewStatus.model";
 
-export const reviewStatusRouter = router({
-  // aggregate: publicProcedure
-  //   .input(ReviewStatusAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const reviewStatusRouter = Router();
 
-  createMany: publicProcedure
-    .input(ReviewStatusCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(ReviewStatusCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(ReviewStatusDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(ReviewStatusDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(ReviewStatusFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(ReviewStatusFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(ReviewStatusFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.reviewStatus.findMany(input),
-          ctx.prisma.reviewStatus.count({ where: input?.where }),
-          ctx.prisma.reviewStatus.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(ReviewStatusFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(ReviewStatusFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.reviewStatus.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(ReviewStatusGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(ReviewStatusUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(ReviewStatusUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(ReviewStatusUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.reviewStatus.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(ReviewStatusCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.reviewStatus.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+reviewStatusRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+reviewStatusRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.aggregate(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.findFirst(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.findMany(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    ReviewStatus.findMany(req, input),
+    ReviewStatus.count(req, { where: input?.where }),
+    ReviewStatus.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+reviewStatusRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.findUnique(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await ReviewStatus.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+reviewStatusRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.groupBy(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await ReviewStatus.count(req, input, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/createMany", async (req, res) => {
+  res.json(await ReviewStatus.createMany(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/createOne", async (req, res) => {
+  res.json(await ReviewStatus.createOne(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/deleteMany", async (req, res) => {
+  res.json(await ReviewStatus.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/deleteOne", async (req, res) => {
+  res.json(await ReviewStatus.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/updateMany", async (req, res) => {
+  res.json(await ReviewStatus.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/updateOne", async (req, res) => {
+  res.json(await ReviewStatus.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+reviewStatusRouter.post("/upsert", async (req, res) => {
+  res.json(await ReviewStatus.upsert(req, req.body, { bypassMiddleware: true }));
 });

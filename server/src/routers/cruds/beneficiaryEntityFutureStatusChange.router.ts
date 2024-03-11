@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // BeneficiaryEntityFutureStatusChangeAggregateSchema,
-  BeneficiaryEntityFutureStatusChangeCreateManySchema,
-  BeneficiaryEntityFutureStatusChangeCreateOneSchema,
-  BeneficiaryEntityFutureStatusChangeDeleteManySchema,
-  BeneficiaryEntityFutureStatusChangeDeleteOneSchema,
-  BeneficiaryEntityFutureStatusChangeFindFirstSchema,
-  BeneficiaryEntityFutureStatusChangeFindManySchema,
-  BeneficiaryEntityFutureStatusChangeFindUniqueSchema,
-  // BeneficiaryEntityFutureStatusChangeGroupBySchema,
-  // BeneficiaryEntityFutureStatusChangeUpdateManySchema,
-  BeneficiaryEntityFutureStatusChangeUpdateOneSchema,
-  // BeneficiaryEntityFutureStatusChangeUpsertSchema,
-  BeneficiaryEntityFutureStatusChangeCountSchema,
-} from "@schemas/routers/beneficiaryEntityFutureStatusChange.schema";
+import { Router, json } from "express";
+import { BeneficiaryEntityFutureStatusChange } from "@models/beneficiaryEntityFutureStatusChange.model";
 
-export const beneficiaryEntityFutureStatusChangeRouter = router({
-  // aggregate: publicProcedure
-  //   .input(BeneficiaryEntityFutureStatusChangeAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryEntityFutureStatusChange.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const beneficiaryEntityFutureStatusChangeRouter = Router();
 
-  createMany: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(BeneficiaryEntityFutureStatusChangeFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryEntityFutureStatusChange.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.beneficiaryEntityFutureStatusChange.findMany(input),
-          ctx.prisma.beneficiaryEntityFutureStatusChange.count({ where: input?.where }),
-          ctx.prisma.beneficiaryEntityFutureStatusChange.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.beneficiaryEntityFutureStatusChange.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(BeneficiaryEntityFutureStatusChangeGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryEntityFutureStatusChange.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(BeneficiaryEntityFutureStatusChangeUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryEntityFutureStatusChange.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(BeneficiaryEntityFutureStatusChangeUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiaryEntityFutureStatusChange.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(BeneficiaryEntityFutureStatusChangeCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiaryEntityFutureStatusChange.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+beneficiaryEntityFutureStatusChangeRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.aggregate(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.findFirst(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.findMany(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    BeneficiaryEntityFutureStatusChange.findMany(req, input),
+    BeneficiaryEntityFutureStatusChange.count(req, { where: input?.where }),
+    BeneficiaryEntityFutureStatusChange.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.findUnique(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await BeneficiaryEntityFutureStatusChange.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.groupBy(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BeneficiaryEntityFutureStatusChange.count(req, input, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/createMany", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.createMany(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/createOne", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.createOne(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/deleteMany", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/deleteOne", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/updateMany", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/updateOne", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+beneficiaryEntityFutureStatusChangeRouter.post("/upsert", async (req, res) => {
+  res.json(await BeneficiaryEntityFutureStatusChange.upsert(req, req.body, { bypassMiddleware: true }));
 });

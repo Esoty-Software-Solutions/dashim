@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // CountryEnumAggregateSchema,
-  CountryEnumCreateManySchema,
-  CountryEnumCreateOneSchema,
-  CountryEnumDeleteManySchema,
-  CountryEnumDeleteOneSchema,
-  CountryEnumFindFirstSchema,
-  CountryEnumFindManySchema,
-  CountryEnumFindUniqueSchema,
-  // CountryEnumGroupBySchema,
-  // CountryEnumUpdateManySchema,
-  CountryEnumUpdateOneSchema,
-  // CountryEnumUpsertSchema,
-  CountryEnumCountSchema,
-} from "@schemas/routers/countryEnum.schema";
+import { Router, json } from "express";
+import { CountryEnum } from "@models/countryEnum.model";
 
-export const countryEnumRouter = router({
-  // aggregate: publicProcedure
-  //   .input(CountryEnumAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.countryEnum.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const countryEnumRouter = Router();
 
-  createMany: publicProcedure
-    .input(CountryEnumCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(CountryEnumCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(CountryEnumDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(CountryEnumDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(CountryEnumFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(CountryEnumFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.countryEnum.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(CountryEnumFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.countryEnum.findMany(input),
-          ctx.prisma.countryEnum.count({ where: input?.where }),
-          ctx.prisma.countryEnum.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(CountryEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(CountryEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.countryEnum.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(CountryEnumGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.countryEnum.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(CountryEnumUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.countryEnum.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(CountryEnumUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(CountryEnumUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.countryEnum.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(CountryEnumCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.countryEnum.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+countryEnumRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+countryEnumRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.aggregate(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.findFirst(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.findMany(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    CountryEnum.findMany(req, input),
+    CountryEnum.count(req, { where: input?.where }),
+    CountryEnum.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+countryEnumRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.findUnique(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await CountryEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+countryEnumRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.groupBy(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CountryEnum.count(req, input, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/createMany", async (req, res) => {
+  res.json(await CountryEnum.createMany(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/createOne", async (req, res) => {
+  res.json(await CountryEnum.createOne(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/deleteMany", async (req, res) => {
+  res.json(await CountryEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/deleteOne", async (req, res) => {
+  res.json(await CountryEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/updateMany", async (req, res) => {
+  res.json(await CountryEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/updateOne", async (req, res) => {
+  res.json(await CountryEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+countryEnumRouter.post("/upsert", async (req, res) => {
+  res.json(await CountryEnum.upsert(req, req.body, { bypassMiddleware: true }));
 });

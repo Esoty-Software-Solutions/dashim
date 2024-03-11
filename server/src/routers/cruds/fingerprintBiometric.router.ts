@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // FingerprintBiometricAggregateSchema,
-  FingerprintBiometricCreateManySchema,
-  FingerprintBiometricCreateOneSchema,
-  FingerprintBiometricDeleteManySchema,
-  FingerprintBiometricDeleteOneSchema,
-  FingerprintBiometricFindFirstSchema,
-  FingerprintBiometricFindManySchema,
-  FingerprintBiometricFindUniqueSchema,
-  // FingerprintBiometricGroupBySchema,
-  // FingerprintBiometricUpdateManySchema,
-  FingerprintBiometricUpdateOneSchema,
-  // FingerprintBiometricUpsertSchema,
-  FingerprintBiometricCountSchema,
-} from "@schemas/routers/fingerprintBiometric.schema";
+import { Router, json } from "express";
+import { FingerprintBiometric } from "@models/fingerprintBiometric.model";
 
-export const fingerprintBiometricRouter = router({
-  // aggregate: publicProcedure
-  //   .input(FingerprintBiometricAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerprintBiometric.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const fingerprintBiometricRouter = Router();
 
-  createMany: publicProcedure
-    .input(FingerprintBiometricCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(FingerprintBiometricCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(FingerprintBiometricDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(FingerprintBiometricDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(FingerprintBiometricFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(FingerprintBiometricFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerprintBiometric.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(FingerprintBiometricFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.fingerprintBiometric.findMany(input),
-          ctx.prisma.fingerprintBiometric.count({ where: input?.where }),
-          ctx.prisma.fingerprintBiometric.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(FingerprintBiometricFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(FingerprintBiometricFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.fingerprintBiometric.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(FingerprintBiometricGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerprintBiometric.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(FingerprintBiometricUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerprintBiometric.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(FingerprintBiometricUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(FingerprintBiometricUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerprintBiometric.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(FingerprintBiometricCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerprintBiometric.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+fingerprintBiometricRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+fingerprintBiometricRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.aggregate(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.findFirst(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.findMany(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    FingerprintBiometric.findMany(req, input),
+    FingerprintBiometric.count(req, { where: input?.where }),
+    FingerprintBiometric.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+fingerprintBiometricRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.findUnique(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await FingerprintBiometric.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+fingerprintBiometricRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.groupBy(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerprintBiometric.count(req, input, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/createMany", async (req, res) => {
+  res.json(await FingerprintBiometric.createMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/createOne", async (req, res) => {
+  res.json(await FingerprintBiometric.createOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/deleteMany", async (req, res) => {
+  res.json(await FingerprintBiometric.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/deleteOne", async (req, res) => {
+  res.json(await FingerprintBiometric.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/updateMany", async (req, res) => {
+  res.json(await FingerprintBiometric.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/updateOne", async (req, res) => {
+  res.json(await FingerprintBiometric.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerprintBiometricRouter.post("/upsert", async (req, res) => {
+  res.json(await FingerprintBiometric.upsert(req, req.body, { bypassMiddleware: true }));
 });

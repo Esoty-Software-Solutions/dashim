@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // BenefitPackageMedicalServiceCategoryAggregateSchema,
-  BenefitPackageMedicalServiceCategoryCreateManySchema,
-  BenefitPackageMedicalServiceCategoryCreateOneSchema,
-  BenefitPackageMedicalServiceCategoryDeleteManySchema,
-  BenefitPackageMedicalServiceCategoryDeleteOneSchema,
-  BenefitPackageMedicalServiceCategoryFindFirstSchema,
-  BenefitPackageMedicalServiceCategoryFindManySchema,
-  BenefitPackageMedicalServiceCategoryFindUniqueSchema,
-  // BenefitPackageMedicalServiceCategoryGroupBySchema,
-  // BenefitPackageMedicalServiceCategoryUpdateManySchema,
-  BenefitPackageMedicalServiceCategoryUpdateOneSchema,
-  // BenefitPackageMedicalServiceCategoryUpsertSchema,
-  BenefitPackageMedicalServiceCategoryCountSchema,
-} from "@schemas/routers/benefitPackageMedicalServiceCategory.schema";
+import { Router, json } from "express";
+import { BenefitPackageMedicalServiceCategory } from "@models/benefitPackageMedicalServiceCategory.model";
 
-export const benefitPackageMedicalServiceCategoryRouter = router({
-  // aggregate: publicProcedure
-  //   .input(BenefitPackageMedicalServiceCategoryAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceCategory.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const benefitPackageMedicalServiceCategoryRouter = Router();
 
-  createMany: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(BenefitPackageMedicalServiceCategoryFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceCategory.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.benefitPackageMedicalServiceCategory.findMany(input),
-          ctx.prisma.benefitPackageMedicalServiceCategory.count({ where: input?.where }),
-          ctx.prisma.benefitPackageMedicalServiceCategory.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.benefitPackageMedicalServiceCategory.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(BenefitPackageMedicalServiceCategoryGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceCategory.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(BenefitPackageMedicalServiceCategoryUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceCategory.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(BenefitPackageMedicalServiceCategoryUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.benefitPackageMedicalServiceCategory.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(BenefitPackageMedicalServiceCategoryCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.benefitPackageMedicalServiceCategory.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+benefitPackageMedicalServiceCategoryRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+benefitPackageMedicalServiceCategoryRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.aggregate(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.findFirst(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.findMany(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    BenefitPackageMedicalServiceCategory.findMany(req, input),
+    BenefitPackageMedicalServiceCategory.count(req, { where: input?.where }),
+    BenefitPackageMedicalServiceCategory.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+benefitPackageMedicalServiceCategoryRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.findUnique(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await BenefitPackageMedicalServiceCategory.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+benefitPackageMedicalServiceCategoryRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.groupBy(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await BenefitPackageMedicalServiceCategory.count(req, input, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/createMany", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.createMany(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/createOne", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.createOne(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/deleteMany", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/deleteOne", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/updateMany", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/updateOne", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+benefitPackageMedicalServiceCategoryRouter.post("/upsert", async (req, res) => {
+  res.json(await BenefitPackageMedicalServiceCategory.upsert(req, req.body, { bypassMiddleware: true }));
 });

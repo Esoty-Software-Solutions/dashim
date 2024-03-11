@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // TenantAggregateSchema,
-  TenantCreateManySchema,
-  TenantCreateOneSchema,
-  TenantDeleteManySchema,
-  TenantDeleteOneSchema,
-  TenantFindFirstSchema,
-  TenantFindManySchema,
-  TenantFindUniqueSchema,
-  // TenantGroupBySchema,
-  // TenantUpdateManySchema,
-  TenantUpdateOneSchema,
-  // TenantUpsertSchema,
-  TenantCountSchema,
-} from "@schemas/routers/tenant.schema";
+import { Router, json } from "express";
+import { Tenant } from "@models/tenant.model";
 
-export const tenantRouter = router({
-  // aggregate: publicProcedure
-  //   .input(TenantAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const tenantRouter = Router();
 
-  createMany: publicProcedure
-    .input(TenantCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(TenantCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(TenantDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(TenantDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(TenantFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(TenantFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(TenantFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.tenant.findMany(input),
-          ctx.prisma.tenant.count({ where: input?.where }),
-          ctx.prisma.tenant.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(TenantFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(TenantFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.tenant.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(TenantGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(TenantUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(TenantUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(TenantUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenant.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(TenantCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenant.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+tenantRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+tenantRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.aggregate(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.findFirst(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.findMany(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    Tenant.findMany(req, input),
+    Tenant.count(req, { where: input?.where }),
+    Tenant.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+tenantRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.findUnique(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await Tenant.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+tenantRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.groupBy(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await Tenant.count(req, input, { bypassMiddleware: true }));
+});
+tenantRouter.post("/createMany", async (req, res) => {
+  res.json(await Tenant.createMany(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/createOne", async (req, res) => {
+  res.json(await Tenant.createOne(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/deleteMany", async (req, res) => {
+  res.json(await Tenant.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/deleteOne", async (req, res) => {
+  res.json(await Tenant.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/updateMany", async (req, res) => {
+  res.json(await Tenant.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/updateOne", async (req, res) => {
+  res.json(await Tenant.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+tenantRouter.post("/upsert", async (req, res) => {
+  res.json(await Tenant.upsert(req, req.body, { bypassMiddleware: true }));
 });

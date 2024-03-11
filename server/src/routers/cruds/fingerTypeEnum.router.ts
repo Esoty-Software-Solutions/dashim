@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // FingerTypeEnumAggregateSchema,
-  FingerTypeEnumCreateManySchema,
-  FingerTypeEnumCreateOneSchema,
-  FingerTypeEnumDeleteManySchema,
-  FingerTypeEnumDeleteOneSchema,
-  FingerTypeEnumFindFirstSchema,
-  FingerTypeEnumFindManySchema,
-  FingerTypeEnumFindUniqueSchema,
-  // FingerTypeEnumGroupBySchema,
-  // FingerTypeEnumUpdateManySchema,
-  FingerTypeEnumUpdateOneSchema,
-  // FingerTypeEnumUpsertSchema,
-  FingerTypeEnumCountSchema,
-} from "@schemas/routers/fingerTypeEnum.schema";
+import { Router, json } from "express";
+import { FingerTypeEnum } from "@models/fingerTypeEnum.model";
 
-export const fingerTypeEnumRouter = router({
-  // aggregate: publicProcedure
-  //   .input(FingerTypeEnumAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerTypeEnum.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const fingerTypeEnumRouter = Router();
 
-  createMany: publicProcedure
-    .input(FingerTypeEnumCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(FingerTypeEnumCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(FingerTypeEnumDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(FingerTypeEnumDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(FingerTypeEnumFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(FingerTypeEnumFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerTypeEnum.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(FingerTypeEnumFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.fingerTypeEnum.findMany(input),
-          ctx.prisma.fingerTypeEnum.count({ where: input?.where }),
-          ctx.prisma.fingerTypeEnum.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(FingerTypeEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(FingerTypeEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.fingerTypeEnum.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(FingerTypeEnumGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerTypeEnum.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(FingerTypeEnumUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerTypeEnum.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(FingerTypeEnumUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(FingerTypeEnumUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.fingerTypeEnum.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(FingerTypeEnumCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.fingerTypeEnum.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+fingerTypeEnumRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+fingerTypeEnumRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.aggregate(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.findFirst(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.findMany(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    FingerTypeEnum.findMany(req, input),
+    FingerTypeEnum.count(req, { where: input?.where }),
+    FingerTypeEnum.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+fingerTypeEnumRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.findUnique(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await FingerTypeEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+fingerTypeEnumRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.groupBy(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await FingerTypeEnum.count(req, input, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/createMany", async (req, res) => {
+  res.json(await FingerTypeEnum.createMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/createOne", async (req, res) => {
+  res.json(await FingerTypeEnum.createOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/deleteMany", async (req, res) => {
+  res.json(await FingerTypeEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/deleteOne", async (req, res) => {
+  res.json(await FingerTypeEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/updateMany", async (req, res) => {
+  res.json(await FingerTypeEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/updateOne", async (req, res) => {
+  res.json(await FingerTypeEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+fingerTypeEnumRouter.post("/upsert", async (req, res) => {
+  res.json(await FingerTypeEnum.upsert(req, req.body, { bypassMiddleware: true }));
 });

@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // GenderEnumAggregateSchema,
-  GenderEnumCreateManySchema,
-  GenderEnumCreateOneSchema,
-  GenderEnumDeleteManySchema,
-  GenderEnumDeleteOneSchema,
-  GenderEnumFindFirstSchema,
-  GenderEnumFindManySchema,
-  GenderEnumFindUniqueSchema,
-  // GenderEnumGroupBySchema,
-  // GenderEnumUpdateManySchema,
-  GenderEnumUpdateOneSchema,
-  // GenderEnumUpsertSchema,
-  GenderEnumCountSchema,
-} from "@schemas/routers/genderEnum.schema";
+import { Router, json } from "express";
+import { GenderEnum } from "@models/genderEnum.model";
 
-export const genderEnumRouter = router({
-  // aggregate: publicProcedure
-  //   .input(GenderEnumAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.genderEnum.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const genderEnumRouter = Router();
 
-  createMany: publicProcedure
-    .input(GenderEnumCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(GenderEnumCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(GenderEnumDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(GenderEnumDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(GenderEnumFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(GenderEnumFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.genderEnum.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(GenderEnumFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.genderEnum.findMany(input),
-          ctx.prisma.genderEnum.count({ where: input?.where }),
-          ctx.prisma.genderEnum.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(GenderEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(GenderEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.genderEnum.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(GenderEnumGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.genderEnum.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(GenderEnumUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.genderEnum.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(GenderEnumUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(GenderEnumUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.genderEnum.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(GenderEnumCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.genderEnum.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+genderEnumRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+genderEnumRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.aggregate(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.findFirst(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.findMany(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    GenderEnum.findMany(req, input),
+    GenderEnum.count(req, { where: input?.where }),
+    GenderEnum.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+genderEnumRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.findUnique(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await GenderEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+genderEnumRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.groupBy(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await GenderEnum.count(req, input, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/createMany", async (req, res) => {
+  res.json(await GenderEnum.createMany(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/createOne", async (req, res) => {
+  res.json(await GenderEnum.createOne(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/deleteMany", async (req, res) => {
+  res.json(await GenderEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/deleteOne", async (req, res) => {
+  res.json(await GenderEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/updateMany", async (req, res) => {
+  res.json(await GenderEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/updateOne", async (req, res) => {
+  res.json(await GenderEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+genderEnumRouter.post("/upsert", async (req, res) => {
+  res.json(await GenderEnum.upsert(req, req.body, { bypassMiddleware: true }));
 });

@@ -1,193 +1,77 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // CurrencyEnumAggregateSchema,
-  CurrencyEnumCreateManySchema,
-  CurrencyEnumCreateOneSchema,
-  CurrencyEnumDeleteManySchema,
-  CurrencyEnumDeleteOneSchema,
-  CurrencyEnumFindFirstSchema,
-  CurrencyEnumFindManySchema,
-  CurrencyEnumFindUniqueSchema,
-  // CurrencyEnumGroupBySchema,
-  // CurrencyEnumUpdateManySchema,
-  CurrencyEnumUpdateOneSchema,
-  // CurrencyEnumUpsertSchema,
-  CurrencyEnumCountSchema,
-} from "@schemas/routers/currencyEnum.schema";
+import { Router, json } from "express";
+import { CurrencyEnum } from "@models/currencyEnum.model";
 
-export const currencyEnumRouter = router({
-  // aggregate: publicProcedure
-  //   .input(CurrencyEnumAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currencyEnum.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const currencyEnumRouter = Router();
 
-  createMany: publicProcedure
-    .input(CurrencyEnumCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(CurrencyEnumCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(CurrencyEnumDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(CurrencyEnumDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(CurrencyEnumFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(CurrencyEnumFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currencyEnum.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(CurrencyEnumFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.currencyEnum.findMany(input),
-          ctx.prisma.currencyEnum.count({ where: input?.where }),
-          ctx.prisma.currencyEnum.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(CurrencyEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(CurrencyEnumFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.currencyEnum.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(CurrencyEnumGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currencyEnum.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(CurrencyEnumUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currencyEnum.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(CurrencyEnumUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(CurrencyEnumUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.currencyEnum.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(CurrencyEnumCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.currencyEnum.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+currencyEnumRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+currencyEnumRouter.get("/aggregate", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.aggregate(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.get("/findFirst", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.findFirst(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.get("/findMany", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.findMany(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.get("/tableQuery", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    CurrencyEnum.findMany(req, input),
+    CurrencyEnum.count(req, { where: input?.where }),
+    CurrencyEnum.count(req),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+currencyEnumRouter.get("/findUnique", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.findUnique(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(
+    await CurrencyEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
+  );
+});
+currencyEnumRouter.get("/groupBy", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.groupBy(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.get("/count", async (req, res) => {
+  const input = JSON.parse(req.query.q as string);
+  res.json(await CurrencyEnum.count(req, input, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/createMany", async (req, res) => {
+  res.json(await CurrencyEnum.createMany(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/createOne", async (req, res) => {
+  res.json(await CurrencyEnum.createOne(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/deleteMany", async (req, res) => {
+  res.json(await CurrencyEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/deleteOne", async (req, res) => {
+  res.json(await CurrencyEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/updateMany", async (req, res) => {
+  res.json(await CurrencyEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/updateOne", async (req, res) => {
+  res.json(await CurrencyEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+});
+currencyEnumRouter.post("/upsert", async (req, res) => {
+  res.json(await CurrencyEnum.upsert(req, req.body, { bypassMiddleware: true }));
 });
