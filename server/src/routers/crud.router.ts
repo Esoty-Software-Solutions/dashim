@@ -36,46 +36,45 @@ import { deviceTypeEnumRouter } from './cruds/deviceTypeEnum.router';
 import { fingerTypeEnumRouter } from './cruds/fingerTypeEnum.router';
 import { cityEnumRouter } from './cruds/cityEnum.router';
 import { countryEnumRouter } from './cruds/countryEnum.router';
-import { router } from "@routers/_trpc.router";
+import { Router } from "express";
+export const crudRouter = Router();
 
-export const crudRouter = router({
-  user: userRouter,
-  tenantMember: tenantMemberRouter,
-  tenant: tenantRouter,
-  deviceToken: deviceTokenRouter,
-  institution: institutionRouter,
-  beneficiaryEntity: beneficiaryEntityRouter,
-  beneficiaryEntityFutureStatusChange: beneficiaryEntityFutureStatusChangeRouter,
-  beneficiary: beneficiaryRouter,
-  beneficiaryFutureStatusChange: beneficiaryFutureStatusChangeRouter,
-  institutionMedicalService: institutionMedicalServiceRouter,
-  fingerprintBiometric: fingerprintBiometricRouter,
-  iDCard: iDCardRouter,
-  faceBiometric: faceBiometricRouter,
-  voiceBiometric: voiceBiometricRouter,
-  insurancePolicy: insurancePolicyRouter,
-  benefitPackage: benefitPackageRouter,
-  insurancePolicyMedicalCenter: insurancePolicyMedicalCenterRouter,
-  medicalCenter: medicalCenterRouter,
-  benefitPackageMedicalServiceCategory: benefitPackageMedicalServiceCategoryRouter,
-  medicalServiceCategory: medicalServiceCategoryRouter,
-  medicalService: medicalServiceRouter,
-  entryRecord: entryRecordRouter,
-  beneficiaryService: beneficiaryServiceRouter,
-  reviewStatus: reviewStatusRouter,
-  beneficiaryBalance: beneficiaryBalanceRouter,
-  diagnosisAttachment: diagnosisAttachmentRouter,
-  labReportAttachment: labReportAttachmentRouter,
-  prescriptionAttachment: prescriptionAttachmentRouter,
-  reviewStatusEnum: reviewStatusEnumRouter,
-  genderEnum: genderEnumRouter,
-  currencyEnum: currencyEnumRouter,
-  relationshipEnum: relationshipEnumRouter,
-  tenantTypeEnum: tenantTypeEnumRouter,
-  roleEnum: roleEnumRouter,
-  deviceTypeEnum: deviceTypeEnumRouter,
-  fingerTypeEnum: fingerTypeEnumRouter,
-  cityEnum: cityEnumRouter,
-  countryEnum: countryEnumRouter,
 
-});
+crudRouter.use("/user", userRouter );
+crudRouter.use("/tenantMember", tenantMemberRouter );
+crudRouter.use("/tenant", tenantRouter );
+crudRouter.use("/deviceToken", deviceTokenRouter );
+crudRouter.use("/institution", institutionRouter );
+crudRouter.use("/beneficiaryEntity", beneficiaryEntityRouter );
+crudRouter.use("/beneficiaryEntityFutureStatusChange", beneficiaryEntityFutureStatusChangeRouter );
+crudRouter.use("/beneficiary", beneficiaryRouter );
+crudRouter.use("/beneficiaryFutureStatusChange", beneficiaryFutureStatusChangeRouter );
+crudRouter.use("/institutionMedicalService", institutionMedicalServiceRouter );
+crudRouter.use("/fingerprintBiometric", fingerprintBiometricRouter );
+crudRouter.use("/iDCard", iDCardRouter );
+crudRouter.use("/faceBiometric", faceBiometricRouter );
+crudRouter.use("/voiceBiometric", voiceBiometricRouter );
+crudRouter.use("/insurancePolicy", insurancePolicyRouter );
+crudRouter.use("/benefitPackage", benefitPackageRouter );
+crudRouter.use("/insurancePolicyMedicalCenter", insurancePolicyMedicalCenterRouter );
+crudRouter.use("/medicalCenter", medicalCenterRouter );
+crudRouter.use("/benefitPackageMedicalServiceCategory", benefitPackageMedicalServiceCategoryRouter );
+crudRouter.use("/medicalServiceCategory", medicalServiceCategoryRouter );
+crudRouter.use("/medicalService", medicalServiceRouter );
+crudRouter.use("/entryRecord", entryRecordRouter );
+crudRouter.use("/beneficiaryService", beneficiaryServiceRouter );
+crudRouter.use("/reviewStatus", reviewStatusRouter );
+crudRouter.use("/beneficiaryBalance", beneficiaryBalanceRouter );
+crudRouter.use("/diagnosisAttachment", diagnosisAttachmentRouter );
+crudRouter.use("/labReportAttachment", labReportAttachmentRouter );
+crudRouter.use("/prescriptionAttachment", prescriptionAttachmentRouter );
+crudRouter.use("/reviewStatusEnum", reviewStatusEnumRouter );
+crudRouter.use("/genderEnum", genderEnumRouter );
+crudRouter.use("/currencyEnum", currencyEnumRouter );
+crudRouter.use("/relationshipEnum", relationshipEnumRouter );
+crudRouter.use("/tenantTypeEnum", tenantTypeEnumRouter );
+crudRouter.use("/roleEnum", roleEnumRouter );
+crudRouter.use("/deviceTypeEnum", deviceTypeEnumRouter );
+crudRouter.use("/fingerTypeEnum", fingerTypeEnumRouter );
+crudRouter.use("/cityEnum", cityEnumRouter );
+crudRouter.use("/countryEnum", countryEnumRouter );
