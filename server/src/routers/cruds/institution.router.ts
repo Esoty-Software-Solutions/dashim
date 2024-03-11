@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { Institution } from "@models/institution.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const institutionRouter = Router();
 
@@ -7,23 +8,35 @@ institutionRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 institutionRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.aggregate(input));
 });
 institutionRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.findFirst(input));
 });
 institutionRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.findMany(input));
 });
 institutionRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    Institution.findMany(req, input),
-    Institution.count(req, { where: input?.where }),
-    Institution.count(req),
+    unGuardedPrisma.institution.findMany(input),
+    unGuardedPrisma.institution.count({ where: input?.where }),
+    unGuardedPrisma.institution.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ institutionRouter.get("/tableQuery", async (req, res) => {
   });
 });
 institutionRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.findUnique(input));
 });
 institutionRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await Institution.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.findUniqueOrThrow(input));
 });
 institutionRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.groupBy(input));
 });
 institutionRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await Institution.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institution.count(input));
 });
 institutionRouter.post("/createMany", async (req, res) => {
-  res.json(await Institution.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.createMany(input));
 });
-institutionRouter.post("/createOne", async (req, res) => {
-  res.json(await Institution.createOne(req, req.body, { bypassMiddleware: true }));
+institutionRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.create(input));
 });
 institutionRouter.post("/deleteMany", async (req, res) => {
-  res.json(await Institution.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.deleteMany(input));
 });
-institutionRouter.post("/deleteOne", async (req, res) => {
-  res.json(await Institution.deleteOne(req, req.body, { bypassMiddleware: true }));
+institutionRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.delete(input));
 });
 institutionRouter.post("/updateMany", async (req, res) => {
-  res.json(await Institution.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.updateMany(input));
 });
-institutionRouter.post("/updateOne", async (req, res) => {
-  res.json(await Institution.updateOne(req, req.body, { bypassMiddleware: true }));
+institutionRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.update(input));
 });
 institutionRouter.post("/upsert", async (req, res) => {
-  res.json(await Institution.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institution.upsert(input));
 });

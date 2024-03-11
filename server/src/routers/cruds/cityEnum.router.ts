@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { CityEnum } from "@models/cityEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const cityEnumRouter = Router();
 
@@ -7,23 +8,35 @@ cityEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 cityEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.aggregate(input));
 });
 cityEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.findFirst(input));
 });
 cityEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.findMany(input));
 });
 cityEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    CityEnum.findMany(req, input),
-    CityEnum.count(req, { where: input?.where }),
-    CityEnum.count(req),
+    unGuardedPrisma.cityEnum.findMany(input),
+    unGuardedPrisma.cityEnum.count({ where: input?.where }),
+    unGuardedPrisma.cityEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ cityEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 cityEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.findUnique(input));
 });
 cityEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await CityEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.findUniqueOrThrow(input));
 });
 cityEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.groupBy(input));
 });
 cityEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CityEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.cityEnum.count(input));
 });
 cityEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await CityEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.createMany(input));
 });
-cityEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await CityEnum.createOne(req, req.body, { bypassMiddleware: true }));
+cityEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.create(input));
 });
 cityEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await CityEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.deleteMany(input));
 });
-cityEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await CityEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+cityEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.delete(input));
 });
 cityEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await CityEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.updateMany(input));
 });
-cityEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await CityEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+cityEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.update(input));
 });
 cityEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await CityEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.cityEnum.upsert(input));
 });

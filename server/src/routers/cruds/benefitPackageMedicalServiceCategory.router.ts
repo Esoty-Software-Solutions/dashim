@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { BenefitPackageMedicalServiceCategory } from "@models/benefitPackageMedicalServiceCategory.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const benefitPackageMedicalServiceCategoryRouter = Router();
 
@@ -7,23 +8,35 @@ benefitPackageMedicalServiceCategoryRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 benefitPackageMedicalServiceCategoryRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.aggregate(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.findFirst(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.findMany(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    BenefitPackageMedicalServiceCategory.findMany(req, input),
-    BenefitPackageMedicalServiceCategory.count(req, { where: input?.where }),
-    BenefitPackageMedicalServiceCategory.count(req),
+    unGuardedPrisma.benefitPackageMedicalServiceCategory.findMany(input),
+    unGuardedPrisma.benefitPackageMedicalServiceCategory.count({ where: input?.where }),
+    unGuardedPrisma.benefitPackageMedicalServiceCategory.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ benefitPackageMedicalServiceCategoryRouter.get("/tableQuery", async (req, res) =
   });
 });
 benefitPackageMedicalServiceCategoryRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.findUnique(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await BenefitPackageMedicalServiceCategory.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.findUniqueOrThrow(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.groupBy(input));
 });
 benefitPackageMedicalServiceCategoryRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BenefitPackageMedicalServiceCategory.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.count(input));
 });
 benefitPackageMedicalServiceCategoryRouter.post("/createMany", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.createMany(input));
 });
-benefitPackageMedicalServiceCategoryRouter.post("/createOne", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.createOne(req, req.body, { bypassMiddleware: true }));
+benefitPackageMedicalServiceCategoryRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.create(input));
 });
 benefitPackageMedicalServiceCategoryRouter.post("/deleteMany", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.deleteMany(input));
 });
-benefitPackageMedicalServiceCategoryRouter.post("/deleteOne", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.deleteOne(req, req.body, { bypassMiddleware: true }));
+benefitPackageMedicalServiceCategoryRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.delete(input));
 });
 benefitPackageMedicalServiceCategoryRouter.post("/updateMany", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.updateMany(input));
 });
-benefitPackageMedicalServiceCategoryRouter.post("/updateOne", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.updateOne(req, req.body, { bypassMiddleware: true }));
+benefitPackageMedicalServiceCategoryRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.update(input));
 });
 benefitPackageMedicalServiceCategoryRouter.post("/upsert", async (req, res) => {
-  res.json(await BenefitPackageMedicalServiceCategory.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.benefitPackageMedicalServiceCategory.upsert(input));
 });

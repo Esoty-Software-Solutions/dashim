@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { PrescriptionAttachment } from "@models/prescriptionAttachment.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const prescriptionAttachmentRouter = Router();
 
@@ -7,23 +8,35 @@ prescriptionAttachmentRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 prescriptionAttachmentRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.aggregate(input));
 });
 prescriptionAttachmentRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.findFirst(input));
 });
 prescriptionAttachmentRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.findMany(input));
 });
 prescriptionAttachmentRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    PrescriptionAttachment.findMany(req, input),
-    PrescriptionAttachment.count(req, { where: input?.where }),
-    PrescriptionAttachment.count(req),
+    unGuardedPrisma.prescriptionAttachment.findMany(input),
+    unGuardedPrisma.prescriptionAttachment.count({ where: input?.where }),
+    unGuardedPrisma.prescriptionAttachment.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ prescriptionAttachmentRouter.get("/tableQuery", async (req, res) => {
   });
 });
 prescriptionAttachmentRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.findUnique(input));
 });
 prescriptionAttachmentRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await PrescriptionAttachment.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.findUniqueOrThrow(input));
 });
 prescriptionAttachmentRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.groupBy(input));
 });
 prescriptionAttachmentRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await PrescriptionAttachment.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.prescriptionAttachment.count(input));
 });
 prescriptionAttachmentRouter.post("/createMany", async (req, res) => {
-  res.json(await PrescriptionAttachment.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.createMany(input));
 });
-prescriptionAttachmentRouter.post("/createOne", async (req, res) => {
-  res.json(await PrescriptionAttachment.createOne(req, req.body, { bypassMiddleware: true }));
+prescriptionAttachmentRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.create(input));
 });
 prescriptionAttachmentRouter.post("/deleteMany", async (req, res) => {
-  res.json(await PrescriptionAttachment.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.deleteMany(input));
 });
-prescriptionAttachmentRouter.post("/deleteOne", async (req, res) => {
-  res.json(await PrescriptionAttachment.deleteOne(req, req.body, { bypassMiddleware: true }));
+prescriptionAttachmentRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.delete(input));
 });
 prescriptionAttachmentRouter.post("/updateMany", async (req, res) => {
-  res.json(await PrescriptionAttachment.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.updateMany(input));
 });
-prescriptionAttachmentRouter.post("/updateOne", async (req, res) => {
-  res.json(await PrescriptionAttachment.updateOne(req, req.body, { bypassMiddleware: true }));
+prescriptionAttachmentRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.update(input));
 });
 prescriptionAttachmentRouter.post("/upsert", async (req, res) => {
-  res.json(await PrescriptionAttachment.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.prescriptionAttachment.upsert(input));
 });

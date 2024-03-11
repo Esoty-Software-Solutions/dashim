@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { TenantTypeEnum } from "@models/tenantTypeEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const tenantTypeEnumRouter = Router();
 
@@ -7,23 +8,35 @@ tenantTypeEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 tenantTypeEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.aggregate(input));
 });
 tenantTypeEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.findFirst(input));
 });
 tenantTypeEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.findMany(input));
 });
 tenantTypeEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    TenantTypeEnum.findMany(req, input),
-    TenantTypeEnum.count(req, { where: input?.where }),
-    TenantTypeEnum.count(req),
+    unGuardedPrisma.tenantTypeEnum.findMany(input),
+    unGuardedPrisma.tenantTypeEnum.count({ where: input?.where }),
+    unGuardedPrisma.tenantTypeEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ tenantTypeEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 tenantTypeEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.findUnique(input));
 });
 tenantTypeEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await TenantTypeEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.findUniqueOrThrow(input));
 });
 tenantTypeEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.groupBy(input));
 });
 tenantTypeEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantTypeEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantTypeEnum.count(input));
 });
 tenantTypeEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await TenantTypeEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.createMany(input));
 });
-tenantTypeEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await TenantTypeEnum.createOne(req, req.body, { bypassMiddleware: true }));
+tenantTypeEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.create(input));
 });
 tenantTypeEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await TenantTypeEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.deleteMany(input));
 });
-tenantTypeEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await TenantTypeEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+tenantTypeEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.delete(input));
 });
 tenantTypeEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await TenantTypeEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.updateMany(input));
 });
-tenantTypeEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await TenantTypeEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+tenantTypeEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.update(input));
 });
 tenantTypeEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await TenantTypeEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantTypeEnum.upsert(input));
 });

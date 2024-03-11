@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { RelationshipEnum } from "@models/relationshipEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const relationshipEnumRouter = Router();
 
@@ -7,23 +8,35 @@ relationshipEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 relationshipEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.aggregate(input));
 });
 relationshipEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.findFirst(input));
 });
 relationshipEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.findMany(input));
 });
 relationshipEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    RelationshipEnum.findMany(req, input),
-    RelationshipEnum.count(req, { where: input?.where }),
-    RelationshipEnum.count(req),
+    unGuardedPrisma.relationshipEnum.findMany(input),
+    unGuardedPrisma.relationshipEnum.count({ where: input?.where }),
+    unGuardedPrisma.relationshipEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ relationshipEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 relationshipEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.findUnique(input));
 });
 relationshipEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await RelationshipEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.findUniqueOrThrow(input));
 });
 relationshipEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.groupBy(input));
 });
 relationshipEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await RelationshipEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.relationshipEnum.count(input));
 });
 relationshipEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await RelationshipEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.createMany(input));
 });
-relationshipEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await RelationshipEnum.createOne(req, req.body, { bypassMiddleware: true }));
+relationshipEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.create(input));
 });
 relationshipEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await RelationshipEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.deleteMany(input));
 });
-relationshipEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await RelationshipEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+relationshipEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.delete(input));
 });
 relationshipEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await RelationshipEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.updateMany(input));
 });
-relationshipEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await RelationshipEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+relationshipEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.update(input));
 });
 relationshipEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await RelationshipEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.relationshipEnum.upsert(input));
 });

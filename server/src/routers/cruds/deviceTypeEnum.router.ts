@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { DeviceTypeEnum } from "@models/deviceTypeEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const deviceTypeEnumRouter = Router();
 
@@ -7,23 +8,35 @@ deviceTypeEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 deviceTypeEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.aggregate(input));
 });
 deviceTypeEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.findFirst(input));
 });
 deviceTypeEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.findMany(input));
 });
 deviceTypeEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    DeviceTypeEnum.findMany(req, input),
-    DeviceTypeEnum.count(req, { where: input?.where }),
-    DeviceTypeEnum.count(req),
+    unGuardedPrisma.deviceTypeEnum.findMany(input),
+    unGuardedPrisma.deviceTypeEnum.count({ where: input?.where }),
+    unGuardedPrisma.deviceTypeEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ deviceTypeEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 deviceTypeEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.findUnique(input));
 });
 deviceTypeEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await DeviceTypeEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.findUniqueOrThrow(input));
 });
 deviceTypeEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.groupBy(input));
 });
 deviceTypeEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceTypeEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceTypeEnum.count(input));
 });
 deviceTypeEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await DeviceTypeEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.createMany(input));
 });
-deviceTypeEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await DeviceTypeEnum.createOne(req, req.body, { bypassMiddleware: true }));
+deviceTypeEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.create(input));
 });
 deviceTypeEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await DeviceTypeEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.deleteMany(input));
 });
-deviceTypeEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await DeviceTypeEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+deviceTypeEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.delete(input));
 });
 deviceTypeEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await DeviceTypeEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.updateMany(input));
 });
-deviceTypeEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await DeviceTypeEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+deviceTypeEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.update(input));
 });
 deviceTypeEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await DeviceTypeEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceTypeEnum.upsert(input));
 });

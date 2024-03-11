@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { FingerprintBiometric } from "@models/fingerprintBiometric.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const fingerprintBiometricRouter = Router();
 
@@ -7,23 +8,35 @@ fingerprintBiometricRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 fingerprintBiometricRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.aggregate(input));
 });
 fingerprintBiometricRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.findFirst(input));
 });
 fingerprintBiometricRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.findMany(input));
 });
 fingerprintBiometricRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    FingerprintBiometric.findMany(req, input),
-    FingerprintBiometric.count(req, { where: input?.where }),
-    FingerprintBiometric.count(req),
+    unGuardedPrisma.fingerprintBiometric.findMany(input),
+    unGuardedPrisma.fingerprintBiometric.count({ where: input?.where }),
+    unGuardedPrisma.fingerprintBiometric.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ fingerprintBiometricRouter.get("/tableQuery", async (req, res) => {
   });
 });
 fingerprintBiometricRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.findUnique(input));
 });
 fingerprintBiometricRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await FingerprintBiometric.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.findUniqueOrThrow(input));
 });
 fingerprintBiometricRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.groupBy(input));
 });
 fingerprintBiometricRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerprintBiometric.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerprintBiometric.count(input));
 });
 fingerprintBiometricRouter.post("/createMany", async (req, res) => {
-  res.json(await FingerprintBiometric.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.createMany(input));
 });
-fingerprintBiometricRouter.post("/createOne", async (req, res) => {
-  res.json(await FingerprintBiometric.createOne(req, req.body, { bypassMiddleware: true }));
+fingerprintBiometricRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.create(input));
 });
 fingerprintBiometricRouter.post("/deleteMany", async (req, res) => {
-  res.json(await FingerprintBiometric.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.deleteMany(input));
 });
-fingerprintBiometricRouter.post("/deleteOne", async (req, res) => {
-  res.json(await FingerprintBiometric.deleteOne(req, req.body, { bypassMiddleware: true }));
+fingerprintBiometricRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.delete(input));
 });
 fingerprintBiometricRouter.post("/updateMany", async (req, res) => {
-  res.json(await FingerprintBiometric.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.updateMany(input));
 });
-fingerprintBiometricRouter.post("/updateOne", async (req, res) => {
-  res.json(await FingerprintBiometric.updateOne(req, req.body, { bypassMiddleware: true }));
+fingerprintBiometricRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.update(input));
 });
 fingerprintBiometricRouter.post("/upsert", async (req, res) => {
-  res.json(await FingerprintBiometric.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerprintBiometric.upsert(input));
 });

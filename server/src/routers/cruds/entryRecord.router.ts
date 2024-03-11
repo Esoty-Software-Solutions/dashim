@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { EntryRecord } from "@models/entryRecord.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const entryRecordRouter = Router();
 
@@ -7,23 +8,35 @@ entryRecordRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 entryRecordRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.aggregate(input));
 });
 entryRecordRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.findFirst(input));
 });
 entryRecordRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.findMany(input));
 });
 entryRecordRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    EntryRecord.findMany(req, input),
-    EntryRecord.count(req, { where: input?.where }),
-    EntryRecord.count(req),
+    unGuardedPrisma.entryRecord.findMany(input),
+    unGuardedPrisma.entryRecord.count({ where: input?.where }),
+    unGuardedPrisma.entryRecord.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ entryRecordRouter.get("/tableQuery", async (req, res) => {
   });
 });
 entryRecordRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.findUnique(input));
 });
 entryRecordRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await EntryRecord.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.findUniqueOrThrow(input));
 });
 entryRecordRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.groupBy(input));
 });
 entryRecordRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await EntryRecord.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.entryRecord.count(input));
 });
 entryRecordRouter.post("/createMany", async (req, res) => {
-  res.json(await EntryRecord.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.createMany(input));
 });
-entryRecordRouter.post("/createOne", async (req, res) => {
-  res.json(await EntryRecord.createOne(req, req.body, { bypassMiddleware: true }));
+entryRecordRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.create(input));
 });
 entryRecordRouter.post("/deleteMany", async (req, res) => {
-  res.json(await EntryRecord.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.deleteMany(input));
 });
-entryRecordRouter.post("/deleteOne", async (req, res) => {
-  res.json(await EntryRecord.deleteOne(req, req.body, { bypassMiddleware: true }));
+entryRecordRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.delete(input));
 });
 entryRecordRouter.post("/updateMany", async (req, res) => {
-  res.json(await EntryRecord.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.updateMany(input));
 });
-entryRecordRouter.post("/updateOne", async (req, res) => {
-  res.json(await EntryRecord.updateOne(req, req.body, { bypassMiddleware: true }));
+entryRecordRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.update(input));
 });
 entryRecordRouter.post("/upsert", async (req, res) => {
-  res.json(await EntryRecord.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.entryRecord.upsert(input));
 });

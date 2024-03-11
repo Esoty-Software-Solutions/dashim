@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { IDCard } from "@models/iDCard.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const iDCardRouter = Router();
 
@@ -7,23 +8,35 @@ iDCardRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 iDCardRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.aggregate(input));
 });
 iDCardRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.findFirst(input));
 });
 iDCardRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.findMany(input));
 });
 iDCardRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    IDCard.findMany(req, input),
-    IDCard.count(req, { where: input?.where }),
-    IDCard.count(req),
+    unGuardedPrisma.iDCard.findMany(input),
+    unGuardedPrisma.iDCard.count({ where: input?.where }),
+    unGuardedPrisma.iDCard.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ iDCardRouter.get("/tableQuery", async (req, res) => {
   });
 });
 iDCardRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.findUnique(input));
 });
 iDCardRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await IDCard.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.findUniqueOrThrow(input));
 });
 iDCardRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.groupBy(input));
 });
 iDCardRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await IDCard.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.iDCard.count(input));
 });
 iDCardRouter.post("/createMany", async (req, res) => {
-  res.json(await IDCard.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.createMany(input));
 });
-iDCardRouter.post("/createOne", async (req, res) => {
-  res.json(await IDCard.createOne(req, req.body, { bypassMiddleware: true }));
+iDCardRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.create(input));
 });
 iDCardRouter.post("/deleteMany", async (req, res) => {
-  res.json(await IDCard.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.deleteMany(input));
 });
-iDCardRouter.post("/deleteOne", async (req, res) => {
-  res.json(await IDCard.deleteOne(req, req.body, { bypassMiddleware: true }));
+iDCardRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.delete(input));
 });
 iDCardRouter.post("/updateMany", async (req, res) => {
-  res.json(await IDCard.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.updateMany(input));
 });
-iDCardRouter.post("/updateOne", async (req, res) => {
-  res.json(await IDCard.updateOne(req, req.body, { bypassMiddleware: true }));
+iDCardRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.update(input));
 });
 iDCardRouter.post("/upsert", async (req, res) => {
-  res.json(await IDCard.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.iDCard.upsert(input));
 });

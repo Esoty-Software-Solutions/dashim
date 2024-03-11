@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { InsurancePolicy } from "@models/insurancePolicy.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const insurancePolicyRouter = Router();
 
@@ -7,23 +8,35 @@ insurancePolicyRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 insurancePolicyRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.aggregate(input));
 });
 insurancePolicyRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.findFirst(input));
 });
 insurancePolicyRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.findMany(input));
 });
 insurancePolicyRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    InsurancePolicy.findMany(req, input),
-    InsurancePolicy.count(req, { where: input?.where }),
-    InsurancePolicy.count(req),
+    unGuardedPrisma.insurancePolicy.findMany(input),
+    unGuardedPrisma.insurancePolicy.count({ where: input?.where }),
+    unGuardedPrisma.insurancePolicy.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ insurancePolicyRouter.get("/tableQuery", async (req, res) => {
   });
 });
 insurancePolicyRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.findUnique(input));
 });
 insurancePolicyRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await InsurancePolicy.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.findUniqueOrThrow(input));
 });
 insurancePolicyRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.groupBy(input));
 });
 insurancePolicyRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InsurancePolicy.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.insurancePolicy.count(input));
 });
 insurancePolicyRouter.post("/createMany", async (req, res) => {
-  res.json(await InsurancePolicy.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.createMany(input));
 });
-insurancePolicyRouter.post("/createOne", async (req, res) => {
-  res.json(await InsurancePolicy.createOne(req, req.body, { bypassMiddleware: true }));
+insurancePolicyRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.create(input));
 });
 insurancePolicyRouter.post("/deleteMany", async (req, res) => {
-  res.json(await InsurancePolicy.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.deleteMany(input));
 });
-insurancePolicyRouter.post("/deleteOne", async (req, res) => {
-  res.json(await InsurancePolicy.deleteOne(req, req.body, { bypassMiddleware: true }));
+insurancePolicyRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.delete(input));
 });
 insurancePolicyRouter.post("/updateMany", async (req, res) => {
-  res.json(await InsurancePolicy.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.updateMany(input));
 });
-insurancePolicyRouter.post("/updateOne", async (req, res) => {
-  res.json(await InsurancePolicy.updateOne(req, req.body, { bypassMiddleware: true }));
+insurancePolicyRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.update(input));
 });
 insurancePolicyRouter.post("/upsert", async (req, res) => {
-  res.json(await InsurancePolicy.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.insurancePolicy.upsert(input));
 });

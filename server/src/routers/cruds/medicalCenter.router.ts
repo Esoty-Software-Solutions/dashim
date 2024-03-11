@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { MedicalCenter } from "@models/medicalCenter.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const medicalCenterRouter = Router();
 
@@ -7,23 +8,35 @@ medicalCenterRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 medicalCenterRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.aggregate(input));
 });
 medicalCenterRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.findFirst(input));
 });
 medicalCenterRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.findMany(input));
 });
 medicalCenterRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    MedicalCenter.findMany(req, input),
-    MedicalCenter.count(req, { where: input?.where }),
-    MedicalCenter.count(req),
+    unGuardedPrisma.medicalCenter.findMany(input),
+    unGuardedPrisma.medicalCenter.count({ where: input?.where }),
+    unGuardedPrisma.medicalCenter.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ medicalCenterRouter.get("/tableQuery", async (req, res) => {
   });
 });
 medicalCenterRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.findUnique(input));
 });
 medicalCenterRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await MedicalCenter.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.findUniqueOrThrow(input));
 });
 medicalCenterRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.groupBy(input));
 });
 medicalCenterRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await MedicalCenter.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalCenter.count(input));
 });
 medicalCenterRouter.post("/createMany", async (req, res) => {
-  res.json(await MedicalCenter.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.createMany(input));
 });
-medicalCenterRouter.post("/createOne", async (req, res) => {
-  res.json(await MedicalCenter.createOne(req, req.body, { bypassMiddleware: true }));
+medicalCenterRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.create(input));
 });
 medicalCenterRouter.post("/deleteMany", async (req, res) => {
-  res.json(await MedicalCenter.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.deleteMany(input));
 });
-medicalCenterRouter.post("/deleteOne", async (req, res) => {
-  res.json(await MedicalCenter.deleteOne(req, req.body, { bypassMiddleware: true }));
+medicalCenterRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.delete(input));
 });
 medicalCenterRouter.post("/updateMany", async (req, res) => {
-  res.json(await MedicalCenter.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.updateMany(input));
 });
-medicalCenterRouter.post("/updateOne", async (req, res) => {
-  res.json(await MedicalCenter.updateOne(req, req.body, { bypassMiddleware: true }));
+medicalCenterRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.update(input));
 });
 medicalCenterRouter.post("/upsert", async (req, res) => {
-  res.json(await MedicalCenter.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalCenter.upsert(input));
 });

@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { BeneficiaryService } from "@models/beneficiaryService.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const beneficiaryServiceRouter = Router();
 
@@ -7,23 +8,35 @@ beneficiaryServiceRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 beneficiaryServiceRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.aggregate(input));
 });
 beneficiaryServiceRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.findFirst(input));
 });
 beneficiaryServiceRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.findMany(input));
 });
 beneficiaryServiceRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    BeneficiaryService.findMany(req, input),
-    BeneficiaryService.count(req, { where: input?.where }),
-    BeneficiaryService.count(req),
+    unGuardedPrisma.beneficiaryService.findMany(input),
+    unGuardedPrisma.beneficiaryService.count({ where: input?.where }),
+    unGuardedPrisma.beneficiaryService.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ beneficiaryServiceRouter.get("/tableQuery", async (req, res) => {
   });
 });
 beneficiaryServiceRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.findUnique(input));
 });
 beneficiaryServiceRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await BeneficiaryService.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.findUniqueOrThrow(input));
 });
 beneficiaryServiceRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.groupBy(input));
 });
 beneficiaryServiceRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryService.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryService.count(input));
 });
 beneficiaryServiceRouter.post("/createMany", async (req, res) => {
-  res.json(await BeneficiaryService.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.createMany(input));
 });
-beneficiaryServiceRouter.post("/createOne", async (req, res) => {
-  res.json(await BeneficiaryService.createOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryServiceRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.create(input));
 });
 beneficiaryServiceRouter.post("/deleteMany", async (req, res) => {
-  res.json(await BeneficiaryService.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.deleteMany(input));
 });
-beneficiaryServiceRouter.post("/deleteOne", async (req, res) => {
-  res.json(await BeneficiaryService.deleteOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryServiceRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.delete(input));
 });
 beneficiaryServiceRouter.post("/updateMany", async (req, res) => {
-  res.json(await BeneficiaryService.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.updateMany(input));
 });
-beneficiaryServiceRouter.post("/updateOne", async (req, res) => {
-  res.json(await BeneficiaryService.updateOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryServiceRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.update(input));
 });
 beneficiaryServiceRouter.post("/upsert", async (req, res) => {
-  res.json(await BeneficiaryService.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryService.upsert(input));
 });

@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { FingerTypeEnum } from "@models/fingerTypeEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const fingerTypeEnumRouter = Router();
 
@@ -7,23 +8,35 @@ fingerTypeEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 fingerTypeEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.aggregate(input));
 });
 fingerTypeEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.findFirst(input));
 });
 fingerTypeEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.findMany(input));
 });
 fingerTypeEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    FingerTypeEnum.findMany(req, input),
-    FingerTypeEnum.count(req, { where: input?.where }),
-    FingerTypeEnum.count(req),
+    unGuardedPrisma.fingerTypeEnum.findMany(input),
+    unGuardedPrisma.fingerTypeEnum.count({ where: input?.where }),
+    unGuardedPrisma.fingerTypeEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ fingerTypeEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 fingerTypeEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.findUnique(input));
 });
 fingerTypeEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await FingerTypeEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.findUniqueOrThrow(input));
 });
 fingerTypeEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.groupBy(input));
 });
 fingerTypeEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FingerTypeEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.fingerTypeEnum.count(input));
 });
 fingerTypeEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await FingerTypeEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.createMany(input));
 });
-fingerTypeEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await FingerTypeEnum.createOne(req, req.body, { bypassMiddleware: true }));
+fingerTypeEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.create(input));
 });
 fingerTypeEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await FingerTypeEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.deleteMany(input));
 });
-fingerTypeEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await FingerTypeEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+fingerTypeEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.delete(input));
 });
 fingerTypeEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await FingerTypeEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.updateMany(input));
 });
-fingerTypeEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await FingerTypeEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+fingerTypeEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.update(input));
 });
 fingerTypeEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await FingerTypeEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.fingerTypeEnum.upsert(input));
 });

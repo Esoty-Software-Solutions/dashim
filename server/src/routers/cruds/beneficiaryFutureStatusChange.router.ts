@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { BeneficiaryFutureStatusChange } from "@models/beneficiaryFutureStatusChange.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const beneficiaryFutureStatusChangeRouter = Router();
 
@@ -7,23 +8,35 @@ beneficiaryFutureStatusChangeRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 beneficiaryFutureStatusChangeRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.aggregate(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.findFirst(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.findMany(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    BeneficiaryFutureStatusChange.findMany(req, input),
-    BeneficiaryFutureStatusChange.count(req, { where: input?.where }),
-    BeneficiaryFutureStatusChange.count(req),
+    unGuardedPrisma.beneficiaryFutureStatusChange.findMany(input),
+    unGuardedPrisma.beneficiaryFutureStatusChange.count({ where: input?.where }),
+    unGuardedPrisma.beneficiaryFutureStatusChange.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ beneficiaryFutureStatusChangeRouter.get("/tableQuery", async (req, res) => {
   });
 });
 beneficiaryFutureStatusChangeRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.findUnique(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await BeneficiaryFutureStatusChange.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.findUniqueOrThrow(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.groupBy(input));
 });
 beneficiaryFutureStatusChangeRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await BeneficiaryFutureStatusChange.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.count(input));
 });
 beneficiaryFutureStatusChangeRouter.post("/createMany", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.createMany(input));
 });
-beneficiaryFutureStatusChangeRouter.post("/createOne", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.createOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryFutureStatusChangeRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.create(input));
 });
 beneficiaryFutureStatusChangeRouter.post("/deleteMany", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.deleteMany(input));
 });
-beneficiaryFutureStatusChangeRouter.post("/deleteOne", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.deleteOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryFutureStatusChangeRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.delete(input));
 });
 beneficiaryFutureStatusChangeRouter.post("/updateMany", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.updateMany(input));
 });
-beneficiaryFutureStatusChangeRouter.post("/updateOne", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.updateOne(req, req.body, { bypassMiddleware: true }));
+beneficiaryFutureStatusChangeRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.update(input));
 });
 beneficiaryFutureStatusChangeRouter.post("/upsert", async (req, res) => {
-  res.json(await BeneficiaryFutureStatusChange.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiaryFutureStatusChange.upsert(input));
 });

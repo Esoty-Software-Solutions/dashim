@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { CurrencyEnum } from "@models/currencyEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const currencyEnumRouter = Router();
 
@@ -7,23 +8,35 @@ currencyEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 currencyEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.aggregate(input));
 });
 currencyEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.findFirst(input));
 });
 currencyEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.findMany(input));
 });
 currencyEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    CurrencyEnum.findMany(req, input),
-    CurrencyEnum.count(req, { where: input?.where }),
-    CurrencyEnum.count(req),
+    unGuardedPrisma.currencyEnum.findMany(input),
+    unGuardedPrisma.currencyEnum.count({ where: input?.where }),
+    unGuardedPrisma.currencyEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ currencyEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 currencyEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.findUnique(input));
 });
 currencyEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await CurrencyEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.findUniqueOrThrow(input));
 });
 currencyEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.groupBy(input));
 });
 currencyEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CurrencyEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.currencyEnum.count(input));
 });
 currencyEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await CurrencyEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.createMany(input));
 });
-currencyEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await CurrencyEnum.createOne(req, req.body, { bypassMiddleware: true }));
+currencyEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.create(input));
 });
 currencyEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await CurrencyEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.deleteMany(input));
 });
-currencyEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await CurrencyEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+currencyEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.delete(input));
 });
 currencyEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await CurrencyEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.updateMany(input));
 });
-currencyEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await CurrencyEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+currencyEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.update(input));
 });
 currencyEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await CurrencyEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.currencyEnum.upsert(input));
 });

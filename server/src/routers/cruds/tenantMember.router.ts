@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { TenantMember } from "@models/tenantMember.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const tenantMemberRouter = Router();
 
@@ -7,23 +8,35 @@ tenantMemberRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 tenantMemberRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.aggregate(input));
 });
 tenantMemberRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findFirst(input));
 });
 tenantMemberRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findMany(input));
 });
 tenantMemberRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    TenantMember.findMany(req, input),
-    TenantMember.count(req, { where: input?.where }),
-    TenantMember.count(req),
+    unGuardedPrisma.tenantMember.findMany(input),
+    unGuardedPrisma.tenantMember.count({ where: input?.where }),
+    unGuardedPrisma.tenantMember.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ tenantMemberRouter.get("/tableQuery", async (req, res) => {
   });
 });
 tenantMemberRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findUnique(input));
 });
 tenantMemberRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await TenantMember.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findUniqueOrThrow(input));
 });
 tenantMemberRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.groupBy(input));
 });
 tenantMemberRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await TenantMember.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.count(input));
 });
 tenantMemberRouter.post("/createMany", async (req, res) => {
-  res.json(await TenantMember.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.createMany(input));
 });
-tenantMemberRouter.post("/createOne", async (req, res) => {
-  res.json(await TenantMember.createOne(req, req.body, { bypassMiddleware: true }));
+tenantMemberRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.create(input));
 });
 tenantMemberRouter.post("/deleteMany", async (req, res) => {
-  res.json(await TenantMember.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.deleteMany(input));
 });
-tenantMemberRouter.post("/deleteOne", async (req, res) => {
-  res.json(await TenantMember.deleteOne(req, req.body, { bypassMiddleware: true }));
+tenantMemberRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.delete(input));
 });
 tenantMemberRouter.post("/updateMany", async (req, res) => {
-  res.json(await TenantMember.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.updateMany(input));
 });
-tenantMemberRouter.post("/updateOne", async (req, res) => {
-  res.json(await TenantMember.updateOne(req, req.body, { bypassMiddleware: true }));
+tenantMemberRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.update(input));
 });
 tenantMemberRouter.post("/upsert", async (req, res) => {
-  res.json(await TenantMember.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.upsert(input));
 });

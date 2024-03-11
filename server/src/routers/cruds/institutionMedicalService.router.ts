@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { InstitutionMedicalService } from "@models/institutionMedicalService.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const institutionMedicalServiceRouter = Router();
 
@@ -7,23 +8,35 @@ institutionMedicalServiceRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 institutionMedicalServiceRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.aggregate(input));
 });
 institutionMedicalServiceRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.findFirst(input));
 });
 institutionMedicalServiceRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.findMany(input));
 });
 institutionMedicalServiceRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    InstitutionMedicalService.findMany(req, input),
-    InstitutionMedicalService.count(req, { where: input?.where }),
-    InstitutionMedicalService.count(req),
+    unGuardedPrisma.institutionMedicalService.findMany(input),
+    unGuardedPrisma.institutionMedicalService.count({ where: input?.where }),
+    unGuardedPrisma.institutionMedicalService.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ institutionMedicalServiceRouter.get("/tableQuery", async (req, res) => {
   });
 });
 institutionMedicalServiceRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.findUnique(input));
 });
 institutionMedicalServiceRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await InstitutionMedicalService.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.findUniqueOrThrow(input));
 });
 institutionMedicalServiceRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.groupBy(input));
 });
 institutionMedicalServiceRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await InstitutionMedicalService.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.institutionMedicalService.count(input));
 });
 institutionMedicalServiceRouter.post("/createMany", async (req, res) => {
-  res.json(await InstitutionMedicalService.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.createMany(input));
 });
-institutionMedicalServiceRouter.post("/createOne", async (req, res) => {
-  res.json(await InstitutionMedicalService.createOne(req, req.body, { bypassMiddleware: true }));
+institutionMedicalServiceRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.create(input));
 });
 institutionMedicalServiceRouter.post("/deleteMany", async (req, res) => {
-  res.json(await InstitutionMedicalService.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.deleteMany(input));
 });
-institutionMedicalServiceRouter.post("/deleteOne", async (req, res) => {
-  res.json(await InstitutionMedicalService.deleteOne(req, req.body, { bypassMiddleware: true }));
+institutionMedicalServiceRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.delete(input));
 });
 institutionMedicalServiceRouter.post("/updateMany", async (req, res) => {
-  res.json(await InstitutionMedicalService.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.updateMany(input));
 });
-institutionMedicalServiceRouter.post("/updateOne", async (req, res) => {
-  res.json(await InstitutionMedicalService.updateOne(req, req.body, { bypassMiddleware: true }));
+institutionMedicalServiceRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.update(input));
 });
 institutionMedicalServiceRouter.post("/upsert", async (req, res) => {
-  res.json(await InstitutionMedicalService.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.institutionMedicalService.upsert(input));
 });

@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { DiagnosisAttachment } from "@models/diagnosisAttachment.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const diagnosisAttachmentRouter = Router();
 
@@ -7,23 +8,35 @@ diagnosisAttachmentRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 diagnosisAttachmentRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.aggregate(input));
 });
 diagnosisAttachmentRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findFirst(input));
 });
 diagnosisAttachmentRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findMany(input));
 });
 diagnosisAttachmentRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    DiagnosisAttachment.findMany(req, input),
-    DiagnosisAttachment.count(req, { where: input?.where }),
-    DiagnosisAttachment.count(req),
+    unGuardedPrisma.diagnosisAttachment.findMany(input),
+    unGuardedPrisma.diagnosisAttachment.count({ where: input?.where }),
+    unGuardedPrisma.diagnosisAttachment.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ diagnosisAttachmentRouter.get("/tableQuery", async (req, res) => {
   });
 });
 diagnosisAttachmentRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findUnique(input));
 });
 diagnosisAttachmentRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await DiagnosisAttachment.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findUniqueOrThrow(input));
 });
 diagnosisAttachmentRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.groupBy(input));
 });
 diagnosisAttachmentRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DiagnosisAttachment.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.count(input));
 });
 diagnosisAttachmentRouter.post("/createMany", async (req, res) => {
-  res.json(await DiagnosisAttachment.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.createMany(input));
 });
-diagnosisAttachmentRouter.post("/createOne", async (req, res) => {
-  res.json(await DiagnosisAttachment.createOne(req, req.body, { bypassMiddleware: true }));
+diagnosisAttachmentRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.create(input));
 });
 diagnosisAttachmentRouter.post("/deleteMany", async (req, res) => {
-  res.json(await DiagnosisAttachment.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.deleteMany(input));
 });
-diagnosisAttachmentRouter.post("/deleteOne", async (req, res) => {
-  res.json(await DiagnosisAttachment.deleteOne(req, req.body, { bypassMiddleware: true }));
+diagnosisAttachmentRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.delete(input));
 });
 diagnosisAttachmentRouter.post("/updateMany", async (req, res) => {
-  res.json(await DiagnosisAttachment.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.updateMany(input));
 });
-diagnosisAttachmentRouter.post("/updateOne", async (req, res) => {
-  res.json(await DiagnosisAttachment.updateOne(req, req.body, { bypassMiddleware: true }));
+diagnosisAttachmentRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.update(input));
 });
 diagnosisAttachmentRouter.post("/upsert", async (req, res) => {
-  res.json(await DiagnosisAttachment.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.upsert(input));
 });

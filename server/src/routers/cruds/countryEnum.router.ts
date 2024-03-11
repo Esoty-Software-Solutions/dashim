@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { CountryEnum } from "@models/countryEnum.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const countryEnumRouter = Router();
 
@@ -7,23 +8,35 @@ countryEnumRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 countryEnumRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.aggregate(input));
 });
 countryEnumRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.findFirst(input));
 });
 countryEnumRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.findMany(input));
 });
 countryEnumRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    CountryEnum.findMany(req, input),
-    CountryEnum.count(req, { where: input?.where }),
-    CountryEnum.count(req),
+    unGuardedPrisma.countryEnum.findMany(input),
+    unGuardedPrisma.countryEnum.count({ where: input?.where }),
+    unGuardedPrisma.countryEnum.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ countryEnumRouter.get("/tableQuery", async (req, res) => {
   });
 });
 countryEnumRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.findUnique(input));
 });
 countryEnumRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await CountryEnum.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.findUniqueOrThrow(input));
 });
 countryEnumRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.groupBy(input));
 });
 countryEnumRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await CountryEnum.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.countryEnum.count(input));
 });
 countryEnumRouter.post("/createMany", async (req, res) => {
-  res.json(await CountryEnum.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.createMany(input));
 });
-countryEnumRouter.post("/createOne", async (req, res) => {
-  res.json(await CountryEnum.createOne(req, req.body, { bypassMiddleware: true }));
+countryEnumRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.create(input));
 });
 countryEnumRouter.post("/deleteMany", async (req, res) => {
-  res.json(await CountryEnum.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.deleteMany(input));
 });
-countryEnumRouter.post("/deleteOne", async (req, res) => {
-  res.json(await CountryEnum.deleteOne(req, req.body, { bypassMiddleware: true }));
+countryEnumRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.delete(input));
 });
 countryEnumRouter.post("/updateMany", async (req, res) => {
-  res.json(await CountryEnum.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.updateMany(input));
 });
-countryEnumRouter.post("/updateOne", async (req, res) => {
-  res.json(await CountryEnum.updateOne(req, req.body, { bypassMiddleware: true }));
+countryEnumRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.update(input));
 });
 countryEnumRouter.post("/upsert", async (req, res) => {
-  res.json(await CountryEnum.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.countryEnum.upsert(input));
 });

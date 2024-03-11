@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { VoiceBiometric } from "@models/voiceBiometric.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const voiceBiometricRouter = Router();
 
@@ -7,23 +8,35 @@ voiceBiometricRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 voiceBiometricRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.aggregate(input));
 });
 voiceBiometricRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findFirst(input));
 });
 voiceBiometricRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findMany(input));
 });
 voiceBiometricRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    VoiceBiometric.findMany(req, input),
-    VoiceBiometric.count(req, { where: input?.where }),
-    VoiceBiometric.count(req),
+    unGuardedPrisma.voiceBiometric.findMany(input),
+    unGuardedPrisma.voiceBiometric.count({ where: input?.where }),
+    unGuardedPrisma.voiceBiometric.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ voiceBiometricRouter.get("/tableQuery", async (req, res) => {
   });
 });
 voiceBiometricRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findUnique(input));
 });
 voiceBiometricRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await VoiceBiometric.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findUniqueOrThrow(input));
 });
 voiceBiometricRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.groupBy(input));
 });
 voiceBiometricRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await VoiceBiometric.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.count(input));
 });
 voiceBiometricRouter.post("/createMany", async (req, res) => {
-  res.json(await VoiceBiometric.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.createMany(input));
 });
-voiceBiometricRouter.post("/createOne", async (req, res) => {
-  res.json(await VoiceBiometric.createOne(req, req.body, { bypassMiddleware: true }));
+voiceBiometricRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.create(input));
 });
 voiceBiometricRouter.post("/deleteMany", async (req, res) => {
-  res.json(await VoiceBiometric.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.deleteMany(input));
 });
-voiceBiometricRouter.post("/deleteOne", async (req, res) => {
-  res.json(await VoiceBiometric.deleteOne(req, req.body, { bypassMiddleware: true }));
+voiceBiometricRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.delete(input));
 });
 voiceBiometricRouter.post("/updateMany", async (req, res) => {
-  res.json(await VoiceBiometric.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.updateMany(input));
 });
-voiceBiometricRouter.post("/updateOne", async (req, res) => {
-  res.json(await VoiceBiometric.updateOne(req, req.body, { bypassMiddleware: true }));
+voiceBiometricRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.update(input));
 });
 voiceBiometricRouter.post("/upsert", async (req, res) => {
-  res.json(await VoiceBiometric.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.upsert(input));
 });

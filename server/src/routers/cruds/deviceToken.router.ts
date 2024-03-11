@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { DeviceToken } from "@models/deviceToken.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const deviceTokenRouter = Router();
 
@@ -7,23 +8,35 @@ deviceTokenRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 deviceTokenRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.aggregate(input));
 });
 deviceTokenRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.findFirst(input));
 });
 deviceTokenRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.findMany(input));
 });
 deviceTokenRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    DeviceToken.findMany(req, input),
-    DeviceToken.count(req, { where: input?.where }),
-    DeviceToken.count(req),
+    unGuardedPrisma.deviceToken.findMany(input),
+    unGuardedPrisma.deviceToken.count({ where: input?.where }),
+    unGuardedPrisma.deviceToken.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ deviceTokenRouter.get("/tableQuery", async (req, res) => {
   });
 });
 deviceTokenRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.findUnique(input));
 });
 deviceTokenRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await DeviceToken.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.findUniqueOrThrow(input));
 });
 deviceTokenRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.groupBy(input));
 });
 deviceTokenRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await DeviceToken.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.deviceToken.count(input));
 });
 deviceTokenRouter.post("/createMany", async (req, res) => {
-  res.json(await DeviceToken.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.createMany(input));
 });
-deviceTokenRouter.post("/createOne", async (req, res) => {
-  res.json(await DeviceToken.createOne(req, req.body, { bypassMiddleware: true }));
+deviceTokenRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.create(input));
 });
 deviceTokenRouter.post("/deleteMany", async (req, res) => {
-  res.json(await DeviceToken.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.deleteMany(input));
 });
-deviceTokenRouter.post("/deleteOne", async (req, res) => {
-  res.json(await DeviceToken.deleteOne(req, req.body, { bypassMiddleware: true }));
+deviceTokenRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.delete(input));
 });
 deviceTokenRouter.post("/updateMany", async (req, res) => {
-  res.json(await DeviceToken.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.updateMany(input));
 });
-deviceTokenRouter.post("/updateOne", async (req, res) => {
-  res.json(await DeviceToken.updateOne(req, req.body, { bypassMiddleware: true }));
+deviceTokenRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.update(input));
 });
 deviceTokenRouter.post("/upsert", async (req, res) => {
-  res.json(await DeviceToken.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.deviceToken.upsert(input));
 });

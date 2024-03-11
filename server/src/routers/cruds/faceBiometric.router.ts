@@ -1,5 +1,6 @@
 import { Router, json } from "express";
 import { FaceBiometric } from "@models/faceBiometric.model";
+import { unGuardedPrisma } from "@config/db";
 
 export const faceBiometricRouter = Router();
 
@@ -7,23 +8,35 @@ faceBiometricRouter.get("/", async (req, res) => {
   res.json(req.originalUrl);
 });
 faceBiometricRouter.get("/aggregate", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.aggregate(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.aggregate(input));
 });
 faceBiometricRouter.get("/findFirst", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.findFirst(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.findFirst(input));
 });
 faceBiometricRouter.get("/findMany", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.findMany(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.findMany(input));
 });
 faceBiometricRouter.get("/tableQuery", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
   const [data, filteredCount, unFilteredCount] = await Promise.all([
-    FaceBiometric.findMany(req, input),
-    FaceBiometric.count(req, { where: input?.where }),
-    FaceBiometric.count(req),
+    unGuardedPrisma.faceBiometric.findMany(input),
+    unGuardedPrisma.faceBiometric.count({ where: input?.where }),
+    unGuardedPrisma.faceBiometric.count(),
   ]);
   const statistics: {
     key: string;
@@ -37,41 +50,58 @@ faceBiometricRouter.get("/tableQuery", async (req, res) => {
   });
 });
 faceBiometricRouter.get("/findUnique", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.findUnique(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.findUnique(input));
 });
 faceBiometricRouter.get("/findUniqueOrThrow", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(
-    await FaceBiometric.findUniqueOrThrow(req, input, { bypassMiddleware: true }),
-  );
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.findUniqueOrThrow(input));
 });
 faceBiometricRouter.get("/groupBy", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.groupBy(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.groupBy(input));
 });
 faceBiometricRouter.get("/count", async (req, res) => {
-  const input = JSON.parse(req.query.q as string);
-  res.json(await FaceBiometric.count(req, input, { bypassMiddleware: true }));
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.faceBiometric.count(input));
 });
 faceBiometricRouter.post("/createMany", async (req, res) => {
-  res.json(await FaceBiometric.createMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.createMany(input));
 });
-faceBiometricRouter.post("/createOne", async (req, res) => {
-  res.json(await FaceBiometric.createOne(req, req.body, { bypassMiddleware: true }));
+faceBiometricRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.create(input));
 });
 faceBiometricRouter.post("/deleteMany", async (req, res) => {
-  res.json(await FaceBiometric.deleteMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.deleteMany(input));
 });
-faceBiometricRouter.post("/deleteOne", async (req, res) => {
-  res.json(await FaceBiometric.deleteOne(req, req.body, { bypassMiddleware: true }));
+faceBiometricRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.delete(input));
 });
 faceBiometricRouter.post("/updateMany", async (req, res) => {
-  res.json(await FaceBiometric.updateMany(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.updateMany(input));
 });
-faceBiometricRouter.post("/updateOne", async (req, res) => {
-  res.json(await FaceBiometric.updateOne(req, req.body, { bypassMiddleware: true }));
+faceBiometricRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.update(input));
 });
 faceBiometricRouter.post("/upsert", async (req, res) => {
-  res.json(await FaceBiometric.upsert(req, req.body, { bypassMiddleware: true }));
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.faceBiometric.upsert(input));
 });
