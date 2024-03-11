@@ -27,23 +27,37 @@ generator dbml {
   provider = "prisma-dbml-generator"
 }
 
-// plugin zod {
-//   provider = '@core/zod'
-//   output = 'src/lib/zod'
-//   compile = false
-// }
-
-generator trpc {
-  provider          = "prisma-trpc-generator"
-  withZod           = true
-  withMiddleware    = false
-  withShield        = false
-  contextPath       = "../src/routers/_context.router"
-  trpcOptionsPath   = "trpcOptions"
+plugin zod {
+  provider = '@core/zod'
+  output = 'schema/zod'
+  compile = false
 }
+
+// generator trpc {
+//   provider          = "prisma-trpc-generator"
+//   withZod           = true
+//   withMiddleware    = false
+//   withShield        = false
+//   contextPath       = "../src/routers/_context.router"
+//   trpcOptionsPath   = "trpcOptions"
+// }
 
 // generator zod {
 //   provider = "prisma-zod-generator"
+// }
+
+// plugin openapi {
+//   provider = '@zenstackhq/openapi'
+//   prefix = '/api'
+//   title = 'Pet Store API'
+//   version = '0.1.0'
+//   description = 'My awesome pet store API'
+//   output = 'petstore-api.yaml'
+//   securitySchemes = {
+//         basic: { type: 'http', scheme: 'basic' },
+//         bearer: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+//         apiKey: { type: 'apiKey', in: 'header', name: 'X-API-KEY' }
+//     }
 // }
 
 generator erd {
