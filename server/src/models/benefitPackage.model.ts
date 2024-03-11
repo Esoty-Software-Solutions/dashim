@@ -12,8 +12,22 @@ async function findUnique(userId: string, params: Prisma.BenefitPackageFindUniqu
   return await enhancedPrisma(userId).benefitPackage.findUnique(params);
 }
 
+async function findUniqueOrThrow(
+  userId: string,
+  params: Prisma.BenefitPackageFindUniqueOrThrowArgs,
+) {
+  return await enhancedPrisma(userId).benefitPackage.findUniqueOrThrow(params);
+}
+
 async function findFirst(userId: string, params: Prisma.BenefitPackageFindFirstArgs) {
   return await enhancedPrisma(userId).benefitPackage.findFirst(params);
+}
+
+async function findFirstOrThrow(
+  userId: string,
+  params: Prisma.BenefitPackageFindFirstOrThrowArgs,
+) {
+  return await enhancedPrisma(userId).benefitPackage.findFirstOrThrow(params);
 }
 
 async function createMany(userId: string, params: Prisma.BenefitPackageCreateManyArgs) {
@@ -32,6 +46,10 @@ async function updateOne(userId: string, params: Prisma.BenefitPackageUpdateArgs
   return await enhancedPrisma(userId).benefitPackage.update(params);
 }
 
+async function upsert(userId: string, params: Prisma.BenefitPackageUpsertArgs) {
+  return await enhancedPrisma(userId).benefitPackage.upsert(params);
+}
+
 async function deleteMany(userId: string, params?: Prisma.BenefitPackageDeleteManyArgs) {
   return await enhancedPrisma(userId).benefitPackage.deleteMany(params);
 }
@@ -48,16 +66,24 @@ async function aggregate(userId: string, params: Prisma.BenefitPackageAggregateA
   return await enhancedPrisma(userId).benefitPackage.aggregate(params);
 }
 
+async function groupBy(userId: string, params: Prisma.BenefitPackageGroupByArgs) {
+  return await enhancedPrisma(userId).benefitPackage.groupBy(params);
+}
+
 export const BenefitPackage = {
   findMany: middleware(findMany),
   findUnique: middleware(findUnique),
+  findUniqueOrThrow: middleware(findUniqueOrThrow),
   findFirst: middleware(findFirst),
+  findFirstOrThrow: middleware(findFirstOrThrow),
   createMany: middleware(createMany),
   createOne: middleware(createOne),
   updateMany: middleware(updateMany),
   updateOne: middleware(updateOne),
+  upsert: middleware(upsert),
   deleteMany: middleware(deleteMany),
   deleteOne: middleware(deleteOne),
   count: middleware(count),
   aggregate: middleware(aggregate),
+  groupBy: middleware(groupBy),
 };

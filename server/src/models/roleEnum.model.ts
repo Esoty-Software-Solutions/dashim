@@ -12,8 +12,22 @@ async function findUnique(userId: string, params: Prisma.RoleEnumFindUniqueArgs)
   return await enhancedPrisma(userId).roleEnum.findUnique(params);
 }
 
+async function findUniqueOrThrow(
+  userId: string,
+  params: Prisma.RoleEnumFindUniqueOrThrowArgs,
+) {
+  return await enhancedPrisma(userId).roleEnum.findUniqueOrThrow(params);
+}
+
 async function findFirst(userId: string, params: Prisma.RoleEnumFindFirstArgs) {
   return await enhancedPrisma(userId).roleEnum.findFirst(params);
+}
+
+async function findFirstOrThrow(
+  userId: string,
+  params: Prisma.RoleEnumFindFirstOrThrowArgs,
+) {
+  return await enhancedPrisma(userId).roleEnum.findFirstOrThrow(params);
 }
 
 async function createMany(userId: string, params: Prisma.RoleEnumCreateManyArgs) {
@@ -32,6 +46,10 @@ async function updateOne(userId: string, params: Prisma.RoleEnumUpdateArgs) {
   return await enhancedPrisma(userId).roleEnum.update(params);
 }
 
+async function upsert(userId: string, params: Prisma.RoleEnumUpsertArgs) {
+  return await enhancedPrisma(userId).roleEnum.upsert(params);
+}
+
 async function deleteMany(userId: string, params?: Prisma.RoleEnumDeleteManyArgs) {
   return await enhancedPrisma(userId).roleEnum.deleteMany(params);
 }
@@ -48,16 +66,24 @@ async function aggregate(userId: string, params: Prisma.RoleEnumAggregateArgs) {
   return await enhancedPrisma(userId).roleEnum.aggregate(params);
 }
 
+async function groupBy(userId: string, params: Prisma.RoleEnumGroupByArgs) {
+  return await enhancedPrisma(userId).roleEnum.groupBy(params);
+}
+
 export const RoleEnum = {
   findMany: middleware(findMany),
   findUnique: middleware(findUnique),
+  findUniqueOrThrow: middleware(findUniqueOrThrow),
   findFirst: middleware(findFirst),
+  findFirstOrThrow: middleware(findFirstOrThrow),
   createMany: middleware(createMany),
   createOne: middleware(createOne),
   updateMany: middleware(updateMany),
   updateOne: middleware(updateOne),
+  upsert: middleware(upsert),
   deleteMany: middleware(deleteMany),
   deleteOne: middleware(deleteOne),
   count: middleware(count),
   aggregate: middleware(aggregate),
+  groupBy: middleware(groupBy),
 };
