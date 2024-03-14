@@ -1,193 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // VoiceBiometricAggregateSchema,
-  VoiceBiometricCreateManySchema,
-  VoiceBiometricCreateOneSchema,
-  VoiceBiometricDeleteManySchema,
-  VoiceBiometricDeleteOneSchema,
-  VoiceBiometricFindFirstSchema,
-  VoiceBiometricFindManySchema,
-  VoiceBiometricFindUniqueSchema,
-  // VoiceBiometricGroupBySchema,
-  // VoiceBiometricUpdateManySchema,
-  VoiceBiometricUpdateOneSchema,
-  // VoiceBiometricUpsertSchema,
-  VoiceBiometricCountSchema,
-} from "@schemas/routers/voiceBiometric.schema";
+import { Router, json } from "express";
+import { VoiceBiometric } from "@models/voiceBiometric.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const voiceBiometricRouter = router({
-  // aggregate: publicProcedure
-  //   .input(VoiceBiometricAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const voiceBiometricRouter = Router();
 
-  createMany: publicProcedure
-    .input(VoiceBiometricCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(VoiceBiometricCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(VoiceBiometricDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(VoiceBiometricDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(VoiceBiometricFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(VoiceBiometricFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(VoiceBiometricFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.voiceBiometric.findMany(input),
-          ctx.prisma.voiceBiometric.count({ where: input?.where }),
-          ctx.prisma.voiceBiometric.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(VoiceBiometricFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(VoiceBiometricFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.voiceBiometric.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(VoiceBiometricGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(VoiceBiometricUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(VoiceBiometricUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(VoiceBiometricUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.voiceBiometric.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(VoiceBiometricCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.voiceBiometric.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+voiceBiometricRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+voiceBiometricRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.aggregate(input));
+});
+voiceBiometricRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findFirst(input));
+});
+voiceBiometricRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findMany(input));
+});
+voiceBiometricRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.voiceBiometric.findMany(input),
+    unGuardedPrisma.voiceBiometric.count({ where: input?.where }),
+    unGuardedPrisma.voiceBiometric.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+voiceBiometricRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findUnique(input));
+});
+voiceBiometricRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.findUniqueOrThrow(input));
+});
+voiceBiometricRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.groupBy(input));
+});
+voiceBiometricRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.voiceBiometric.count(input));
+});
+voiceBiometricRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.createMany(input));
+});
+voiceBiometricRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.create(input));
+});
+voiceBiometricRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.deleteMany(input));
+});
+voiceBiometricRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.delete(input));
+});
+voiceBiometricRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.updateMany(input));
+});
+voiceBiometricRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.update(input));
+});
+voiceBiometricRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.voiceBiometric.upsert(input));
 });

@@ -1,193 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // DiagnosisAttachmentAggregateSchema,
-  DiagnosisAttachmentCreateManySchema,
-  DiagnosisAttachmentCreateOneSchema,
-  DiagnosisAttachmentDeleteManySchema,
-  DiagnosisAttachmentDeleteOneSchema,
-  DiagnosisAttachmentFindFirstSchema,
-  DiagnosisAttachmentFindManySchema,
-  DiagnosisAttachmentFindUniqueSchema,
-  // DiagnosisAttachmentGroupBySchema,
-  // DiagnosisAttachmentUpdateManySchema,
-  DiagnosisAttachmentUpdateOneSchema,
-  // DiagnosisAttachmentUpsertSchema,
-  DiagnosisAttachmentCountSchema,
-} from "@schemas/routers/diagnosisAttachment.schema";
+import { Router, json } from "express";
+import { DiagnosisAttachment } from "@models/diagnosisAttachment.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const diagnosisAttachmentRouter = router({
-  // aggregate: publicProcedure
-  //   .input(DiagnosisAttachmentAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const diagnosisAttachmentRouter = Router();
 
-  createMany: publicProcedure
-    .input(DiagnosisAttachmentCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(DiagnosisAttachmentCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(DiagnosisAttachmentDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(DiagnosisAttachmentDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(DiagnosisAttachmentFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(DiagnosisAttachmentFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(DiagnosisAttachmentFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.diagnosisAttachment.findMany(input),
-          ctx.prisma.diagnosisAttachment.count({ where: input?.where }),
-          ctx.prisma.diagnosisAttachment.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(DiagnosisAttachmentFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(DiagnosisAttachmentFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.diagnosisAttachment.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(DiagnosisAttachmentGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(DiagnosisAttachmentUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(DiagnosisAttachmentUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(DiagnosisAttachmentUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.diagnosisAttachment.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(DiagnosisAttachmentCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.diagnosisAttachment.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+diagnosisAttachmentRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+diagnosisAttachmentRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.aggregate(input));
+});
+diagnosisAttachmentRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findFirst(input));
+});
+diagnosisAttachmentRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findMany(input));
+});
+diagnosisAttachmentRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.diagnosisAttachment.findMany(input),
+    unGuardedPrisma.diagnosisAttachment.count({ where: input?.where }),
+    unGuardedPrisma.diagnosisAttachment.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+diagnosisAttachmentRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findUnique(input));
+});
+diagnosisAttachmentRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.findUniqueOrThrow(input));
+});
+diagnosisAttachmentRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.groupBy(input));
+});
+diagnosisAttachmentRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.diagnosisAttachment.count(input));
+});
+diagnosisAttachmentRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.createMany(input));
+});
+diagnosisAttachmentRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.create(input));
+});
+diagnosisAttachmentRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.deleteMany(input));
+});
+diagnosisAttachmentRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.delete(input));
+});
+diagnosisAttachmentRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.updateMany(input));
+});
+diagnosisAttachmentRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.update(input));
+});
+diagnosisAttachmentRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.diagnosisAttachment.upsert(input));
 });

@@ -1,193 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // TenantMemberAggregateSchema,
-  TenantMemberCreateManySchema,
-  TenantMemberCreateOneSchema,
-  TenantMemberDeleteManySchema,
-  TenantMemberDeleteOneSchema,
-  TenantMemberFindFirstSchema,
-  TenantMemberFindManySchema,
-  TenantMemberFindUniqueSchema,
-  // TenantMemberGroupBySchema,
-  // TenantMemberUpdateManySchema,
-  TenantMemberUpdateOneSchema,
-  // TenantMemberUpsertSchema,
-  TenantMemberCountSchema,
-} from "@schemas/routers/tenantMember.schema";
+import { Router, json } from "express";
+import { TenantMember } from "@models/tenantMember.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const tenantMemberRouter = router({
-  // aggregate: publicProcedure
-  //   .input(TenantMemberAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const tenantMemberRouter = Router();
 
-  createMany: publicProcedure
-    .input(TenantMemberCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(TenantMemberCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(TenantMemberDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(TenantMemberDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(TenantMemberFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(TenantMemberFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(TenantMemberFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.tenantMember.findMany(input),
-          ctx.prisma.tenantMember.count({ where: input?.where }),
-          ctx.prisma.tenantMember.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(TenantMemberFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(TenantMemberFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.tenantMember.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(TenantMemberGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(TenantMemberUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(TenantMemberUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(TenantMemberUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.tenantMember.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(TenantMemberCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.tenantMember.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+tenantMemberRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+tenantMemberRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.aggregate(input));
+});
+tenantMemberRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findFirst(input));
+});
+tenantMemberRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findMany(input));
+});
+tenantMemberRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.tenantMember.findMany(input),
+    unGuardedPrisma.tenantMember.count({ where: input?.where }),
+    unGuardedPrisma.tenantMember.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+tenantMemberRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findUnique(input));
+});
+tenantMemberRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.findUniqueOrThrow(input));
+});
+tenantMemberRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.groupBy(input));
+});
+tenantMemberRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.tenantMember.count(input));
+});
+tenantMemberRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.createMany(input));
+});
+tenantMemberRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.create(input));
+});
+tenantMemberRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.deleteMany(input));
+});
+tenantMemberRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.delete(input));
+});
+tenantMemberRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.updateMany(input));
+});
+tenantMemberRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.update(input));
+});
+tenantMemberRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.tenantMember.upsert(input));
 });

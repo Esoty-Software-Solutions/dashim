@@ -12,6 +12,11 @@ const template = fs.readFileSync(templatePath, "utf-8");
 
 const outputDirectory: string = path.resolve(__dirname, "..", "src", "models");
 
+console.info("removing files in output directory");
+fs.rmSync(outputDirectory, { recursive: true, force: true });
+// Recreate the directories
+fs.mkdirSync(outputDirectory, { recursive: true });
+
 TableNames.forEach((TableName) => {
   const tableName = TableName.charAt(0).toLowerCase() + TableName.slice(1);
   const output: string = template

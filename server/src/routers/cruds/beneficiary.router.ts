@@ -1,203 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // BeneficiaryAggregateSchema,
-  BeneficiaryCreateManySchema,
-  BeneficiaryCreateOneSchema,
-  BeneficiaryDeleteManySchema,
-  BeneficiaryDeleteOneSchema,
-  BeneficiaryFindFirstSchema,
-  BeneficiaryFindManySchema,
-  BeneficiaryFindUniqueSchema,
-  // BeneficiaryGroupBySchema,
-  // BeneficiaryUpdateManySchema,
-  BeneficiaryUpdateOneSchema,
-  // BeneficiaryUpsertSchema,
-  BeneficiaryCountSchema,
-} from "@schemas/routers/beneficiary.schema";
+import { Router, json } from "express";
+import { Beneficiary } from "@models/beneficiary.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const beneficiaryRouter = router({
-  // aggregate: publicProcedure
-  //   .input(BeneficiaryAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiary.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const beneficiaryRouter = Router();
 
-  createMany: publicProcedure
-    .input(BeneficiaryCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(BeneficiaryCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(BeneficiaryDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(BeneficiaryDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(BeneficiaryFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(BeneficiaryFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiary.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(BeneficiaryFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        // ! This is a workaround for the searchName field needs future refactoring
-        if (input?.where?.searchName) {
-          //ts-ignore
-          (input.where.searchName as any).contains = (
-            input.where.searchName as any
-          ).contains
-            .toLowerCase()
-            .replace(/\s/g, "");
-        }
-
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.beneficiary.findMany(input),
-          ctx.prisma.beneficiary.count({ where: input?.where }),
-          ctx.prisma.beneficiary.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(BeneficiaryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(BeneficiaryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.beneficiary.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(BeneficiaryGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiary.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(BeneficiaryUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiary.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(BeneficiaryUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(BeneficiaryUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.beneficiary.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(BeneficiaryCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.beneficiary.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+beneficiaryRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+beneficiaryRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.aggregate(input));
+});
+beneficiaryRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.findFirst(input));
+});
+beneficiaryRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.findMany(input));
+});
+beneficiaryRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.beneficiary.findMany(input),
+    unGuardedPrisma.beneficiary.count({ where: input?.where }),
+    unGuardedPrisma.beneficiary.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+beneficiaryRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.findUnique(input));
+});
+beneficiaryRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.findUniqueOrThrow(input));
+});
+beneficiaryRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.groupBy(input));
+});
+beneficiaryRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.beneficiary.count(input));
+});
+beneficiaryRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.createMany(input));
+});
+beneficiaryRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.create(input));
+});
+beneficiaryRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.deleteMany(input));
+});
+beneficiaryRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.delete(input));
+});
+beneficiaryRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.updateMany(input));
+});
+beneficiaryRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.update(input));
+});
+beneficiaryRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.beneficiary.upsert(input));
 });

@@ -1,193 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // LabReportAttachmentAggregateSchema,
-  LabReportAttachmentCreateManySchema,
-  LabReportAttachmentCreateOneSchema,
-  LabReportAttachmentDeleteManySchema,
-  LabReportAttachmentDeleteOneSchema,
-  LabReportAttachmentFindFirstSchema,
-  LabReportAttachmentFindManySchema,
-  LabReportAttachmentFindUniqueSchema,
-  // LabReportAttachmentGroupBySchema,
-  // LabReportAttachmentUpdateManySchema,
-  LabReportAttachmentUpdateOneSchema,
-  // LabReportAttachmentUpsertSchema,
-  LabReportAttachmentCountSchema,
-} from "@schemas/routers/labReportAttachment.schema";
+import { Router, json } from "express";
+import { LabReportAttachment } from "@models/labReportAttachment.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const labReportAttachmentRouter = router({
-  // aggregate: publicProcedure
-  //   .input(LabReportAttachmentAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.labReportAttachment.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const labReportAttachmentRouter = Router();
 
-  createMany: publicProcedure
-    .input(LabReportAttachmentCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(LabReportAttachmentCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(LabReportAttachmentDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(LabReportAttachmentDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(LabReportAttachmentFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(LabReportAttachmentFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.labReportAttachment.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(LabReportAttachmentFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.labReportAttachment.findMany(input),
-          ctx.prisma.labReportAttachment.count({ where: input?.where }),
-          ctx.prisma.labReportAttachment.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(LabReportAttachmentFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(LabReportAttachmentFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.labReportAttachment.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(LabReportAttachmentGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.labReportAttachment.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(LabReportAttachmentUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.labReportAttachment.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(LabReportAttachmentUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(LabReportAttachmentUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.labReportAttachment.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(LabReportAttachmentCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.labReportAttachment.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+labReportAttachmentRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+labReportAttachmentRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.aggregate(input));
+});
+labReportAttachmentRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.findFirst(input));
+});
+labReportAttachmentRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.findMany(input));
+});
+labReportAttachmentRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.labReportAttachment.findMany(input),
+    unGuardedPrisma.labReportAttachment.count({ where: input?.where }),
+    unGuardedPrisma.labReportAttachment.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+labReportAttachmentRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.findUnique(input));
+});
+labReportAttachmentRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.findUniqueOrThrow(input));
+});
+labReportAttachmentRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.groupBy(input));
+});
+labReportAttachmentRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.labReportAttachment.count(input));
+});
+labReportAttachmentRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.createMany(input));
+});
+labReportAttachmentRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.create(input));
+});
+labReportAttachmentRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.deleteMany(input));
+});
+labReportAttachmentRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.delete(input));
+});
+labReportAttachmentRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.updateMany(input));
+});
+labReportAttachmentRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.update(input));
+});
+labReportAttachmentRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.labReportAttachment.upsert(input));
 });
