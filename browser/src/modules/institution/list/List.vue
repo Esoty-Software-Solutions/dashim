@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, toRefs, computed } from "vue";
+import { ref, toRefs, defineAsyncComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiDelete, mdiPencil } from "@mdi/js";
 
 import useListStore from "../stores/storeList";
 
@@ -18,7 +18,13 @@ defineOptions({
 const { t } = useI18n();
 
 const store = toRefs(useListStore());
-
+const deleteDialog = ref(false);
+const CreateInstitutionModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/CreateInstitutionModel.vue"),
+);
+const EditInstitutionModel = defineAsyncComponent(
+  () => import("@/modules/institution/components/EditInstitutionModel.vue"),
+);
 /* ****
  *  filters
  * ********** */
@@ -41,8 +47,52 @@ const { FilterComponent } = useDataFilters({
   },
 });
 
-// table headers
+function closeDelete() {
+  store.triggerFetch.value();
+  deleteDialog.value = false;
+  // nextTick(() => {
+  //   editedItem.value = Object.assign({}, defaultItem.value)
+  //   editedIndex.value = -1
+  // })
+}
+function editItem(item) {
+  store.editDialog.value = !store.editDialog.value;
+  store.editedItem = item;
+  console.log(item);
+}
+function deleteItem(id) {
+  if (id && typeof id == "string") {
+    store.deletedItems.value.push(id);
+  }
+  if (id && typeof id == "object") {
+    store.deletedItems.value.push(...id);
+  }
+  deleteDialog.value = true;
+}
+function openCreateInstitutionDialog(item) {
+  store.dialog.value = !store.dialog.value;
+}
 
+function closeDialiog(dialogType) {
+  if (dialogType == "add") {
+    store.dialog.value = false;
+  }
+  if (dialogType == "edit") {
+    store.editDialog.value = false;
+  }
+  store.triggerFetch.value();
+}
+function refresh() {
+  store.triggerFetch.value();
+}
+async function deleteItemConfirm(item: string) {
+  await store.deleteInstitution.value(item);
+  store.triggerFetch.value();
+  console.log(item);
+
+  closeDelete();
+}
+// table headers
 const headers = ref<TableHeader[]>([
   {
     title: t("common.name"),
@@ -69,13 +119,24 @@ const headers = ref<TableHeader[]>([
     title: t("common.actions"),
     key: "actions",
     sortable: false,
-    width: "1rem",
+    width: "200",
     align: "center",
   },
 ]);
 </script>
 
 <template>
+  <CreateInstitutionModel
+    v-if="store.dialog.value"
+    :dialog="store.dialog.value"
+    @update-dialog="closeDialiog('add')"
+  />
+  <EditInstitutionModel
+    v-if="store.editDialog.value"
+    :dialog="store.editDialog.value"
+    :institution="store.editedItem"
+    @update-dialog="closeDialiog('edit')"
+  />
   <DataPageBase>
     <template #filters>
       <FilterComponent />
@@ -83,10 +144,14 @@ const headers = ref<TableHeader[]>([
 
     <template #actions>
       <VCardActions>
-        <VBtn> Action 1 </VBtn>
+        <VBtn @click="refresh">{{ t("actions.refresh") }} </VBtn>
 
         <VSpacer />
-        <VBtn color="primary" variant="plain">
+        <VBtn
+          color="primary"
+          variant="plain"
+          @click="openCreateInstitutionDialog"
+        >
           <span>{{ t("institution.list.newInstitution") }}</span>
           <VIcon end :icon="mdiPlus" />
         </VBtn>
@@ -104,10 +169,45 @@ const headers = ref<TableHeader[]>([
           </VChip>
         </template>
 
-        <template #item.actions>
-          <VIcon :icon="mdiPlus" />
+        <template #item.actions="{ item }">
+          <!-- <VIcon :icon="mdiPlus" /> -->
+          <!-- <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPlus"
+            @click="openAddInstitutionDialog(item)"
+          /> -->
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiPencil"
+            @click="editItem(item)"
+          />
+          <VIcon
+            class="mx-1"
+            color="primary"
+            :icon="mdiDelete"
+            @click="deleteItem(item.id)"
+          />
         </template>
       </VDataTableServer>
     </template>
   </DataPageBase>
+  <VDialog v-model="deleteDialog" max-width="500px">
+    <VCard>
+      <VCardTitle class="text-h5">{{
+        t("components.deleteConfirmation")
+      }}</VCardTitle>
+      <VCardActions>
+        <VSpacer />
+        <VBtn color="primary" variant="text" @click="closeDelete">{{
+          t("components.cancel")
+        }}</VBtn>
+        <VBtn color="red" variant="text" @click="deleteItemConfirm">{{
+          t("components.ok")
+        }}</VBtn>
+        <VSpacer />
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

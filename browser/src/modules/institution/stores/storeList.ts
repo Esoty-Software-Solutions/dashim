@@ -8,6 +8,7 @@ import { client, type RouterInput } from "@/queries";
 // See the input later
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type FindManyInput = RouterInput["crud"]["institution"]["findMany"];
+// type UpdateOneInput = RouterInput["crud"]["institution"];
 
 const useStoreList = defineStore("institutionsStoreList", () => {
   const nameFilter = useLocalStorage("institutionsList.nameFilterValue", "");
@@ -15,8 +16,26 @@ const useStoreList = defineStore("institutionsStoreList", () => {
     "institutionsList.nameFilterEnabled",
     true,
   );
+  const dialog = useLocalStorage<boolean>("createInstitution.dialog", false);
+  const deletedItems = ref<string[]>([]);
+  const editDialog = useLocalStorage<boolean>(
+    "createInstitution.editDialog",
+    false,
+  );
+  const editedItem = ref({});
 
-  const { binding, items } = useQuerierTable({
+  async function deleteInstitution(id) {
+    if (deletedItems.value.length > 0) {
+      const response = await client.crud.institution.deleteMany.mutate({
+        where: {
+          id: { in: deletedItems.value },
+        },
+      });
+      deletedItems.value = [];
+      console.log(response);
+    }
+  }
+  const { binding, items, triggerFetch } = useQuerierTable({
     /*
      * There are multiple ways to pass your input as this is a `MayBeRefOrGetter`
      * _might want to learn more about this at_
@@ -33,13 +52,14 @@ const useStoreList = defineStore("institutionsStoreList", () => {
      * https://www.typescriptlang.org/docs/handbook/type-inference.html#contextual-typing
      *
      */
+
     input: () => {
       // you may want to use this if you want to access the types ahead of time.
       /* const where: FindManyInput['where'] = {} */
       const where: any = {};
 
       if (nameFilterEnabled.value && nameFilter.value.trim()) {
-        where.name = { equals: nameFilter.value.trim() };
+        where.name = { contains: nameFilter.value.trim() };
       }
 
       return {
@@ -56,8 +76,13 @@ const useStoreList = defineStore("institutionsStoreList", () => {
   return {
     nameFilter,
     nameFilterEnabled,
-
+    dialog,
     binding,
+    triggerFetch,
+    deleteInstitution,
+    deletedItems,
+    editDialog,
+    editedItem,
   };
 });
 

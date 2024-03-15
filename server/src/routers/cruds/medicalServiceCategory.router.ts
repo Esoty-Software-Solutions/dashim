@@ -1,193 +1,107 @@
-import {
-  router,
-  publicProcedure,
-  throwCustomError,
-} from "@routers/_trpc.router";
-import {
-  // MedicalServiceCategoryAggregateSchema,
-  MedicalServiceCategoryCreateManySchema,
-  MedicalServiceCategoryCreateOneSchema,
-  MedicalServiceCategoryDeleteManySchema,
-  MedicalServiceCategoryDeleteOneSchema,
-  MedicalServiceCategoryFindFirstSchema,
-  MedicalServiceCategoryFindManySchema,
-  MedicalServiceCategoryFindUniqueSchema,
-  // MedicalServiceCategoryGroupBySchema,
-  // MedicalServiceCategoryUpdateManySchema,
-  MedicalServiceCategoryUpdateOneSchema,
-  // MedicalServiceCategoryUpsertSchema,
-  MedicalServiceCategoryCountSchema,
-} from "@schemas/routers/medicalServiceCategory.schema";
+import { Router, json } from "express";
+import { MedicalServiceCategory } from "@models/medicalServiceCategory.model";
+import { unGuardedPrisma } from "@config/db";
 
-export const medicalServiceCategoryRouter = router({
-  // aggregate: publicProcedure
-  //   .input(MedicalServiceCategoryAggregateSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceCategory.aggregate(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
+export const medicalServiceCategoryRouter = Router();
 
-  createMany: publicProcedure
-    .input(MedicalServiceCategoryCreateManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.createMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  createOne: publicProcedure
-    .input(MedicalServiceCategoryCreateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.create(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteMany: publicProcedure
-    .input(MedicalServiceCategoryDeleteManySchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.deleteMany(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  deleteOne: publicProcedure
-    .input(MedicalServiceCategoryDeleteOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.delete(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findFirst: publicProcedure
-    .input(MedicalServiceCategoryFindFirstSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.findFirst(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // findFirstOrThrow: publicProcedure
-  //   .input(MedicalServiceCategoryFindFirstSchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceCategory.findFirstOrThrow(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  findMany: publicProcedure
-    .input(MedicalServiceCategoryFindManySchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        const [data, filteredCount, unFilteredCount] = await Promise.all([
-          ctx.prisma.medicalServiceCategory.findMany(input),
-          ctx.prisma.medicalServiceCategory.count({ where: input?.where }),
-          ctx.prisma.medicalServiceCategory.count(),
-        ]);
-        const statistics: {
-          key: string;
-          value: string | number | boolean;
-        }[] = [];
-        return {
-          data,
-          filteredCount,
-          unFilteredCount,
-          statistics,
-        };
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUnique: publicProcedure
-    .input(MedicalServiceCategoryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.findUnique(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  findUniqueOrThrow: publicProcedure
-    .input(MedicalServiceCategoryFindUniqueSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return ctx.prisma.medicalServiceCategory.findUniqueOrThrow(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // groupBy: publicProcedure
-  //   .input(MedicalServiceCategoryGroupBySchema)
-  //   .query(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceCategory.groupBy({
-  //         where: input.where,
-  //         orderBy: input.orderBy,
-  //         by: input.by,
-  //         having: input.having,
-  //         take: input.take,
-  //         skip: input.skip,
-  //       });
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  // updateMany: publicProcedure
-  //   .input(MedicalServiceCategoryUpdateManySchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceCategory.updateMany(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  updateOne: publicProcedure
-    .input(MedicalServiceCategoryUpdateOneSchema)
-    .mutation(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.update(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
-
-  // upsertOne: publicProcedure
-  //   .input(MedicalServiceCategoryUpsertSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     try {
-  //       return await ctx.prisma.medicalServiceCategory.upsert(input);
-  //     } catch (error) {
-  //       throwCustomError(error);
-  //     }
-  //   }),
-
-  count: publicProcedure
-    .input(MedicalServiceCategoryCountSchema)
-    .query(async ({ ctx, input }) => {
-      try {
-        return await ctx.prisma.medicalServiceCategory.count(input);
-      } catch (error) {
-        throwCustomError(error);
-      }
-    }),
+medicalServiceCategoryRouter.get("/", async (req, res) => {
+  res.json(req.originalUrl);
+});
+medicalServiceCategoryRouter.get("/aggregate", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.aggregate(input));
+});
+medicalServiceCategoryRouter.get("/findFirst", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.findFirst(input));
+});
+medicalServiceCategoryRouter.get("/findMany", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.findMany(input));
+});
+medicalServiceCategoryRouter.get("/tableQuery", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  const [data, filteredCount, unFilteredCount] = await Promise.all([
+    unGuardedPrisma.medicalServiceCategory.findMany(input),
+    unGuardedPrisma.medicalServiceCategory.count({ where: input?.where }),
+    unGuardedPrisma.medicalServiceCategory.count(),
+  ]);
+  const statistics: {
+    key: string;
+    value: string | number | boolean;
+  }[] = [];
+  res.json({
+    data,
+    filteredCount,
+    unFilteredCount,
+    statistics,
+  });
+});
+medicalServiceCategoryRouter.get("/findUnique", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.findUnique(input));
+});
+medicalServiceCategoryRouter.get("/findUniqueOrThrow", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.findUniqueOrThrow(input));
+});
+medicalServiceCategoryRouter.get("/groupBy", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.groupBy(input));
+});
+medicalServiceCategoryRouter.get("/count", async (req, res) => {
+  let input = {} as any;
+  if (typeof req.query.q === "string") {
+    input = JSON.parse(req.query.q);
+  }
+  res.json(await unGuardedPrisma.medicalServiceCategory.count(input));
+});
+medicalServiceCategoryRouter.post("/createMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.createMany(input));
+});
+medicalServiceCategoryRouter.post("/create", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.create(input));
+});
+medicalServiceCategoryRouter.post("/deleteMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.deleteMany(input));
+});
+medicalServiceCategoryRouter.post("/delete", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.delete(input));
+});
+medicalServiceCategoryRouter.post("/updateMany", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.updateMany(input));
+});
+medicalServiceCategoryRouter.post("/update", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.update(input));
+});
+medicalServiceCategoryRouter.post("/upsert", async (req, res) => {
+  const input = req.body as any;
+  res.json(await unGuardedPrisma.medicalServiceCategory.upsert(input));
 });

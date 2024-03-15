@@ -90,13 +90,12 @@ async function createSubscriber() {
         v-model="store.valid"
         @submit.prevent="createSubscriber"
       >
-        <VCard-title class="pa-5">
+        <VCardTitle class="pa-5">
           <span class="text-h5">{{
             t("institution.beneficiaries.newBeneficiary")
           }}</span>
-        </VCard-title>
-        <VCard-text>
-          {{ store.valid }}
+        </VCardTitle>
+        <VCardText>
           <VContainer>
             <VRow>
               <!-- <VCol cols="12" sm="6" md="4">
@@ -205,14 +204,16 @@ async function createSubscriber() {
               {{ ben }}
             </AddBeneficiaryForm>
           </div>
-        </VCard-text>
-        <VCard-actions>
+        </VCardText>
+        <VCardActions>
           <VSpacer />
           <VBtn color="primary" variant="plain" @click="emit('update-dialog')">
-            Close
+            {{ t("components.close") }}
           </VBtn>
-          <VBtn type="submit" color="primary" variant="plain"> Save </VBtn>
-        </VCard-actions>
+          <VBtn type="submit" color="primary" variant="plain">
+            {{ t("components.save") }}
+          </VBtn>
+        </VCardActions>
       </v-form>
     </VCard>
   </VDialog>

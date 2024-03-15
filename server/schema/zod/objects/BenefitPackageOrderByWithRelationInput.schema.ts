@@ -1,0 +1,34 @@
+/* eslint-disable */
+import { z } from 'zod';
+import { SortOrderSchema } from '../enums/SortOrder.schema';
+import { SortOrderInputObjectSchema } from './SortOrderInput.schema';
+import { BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInputObjectSchema } from './BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInput.schema';
+import { InsurancePolicyOrderByWithRelationInputObjectSchema } from './InsurancePolicyOrderByWithRelationInput.schema';
+import { BeneficiaryBalanceOrderByRelationAggregateInputObjectSchema } from './BeneficiaryBalanceOrderByRelationAggregateInput.schema';
+
+import type { Prisma } from '@prisma/client';
+
+type SchemaType = z.ZodType<Prisma.BenefitPackageOrderByWithRelationInput>;
+export const BenefitPackageOrderByWithRelationInputObjectSchema: SchemaType = z
+    .object({
+        id: z.lazy(() => SortOrderSchema).optional(),
+        createdAt: z.lazy(() => SortOrderSchema).optional(),
+        updatedAt: z.lazy(() => SortOrderSchema).optional(),
+        isPublished: z.lazy(() => SortOrderSchema).optional(),
+        isSoftDeleted: z.lazy(() => SortOrderSchema).optional(),
+        isActive: z.lazy(() => SortOrderSchema).optional(),
+        deactivationReason: z
+            .union([z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputObjectSchema)])
+            .optional(),
+        deactivationDate: z.union([z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputObjectSchema)]).optional(),
+        name: z.lazy(() => SortOrderSchema).optional(),
+        copayDistrubtion: z.lazy(() => SortOrderSchema).optional(),
+        threashold: z.lazy(() => SortOrderSchema).optional(),
+        insurancePolicyId: z.lazy(() => SortOrderSchema).optional(),
+        medicalServiceCategories: z
+            .lazy(() => BenefitPackageMedicalServiceCategoryOrderByRelationAggregateInputObjectSchema)
+            .optional(),
+        insurancePolicy: z.lazy(() => InsurancePolicyOrderByWithRelationInputObjectSchema).optional(),
+        beneficiaryBalances: z.lazy(() => BeneficiaryBalanceOrderByRelationAggregateInputObjectSchema).optional(),
+    })
+    .strict() as SchemaType;

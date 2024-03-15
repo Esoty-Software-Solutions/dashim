@@ -22,9 +22,9 @@ const tabs = ref([
     },
   },
   {
-    text: `${t("institution.tabs.beneficiaries")} 2`,
+    text: `${t("institution.tabs.beneficiariesEntity")} `,
     to: {
-      name: "InstitutionsBeneficiaries2",
+      name: "InstitutionsBeneficiariesEntity",
     },
   },
   {
@@ -45,9 +45,9 @@ const tabs = ref([
       name: "InstitutionsBenefitPackages",
     },
   },
-  {
-    text: t("institution.tabs.claims"),
-  },
+  // {
+  //   text: t("institution.tabs.claims"),
+  // },
 ]);
 </script>
 
