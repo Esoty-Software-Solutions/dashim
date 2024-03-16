@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import DataFilterBase from "@/modules/filter/components/DataFilterBase.vue";
 import useDataFilters, {
   select,
   text,
   chips,
+  range,
   type ChipsDataFilterItem,
 } from "@/modules/filter/composables/dataFilter";
 
@@ -128,6 +128,8 @@ for (let i = 0; i < 20; i++) {
   });
 }
 
+const rangeValue = ref<[number, number]>([20, 60]);
+
 const { FilterComponent: FilterComponent2 } = useDataFilters({
   filter: {
     chips: chips({
@@ -151,6 +153,26 @@ const { FilterComponent: FilterComponent2 } = useDataFilters({
       props: () => ({
         label: "Vuetify label",
       }),
+    }),
+
+    ranger: range({
+      value: rangeValue,
+      props: () => ({
+        strict: true,
+        step: 1,
+
+        min: 20,
+      }),
+
+      commonFieldProps: () => ({
+        variant: "outlined",
+      }),
+
+      label: "Price (LYD)",
+
+      display: {
+        md: 12,
+      },
     }),
   },
 });
@@ -191,6 +213,10 @@ const { FilterComponent: FilterComponent2 } = useDataFilters({
 
     <FilterComponent2 />
     <VCardText>
+      {{ rangeValue }}
+
+      <br />
+
       <VCardItem> Selected Chip Value: {{ chipValue }}. </VCardItem>
     </VCardText>
   </VContainer>

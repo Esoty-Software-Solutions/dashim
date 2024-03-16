@@ -36,34 +36,38 @@ import {
 export { autocomplete, asyncAutocomplete } from "./autocompleteFilter";
 import { render as renderChips, type ChipsDataFilter } from "./chipsFilter";
 export { chips, type ChipsDataFilterItem } from "./chipsFilter";
+import { render as renderRange, type RangeDataFilter } from "./rangeFilter";
+export { range } from "./rangeFilter";
 import { render as renderSelect, type SelectDataFilter } from "./selectFilter";
 export { select, asyncSelect } from "./selectFilter";
 import { render as renderText, type TextDataFilter } from "./textFilter";
 export { text } from "./textFilter";
 
 import type { DataFiltersDisplay, DataFilterInjection } from "./types";
-import type { Merge } from "@/utils";
+import type { Merge, Prettify } from "@/utils";
+
+import "@/modules/filter/styles/main.sass";
 
 /*
  * Filter Types
  *
  * [x] text filter
- * [x] date
- * [x] date range
+ * [ ] date
+ * [ ] date range
  * [x] number range
  * [x] select (single/multiple)
  * [x] auto complete (single/multiple)
  * [ ] toggle buttons
  * [ ] toggle switch
- * [ ] chip group (single/many)
+ * [x] chip group (single/many)
  */
 
 type DataFilter =
   | TextDataFilter
   | SelectDataFilter
   | AutocompleteDataFilter
-  | ChipsDataFilter;
-
+  | ChipsDataFilter
+  | RangeDataFilter;
 type Icon = (typeof VIcon)["$props"]["icon"];
 
 interface UseDataFiltersOptions<TFilter extends Record<string, DataFilter>> {
@@ -111,7 +115,6 @@ export default function useDataFilters<
     for (const filterKey in options.filter) {
       const definition = options.filter[filterKey];
       const focusedRef = ref(false);
-      const hoveredRef = ref(false);
 
       const enabled = useProxiedRefOrGetter(definition.enabled, false);
 
@@ -132,20 +135,11 @@ export default function useDataFilters<
         setFocus(value) {
           focusedRef.value = value ?? true;
 
-          // enable filter on hover (if option is set so)
+          // enable filter on focus (if option is set so)
           const enableOnFocus = toValue(definition.enableOnFocus) ?? true;
           if (enableOnFocus && value) {
             enabled.value = true;
           }
-        },
-
-        hovered: hoveredRef,
-        hoverIn() {
-          hoveredRef.value = true;
-        },
-
-        hoverOut() {
-          hoveredRef.value = false;
         },
       };
     }
@@ -177,7 +171,7 @@ export default function useDataFilters<
     append?: {};
   };
 
-  type FilterSlots = SlotsType<Merge<NamedSlots, SingleSlots>>;
+  type FilterSlots = SlotsType<Prettify<Merge<NamedSlots, SingleSlots>>>;
 
   const injections = shallowRef<ReturnType<typeof useFiltersInjections> | null>(
     null,
@@ -266,6 +260,8 @@ export default function useDataFilters<
           filterNode = renderAutocomplete(definition, injection, nodeProps);
         } else if (definition.type === "chips") {
           filterNode = renderChips(definition, injection, nodeProps);
+        } else if (definition.type === "range") {
+          filterNode = renderRange(definition, injection, nodeProps);
         }
         // TODO: render other types of filters
 
@@ -275,9 +271,10 @@ export default function useDataFilters<
             injection.setEnabled(newValue);
           },
           focused: toValue(injection.focused),
-          contentBorder: definition.contentBorder,
 
           label: toValue(definition.label),
+
+          contentBorder: definition.contentBorder,
 
           class: [computeDisplayClasses(globalDisplay, definition.display)],
           [`data-filter-name`]: key,
@@ -295,7 +292,6 @@ export default function useDataFilters<
           });
         } else {
           // Wrap the rendered filter in a DataFilterBase
-
           return h(DataFilterBase, baseProps, () => filterNode);
         }
       }

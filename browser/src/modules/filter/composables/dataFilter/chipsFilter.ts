@@ -103,6 +103,9 @@ export function render(
 
   const nodeProps = mergeProps(
     toValue(definition.props) ?? {},
+    {
+      class: "px-0",
+    },
     modelProps,
     additionalProps ?? {},
   );
