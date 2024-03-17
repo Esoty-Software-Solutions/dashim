@@ -1,195 +1,60 @@
 import { z } from "zod";
-import { enhancedPrisma } from "@config/db";
+import { unGuardedPrisma } from "@config/db";
 import { Prisma } from "@prisma/client";
 import {
   DEFAULT_MAX_RETRIES,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_NUMBER,
 } from "@procedures/_config";
-import {
-  ListBeneficiaryEntityInputSchema,
-  CreateBeneficiaryEntityInputSchema,
-  UpdateBeneficiaryEntityInputSchema,
-  CreateBeneficiaryInputSchema,
-} from "./beneficiary.procedure.schema";
-import { rules } from "./beneficiary.procedure.rule";
 import { actions } from "./beneficiary.procedure.action";
 
 import { FAKE_USER_ID } from "@utilities/auth";
 
-const StatusSetByFields = {
-  //* Using Prisma operation "include" includes all fields in the return type
-  select: { id: true, firstName: true, lastName: true },
-};
-
-export async function listBeneficiaryEntities(
-  userId: string,
-  input: z.infer<typeof ListBeneficiaryEntityInputSchema>,
-) {
-  input = input || {};
-  input.take = input.take || DEFAULT_PAGE_SIZE;
-  input.skip = input.skip || DEFAULT_PAGE_NUMBER * DEFAULT_PAGE_SIZE;
-  const validInput = ListBeneficiaryEntityInputSchema.parse(input);
-  const [data, filteredCount, unFilteredCount, activeCount] = await Promise.all(
-    [
-      enhancedPrisma(userId).beneficiaryEntity.findMany({
-        where: validInput?.where,
-        orderBy: validInput?.orderBy,
-        skip: validInput?.skip,
-        take: validInput?.take,
-        select: {
-          id: true,
-          createdAt: true,
-          updatedAt: true,
-          isActive: true,
-          city: {
-            select: {
-              id: true,
-              arabic: true,
-              english: true,
-              name: true,
-            },
-          },
-          insurancePolicyId: true,
-          beneficiaries: {
-            select: {
-              id: true,
-              createdAt: true,
-              updatedAt: true,
-              isActive: true,
-              firstName: true,
-              secondName: true,
-              thirdName: true,
-              fourthName: true,
-              lastName: true,
-              birthDate: true,
-              gender: {
-                select: {
-                  id: true,
-                  name: true,
-                  arabic: true,
-                  english: true,
-                },
-              },
-              relationship: {
-                select: {
-                  id: true,
-                  name: true,
-                  arabic: true,
-                  english: true,
-                },
-              },
-              StatusSetBy: StatusSetByFields,
-              beneficiaryBalances: {
-                select: {
-                  id: true,
-                  balanceActual: true,
-                  balancePending: true,
-                  updatedAt: true,
-                },
-              },
-            },
-          },
-          StatusSetBy: StatusSetByFields,
-        },
-      }),
-      enhancedPrisma(userId).beneficiaryEntity.count({
-        where: input?.where,
-      }),
-      enhancedPrisma(userId).beneficiaryEntity.count(),
-      enhancedPrisma(userId).beneficiaryEntity.count({
-        where: { ...input?.where, isActive: true },
-      }),
-    ],
-  );
-  const inActiveCount = filteredCount - activeCount;
-  const statistics = [
-    { key: "activeCount", value: activeCount },
-    { key: "inActiveCount", value: inActiveCount },
-  ];
-
-  return {
-    data,
-    filteredCount,
-    unFilteredCount,
-    statistics,
-  };
-}
 export async function createBeneficiaryEntity(
-  userId: string,
-  input: z.infer<typeof CreateBeneficiaryEntityInputSchema>,
+  userId: string = FAKE_USER_ID,
+  input: Prisma.BeneficiaryEntityCreateArgs,
 ) {
   // input data validation
-  const validInput = CreateBeneficiaryEntityInputSchema.parse(input);
-  // input data business rules
-  rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
-  rules.oneFatherRelationshipMustExist.evaluation(
-    validInput.data.beneficiaries,
-  );
-  rules.oneMotherRelationshipMustExist.evaluation(
-    validInput.data.beneficiaries,
-  );
+  //TODO: add validation
+  const validInput = input;
+  // business rules
+  //TODO: add business rules
   // business logic
-  const processedInput = await actions.formatToPrismaCreateShape(
-    FAKE_USER_ID,
+  const processedInput = actions.processBeneficiaryEntryCreate(
     validInput,
+    userId,
   );
 
-  return await enhancedPrisma(userId).beneficiaryEntity.create({
-    data: processedInput,
-    include: { beneficiaries: true },
-  });
+  return await unGuardedPrisma.beneficiaryEntity.create(processedInput);
 }
 
 export async function createBeneficiary(
-  userId: string,
-  input: z.infer<typeof CreateBeneficiaryInputSchema>,
+  userId: string = FAKE_USER_ID,
+  input: Prisma.BeneficiaryCreateArgs,
 ) {
   // input data validation
-  const validInput = CreateBeneficiaryInputSchema.parse(input);
-  // input data business rules
-  const beneficiaryEntity = await enhancedPrisma(
-    userId,
-  ).beneficiaryEntity.findFirstOrThrow({
-    where: { id: validInput.data.beneficiaryEntityId },
-    include: { beneficiaries: true },
-  });
-  const { beneficiaries } = beneficiaryEntity;
-  const allBeneficiaries: Omit<
-    Prisma.BeneficiaryUncheckedCreateInput,
-    "searchName" | "statusSetById"
-  >[] = beneficiaries.map((ben) => ben);
-  allBeneficiaries.push(validInput.data);
-
-  rules.oneSelfRelationshipMustExist.evaluation(allBeneficiaries);
-  rules.oneFatherRelationshipMustExist.evaluation(allBeneficiaries);
-  rules.oneMotherRelationshipMustExist.evaluation(allBeneficiaries);
+  //TODO: add validation
+  const validInput = input;
+  // business rules
+  //TODO: add business rules
   // business logic
-  const processedInput = await actions.formatBeneficiaryToPrismaCreateShape(
-    FAKE_USER_ID,
-    validInput,
-  );
+  const processedInput = actions.processBeneficiaryCreate(validInput, userId);
 
-  return await enhancedPrisma(userId).beneficiary.create({
-    data: processedInput,
-  });
+  const result = await unGuardedPrisma.beneficiary.create(processedInput);
+  return result;
 }
-// export async function updateBeneficiaryEntity(
-//   userId: string,
-//   input: z.infer<typeof UpdateBeneficiaryEntityInputSchema>,
-// ) {
-//   // input data validation
-//   const validInput = UpdateBeneficiaryEntityInputSchema.parse(input);
-//   // input data business rules
-//   rules.oneSelfRelationshipMustExist.evaluation(validInput.data.beneficiaries);
-//   // business logic
-//   const processedInput = await actions.formatToPrismaCreateShape(
-//     userId,
-//     validInput,
-//   );
 
-//   return await enhancedPrisma(userId).beneficiaryEntity.create({
-//     data: processedInput,
-//     include: { beneficiaries: true },
-//   });
-// }
+export async function updateBeneficiaryEntity(
+  userId: string = FAKE_USER_ID,
+  input: Prisma.BeneficiaryEntityUpdateArgs,
+) {
+  // input data validation
+  //TODO: add validation
+  const validInput = input;
+  // business rules
+  //TODO: add business rules
+  // business logic
+  const processedInput = validInput;
+
+  return await unGuardedPrisma.beneficiaryEntity.update(processedInput);
+}
